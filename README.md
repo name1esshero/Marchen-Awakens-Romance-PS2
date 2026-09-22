@@ -40,10 +40,14 @@ The wrapper stages old tools and source on a native temporary filesystem to avoi
 their failures on this Windows-mounted workspace. See [compiler evidence and
 limitations](docs/tasks/COMPILER_PROBE.md).
 
-`asm/` preserves eight accessors as instructions. `candidates/` contains semantic
-models and a byte-matching EE C++ probe; the complete class remains unrecovered.
-`preserved/boot/` explicitly retains 3,445,140 unrecovered bytes as hexadecimal
-text, with the other 64 bytes supplied by the built object. `reports/` contains inventories;
+`asm/` preserves nineteen accessors across three classes (`CCamera`, `CCamera2`,
+`CCameraMv`) as instructions. `candidates/` contains semantic models and a
+byte-matching EE C++ probe; the complete classes remain unrecovered.
+`preserved/boot/` explicitly retains 3,445,052 unrecovered bytes as hexadecimal
+text, with the other 152 bytes supplied by the built object. A census of the
+1,694-section, 71,932-byte named `.gnu.linkonce.t.*` cluster these accessors
+belong to is in `reports/linkonce_text_inventory.json`; see
+[the linkonce cluster task](docs/tasks/LINKONCE_CLUSTER.md). `reports/` contains inventories;
 `config/` pins the observed reference hashes and comparison selection.
 Extracted reference files, downloaded tools and build outputs are ignored.
 The normal build reads no reference bytes. Comparison deliberately reads the reference executable.

@@ -6,3 +6,14 @@
 .gnu.linkonce.t.GetFogDistance__7CCamera
 .gnu.linkonce.t.SetFogConcentration__7CCameraf
 .gnu.linkonce.t.GetFogConcentration__7CCamera
+.gnu.linkonce.t.GetViewScaleX__7CCamera
+.gnu.linkonce.t.GetViewScaleY__7CCamera
+.gnu.linkonce.t.GetViewAngle__C7CCamera
+.gnu.linkonce.t.GetViewAngleDir__C7CCamera
+.gnu.linkonce.t.Draw__7CCameraP7CRender
+.gnu.linkonce.t.CameraControl__8CCamera2f
+.gnu.linkonce.t.GetAngleY__8CCamera2
+.gnu.linkonce.t.GetAngleX__8CCamera2
+.gnu.linkonce.t.DebugCamera__8CCamera2ii
+.gnu.linkonce.t.GetTgtChr__9CCameraMv
+.gnu.linkonce.t.GetCamType__9CCameraMv

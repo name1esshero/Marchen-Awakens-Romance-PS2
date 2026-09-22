@@ -3,6 +3,7 @@
 Authority: [STANDARDS.md](../STANDARDS.md).
 Agent: GPT-6 Astra Light (operator-provided label); role: Initial Manager.
 Work type: R&D, Bootstrap. Current state: [STATUS.md](../STATUS.md).
+Follow-up: [linkonce cluster census and broadened match](LINKONCE_CLUSTER.md).
 
 ## Direct evidence
 

@@ -1,8 +1,9 @@
 # Current project status
 
 Updated: 2026-09-22. Authority: [STANDARDS.md](STANDARDS.md).
-Current manager: GPT-6 Astra Light (operator-provided session label), Initial Manager.
-Role/model attribution is per session and commit, not a permanent assignment.
+Current contributor: Claude Sonnet 5, Contributor. Initial Manager: GPT-6 Astra
+Light (operator-provided session label). Role/model attribution is per session
+and commit, not a permanent assignment.
 
 ## Verified scope
 
@@ -11,22 +12,31 @@ Role/model attribution is per session and commit, not a permanent assignment.
   text artifacts plus assembled code. `cmp` verifies every output byte.
 - An isolated build containing no ISO, extracted files, reports, existing build
   outputs or downloaded compiler reproduces the pinned boot hash.
-- Eight camera accessors (64 bytes) have verified assembly implementations.
-- EE GCC `2.96-ee-001003-1` with `-O2` compiles natural inline C++ accessor
-  candidates into the same eight sections. Substituting them in the full ELF
-  also passes byte comparison. The partial class remains a candidate.
+- Nineteen accessors (152 bytes) across three distinct classes (`CCamera`,
+  `CCamera2`, `CCameraMv`) have verified assembly implementations.
+- EE GCC `2.96-ee-001003-1` with the same single `-O2` flag compiles natural
+  C++ candidates for all nineteen into the same sections. Substituting them
+  in the full ELF also passes byte comparison. The partial classes remain candidates.
 - Research compiler distribution, hash and flags are pinned; the setup step is
   explicit and downloaded executables are ignored by Git.
+- The boot ELF's `.text` ends exactly where a contiguous run of 1,694 named
+  `.gnu.linkonce.t.*` sections begins (71,932 bytes, 497 classes by a
+  naming-shape heuristic); 733 of those are the same trivial single-instruction
+  shape already proven recoverable. See
+  [the linkonce cluster task](tasks/LINKONCE_CLUSTER.md) and
+  `reports/linkonce_text_inventory.json`.
 
 ## Remaining debt and limits
 
-- **3,445,140 bytes** of the boot ELF remain explicitly preserved as unrecovered
+- **3,445,052 bytes** of the boot ELF remain explicitly preserved as unrecovered
   hex, including most code, data and ELF metadata. No authentic-source completion
   percentage is claimed; a source-artifact rebuild is not complete decompilation.
 - Original game compiler version/flags are not proved. Eight middleware banners
   advertise `GCC2096 SCE3020`; those labels are not provenance for every object.
-- Complete CCamera inheritance, virtual layout and size are unknown. Matching
-  these small accessors is insufficient to promote the class to recovered source.
+- Complete CCamera/CCamera2/CCameraMv inheritance, virtual layout and size are
+  unknown. Matching these small accessors is insufficient to promote the
+  classes to recovered source. Roughly 1,675 more census-identified linkonce
+  sections (including ~733 same-shape trivial ones) remain unrecovered.
 - No full-disc rebuild, archive round trip, runtime/emulator test or gameplay
   validation has been performed. Module internals and DVP overlay semantics remain open.
 - Independent retail-dump authentication remains unestablished.

@@ -27,3 +27,36 @@ swc1 $f12, 0x18c($4)
 .section .gnu.linkonce.t.GetFogConcentration__7CCamera,"ax",@progbits
 jr $31
 lwc1 $f0, 0x18c($4)
+.section .gnu.linkonce.t.GetViewScaleX__7CCamera,"ax",@progbits
+jr $31
+lwc1 $f0, 0x17c($4)
+.section .gnu.linkonce.t.GetViewScaleY__7CCamera,"ax",@progbits
+jr $31
+lwc1 $f0, 0x180($4)
+.section .gnu.linkonce.t.GetViewAngle__C7CCamera,"ax",@progbits
+jr $31
+lwc1 $f0, 0x178($4)
+.section .gnu.linkonce.t.GetViewAngleDir__C7CCamera,"ax",@progbits
+jr $31
+lwc1 $f0, 0x178($4)
+.section .gnu.linkonce.t.Draw__7CCameraP7CRender,"ax",@progbits
+jr $31
+addiu $2, $0, 1
+.section .gnu.linkonce.t.CameraControl__8CCamera2f,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.GetAngleY__8CCamera2,"ax",@progbits
+jr $31
+lwc1 $f0, 0x15c($4)
+.section .gnu.linkonce.t.GetAngleX__8CCamera2,"ax",@progbits
+jr $31
+lwc1 $f0, 0x160($4)
+.section .gnu.linkonce.t.DebugCamera__8CCamera2ii,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.GetTgtChr__9CCameraMv,"ax",@progbits
+jr $31
+lw $2, 0x294($4)
+.section .gnu.linkonce.t.GetCamType__9CCameraMv,"ax",@progbits
+jr $31
+lw $2, 0x234($4)

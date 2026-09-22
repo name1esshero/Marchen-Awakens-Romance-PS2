@@ -59,9 +59,99 @@
     },
     {
       "offset": 2342880,
-      "size": 1102324,
+      "size": 24,
       "kind": "unrecovered_hex",
       "source": "unrecovered_0023bfe0.hex"
+    },
+    {
+      "offset": 2342904,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetViewScaleX__7CCamera"
+    },
+    {
+      "offset": 2342912,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetViewScaleY__7CCamera"
+    },
+    {
+      "offset": 2342920,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetViewAngle__C7CCamera"
+    },
+    {
+      "offset": 2342928,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetViewAngleDir__C7CCamera"
+    },
+    {
+      "offset": 2342936,
+      "size": 368,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023c018.hex"
+    },
+    {
+      "offset": 2343304,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.Draw__7CCameraP7CRender"
+    },
+    {
+      "offset": 2343312,
+      "size": 840,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023c190.hex"
+    },
+    {
+      "offset": 2344152,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.CameraControl__8CCamera2f"
+    },
+    {
+      "offset": 2344160,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetAngleY__8CCamera2"
+    },
+    {
+      "offset": 2344168,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetAngleX__8CCamera2"
+    },
+    {
+      "offset": 2344176,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.DebugCamera__8CCamera2ii"
+    },
+    {
+      "offset": 2344184,
+      "size": 572,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023c4f8.hex"
+    },
+    {
+      "offset": 2344756,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetTgtChr__9CCameraMv"
+    },
+    {
+      "offset": 2344764,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetCamType__9CCameraMv"
+    },
+    {
+      "offset": 2344772,
+      "size": 1100432,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023c744.hex"
     }
   ]
 }

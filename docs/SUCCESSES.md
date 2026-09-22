@@ -28,6 +28,36 @@ accessors reproduces all 64 bytes; the full probe ELF also compares identically.
 Limits: trivial methods do not identify the original compiler or complete class.
 Reference: [compiler experiment](tasks/COMPILER_PROBE.md), `make verify-ee`.
 
+## Linkonce sections cluster contiguously outside main .text, and their address range predicts a census
+
+Symptom: only a handful of named sections were known, all within one class;
+the possibility of many more went unnoticed because nothing pointed a worker
+at them.
+Mechanism: a linker that folds GNU linkonce/COMDAT-style sections (one per
+inline/template instantiation) tends to place them together, after the
+"normal" compiled `.text`. Here `.text` ends at exactly the address where the
+first `.gnu.linkonce.t.*` section begins (`0x33af18`), and 1,694 more named
+sections (71,932 bytes, 497 classes by mangled-name heuristic) follow
+contiguously. 733 of them are exactly 8 bytes — the same trivial
+`jr $ra` + one delay-slot instruction shape already proven recoverable.
+Pathway: when one named section is found, check whether `.text`'s
+declared `address + size` equals that section's address; if so, inventory the
+whole contiguous run instead of treating the one finding as isolated. A small
+mangled-name shape classifier (`tools/linkonce_inventory.py`) turns this into
+a reusable census: kind (member/const member/constructor/destructor/type-info),
+class name where the shape supports it, and a size histogram to prioritize
+which sections are cheap to recover next.
+Verification: `reports/linkonce_text_inventory.json`; classifier tested in
+`tests/test_linkonce_inventory.py` against real observed mangled names,
+including cases deliberately left `unparsed` (template instantiations) rather
+than guessed.
+Scope: this single ELF's linkonce region and GNU v2/cfront-style mangling.
+Limits: the classifier is a naming-shape heuristic, not a demangler; it does
+not decode parameter/return types and must not be trusted for semantics.
+A section's small size does not guarantee its recovery is risk-free — always
+disassemble before writing a natural-source candidate.
+References: [linkonce cluster task](tasks/LINKONCE_CLUSTER.md), `make verify-ee`.
+
 ## Exclude replaced bytes from bootstrap source intervals
 
 Symptom: a bootstrap can appear to match while silently retaining original bytes

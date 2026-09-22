@@ -1,7 +1,8 @@
 # Initial investigation — 2026-09-22
 
 Historical initial snapshot. Current state: [STATUS.md](../STATUS.md).
-Follow-up: [compiler probe and full ELF baseline](COMPILER_PROBE.md).
+Follow-up: [compiler probe and full ELF baseline](COMPILER_PROBE.md), then
+[linkonce cluster census and broadened match](LINKONCE_CLUSTER.md).
 
 Governed by [STANDARDS.md](../STANDARDS.md) and
 [AGENT_ENVIRONMENT.md](../AGENT_ENVIRONMENT.md).
