@@ -3,6 +3,9 @@
 Authority: [STANDARDS.md](STANDARDS.md), [AGENT_ENVIRONMENT.md](AGENT_ENVIRONMENT.md).
 Objective: turn supplied media into reproducible evidence and bounded recovery tasks.
 
+After initial extraction, follow [boot reconstruction and compiler probes](TASK_BOOT_RECONSTRUCTION_METHODOLOGY.md).
+Current [status](STATUS.md) and [work queue](WORK_QUEUE.md) supersede historical task queues.
+
 1. Read standards, status, successes and failures before changing tools or source.
 2. Pin input size and SHA-256. Never regenerate expected hashes to accept a mismatch.
    Our pinned hashes identify the supplied image, not external release provenance.
@@ -32,7 +35,7 @@ Rock Ridge/Joliet interpretation, generic ELF extended numbering, or disc repack
 listed PROGBITS sections and compares their complete bytes. Missing names or unequal
 bytes fail. It does not apply relocations or verify executable headers, placement,
 unselected sections, or semantics. Only use it for relocation-free local experiments.
-Full reconstruction must add a separate whole-file byte comparison before integration.
+Full reconstruction uses a separate whole-file `cmp` in `make verify-boot` before integration.
 
 If a pinned hash fails, stop dependent matching and investigate the input; do not
 edit the baseline. If an unsupported format is encountered, retain the original

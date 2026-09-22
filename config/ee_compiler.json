@@ -1,0 +1,10 @@
+{
+  "version": "2.96-ee-001003-1",
+  "assembler_version": "2.10-ee-001003-1",
+  "url": "https://github.com/decompme/compilers/releases/download/compilers/ee-gcc2.96.tar.xz",
+  "archive_size": 2754768,
+  "sha256": "0590d2ca9da8f5903889d66761220d14b47a8d14ba987ca53db84a1650a1fd0a",
+  "status": "Research compiler; original game compiler identity not yet established",
+  "probe_flags": ["-O2"],
+  "scope": "Eight inline CCamera accessors only; partial class layout remains a candidate"
+}

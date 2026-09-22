@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "reference_sha256": "9f562361510b2d82bc99bbc02306f63efc3c61d2ae3d1c484401eb60a46af672",
+  "file_size": 3445204,
+  "regions": [
+    {
+      "offset": 0,
+      "size": 2342816,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_00000000.hex"
+    },
+    {
+      "offset": 2342816,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetNearClipPlane__7CCamera"
+    },
+    {
+      "offset": 2342824,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetFarClipPlane__7CCamera"
+    },
+    {
+      "offset": 2342832,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetFogMode__7CCamerai"
+    },
+    {
+      "offset": 2342840,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetFogMode__7CCamera"
+    },
+    {
+      "offset": 2342848,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetFogDistance__7CCameraf"
+    },
+    {
+      "offset": 2342856,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetFogDistance__7CCamera"
+    },
+    {
+      "offset": 2342864,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetFogConcentration__7CCameraf"
+    },
+    {
+      "offset": 2342872,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetFogConcentration__7CCamera"
+    },
+    {
+      "offset": 2342880,
+      "size": 1102324,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023bfe0.hex"
+    }
+  ]
+}

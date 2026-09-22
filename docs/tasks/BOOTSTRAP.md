@@ -1,5 +1,8 @@
 # Initial investigation — 2026-09-22
 
+Historical initial snapshot. Current state: [STATUS.md](../STATUS.md).
+Follow-up: [compiler probe and full ELF baseline](COMPILER_PROBE.md).
+
 Governed by [STANDARDS.md](../STANDARDS.md) and
 [AGENT_ENVIRONMENT.md](../AGENT_ENVIRONMENT.md).
 
@@ -51,8 +54,9 @@ Names are verbatim evidence from `.gnu.linkonce.t.*`, not newly invented names.
 The `i`/`f` name suffixes and instructions support int/float accessor semantics.
 The candidate uses a partial layout with explicitly unknown bytes. It does not
 claim the original inheritance, virtual dispatch, class size, const qualifiers,
-or exact source spelling. No target compilation of this candidate has been
-claimed: the original compiler and ABI setup are unresolved.
+or exact source spelling. At initial bootstrap no target compilation had been
+run. The follow-up EE probe now matches these operations; the original game
+compiler and complete class/ABI remain unresolved.
 
 `asm/camera_accessors.s` is a lower-level preservation, not high-level recovery.
 Clang 21.1.8 with `-target mipsel-none-elf -march=mips3 -mabi=32` reproduces
@@ -72,11 +76,15 @@ The selected sections contain no relocations; whole-object metadata is not match
   C++ syntax and field-offset assertions pass on host Clang.
 - `make verify-camera`: eight sections / 64 bytes match exactly after assembly
   from text. The extracted ELF hash is checked before comparison.
-- No complete ELF/disc build or comparison exists yet; no gameplay testing run.
-- The provided `.git` directory is empty and read-only; no valid Git repository
-  or commit history was available. Files are left reviewable without a commit.
+- At this initial checkpoint no complete ELF/disc build existed. The follow-up
+  added full boot ELF reconstruction/comparison; disc/gameplay checks remain open.
+- At initial bootstrap `.git` was empty and read-only. The owner subsequently
+  initialized Git in `8d5068a` and authorized commits with attribution trailers.
 
 ## Work queue and blockers
+
+This was the initial queue; [WORK_QUEUE.md](../WORK_QUEUE.md) is authoritative
+for current task state. Item 2 now has a verified bootstrap implementation.
 
 1. Establish original compiler family/version and flags from broader code and
    executable evidence. GNU-style C++ names suggest an older GNU toolchain;

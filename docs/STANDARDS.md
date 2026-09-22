@@ -575,7 +575,45 @@ When an AI worker enters the repository:
 
 ------------------------------------------------------------------------
 
-## 17. Definition of Done
+## 17. Commit Attribution and Evidence Footers
+
+Every commit must end with the following five Git-style trailer fields, separated
+from the commit message body by a blank line:
+
+```text
+Agent-Model: <model responsible for the work>
+Agent-Role: <role for this work>
+Work-Type: <work categories for this commit>
+Verification: <gates actually run and their outcomes>
+Knowledge-Updated: <knowledge/documentation files updated, or none with reason>
+```
+
+The field names are mandatory; their values vary with the contributor and work.
+Record the model identity supplied by the session or operator without inventing
+an unavailable model/version. Roles and work categories are not fixed enums.
+For non-agent work, use `Agent-Model: none (human)` and an appropriate role.
+
+The subject and body must describe the concrete change and its scope. Verification
+must report only commands or gates actually run, including material failures or
+unrun required gates. A narrow match must not be described as full verification.
+`Knowledge-Updated` must name the files changed in that commit, not future work.
+
+Example only (these values are **not** mandatory defaults):
+
+```text
+Agent-Model: GPT-6 Astra Light
+Agent-Role: Initial Manager
+Work-Type: R&D, Bootstrap
+Verification: make test PASS; make verify-camera PASS (8 sections, 64 bytes)
+Knowledge-Updated: docs/tasks/BOOTSTRAP.md, docs/SUCCESSES.md
+```
+
+Apply this standard to new commits. Do not rewrite existing history solely to
+add trailers unless the owner explicitly requests it.
+
+------------------------------------------------------------------------
+
+## 18. Definition of Done
 
 The project is complete only when the repository's documented final
 completion gates are satisfied.

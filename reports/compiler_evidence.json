@@ -1,0 +1,70 @@
+{
+  "sha256": "9f562361510b2d82bc99bbc02306f63efc3c61d2ae3d1c484401eb60a46af672",
+  "banners": [
+    {
+      "offset": 3169434,
+      "banner": "Append: GCC2096 SCE3020\n",
+      "preceding_string": "\nMWSFD/PS2EE Ver.3.31 Build:Sep  3 2004 14:48:38\n",
+      "sections": [
+        ".rodata"
+      ]
+    },
+    {
+      "offset": 3176085,
+      "banner": "Append: GCC2096 SCE3020\n",
+      "preceding_string": "\nCRI SFD/PS2EE Ver.1.940 Build:Sep  3 2004 14:48:09\n",
+      "sections": [
+        ".rodata"
+      ]
+    },
+    {
+      "offset": 3179636,
+      "banner": "Append: GCC2096 SCE3020\n",
+      "preceding_string": "\nCRI CFT/PS2EE Ver.1.57 Build:Sep  3 2004 14:48:32\n",
+      "sections": [
+        ".rodata"
+      ]
+    },
+    {
+      "offset": 3179717,
+      "banner": "Append: GCC2096 SCE3020\n",
+      "preceding_string": "\nCRI MPS/PS2EE Ver.1.924 Build:Sep  3 2004 14:48:19\n",
+      "sections": [
+        ".rodata"
+      ]
+    },
+    {
+      "offset": 3179821,
+      "banner": "Append: GCC2096 SCE3020\n",
+      "preceding_string": "\nCRI MPV/PS2EE Ver.1.933 Build:Sep  3 2004 14:48:21\n",
+      "sections": [
+        ".rodata"
+      ]
+    },
+    {
+      "offset": 3179989,
+      "banner": "Append: GCC2096 SCE3020\n",
+      "preceding_string": "\nCRI M2V/PS2EE Ver.1.939 Build:Sep  3 2004 14:48:27\n",
+      "sections": [
+        ".rodata"
+      ]
+    },
+    {
+      "offset": 3182041,
+      "banner": "Append: GCC2096 SCE3020\n",
+      "preceding_string": "\nADXT/PS2EE Ver.9.28 Build:Sep  3 2004 17:35:15\n",
+      "sections": [
+        ".rodata"
+      ]
+    },
+    {
+      "offset": 3185245,
+      "banner": "Append: GCC2096 SCE3020\n",
+      "preceding_string": "\nCRI CFG/PS2EE Ver.1.002 Build:Sep  3 2004 17:35:30\n",
+      "sections": [
+        ".rodata"
+      ]
+    }
+  ],
+  "interpretation": "Literal library build labels; not proof of the game compiler identity"
+}
