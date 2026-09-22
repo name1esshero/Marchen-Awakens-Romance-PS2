@@ -1,0 +1,8 @@
+.gnu.linkonce.t.GetNearClipPlane__7CCamera
+.gnu.linkonce.t.GetFarClipPlane__7CCamera
+.gnu.linkonce.t.SetFogMode__7CCamerai
+.gnu.linkonce.t.GetFogMode__7CCamera
+.gnu.linkonce.t.SetFogDistance__7CCameraf
+.gnu.linkonce.t.GetFogDistance__7CCamera
+.gnu.linkonce.t.SetFogConcentration__7CCameraf
+.gnu.linkonce.t.GetFogConcentration__7CCamera

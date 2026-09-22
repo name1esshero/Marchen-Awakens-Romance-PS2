@@ -1,0 +1,320 @@
+{
+  "system_id": "PLAYSTATION",
+  "volume_id": "",
+  "volume_bytes": 4587749376,
+  "image_bytes": 4587749376,
+  "entries": [
+    {
+      "path": "SYSTEM.CNF;1",
+      "lba": 310,
+      "size": 57,
+      "directory": false,
+      "prefix_hex": "424f4f5432203d206364726f6d303a5c",
+      "sha256": "c8e29ec1ab69d944388c23b93abb06ec7010f98f8fbb1991c36a48eff9103f0b"
+    },
+    {
+      "path": "SLPM_661.56;1",
+      "lba": 311,
+      "size": 3445204,
+      "directory": false,
+      "prefix_hex": "7f454c46010101000000000000000000",
+      "sha256": "9f562361510b2d82bc99bbc02306f63efc3c61d2ae3d1c484401eb60a46af672"
+    },
+    {
+      "path": "MODULES",
+      "lba": 262,
+      "size": 992,
+      "directory": true
+    },
+    {
+      "path": "MODULES/CRI_ADXI.IRX;1",
+      "lba": 1994,
+      "size": 68893,
+      "directory": false,
+      "prefix_hex": "7f454c46010101000000000000000000",
+      "sha256": "864171baafc279fb74245c99fb48f3cf8e17c0f0cab0efcf02f1854e7bc259d9"
+    },
+    {
+      "path": "MODULES/DBCMAN.IRX;1",
+      "lba": 2028,
+      "size": 15653,
+      "directory": false,
+      "prefix_hex": "7f454c46010101000000000000000000",
+      "sha256": "60bfea7d0877df3af370676666e5f1043b6e71723fab94cdff790c19e75e12e7"
+    },
+    {
+      "path": "MODULES/DS1O.IRX;1",
+      "lba": 2036,
+      "size": 9509,
+      "directory": false,
+      "prefix_hex": "7f454c46010101000000000000000000",
+      "sha256": "3292b0b26c17de16cde9b701efbf47ee4802f7d61be38276463ae66a43f9e365"
+    },
+    {
+      "path": "MODULES/IOPRP300.IMG;1",
+      "lba": 2041,
+      "size": 275345,
+      "directory": false,
+      "prefix_hex": "52455345540000000000080000000000",
+      "sha256": "02d314464c17c715d7e809297b0aba184173a98616b1fafeac27fe33fc480c82"
+    },
+    {
+      "path": "MODULES/LIBSD.IRX;1",
+      "lba": 2176,
+      "size": 30085,
+      "directory": false,
+      "prefix_hex": "7f454c46010101000000000000000000",
+      "sha256": "94915a3d9673e8a370e144ae493552d5e1f3956bb9ae5bd91e2da5f36c83ce7d"
+    },
+    {
+      "path": "MODULES/MC2_D.IRX;1",
+      "lba": 2191,
+      "size": 20269,
+      "directory": false,
+      "prefix_hex": "7f454c46010101000000000000000000",
+      "sha256": "e4c9df69322819807761baff5b3fd33a66054ac4cc76e24d6558f6f210b12a04"
+    },
+    {
+      "path": "MODULES/MCMAN.IRX;1",
+      "lba": 2201,
+      "size": 96181,
+      "directory": false,
+      "prefix_hex": "7f454c46010101000000000000000000",
+      "sha256": "b4df4061f8fdc9c7cf06a329b96227ad6ca69d008df475c1fc4d3e8d06fe3fa4"
+    },
+    {
+      "path": "MODULES/MCSERV.IRX;1",
+      "lba": 2248,
+      "size": 7385,
+      "directory": false,
+      "prefix_hex": "7f454c46010101000000000000000000",
+      "sha256": "5006b0dd650fa416d03a559bc8e3bae8a7ae95be81f3e4f3fd9bd524fa27e000"
+    },
+    {
+      "path": "MODULES/MODHSYN.IRX;1",
+      "lba": 2252,
+      "size": 63037,
+      "directory": false,
+      "prefix_hex": "7f454c46010101000000000000000000",
+      "sha256": "804a40a38d620ecc88b81b90afb8aab262f0540187e8db25eed1ede69131fed1"
+    },
+    {
+      "path": "MODULES/MODSEIN.IRX;1",
+      "lba": 2283,
+      "size": 9393,
+      "directory": false,
+      "prefix_hex": "7f454c46010101000000000000000000",
+      "sha256": "14eb4e2858121dd69779a1a90e30aa04c48757d28bb349cf629e499c038ad635"
+    },
+    {
+      "path": "MODULES/MODSESQ2.IRX;1",
+      "lba": 2288,
+      "size": 19069,
+      "directory": false,
+      "prefix_hex": "7f454c46010101000000000000000000",
+      "sha256": "ed00189ce365e2efa4589c074378a9ee2f472d134ac64e13871abad544d754af"
+    },
+    {
+      "path": "MODULES/SDRDRV.IRX;1",
+      "lba": 2298,
+      "size": 9161,
+      "directory": false,
+      "prefix_hex": "7f454c46010101000000000000000000",
+      "sha256": "85a465ab251bde0c3d33151b3a67ec2780d57cc40ebb7df9d5ecb7bad3396b16"
+    },
+    {
+      "path": "MODULES/SE_PLAY.IRX;1",
+      "lba": 2303,
+      "size": 14756,
+      "directory": false,
+      "prefix_hex": "7f454c46010101000000000000000000",
+      "sha256": "ed0b6bbeb9f3394f4a306bf88de0f6ddc15553417b0bb7f1219d4da3da70f632"
+    },
+    {
+      "path": "MODULES/SIO2D.IRX;1",
+      "lba": 2311,
+      "size": 11289,
+      "directory": false,
+      "prefix_hex": "7f454c46010101000000000000000000",
+      "sha256": "b07339d0b6ef6021ebb2bd8dba1138f3159b2cdfbf1b29df799694107107d330"
+    },
+    {
+      "path": "MODULES/SIO2MAN.IRX;1",
+      "lba": 2317,
+      "size": 6641,
+      "directory": false,
+      "prefix_hex": "7f454c46010101000000000000000000",
+      "sha256": "565ec77e75f174cfddf72c41ccc446c1c07a3d5fb0a2ccfefad337cb8a7d0728"
+    },
+    {
+      "path": "0FLIST.DIR;1",
+      "lba": 2321,
+      "size": 31,
+      "directory": false,
+      "prefix_hex": "5f646174612e7966730d0a6d6f766965",
+      "sha256": "9bef63e53d8080bddede807e7bc5e84bc7df38c0e96903f9c24af4891d3e8fc8"
+    },
+    {
+      "path": "MOVIE.AFS;1",
+      "lba": 1625762,
+      "size": 685115392,
+      "directory": false,
+      "prefix_hex": "414653000d0000000008000000486c03"
+    },
+    {
+      "path": "_DATA.YFS;1",
+      "lba": 1960291,
+      "size": 428670976,
+      "directory": false,
+      "prefix_hex": "594653001700c608646174612f000000"
+    },
+    {
+      "path": "BGM.AFS;1",
+      "lba": 2169603,
+      "size": 123400192,
+      "directory": false,
+      "prefix_hex": "41465300190000000008000000301900"
+    },
+    {
+      "path": "DMY00.;1",
+      "lba": 2322,
+      "size": 166238400,
+      "directory": false,
+      "prefix_hex": "00000000000000000000000000000000"
+    },
+    {
+      "path": "DMY01.;1",
+      "lba": 83494,
+      "size": 166238400,
+      "directory": false,
+      "prefix_hex": "00000000000000000000000000000000"
+    },
+    {
+      "path": "DMY02.;1",
+      "lba": 164666,
+      "size": 166238400,
+      "directory": false,
+      "prefix_hex": "00000000000000000000000000000000"
+    },
+    {
+      "path": "DMY03.;1",
+      "lba": 245838,
+      "size": 166238400,
+      "directory": false,
+      "prefix_hex": "00000000000000000000000000000000"
+    },
+    {
+      "path": "DMY04.;1",
+      "lba": 327010,
+      "size": 166238400,
+      "directory": false,
+      "prefix_hex": "00000000000000000000000000000000"
+    },
+    {
+      "path": "DMY05.;1",
+      "lba": 408182,
+      "size": 166238400,
+      "directory": false,
+      "prefix_hex": "00000000000000000000000000000000"
+    },
+    {
+      "path": "DMY06.;1",
+      "lba": 489354,
+      "size": 166238400,
+      "directory": false,
+      "prefix_hex": "00000000000000000000000000000000"
+    },
+    {
+      "path": "DMY07.;1",
+      "lba": 570526,
+      "size": 166238400,
+      "directory": false,
+      "prefix_hex": "00000000000000000000000000000000"
+    },
+    {
+      "path": "DMY08.;1",
+      "lba": 651698,
+      "size": 166238400,
+      "directory": false,
+      "prefix_hex": "00000000000000000000000000000000"
+    },
+    {
+      "path": "DMY09.;1",
+      "lba": 732870,
+      "size": 166238400,
+      "directory": false,
+      "prefix_hex": "00000000000000000000000000000000"
+    },
+    {
+      "path": "DMY10.;1",
+      "lba": 814042,
+      "size": 166238400,
+      "directory": false,
+      "prefix_hex": "00000000000000000000000000000000"
+    },
+    {
+      "path": "DMY11.;1",
+      "lba": 895214,
+      "size": 166238400,
+      "directory": false,
+      "prefix_hex": "00000000000000000000000000000000"
+    },
+    {
+      "path": "DMY12.;1",
+      "lba": 976386,
+      "size": 166238400,
+      "directory": false,
+      "prefix_hex": "00000000000000000000000000000000"
+    },
+    {
+      "path": "DMY13.;1",
+      "lba": 1057558,
+      "size": 166238400,
+      "directory": false,
+      "prefix_hex": "00000000000000000000000000000000"
+    },
+    {
+      "path": "DMY14.;1",
+      "lba": 1138730,
+      "size": 166238400,
+      "directory": false,
+      "prefix_hex": "00000000000000000000000000000000"
+    },
+    {
+      "path": "DMY15.;1",
+      "lba": 1219902,
+      "size": 166238400,
+      "directory": false,
+      "prefix_hex": "00000000000000000000000000000000"
+    },
+    {
+      "path": "DMY16.;1",
+      "lba": 1301074,
+      "size": 166238400,
+      "directory": false,
+      "prefix_hex": "00000000000000000000000000000000"
+    },
+    {
+      "path": "DMY17.;1",
+      "lba": 1382246,
+      "size": 166238400,
+      "directory": false,
+      "prefix_hex": "00000000000000000000000000000000"
+    },
+    {
+      "path": "DMY18.;1",
+      "lba": 1463418,
+      "size": 166238400,
+      "directory": false,
+      "prefix_hex": "00000000000000000000000000000000"
+    },
+    {
+      "path": "DMY19.;1",
+      "lba": 1544590,
+      "size": 166238400,
+      "directory": false,
+      "prefix_hex": "00000000000000000000000000000000"
+    }
+  ],
+  "sha256": "cc059a3acf818dfbd0a782a9d20ee67e020d167866cd1c4dca77e6eb9224e3ec"
+}

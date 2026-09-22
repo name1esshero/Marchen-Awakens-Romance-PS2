@@ -1,0 +1,5 @@
+/baserom.iso
+/extracted/
+/build/
+__pycache__/
+*.pyc

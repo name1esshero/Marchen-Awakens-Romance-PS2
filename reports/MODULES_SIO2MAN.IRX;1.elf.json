@@ -1,0 +1,129 @@
+{
+  "machine": 8,
+  "entry": 1588,
+  "flags": 1,
+  "sections": [
+    {
+      "index": 0,
+      "name": "",
+      "type": 0,
+      "flags": 0,
+      "address": 0,
+      "offset": 0,
+      "size": 0,
+      "alignment": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "index": 1,
+      "name": ".iopmod",
+      "type": 1879048320,
+      "flags": 0,
+      "address": 0,
+      "offset": 116,
+      "size": 34,
+      "alignment": 4,
+      "sha256": "7937e6e109108395d14b392f531882db8aca96588612b7ba3d21a318541789ff"
+    },
+    {
+      "index": 2,
+      "name": ".text",
+      "type": 1,
+      "flags": 6,
+      "address": 0,
+      "offset": 160,
+      "size": 3904,
+      "alignment": 16,
+      "sha256": "2d0b2db8fcfd6473deb2978eed3d05f9c4828b1b4cfa98510554d2755b6d97d6"
+    },
+    {
+      "index": 3,
+      "name": ".rel.text",
+      "type": 9,
+      "flags": 0,
+      "address": 0,
+      "offset": 4712,
+      "size": 1904,
+      "alignment": 4,
+      "sha256": "761976aa40b5577d2a98b6ac92dcd1e067157176db526e729261a1c3aed6ad3e"
+    },
+    {
+      "index": 4,
+      "name": ".rodata",
+      "type": 1,
+      "flags": 2,
+      "address": 3904,
+      "offset": 4064,
+      "size": 96,
+      "alignment": 16,
+      "sha256": "74896e2092f5684c1992f4dcd58a801cc5adb5200469b40aced928999caac242"
+    },
+    {
+      "index": 5,
+      "name": ".data",
+      "type": 1,
+      "flags": 3,
+      "address": 4000,
+      "offset": 4160,
+      "size": 32,
+      "alignment": 16,
+      "sha256": "367ad9ac44e4be8bdd639c5511811f7e5aaad07c080b2ed7905ab148e9ab9b96"
+    },
+    {
+      "index": 6,
+      "name": ".rel.data",
+      "type": 9,
+      "flags": 0,
+      "address": 0,
+      "offset": 6616,
+      "size": 8,
+      "alignment": 4,
+      "sha256": "1d2da7cf51edf52ca220eee181ab681a4c7f9c7d7c8bd411c2bea75f5fd8f353"
+    },
+    {
+      "index": 7,
+      "name": ".bss",
+      "type": 8,
+      "flags": 3,
+      "address": 4032,
+      "offset": 4192,
+      "size": 48,
+      "alignment": 16
+    },
+    {
+      "index": 8,
+      "name": ".shstrtab",
+      "type": 3,
+      "flags": 0,
+      "address": 0,
+      "offset": 4192,
+      "size": 80,
+      "alignment": 1,
+      "sha256": "9492e7777fff498f8547c3b4552061f6dae164454312824dc16aea3ce2bbe649"
+    },
+    {
+      "index": 9,
+      "name": ".symtab",
+      "type": 2,
+      "flags": 0,
+      "address": 0,
+      "offset": 6624,
+      "size": 16,
+      "alignment": 4,
+      "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+    },
+    {
+      "index": 10,
+      "name": ".strtab",
+      "type": 3,
+      "flags": 0,
+      "address": 0,
+      "offset": 6640,
+      "size": 1,
+      "alignment": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    }
+  ],
+  "iso_path": "MODULES/SIO2MAN.IRX;1",
+  "sha256": "565ec77e75f174cfddf72c41ccc446c1c07a3d5fb0a2ccfefad337cb8a7d0728"
+}

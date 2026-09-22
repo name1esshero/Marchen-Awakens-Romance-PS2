@@ -1,0 +1,140 @@
+{
+  "machine": 8,
+  "entry": 0,
+  "flags": 1,
+  "sections": [
+    {
+      "index": 0,
+      "name": "",
+      "type": 0,
+      "flags": 0,
+      "address": 0,
+      "offset": 0,
+      "size": 0,
+      "alignment": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "index": 1,
+      "name": ".iopmod",
+      "type": 1879048320,
+      "flags": 0,
+      "address": 0,
+      "offset": 116,
+      "size": 47,
+      "alignment": 4,
+      "sha256": "4b110edf662b2047b226af38903ad62ed69dcb5c4b613f1303a0946580894e98"
+    },
+    {
+      "index": 2,
+      "name": ".text",
+      "type": 1,
+      "flags": 6,
+      "address": 0,
+      "offset": 176,
+      "size": 15104,
+      "alignment": 16,
+      "sha256": "445a7c8e6cd22ad0d3cfe220357bc8a1a5caf988314db2f8d362f35700d9f988"
+    },
+    {
+      "index": 3,
+      "name": ".rel.text",
+      "type": 9,
+      "flags": 0,
+      "address": 0,
+      "offset": 16300,
+      "size": 2432,
+      "alignment": 4,
+      "sha256": "6a409ac4cab2dc49c9c24054ae03d111aa5201894230c70f00242acc802e470b"
+    },
+    {
+      "index": 4,
+      "name": ".rodata",
+      "type": 1,
+      "flags": 2,
+      "address": 15104,
+      "offset": 15280,
+      "size": 352,
+      "alignment": 16,
+      "sha256": "d3132031bacd1e804814f7a1544cc60c417f38a08fa4790d538745c276186736"
+    },
+    {
+      "index": 5,
+      "name": ".rel.rodata",
+      "type": 9,
+      "flags": 0,
+      "address": 0,
+      "offset": 18732,
+      "size": 280,
+      "alignment": 4,
+      "sha256": "5ed0872690640fe3a6c820d155aee267f9b9c3d3f964a90aac8e6b2b4f2b4107"
+    },
+    {
+      "index": 6,
+      "name": ".data",
+      "type": 1,
+      "flags": 3,
+      "address": 15456,
+      "offset": 15632,
+      "size": 96,
+      "alignment": 16,
+      "sha256": "c2d10ab0ce0c9cce316e960633c535f3d531dfecd166fd07984e682f562550d4"
+    },
+    {
+      "index": 7,
+      "name": ".rel.data",
+      "type": 9,
+      "flags": 0,
+      "address": 0,
+      "offset": 19012,
+      "size": 40,
+      "alignment": 4,
+      "sha256": "b20901a06c29e470125321fd28514d78e6c1fda627c5424b5ec194e51943ac42"
+    },
+    {
+      "index": 8,
+      "name": ".bss",
+      "type": 8,
+      "flags": 3,
+      "address": 15552,
+      "offset": 15728,
+      "size": 20,
+      "alignment": 16
+    },
+    {
+      "index": 9,
+      "name": ".shstrtab",
+      "type": 3,
+      "flags": 0,
+      "address": 0,
+      "offset": 15728,
+      "size": 92,
+      "alignment": 1,
+      "sha256": "37b54db04aadd038415633861bbd87f009979af5421ef116b1cb8824b6de7e1a"
+    },
+    {
+      "index": 10,
+      "name": ".symtab",
+      "type": 2,
+      "flags": 0,
+      "address": 0,
+      "offset": 19052,
+      "size": 16,
+      "alignment": 4,
+      "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+    },
+    {
+      "index": 11,
+      "name": ".strtab",
+      "type": 3,
+      "flags": 0,
+      "address": 0,
+      "offset": 19068,
+      "size": 1,
+      "alignment": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    }
+  ],
+  "iso_path": "MODULES/MODSESQ2.IRX;1",
+  "sha256": "ed00189ce365e2efa4589c074378a9ee2f472d134ac64e13871abad544d754af"
+}
