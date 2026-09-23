@@ -114,11 +114,19 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   title subtitle `sbttl` and `BATTLE START` UI label. The currently identified
   remaining title text surfaces are `ttlprts` and repeated `title000`; their
   drafts are in isolated worktrees. A corpus-wide UI/title text audit remains
-  open. The work queue keeps two additional `READY` bounded investigation cards
-  for delegated workers, covering the 43 unresolved PSMCT32 records and the AFS
-  filename-TOC suffixes; the coordinator replenishes this reserve as cards are
-  assigned. See the [delegation-ready reserve](WORK_QUEUE.md#delegation-ready-reserve)
-  and [worker procedure](AGENT_ENVIRONMENT.md#rolling-queue-for-delegated-work).
+  open. The queue targets four `READY` bounded cards for the current two-worker
+  delegation limit and currently has five (2.5 per authorized worker slot): AFS
+  TOC suffixes, map-text and background-text audits, special-font atlas
+  characterization, and the alternate `.yma` layouts. The coordinator is
+  separately investigating the 43 unresolved PSMCT32 records. English siblings
+  for `ttlprts` and repeated `title000`, their task notes, and applicable success
+  entries are committed in isolated branches; both local texture round-trips
+  passed. They await integration and combined ISO validation, and neither has
+  runtime validation. The worker procedure now requires each delegated task to
+  record its reusable result or negative finding in `SUCCESSES.md` or
+  `FAILURES.md` as applicable. See the
+  [delegation-ready reserve](WORK_QUEUE.md#delegation-ready-reserve) and
+  [worker procedure](AGENT_ENVIRONMENT.md#rolling-queue-for-delegated-work).
 - The complete 3,445,204-byte boot ELF now rebuilds identically from repository
   text artifacts plus assembled code. `cmp` verifies every output byte.
 - An isolated build containing no ISO, extracted files, reports, existing build

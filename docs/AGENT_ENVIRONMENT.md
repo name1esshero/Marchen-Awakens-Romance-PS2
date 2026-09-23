@@ -304,29 +304,72 @@ work has been authorized.
 
 ### Rolling queue for delegated work
 
-Keep a rolling pool of at least two `READY` bounded tasks in
-`docs/WORK_QUEUE.md`, in addition to tasks already marked `IN PROGRESS`, so
-both authorized worker slots can take independent work without first waiting
-for task decomposition. A ready card names its exact files or evidence scope,
-what it must not touch, relevant prior findings, expected task-note/report or
-code output, and an objective completion gate. Broad project workstreams do
-not count as ready cards until they are split into such assignable slices.
+Target a ready reserve of at least twice the maximum number of simultaneously
+authorized delegated workers. With the current two-worker limit, keep four
+`READY` bounded tasks in `docs/WORK_QUEUE.md` beyond assignments already marked
+`IN PROGRESS`, whenever the dependency graph allows. A ready card names its
+exact files or evidence scope, exclusions, relevant prior findings, expected
+task-note/report or code output, and an objective completion gate. Broad
+project workstreams do not count until they are split into assignable slices.
+
+The queue is shared across department leads. For this collaboration, the owner
+authorizes Claude to contribute bounded code-frontier tasks while Luna
+contributes asset and localization tasks. Every card names its owning
+lead/domain; the queue coordinator checks dependencies and active scopes before
+marking it `READY`. Maintain the 2x reserve and report capacity ratios per
+authorized worker pool, not as one pooled count that lets one department's
+tasks hide another's empty reserve. A task from another lead is assigned
+through that lead's coordination unless ownership is explicitly transferred.
+
+Track `READY` queue depth against active delegated workers as a supply signal;
+report the ratio as not applicable when none are active. Compare ready depth
+with authorized worker capacity as well, so low actual activity does not hide
+an empty reserve. The metric guides queue replenishment; it is not a quality or
+productivity score.
 
 When a worker finishes, the coordinator integrates or records its commit,
 updates the queue state, checks active scopes again, and assigns that worker a
 different `READY` task while delegated work remains authorized and a disjoint
-task is available. Replenish the ready pool as cards are assigned or completed;
+task is available. Replenish the reserve as cards are assigned or completed;
 derive new cards from documented unresolved evidence instead of inventing
-work to satisfy the count. If fewer than two genuinely independent tasks
-exist, document the dependency or conflict and prepare the next evidence-backed
-slice before opening another worker slot. Do not assign overlapping work just
-to keep a worker busy.
+work to meet the target. If fewer than four genuinely independent tasks exist
+under the current limit, document the dependency or conflict and prepare the
+next evidence-backed slice before opening another worker slot. Do not assign
+overlapping work just to keep a worker busy.
+
+A worker's own task frequently surfaces bounded, independent work outside its
+declared scope (a naming/mangling quirk worth verifying elsewhere, a data
+structure or region worth its own investigation, an unresolved detail noticed
+only in passing). Any worker or department lead, delegated or not, may add such
+a discovery to `docs/WORK_QUEUE.md` as a `PROPOSED` card with exact
+files/evidence scope, exclusions, evidence inputs, expected deliverable, and
+objective completion gate. The queue coordinator checks ownership, dependencies,
+and active scopes, then marks it `READY` when assignable. A contributor may mark
+it `READY` directly only after completing those same checks and notifying the
+coordinator. This supplements rather than replaces coordinator replenishment.
+Adding a card is not claiming it: the discovering worker must not expand its
+own scope to chase the new lead, and must not touch files or regions its current
+task did not already cover.
+
+Run this as a repeating operations loop: frontier discovery -> decomposition
+-> ready queue -> claim -> isolated execution -> verification -> worker commit
+-> integration -> knowledge update -> queue replenishment. A verified result
+or a useful negative result must improve the shared record so later workers
+can start from evidence instead of repeating the same search.
 
 Before editing, each simultaneous worker must create its own Git worktree and
 branch. It owns its implementation, task evidence, applicable verification,
 scoped staging, and commit with all required `STANDARDS.md` §17 trailers. It
 must inspect its own final commit and verify that the changed-file list matches
 its task and trailers, then report the commit hash and verification outcome.
+Every delegated task commit must also preserve its reusable findings in
+`docs/SUCCESSES.md` and/or `docs/FAILURES.md`: record a verified method or result
+as a success, a rejected hypothesis or useful negative result as a failure, and
+update both when both apply. The relevant task-evidence note and knowledge-log
+entry belong in the worker's declared scope and `Knowledge-Updated` trailer.
+Declare the intended log file with the task scope so the coordinator can avoid
+unnecessary concurrent edits to the same shared documentation; a possible
+integration conflict is not a reason to omit the record.
 This leaves routine commit and task-check work with the worker. The coordinator
 handles task decomposition, integration conflicts, combined gates, and shared
 status/queue updates unless explicitly delegated.
