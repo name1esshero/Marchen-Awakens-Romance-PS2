@@ -61,12 +61,13 @@
       "path": "disc!/_DATA.YFS;1!/data/menu/*.b",
       "count": 724,
       "translation_relevance": "likely_graphical_or_structured_menu_content",
-      "evidence": "Menu path/name identifies UI resources; a sampled 000_top_at.b begins with bytes BPE\\0.",
-      "confidence": "CANDIDATE: compression and text-bearing status of the full set are unresolved",
-      "extraction_status": "raw binary leaves",
+      "evidence": "All 724 leaves start with BPE\\0; u32le@0x04 is 256 in every sample and u32le@0x08 equals file size minus the 16-byte header. u32le@0x0c is a candidate expanded-size field (64..1,333,264), not confirmed by decoding.",
+      "confidence": "OBSERVED: common wrapper/header invariants only; payload format, image/text content and decoder remain unresolved",
+      "extraction_status": "raw binary leaves; no decoded representation",
       "editability_status": "opaque",
-      "rebuild_status": "container reinsertion only",
-      "relocation_status": "individual resource references not audited"
+      "rebuild_status": "container reinsertion only; modified leaf not tried",
+      "relocation_status": "member-table relocation infrastructure exists but not exercised on edited .b resource",
+      "header_survey": "reports/ui_b_format_survey.json"
     },
     {
       "path": "disc!/_DATA.YFS;1!/data/script/*.SCD and MAR_SCP.SCI",
