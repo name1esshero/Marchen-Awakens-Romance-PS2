@@ -19,7 +19,7 @@ def main():
         for directory in ('preserved/boot', 'asm'):
             shutil.copytree(root / directory, target / directory)
         (target / 'tools').mkdir()
-        for path in ('Makefile', 'graphics_rules.mk',
+        for path in ('Makefile', 'graphics_rules.mk', 'movies_rules.mk',
                      'tools/bootstrap.py', 'tools/reconstruct_elf.py'):
             shutil.copy2(root / path, target / path)
         subprocess.run(['make', '--no-print-directory', 'build-boot'], cwd=target, check=True)

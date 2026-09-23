@@ -33,7 +33,7 @@ See `tools/asset_recovery_census.py`,
 `tests/test_asset_recovery_census.py`, and
 [`TASK_ASSET_WORKSPACE_METHODOLOGY.md`](TASK_ASSET_WORKSPACE_METHODOLOGY.md).
 
-## Generic MPEG muxers do not accept the game's ADX audio packets
+## Generic MPEG muxers reject the game's ADX audio packets
 
 Hypothesis: an ordinary subtitle-burn and MPEG remux can replace a movie while
 preserving the game's audio stream. FFmpeg 7.0.2 decoded a frame and audio sample
@@ -42,13 +42,14 @@ the input ADX audio as an unsupported codec. An inspected PSS mux helper also
 expects BD private-stream audio packets; the observed game streams carry audio
 under packet ID `0xc0`, so that helper does not establish a compatible path.
 
-Keep the source movie as opaque media payload behind the validated sector/PES
-envelope. Do not substitute an unrelated PSS muxer or claim subtitle editability
-until a writer preserves this game's ADX packets, timestamps and sector layout,
-then reparses and passes playback validation. This failure does not prove that
-the video cannot be re-encoded or that no compatible PS2 stream muxer exists.
-See [movie stream evidence](tasks/VIDEO_STREAM_RECOVERY.md),
-`tools/mpeg_ps.py`, and `tests/test_mpeg_ps.py`.
+This ruled out the generic muxers, not video editing itself. The compatible path
+uses a vendored MIT SofDec muxer with a game-specific packetizer that preserves
+CRI metadata sectors and the original ADX stream; details and attribution are
+in [movie stream evidence](tasks/VIDEO_STREAM_RECOVERY.md). The initial
+third-party writer also mishandled shortened non-final packets at picture
+header boundaries, so the adapter keeps picture headers intact and emits valid
+padding PES packets. All 13 no-op remuxes now preserve elementary streams and
+pass full decode comparisons. A runtime emulator check is still outstanding.
 
 ## An indexed RTX3 entry is not proof that its full extent parsed
 
@@ -222,15 +223,16 @@ This applies to the unchanged `build-disc`/`verify-disc` output path. The separa
 `make build-mod-disc` target now opts into `--replace-existing`, which builds to
 a temp file and atomically installs only after success.
 
-## The isolated source-only target omitted an included Makefile fragment
+## The isolated source-only target omitted included Makefile fragments
 
 Hypothesis: copying the top-level `Makefile` and boot inputs is sufficient for
-`verify-source-only`. After the Makefile began including `graphics_rules.mk`,
-the temporary tree failed before compilation with `No rule to make target
-'graphics_rules.mk'`. This was an isolation-harness input omission, not a source
-or compiler mismatch.
+`verify-source-only`. The harness first omitted `graphics_rules.mk`; after it
+was added to the Makefile includes, the movie workflow introduced a second
+required `movies_rules.mk` fragment and the isolated build again failed before
+compilation. These were isolation-harness input omissions, not source or
+compiler mismatches.
 
-The harness now copies the included fragment along with the Makefile. Verification:
+The harness copies both included fragments with the Makefile. Verification:
 `make verify-source-only` passes and the isolated boot output retains the pinned
 SHA-256. When a source-only target includes additional Make fragments, add each
 required fragment to the declared minimal input set; do not copy the whole

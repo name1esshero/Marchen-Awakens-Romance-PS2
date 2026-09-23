@@ -261,6 +261,39 @@ class AssetRecoveryCensusTests(unittest.TestCase):
         self.assertNotIn("video_cinematics", opaque_classes)
         self.assertEqual(census["video_resource_corpus"]["parse_successful_count"], 1)
 
+    def test_movie_video_source_bytes_are_editable_but_audio_and_mux_bytes_remain_queued(self):
+        leaves, index, disc, roundtrip = self.fixture()
+        movie_leaf = next(leaf for leaf in leaves if leaf["source"] == "00007.bin")
+        movie_leaf["name"] = "disc!/MOVIE.AFS;1!/00000.bin"
+        movie_leaf["_mpeg_program_stream"] = True
+        movie_leaf["_mpeg_ps_structural_bytes"] = movie_leaf["size"]
+        movie_leaf["_editable_movie_video_bytes"] = 4
+        movie_leaf["_movie_audio_source_bytes"] = 3
+        index["_mpeg_ps_resource_corpus"] = {
+            "file_count": 1,
+            "source_bytes": movie_leaf["size"],
+            "parse_successful_count": 1,
+            "exact_noop_roundtrip_count": 1,
+            "editable_MPEG2_video_ES_source_bytes": 4,
+            "preserved_noneditable_ADX_ES_source_bytes": 3,
+            "container_and_packetization_source_bytes": 9,
+        }
+
+        census = build_census(leaves, index, disc, roundtrip)
+        logical = census["expanded_logical_payload"]
+        editable = logical["recovery_levels"]["semantically_editable"]
+        self.assertEqual(editable["bytes_B"], 35)
+        self.assertEqual(
+            editable["components"]["editable_MPEG2_video_elementary_stream_source_bytes"], 4
+        )
+        self.assertAlmostEqual(editable["percent_B_of_Y"], 51.4706)
+        remaining = logical["remaining_after_semantic_editability"]
+        categories = {row["name"]: row["source_bytes"]
+                      for row in remaining["exclusive_byte_weighted_categories"]}
+        self.assertEqual(categories["audio_sound_candidates"], 3)
+        self.assertEqual(categories["video_container_and_packetization"], 9)
+        self.assertEqual(sum(categories.values()), 33)
+
 
 if __name__ == "__main__":
     unittest.main()

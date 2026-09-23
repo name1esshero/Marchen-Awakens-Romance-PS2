@@ -18,12 +18,14 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 try:
+    from tools import movies as movies_tool
     from tools.at3 import parse as parse_at3, rebuild as rebuild_at3
     from tools.mpeg_ps import parse as parse_mpeg_ps, rebuild as rebuild_mpeg_ps
     from tools.yobj import parse as parse_yobj, rebuild as rebuild_yobj
     from tools.yobj_geometry import export_geometry as export_yobj_geometry
     from tools.yobj_geometry import rebuild_geometry as rebuild_yobj_geometry
 except ModuleNotFoundError:  # Direct execution places tools/ on sys.path.
+    import movies as movies_tool
     from at3 import parse as parse_at3, rebuild as rebuild_at3
     from mpeg_ps import parse as parse_mpeg_ps, rebuild as rebuild_mpeg_ps
     from yobj import parse as parse_yobj, rebuild as rebuild_yobj
@@ -119,13 +121,28 @@ def _load_layout_partition(layout_path: Path, expected_image_bytes: int) -> dict
 
 
 def _load_inputs(workspace: Path, catalog_path: Path, graphics_path: Path,
-                 disc_path: Path, roundtrip_path: Path):
+                 disc_path: Path, roundtrip_path: Path,
+                 movies_path: Path = Path("movies")):
     catalog = _read_json(catalog_path)
     graphics = _read_json(graphics_path)
     disc = _read_json(disc_path)
     roundtrip = _read_json(roundtrip_path)
     root_layout = workspace / "layout.json"
     disc["_layout_partition"] = _load_layout_partition(root_layout, disc["image_bytes"])
+
+    # The editable video numerator is tied to immutable Japanese elementary
+    # stream exports and a profile-checked override audit, not to whole movie
+    # containers or to filenames alone.
+    movie_audit = movies_tool.audit(workspace, movies_path)
+    movie_entries = {
+        entry["logical_path"]: entry for entry in movie_audit["_audited_entries"]
+    }
+    catalog_movie_paths = {
+        leaf["name"] for leaf in catalog
+        if leaf.get("source") and "MOVIE.AFS;1!/" in leaf["name"]
+    }
+    if catalog_movie_paths != set(movie_entries):
+        raise ValueError("movie export index does not cover the direct MOVIE.AFS catalog")
 
     # Prepared metadata records exact BPE hashes for the three unparsed YMA
     # payloads, but older catalogs omitted their decoded lengths.
@@ -139,6 +156,12 @@ def _load_inputs(workspace: Path, catalog_path: Path, graphics_path: Path,
         "packet_count": 0,
         "packet_counts_by_stream_id": {},
         "terminal_ff_bytes": 0,
+        "profile_checked_video_reinsertion_path_count": 0,
+        "editable_MPEG2_video_ES_source_bytes": 0,
+        "preserved_noneditable_ADX_ES_source_bytes": 0,
+        "container_and_packetization_source_bytes": 0,
+        "english_override_count": movie_audit["english_override_count"],
+        "english_overrides": movie_audit["english_overrides"],
         "failures": [],
     }
     for leaf in catalog:
@@ -177,6 +200,12 @@ def _load_inputs(workspace: Path, catalog_path: Path, graphics_path: Path,
                 leaf["_yobj_structural_bytes"] = 0
         if leaf.get("source") and "MOVIE.AFS;1!/" in leaf["name"]:
             raw = (workspace / leaf["source"]).read_bytes()
+            movie_entry = movie_entries.get(leaf["name"])
+            if movie_entry is None:
+                raise ValueError(f"movie has no audited editable stream entry: {leaf['name']}")
+            if (len(raw) != movie_entry["source_bytes"] or
+                    hashlib.sha256(raw).hexdigest() != movie_entry["source_sha256"]):
+                raise ValueError(f"movie sidecar differs from movie export index: {leaf['name']}")
             mpeg_stats["file_count"] += 1
             mpeg_stats["source_bytes"] += len(raw)
             leaf["_mpeg_program_stream"] = raw.startswith(b"\0\0\1\xba")
@@ -189,6 +218,20 @@ def _load_inputs(workspace: Path, catalog_path: Path, graphics_path: Path,
                 mpeg_stats["parse_failure_count"] += 1
                 mpeg_stats["failures"].append({"name": leaf["name"], "reason": str(exc)})
             else:
+                if parsed_mpeg["sha256"] != movie_entry["source_sha256"]:
+                    raise ValueError(f"parsed movie hash differs from audited source: {leaf['name']}")
+                video_bytes = movie_entry["video_bytes"]
+                audio_bytes = movie_entry["audio_bytes"]
+                if video_bytes + audio_bytes > len(raw):
+                    raise ValueError(f"extracted movie streams exceed source extent: {leaf['name']}")
+                leaf["_editable_movie_video_bytes"] = video_bytes
+                leaf["_movie_audio_source_bytes"] = audio_bytes
+                mpeg_stats["profile_checked_video_reinsertion_path_count"] += 1
+                mpeg_stats["editable_MPEG2_video_ES_source_bytes"] += video_bytes
+                mpeg_stats["preserved_noneditable_ADX_ES_source_bytes"] += audio_bytes
+                mpeg_stats["container_and_packetization_source_bytes"] += (
+                    len(raw) - video_bytes - audio_bytes
+                )
                 leaf["_mpeg_program_stream"] = True
                 leaf["_mpeg_ps_structural_bytes"] = parsed_mpeg["structural_bytes"]
                 leaf["_mpeg_ps_packet_count"] = parsed_mpeg["packet_count"]
@@ -203,11 +246,22 @@ def _load_inputs(workspace: Path, catalog_path: Path, graphics_path: Path,
     if mpeg_stats["parse_successful_count"] != mpeg_stats["exact_noop_roundtrip_count"]:
         raise ValueError("MPEG program-stream no-op round-trip audit failed")
     mpeg_stats["note"] = (
-        "Direct MOVIE.AFS resources are parsed as the observed sectorized MPEG-1 "
-        "program-stream variant. Pack/PES extents and the 0xff terminal sector "
-        "are validated and rebuild exactly; PES payloads and codec semantics "
-        "remain opaque."
+        "Direct MOVIE.AFS resources use the observed sectorized CRI SofDec "
+        "MPEG-2 video plus CRI ADX audio profile. Pack/PES extents and original "
+        "metadata sectors rebuild with exact elementary streams. Only extracted "
+        "MPEG-2 video source bytes count as semantically editable; ADX audio and "
+        "container/packetization bytes remain preserved but not editable."
     )
+    if mpeg_stats["file_count"] != movie_audit["movie_count"]:
+        raise ValueError("movie export index count disagrees with direct stream corpus")
+    if mpeg_stats["source_bytes"] != movie_audit["source_bytes"]:
+        raise ValueError("movie export index byte total disagrees with direct stream corpus")
+    if mpeg_stats["editable_MPEG2_video_ES_source_bytes"] != movie_audit[
+            "video_elementary_stream_bytes"]:
+        raise ValueError("movie video source spans disagree with the audited movie exports")
+    if mpeg_stats["preserved_noneditable_ADX_ES_source_bytes"] != movie_audit[
+            "audio_elementary_stream_bytes"]:
+        raise ValueError("movie ADX source spans disagree with the audited movie exports")
     graphics["_mpeg_ps_resource_corpus"] = mpeg_stats
 
     manifest_paths = {entry["bundle_manifest"] for entry in graphics.get("entries", [])
@@ -653,6 +707,9 @@ def build_census(catalog, graphics_index, disc, roundtrip):
             )
         elif leaf.get("_mpeg_ps_structural_bytes"):
             row["structural_bytes"] = leaf["_mpeg_ps_structural_bytes"]
+            row["semantic_editable_bytes"] = leaf.get(
+                "_editable_movie_video_bytes", 0
+            )
         expanded_rows.append(row)
 
     expanded_payload_bytes = sum(row["size"] for row in expanded_rows)
@@ -677,7 +734,17 @@ def build_census(catalog, graphics_index, disc, roundtrip):
     )
     if row_model_geometry_bytes != editable_model_geometry_bytes:
         raise ValueError("editable YOBJ geometry spans disagree with the audited model corpus")
-    expected_editable_bytes = editable_graphics + text_bytes + message_bytes + editable_model_geometry_bytes
+    editable_movie_video_bytes = sum(
+        leaf.get("_editable_movie_video_bytes", 0) for leaf in leaves
+    )
+    row_movie_video_bytes = sum(
+        row["semantic_editable_bytes"] for row in expanded_rows
+        if row.get("leaf", {}).get("_editable_movie_video_bytes")
+    )
+    if row_movie_video_bytes != editable_movie_video_bytes:
+        raise ValueError("editable movie video spans disagree with the audited movie corpus")
+    expected_editable_bytes = (editable_graphics + text_bytes + message_bytes +
+                               editable_model_geometry_bytes + editable_movie_video_bytes)
     if semantically_editable_bytes != expected_editable_bytes:
         raise ValueError("editable source spans do not match indexed texture/text sources")
     remaining_bytes = expanded_payload_bytes - semantically_editable_bytes
@@ -727,14 +794,35 @@ def build_census(catalog, graphics_index, disc, roundtrip):
     remainder_totals = Counter()
     remainder_counts = Counter()
     remainder_basis = {}
+    def add_remainder(name: str, basis: str, byte_count: int):
+        if byte_count <= 0:
+            return
+        remainder_totals[name] += byte_count
+        remainder_counts[name] += 1
+        remainder_basis[name] = basis
+
     for row in expanded_rows:
         remaining_row_bytes = row["size"] - row["semantic_editable_bytes"]
         if remaining_row_bytes == 0:
             continue
+        leaf = row.get("leaf", {})
+        if leaf.get("_movie_audio_source_bytes"):
+            audio_bytes = leaf["_movie_audio_source_bytes"]
+            if audio_bytes > remaining_row_bytes:
+                raise ValueError(f"ADX remainder exceeds movie noneditable bytes: {row['name']}")
+            add_remainder(
+                "audio_sound_candidates",
+                "Verified CRI ADX elementary stream; source is preserved but has no authored audio override path.",
+                audio_bytes,
+            )
+            add_remainder(
+                "video_container_and_packetization",
+                "Remaining MOVIE.AFS SofDec sectors, CRI metadata, PES framing, and padding after editable MPEG-2 video and preserved ADX stream extraction.",
+                remaining_row_bytes - audio_bytes,
+            )
+            continue
         category_name, basis = _residual_category(row)
-        remainder_totals[category_name] += remaining_row_bytes
-        remainder_counts[category_name] += 1
-        remainder_basis[category_name] = basis
+        add_remainder(category_name, basis, remaining_row_bytes)
     if sum(remainder_totals.values()) != remaining_bytes:
         raise ValueError("exclusive remaining-payload categories do not sum to Y minus B")
     remaining_categories = [
@@ -816,7 +904,7 @@ def build_census(catalog, graphics_index, disc, roundtrip):
 
     zero_span_bytes = layout["all_zero_named_member_bytes"] + layout["all_zero_gap_bytes"]
     return {
-        "schema_version": 7,
+        "schema_version": 8,
         "evidence_date": dt.date.today().isoformat(),
         "reference_sha256": reference_hash,
         "scope": "Pinned physical image partition plus a de-duplicated expanded logical content inventory; recovery levels have separate definitions and evidence.",
@@ -887,7 +975,7 @@ def build_census(catalog, graphics_index, disc, roundtrip):
                         "direct_YOBJ_YMP_validated_envelope_bytes": direct_yobj_file_bytes,
                         "direct_MPEG_PS_validated_packet_and_sector_bytes": direct_mpeg_ps_file_bytes,
                     },
-                    "meaning": "Bytes assigned to complete parser-validated records or bounded child extents, de-duplicated across nested TXCs. The 43 RTX3 records that fail the complete length contract are excluded. Direct AT3 preambles and node envelopes, YOBJ/YMP envelopes, and sectorized MPEG pack/PES framing are structurally validated but their property, model and media payload semantics remain opaque.",
+                    "meaning": "Bytes assigned to complete parser-validated records or bounded child extents, de-duplicated across nested TXCs. The 43 RTX3 records that fail the complete length contract are excluded. Direct AT3 preambles and node envelopes, YOBJ/YMP envelopes, and sectorized CRI SofDec MPEG pack/PES framing are structurally validated; media payload semantics are reported separately.",
                 },
                 "losslessly_rebuildable": {
                     "bytes_A": expanded_payload_bytes,
@@ -905,6 +993,7 @@ def build_census(catalog, graphics_index, disc, roundtrip):
                         "reversible_text_companion_source_bytes": text_bytes,
                         "structured_message_catalog_source_bytes": message_bytes,
                         "editable_YOBJ_position_and_normal_source_bytes": editable_model_geometry_bytes,
+                        "editable_MPEG2_video_elementary_stream_source_bytes": editable_movie_video_bytes,
                     },
                     "component_percentages_of_Y": {
                         "supported_editable_TGA_texture_source_bytes": _percent(
@@ -919,8 +1008,11 @@ def build_census(catalog, graphics_index, disc, roundtrip):
                         "editable_YOBJ_position_and_normal_source_bytes": _percent(
                             editable_model_geometry_bytes, expanded_payload_bytes
                         ),
+                        "editable_MPEG2_video_elementary_stream_source_bytes": _percent(
+                            editable_movie_video_bytes, expanded_payload_bytes
+                        ),
                     },
-                    "meaning": "A source representation has an evidence-backed editable representation and insertion path. This measures editability, not the fraction already translated.",
+                    "meaning": "A source representation has an evidence-backed editable representation and insertion path. For partially editable resources only validated source fields count: YOBJ XYZ spans and extracted MPEG-2 video elementary-stream bytes. Movie audio and container bytes remain outside B. This measures editability, not the fraction already translated.",
                 },
                 "runtime_validated_editable": {
                     "bytes_C": 0,
@@ -960,7 +1052,7 @@ def build_census(catalog, graphics_index, disc, roundtrip):
             "Information-bearing means a named terminal member extent that is not wholly zero. Zero-valued bytes inside a nonzero member are retained in its full extent.",
             "Expanded logical payload is a normalized content inventory, not a second physical disc size; it replaces compressed BPE wrappers with decoded child payloads and excludes bundle control/gap bytes.",
             "The structural numerator counts only the explicit parser-backed extents listed. Records counted in Z can still contain semantically opaque fields or payloads. Container hierarchy addressing is reported separately and must not be mistaken for semantic understanding.",
-            "MPEG program-stream packet framing is structural evidence only; a frame/sample decode smoke test does not provide an editable or reinsertable media representation.",
+            "The video B numerator counts only extracted MPEG-2 video elementary-stream bytes covered by an audited profile-compatible override and source-preserving remux path. ADX audio and SofDec container/packetization bytes remain noneditable.",
             "A byte-identical unchanged rebuild proves source preservation. It does not prove relocation correctness for every edit or runtime correctness.",
             "Candidate remainder classes rely on signatures, member types, extensions, or directory names as documented; unparsed member bodies are not claimed to be semantically recovered.",
             "Generated TGAs and YOBJ geometry JSON are editable representations; their output sizes are not counted as original source bytes. YOBJ contributes only validated XYZ position/normal float spans, not opaque model bytes.",
@@ -1021,6 +1113,15 @@ def format_census_summary(report: dict) -> str:
         percent = editable["component_percentages_of_Y"][name]
         lines.append(f"  {label}: {source_bytes:,} bytes ({percent:.4f}%)")
 
+    video = report.get("video_resource_corpus", {})
+    if video.get("file_count"):
+        lines.append(
+            "Movie source split: "
+            f"{video.get('editable_MPEG2_video_ES_source_bytes', 0):,} editable MPEG-2 video ES bytes; "
+            f"{video.get('preserved_noneditable_ADX_ES_source_bytes', 0):,} preserved, noneditable ADX bytes; "
+            f"{video.get('container_and_packetization_source_bytes', 0):,} container/packetization bytes"
+        )
+
     classified_only = logical["classified_but_not_semantically_editable"]
     remaining = logical["remaining_after_semantic_editability"]
     opaque = logical["opaque_after_structural_classification"]
@@ -1058,10 +1159,12 @@ def main():
     parser.add_argument("--graphics-index", type=Path, default=Path("graphics/index.json"))
     parser.add_argument("--disc-report", type=Path, default=Path("reports/disc.json"))
     parser.add_argument("--roundtrip", type=Path, default=Path("reports/assets-roundtrip-prepared.json"))
+    parser.add_argument("--movies", type=Path, default=Path("movies"),
+                        help="movie workspace containing index.json and immutable *_jp streams")
     parser.add_argument("--output", type=Path, default=Path("reports/asset_recovery_census.json"))
     args = parser.parse_args()
     inputs = _load_inputs(args.workspace, args.catalog, args.graphics_index,
-                          args.disc_report, args.roundtrip)
+                          args.disc_report, args.roundtrip, args.movies)
     report = build_census(*inputs)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n",

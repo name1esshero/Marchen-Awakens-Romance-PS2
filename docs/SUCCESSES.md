@@ -518,7 +518,7 @@ References: `graphics/title/00039_01566_0002_title_marh_eng.tga`,
 [`TITLE_TEXTURE_RENDERING.md`](../tasks/TITLE_TEXTURE_RENDERING.md),
 `tools/graphics.py`, `tools/rtx3.py`.
 
-## Byte-weight the recovery levels and only count editable source spans
+## Byte-weight recovery levels after editable YOBJ coordinate surfaces
 
 Symptom: one "decompiled percentage" conflates file preservation, parser
 structure, semantic editability and runtime acceptance, while file counts hide
@@ -534,7 +534,7 @@ wrappers with parsed child payloads once; audit source hashes and exact no-op
 rebuilds; then count TXC/text/message spans and only the validated XYZ float
 components from YOBJ geometry. Partition `Y-B` and `Y-Z` independently because
 the former includes structurally known but opaque bytes.
-Verification: `make asset-census` reports `Z/Y=86.8157%`, `A/Y=100%`,
+Verification at this pre-movie milestone: `make asset-census` reported `Z/Y=86.8157%`, `A/Y=100%`,
 `B/Y=20.9454%`, and `C/Y=0%` for this pinned image. B is 273,116,350 of
 1,303,947,016 bytes, including 33,583,536 editable YOBJ coordinate bytes.
 The B components contribute 18.3630% of Y from textures, 0.0052% from
@@ -556,3 +556,39 @@ References: `tools/asset_recovery_census.py`, `tools/yobj_geometry.py`,
 [`YOBJ evidence`](../tasks/YOBJ_MODEL_RECOVERY.md),
 [`asset census report`](../reports/asset_recovery_census.json),
 [asset methodology](TASK_ASSET_WORKSPACE_METHODOLOGY.md).
+
+## Recovered editable video streams and separated them in the byte census
+
+Symptom: all 13 movie streams were structurally parsed, but their 685,111,296
+bytes were counted as noneditable because generic MPEG muxers rejected the
+game's ADX audio.
+Mechanism: extract the MPEG-2 and ADX elementary streams from the observed
+sectorized CRI SofDec profile; use a game-specific mux adapter that retains both
+CRI metadata packets, original ADX bytes and sector-safe picture headers. Export
+Japanese video/audio baselines into flat `movies/` files and accept only
+profile-compatible `_eng.m2v` siblings. Reinsert with the existing relocated
+archive builder.
+Verification: `make movies-audit` checks all 13 immutable source/export hashes
+and reports 615,212,537 MPEG-2 video bytes, 59,642,694 ADX bytes and 10,256,065
+container/packetization bytes. All 13 no-op remuxes recovered exact elementary
+streams; full decoded frame-hash and PCM-byte comparisons matched. An expanded
+movie member relocated through synthetic YFS/AFS tables while preserving its
+ADX stream and both CRI metadata sectors. The normal `make build-mod-disc`
+target also produced a temporary 5,705,777,152-byte mod ISO with an edited test
+clip; reparsing `MOVIE.AFS` recovered the exact edited MPEG-2 stream and original
+ADX. The smoke-test image was discarded. The full `make test` run passed all
+106 tests; the focused census/movie subset covers 14 tests.
+The refreshed census now reports `Z/Y=86.8157%`, `A/Y=100%`,
+`B/Y=68.1261%` (888,328,887/1,303,947,016 bytes), and `C/Y=0%`. Its noneditable
+queue is `Y-B=415,618,129` bytes (31.8739% of Y), led by audio/sound candidates
+(51.9940% of Y-B) and model/geometry candidates (40.4335%). Only editable video
+elementary-stream bytes enter B; ADX and mux/container bytes remain queued.
+Scope: direct movies in this pinned disc image and profile-compatible video
+replacement through the observed SofDec container and full ISO relocation path.
+Limits: no audio editing, translation-quality review, or emulator runtime
+acceptance has been verified.
+References: `tools/sofdec.py`, `tools/movies.py`,
+`tests/test_sofdec_movies.py`, `tools/asset_recovery_census.py`,
+[`movie evidence`](tasks/VIDEO_STREAM_RECOVERY.md),
+[`asset census report`](../reports/asset_recovery_census.json),
+[`asset methodology`](TASK_ASSET_WORKSPACE_METHODOLOGY.md).

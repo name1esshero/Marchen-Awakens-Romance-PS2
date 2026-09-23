@@ -17,6 +17,12 @@ import message_catalog
 import text_catalog
 import bpe
 import ui_bundle
+try:
+    from . import movies as movie_tools
+    from . import sofdec
+except ImportError:  # Support direct execution of sibling tools.
+    import movies as movie_tools
+    import sofdec
 
 CHUNK = 1024 * 1024
 GRAPHICS_STANDALONE_MANIFEST = 'standalone-txc-overrides.json'
@@ -258,7 +264,7 @@ def export(image, dest, hash_file):
 
 def build_node(root, output, relocate=False, translations=None, text_translations=None,
                logical='disc', graphics_overrides=None, workspace_root=None,
-               graphics_state=None):
+               graphics_state=None, movie_state=None):
     if workspace_root is None:
         workspace_root = Path(root).resolve()
     m = json.loads((root / 'layout.json').read_text())
@@ -281,7 +287,7 @@ def build_node(root, output, relocate=False, translations=None, text_translation
                 nested = Path(temp) / str(i)
                 build_node(source, nested, relocate, translations, text_translations,
                            logical_path, graphics_overrides, workspace_root,
-                           graphics_state)
+                           graphics_state, movie_state)
                 source = nested
             if (not p.get('container') and graphics_state is not None and
                     p.get('name', '').lower().endswith('.txc')):
@@ -302,6 +308,24 @@ def build_node(root, output, relocate=False, translations=None, text_translation
                         raise ValueError(f'standalone TXC graphics override hash/size mismatch: {target}')
                     source = override
                     graphics_state['applied'].add(target)
+            if movie_state is not None and logical_path in movie_state['entries']:
+                entry = movie_state['entries'][logical_path]
+                workspace_relative = root.resolve().relative_to(workspace_root.resolve())
+                target = (workspace_relative / p['source']).as_posix()
+                if target != entry['source_path']:
+                    raise ValueError(f'movie index source path disagrees with layout: {logical_path}')
+                original = source.read_bytes()
+                if (len(original) != entry['source_bytes'] or
+                        hashlib.sha256(original).hexdigest() != entry['source_sha256']):
+                    raise ValueError(f'movie source differs from indexed Japanese baseline: {logical_path}')
+                english_video = safe(movie_state['root'], entry['english_video_file'])
+                video_bytes = english_video.read_bytes()
+                if hashlib.sha256(video_bytes).hexdigest() != entry['english_video_sha256']:
+                    raise ValueError(f'English movie override changed during build: {logical_path}')
+                patched = Path(temp) / f'movie-{i}'
+                patched.write_bytes(sofdec.rebuild(original, video_bytes))
+                source = patched
+                movie_state['applied'].add(logical_path)
             if p.get('bpe_source'):
                 original = source.read_bytes()
                 if hashlib.sha256(original).hexdigest() != p.get('bpe_original_sha256'):
@@ -390,7 +414,7 @@ def build_node(root, output, relocate=False, translations=None, text_translation
 
 def build(root, output, relocate=False, translations_path=None,
           text_translations_paths=None, graphics_overrides=None,
-          replace_existing=False):
+          replace_existing=False, movie_overrides=None):
     output = Path(output)
     if output.is_symlink() or output.resolve().is_relative_to(root.resolve()):
         raise ValueError('output must be outside the source workspace and not a symlink')
@@ -413,10 +437,12 @@ def build(root, output, relocate=False, translations_path=None,
                 catalogs[catalog['resource']] = catalog
             text_translations = {'catalogs': catalogs, 'applied': set()}
         graphics_state = graphics_override_state(graphics_overrides)
+        movie_state = (movie_tools.override_state(movie_overrides)
+                       if movie_overrides is not None else None)
         build_node(root, Path(tmp), relocate, translations, text_translations,
                    graphics_overrides=graphics_overrides,
                    workspace_root=Path(root).resolve(),
-                   graphics_state=graphics_state)
+                   graphics_state=graphics_state, movie_state=movie_state)
         if translations is not None and translations['applied'] != 1:
             raise ValueError('translation catalogue was not applied to exactly one message table')
         if text_translations is not None and text_translations['applied'] != set(text_translations['catalogs']):
@@ -426,6 +452,10 @@ def build(root, output, relocate=False, translations_path=None,
                 graphics_state['applied'] != set(graphics_state['entries'])):
             missing = sorted(set(graphics_state['entries']) - graphics_state['applied'])
             raise ValueError(f'standalone TXC graphics overrides were not applied: {missing[:3]}')
+        if (movie_state is not None and
+                movie_state['applied'] != set(movie_state['entries'])):
+            missing = sorted(set(movie_state['entries']) - movie_state['applied'])
+            raise ValueError(f'English movie overrides were not applied: {missing[:3]}')
         os.replace(tmp, output)
     finally:
         if os.path.exists(tmp):
@@ -555,6 +585,8 @@ def main():
                    help='apply a validated CP932 TSV catalogue; may be repeated')
     b.add_argument('--graphics-overrides', type=Path,
                    help='apply generated RTX3 replacements without editing extracted sidecars')
+    b.add_argument('--movie-overrides', type=Path,
+                   help='apply indexed *_eng.m2v overrides while preserving original movie audio and CRI metadata')
     b.add_argument('--replace-existing', action='store_true',
                    help='atomically replace an existing regular output after a successful build')
     args = p.parse_args()
@@ -564,7 +596,8 @@ def main():
         prepare(args.workspace, args.report)
     else:
         build(args.workspace, args.output, args.relocate, args.translations,
-              args.text_translations, args.graphics_overrides, args.replace_existing)
+              args.text_translations, args.graphics_overrides, args.replace_existing,
+              args.movie_overrides)
 
 
 if __name__ == '__main__':

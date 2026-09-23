@@ -27,19 +27,25 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   covers 100% of nonzero physical terminal members. Parser-backed structural
   coverage is Z/Y = 1,132,030,822/1,303,947,016 (86.8157%); unchanged-input
   no-op rebuildability is A/Y = 100%; semantic editability is
-  B/Y = 273,116,350/1,303,947,016 (20.9454%); runtime-validated editability is
+  B/Y = 888,328,887/1,303,947,016 (68.1261%); runtime-validated editability is
   C/Y = 0%. B comprises 239,444,320 texture source bytes, 88,494 text/message
-  bytes, and 33,583,536 editable YOBJ position/normal XYZ bytes. The non-editable
-  queue Y-B is 1,030,830,666 bytes (79.0546% of Y), including 858,914,472
-  structurally classified but not semantically editable bytes (Z-B). Strictly
+  bytes, 33,583,536 editable YOBJ position/normal XYZ bytes, and 615,212,537
+  MPEG-2 video elementary-stream bytes with a checked edit/reinsertion path. The
+  non-editable queue Y-B is 415,618,129 bytes (31.8739% of Y), including
+  243,701,935 structurally classified but not semantically editable bytes (Z-B). Strictly
   unclassified payload Y-Z is 171,916,194 bytes (13.1843%
   of Y), comprising audio/sound candidates 91.0058%, executables/modules
   2.3860%, animation/motion 2.1708%, model/geometry candidates 2.0591%, and
-  other classes in the report. The full Y-B queue is largest in video/cinematics
-  (66.4621%), model/geometry candidates (16.3023%), and audio/sound candidates
-  (15.1774%). The census validates packet extents in all 13 movie streams
-  (685,111,296 bytes); this adds structural coverage, not editable video or
-  runtime evidence. A validated AT3 envelope parser covers 723 direct
+  other classes in the report. The full Y-B queue is largest in audio/sound
+  candidates (51.9940%), model/geometry candidates (40.4335%), animation/motion
+  (3.0201%), and movie container/packetization bytes (2.4677%). All 13 movies
+  (685,111,296 bytes) export to editable MPEG-2 video and reinsert while
+  preserving ADX and CRI metadata; 59,642,694 audio bytes and 10,256,065
+  container/packetization bytes remain noneditable. Exact decoded video-frame
+  and PCM-audio comparisons passed for all no-op remuxes. This is not emulator
+  runtime evidence. A disposable full mod-ISO build with a test clip reparsed
+  the changed movie and preserved its ADX audio; the test image was discarded.
+  A validated AT3 envelope parser covers 723 direct
   and 1,605 nested resources (26,798 named nodes), all of which rebuild exactly;
   internal animation fields remain opaque. A YOBJ/POF0 envelope parser covers
   899 direct YMPs and 14 nested UI resources, all with exact no-op rebuilds and

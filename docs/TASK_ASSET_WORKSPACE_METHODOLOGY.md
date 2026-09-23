@@ -250,11 +250,11 @@ structural coverage is **Z/Y = 1,132,030,822 / 1,303,947,016 = 86.8157%**.
 This includes complete RTX3 parses, nontexture members bounded by parsed UI
 bundle tables, reversible text/message sources, directly parsed AT3 reference
 tables and node envelopes, direct YOBJ/YMP envelopes, and all 685,111,296 bytes
-of validated sectorized MPEG program-stream packet/sector extents. Structural
-coverage does not mean the bytes inside those records are semantically
-understood: video/audio samples, most model fields and animation properties
-still contain opaque fields. The 43 PSMCT32 RTX3 records fail the complete declared-
-length check and are excluded from Z even though their headers identify
+of validated sectorized CRI SofDec packet/sector extents. Structural coverage
+does not mean every field inside those records is semantically understood:
+movie audio, most model fields and animation properties remain opaque. The 43
+PSMCT32 RTX3 records fail the complete declared-length check and are excluded
+from Z even though their headers identify
 candidate dimensions and storage mode. The graphics index records strict parse
 success separately from image-export support.
 
@@ -262,15 +262,17 @@ Unchanged-input no-op rebuild coverage is **A/Y = 100%**, backed by an
 authenticated byte-identical full-disc rebuild and exact parsed-bundle no-op
 reassembly. A does not establish that arbitrary edited data, growth, relocation,
 or runtime behavior is correct. Semantic editability is **B/Y =
-273,116,350 / 1,303,947,016 = 20.9454%**: 239,444,320 editable texture
-source bytes, 88,494 reversible text/message bytes, and 33,583,536 YOBJ
-position/normal XYZ bytes. Only the six XYZ float components per validated
-vertex count for YOBJ; opaque model bytes are excluded. Runtime-validated edited
-coverage is **C/Y = 0%**. These levels are separate measures, not a combined
-"decompiled" percentage. The independently rounded B components are 18.3630%
-textures, 0.0052% reversible text, 0.0016% messages, and 2.5755% YOBJ
-coordinates; their displayed sum can differ from total B/Y by 0.0001 percentage
-points due to rounding.
+888,328,887 / 1,303,947,016 = 68.1261%**. It counts 239,444,320 editable
+texture source bytes, 88,494 reversible text/message bytes, 33,583,536 YOBJ
+position/normal XYZ bytes, and 615,212,537 extracted MPEG-2 video elementary-
+stream bytes with an audited editing and reinsertion path. For YOBJ, only the
+six XYZ float components per validated vertex count; for movies, ADX audio, CRI
+metadata, PES framing and sector overhead remain outside B. Runtime-validated
+edited coverage is **C/Y = 0%**. These levels are separate measures, not a
+combined "decompiled" percentage. The independently rounded B components are
+18.3630% textures, 0.0068% text/message sources, 2.5755% YOBJ coordinates, and
+47.1808% MPEG-2 video; component percentages may differ from B/Y by 0.0001
+percentage points due to rounding.
 
 The AT3 envelope audit covers 723 direct archive leaves (1,840,708 bytes) and
 1,605 nested UI-bundle resources (6,979,660 bytes). All 2,328 resources parse and
@@ -302,42 +304,48 @@ runtime relocation remain unresolved. See
 [`YOBJ model evidence`](../tasks/YOBJ_MODEL_RECOVERY.md) and the
 `model_resource_corpus` census section.
 
-The direct movie-stream corpus is 13 files / 685,111,296 bytes. All 13 streams
-pass the observed sectorized MPEG-1 pack/PES extent parser and exact no-op
-reassembly; this moves their packet and sector bytes into Z, but their video and
-ADX payloads remain semantically opaque and outside B. A temporary FFmpeg probe
-decoded a frame and an audio sample per file. Generic MPEG/VCD/VOB muxers
-rejected the ADX input, so there is not yet an edited/reinsertable movie path.
+The direct movie-stream corpus is 13 files / 685,111,296 bytes. The sectorized
+CRI SofDec parser validates their packet extents, metadata, MPEG-2 video profile
+and ADX stream signatures. A game-specific writer preserves both CRI metadata
+sectors and original ADX audio while accepting profile-matched MPEG-2 video
+overrides. All 13 source video streams export unchanged to `.m2v`; no-op remuxes
+recover the exact video and audio elementary streams, and decoded frame hashes
+and PCM audio bytes match the originals across all 13. The 615,212,537 video
+elementary-stream bytes count toward B. The other 59,642,694 ADX bytes and
+10,256,065 container/packetization bytes remain in `Y-B`. Synthetic YFS/AFS
+tests and a disposable full mod-ISO build prove that changed video grows and
+relocates while retaining audio and CRI tags. No edited movie has emulator
+runtime acceptance.
 See [movie stream evidence](../tasks/VIDEO_STREAM_RECOVERY.md).
 
 Semantic editability comprises 239,444,320 editable texture bytes, 88,494
-reversible text/message source bytes, and 33,583,536 editable YOBJ coordinate
-bytes. It measures available editable representations, not the share already
-translated.
+reversible text/message source bytes, 33,583,536 editable YOBJ coordinate
+bytes, and 615,212,537 editable MPEG-2 video bytes. It measures available
+editable representations, not the share already translated.
 
 Keep two disjoint work-queue views. The complete non-editable remainder **Y-B**
-is 1,030,830,666 bytes (79.0546% of Y); it includes structurally bounded members
-that do not yet have an editable representation. Of that, **Z-B = 858,914,472**
-bytes (65.8704% of Y) are structurally classified but not semantically editable.
+is 415,618,129 bytes (31.8739% of Y); it includes structurally bounded members
+that do not yet have an editable representation. Of that, **Z-B = 243,701,935**
+bytes (18.6896% of Y) are structurally classified but not semantically editable.
 The strictly structurally unclassified remainder **Y-Z = 171,916,194** bytes
 (13.1843% of Y) is the byte base for the unclassified-inventory breakdown
 below. These bases answer different questions and must not be substituted for
 one another.
 
-The disjoint `Y - B` remainder is 1,030,830,666 bytes. Its byte-weighted
+The disjoint `Y - B` remainder is 415,618,129 bytes. Its byte-weighted
 inventory is:
 
 | Remaining class | Bytes | Share of `Y - B` |
 | --- | ---: | ---: |
-| Video/cinematics | 685,111,296 | 66.4621% |
-| Model/geometry candidates | 168,048,912 | 16.3023% |
-| Audio/sound candidates | 156,453,642 | 15.1774% |
-| Animation/motion candidates | 12,552,248 | 1.2177% |
-| Executables/modules | 4,101,870 | 0.3979% |
-| Other unclassified | 2,644,996 | 0.2566% |
-| Font assets | 896,928 | 0.0870% |
-| Script/data candidates | 880,126 | 0.0854% |
-| Unresolved graphics (43 short PSMCT32 records) | 140,648 | 0.0136% |
+| Audio/sound candidates, including preserved movie ADX | 216,096,336 | 51.9940% |
+| Model/geometry candidates | 168,048,912 | 40.4335% |
+| Animation/motion candidates | 12,552,248 | 3.0201% |
+| Video container/packetization bytes | 10,256,065 | 2.4677% |
+| Executables/modules | 4,101,870 | 0.9869% |
+| Other unclassified | 2,644,996 | 0.6364% |
+| Font assets | 896,928 | 0.2158% |
+| Script/data candidates | 880,126 | 0.2118% |
+| Unresolved graphics (43 short PSMCT32 records) | 140,648 | 0.0338% |
 
 These classes partition `Y - B`. Their names classify inventory by validated
 signature, bundle member type, filename or path; they do not claim the opaque
@@ -348,10 +356,10 @@ byte shares are: audio/sound candidates 91.0058% (156,453,642 bytes),
 executables/modules 2.3860% (4,101,870), animation/motion candidates 2.1708%
 (3,731,880), model/geometry candidates 2.0591% (3,539,860), other unclassified
 1.2708% (2,184,740), font assets 0.5217% (896,928), script/data candidates
-0.5041% (866,626), and unresolved graphics 0.0818% (140,648). The video files
-leave this strict remainder after packet extents parse successfully; their
-payload codecs remain opaque and they still comprise 66.4621% of the complete
-`Y-B` queue. These are evidence-led inventory labels, not semantic asset
+0.5041% (866,626), and unresolved graphics 0.0818% (140,648). The movie files
+leave this strict remainder after packet extents parse successfully; their ADX
+audio and container bytes remain outside B, while video bytes have an editable
+and reinsertable representation. These are evidence-led inventory labels, not semantic asset
 decodes. `Y-Z` is not a measure of every semantically opaque byte: validated
 MPEG packet extents, YOBJ envelopes and AT3 records can contain uninterpreted
 payloads while still contributing to Z. Use `Y-B` to measure the bytes that
