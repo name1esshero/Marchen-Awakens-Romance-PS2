@@ -2,6 +2,19 @@
 
 Authority: [STANDARDS.md](STANDARDS.md).
 
+## A 16-byte copy does not establish a four-float aggregate
+
+Hypothesis: `CCamera::GetViewRect` returns a four-float rectangle by value.
+The name and 16-byte transfer made this plausible. EE GCC `2.96-ee-001003-1`
+with the existing `-O2` produces the same hidden-destination register roles,
+but 40 bytes of unaligned load/store pairs versus 24 original bytes using
+aligned `ld`/`sd`. Aggregate alignment is a mechanism hypothesis, not a recovered
+declaration. Do not force alignment or choose wider fields to obtain a match.
+Revisit after callers/member writes establish type or alignment, or independent
+compiler evidence changes. This does not disprove aggregate return or the
+compiler family. Original bytes remain preserved; the reproducible candidate
+is excluded from reconstruction. See [exact evidence](tasks/VIEW_RECT_PROBE.md).
+
 ## Host GNU objdump is not a target disassembler
 
 Hypothesis: the installed `objdump` could inspect the MIPS code because `readelf`

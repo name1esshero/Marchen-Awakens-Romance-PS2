@@ -1,7 +1,7 @@
 # Current project status
 
 Updated: 2026-09-22. Authority: [STANDARDS.md](STANDARDS.md).
-Current contributor: Claude Sonnet 5, Contributor. Initial Manager: GPT-6 Astra
+Current contributor: GPT-6, R&D contributor. Initial Manager: GPT-6 Astra
 Light (operator-provided session label). Role/model attribution is per session
 and commit, not a permanent assignment.
 
@@ -37,6 +37,10 @@ and commit, not a permanent assignment.
   unknown. Matching these small accessors is insufficient to promote the
   classes to recovered source. Roughly 1,675 more census-identified linkonce
   sections (including ~733 same-shape trivial ones) remain unrecovered.
+- `GetViewRect` now has a reproducible non-matching four-float aggregate probe:
+  40 candidate bytes versus 24 original bytes, with unaligned versus aligned
+  transfers. Member types/alignment require independent evidence; all original
+  bytes remain preserved. See [the probe](tasks/VIEW_RECT_PROBE.md).
 - No full-disc rebuild, archive round trip, runtime/emulator test or gameplay
   validation has been performed. Module internals and DVP overlay semantics remain open.
 - Independent retail-dump authentication remains unestablished.

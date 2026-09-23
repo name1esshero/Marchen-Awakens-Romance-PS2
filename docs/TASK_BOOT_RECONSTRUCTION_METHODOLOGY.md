@@ -19,6 +19,10 @@ Do not change `config/boot.sha256` or `config/reference.sha256` to accept new ou
    No reference or extraction command may enter this dependency graph.
 3. Use known section boundaries, callers and target ABI evidence for candidates.
    Keep incomplete class layouts in `candidates/`, even when individual methods match.
+   For aggregate copies, distinguish observed transfer width from component type
+   and declared alignment. Keep non-matching experiments in a separate source
+   directory passed to `run_ee_probe.py --sources`; compare an explicit selection
+   without adding it to the boot layout. See [GetViewRect](tasks/VIEW_RECT_PROBE.md).
 4. For the EE probe, run `make setup-ee` once. Download hash and version are pinned
    in `config/ee_compiler.json`. The current `-O2` is an experimental common setting,
    not a recovered original flag. Do not tune flags separately per method.
