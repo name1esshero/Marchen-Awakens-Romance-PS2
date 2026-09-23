@@ -741,6 +741,24 @@ on-screen readability; no ISO or emulator validation was performed.
 References: `graphics/user_interface/00039_00985_00000_title000_eng.tga`,
 [`title000 task evidence`](../tasks/GRAPHIC_TEXT_TITLE000.md), `tools/rtx3.py`.
 
+## Distinguish language-neutral map numbers from Japanese labels
+
+Symptom: exported map textures are potential localization surfaces, but numerals
+and map symbols should not be mistaken for Japanese text.
+Mechanism: review every decoded texture on a transparency checkerboard, enlarge
+small maps with nearest-neighbor scaling, cross-check each image hash and
+dimension against the asset index, and record the bounds of any bright glyphs.
+Successful pathway: classify six maze-pattern textures as non-text and ten
+numbered thumbnails as Arabic numerals 1 through 10; keep both groups' Japanese
+baselines unchanged and do not create unnecessary English overrides.
+Verification: all 16 tracked TGA hashes and dimensions match their index entries;
+the map-category index contains exactly the same 16 files. No Japanese writing
+or words were observed.
+Limits: this is flat-texture evidence only. Number meanings, UV rectangles,
+runtime composition, and on-screen presentation remain unknown.
+References: [`map texture audit`](../tasks/GRAPHIC_TEXT_MAPS.md),
+`graphics/index.json`, `tools/rtx3.py`.
+
 ## Byte-weight recovery levels after editable YOBJ coordinate surfaces
 
 Symptom: one "decompiled percentage" conflates file preservation, parser
