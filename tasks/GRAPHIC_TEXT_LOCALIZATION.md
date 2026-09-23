@@ -49,18 +49,19 @@ literal-identity BPE writer also expands edited `.b` bundles. See
 [`TITLE_TEXTURE_RENDERING.md`](TITLE_TEXTURE_RENDERING.md) for unresolved UV,
 composition and runtime questions.
 
-## Rejected art attempt
+## Rejected atlas edits
 
-An image-generation edit of the `00039_01565_0003_sbttl` title variant was
-rejected: after converting its TGA reference to PNG for tool input, the result
-replaced the composition with an oversized ARM FIGHT DREAM logo and added an
-extra MÄR HEAVEN mark instead of changing only the Japanese subtitle. No
-`_eng.tga` was produced from that result. The Japanese source and current
-localized ISO were unchanged. Revisit this texture only after exact text and
-the rendered atlas role are established.
+Image-generation edits of `00039_01565_0003_sbttl` and
+`00039_01631_0025_windisp` were rejected. The first replaced the title
+composition with an oversized ARM FIGHT DREAM logo and an extra MÄR HEAVEN mark
+instead of changing only the subtitle. The second replaced the team-label
+layout and arrows with oversized MÄR/Chess wordmarks and returned a 1774x887
+image for the 512x256 source. Neither result was imported; source TGAs and the
+current ISO remain unchanged. The rejected outputs and the reason for rejection
+are recorded in [`FAILURES.md`](../docs/FAILURES.md).
 
-The next image candidates are `00039_01565_0000_ttlprts`,
-`00039_01565_0003_sbttl`, the repeated title texture
-`00039_00985_00000_title000`, and the Japanese labels in
-`00039_01631_0025_windisp`. Confirm their displayed regions and wording before
-authoring more siblings; the texture previews alone do not establish UV use.
+Continue with `00039_01565_0000_ttlprts`, `00039_01565_0003_sbttl`, and the
+repeated title texture `00039_00985_00000_title000`. For `windisp`, confirm the
+exact Japanese labels and their displayed regions, then use a controlled
+glyph/layout edit that preserves its arrows, transparency and 512x256 canvas.
+Texture previews alone do not establish UV use.

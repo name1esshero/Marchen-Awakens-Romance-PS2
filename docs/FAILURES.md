@@ -2,21 +2,24 @@
 
 Authority: [STANDARDS.md](STANDARDS.md).
 
-## Image-generation editing did not preserve the title subtitle atlas
+## Image-generation edits did not preserve game UI atlas layouts
 
-Hypothesis: an image-generation edit could replace the Japanese subtitle in
-`00039_01565_0003_sbttl` while preserving its original `ARM FIGHT DREAM`
-wordmark, 512x128 layout and transparent canvas. The editor did not accept the
-TGA source directly, so a PNG view was supplied. Its result instead enlarged
-and replaced the main wordmark and added a second MÄR HEAVEN mark. It was
-visually rejected and no `_eng.tga` was created from it. The source TGA and
-current `mar_eng.iso` were unchanged. The rejected output remains at
-`~/.codex/generated_images/01a0cbce-e093-7d81-89ab-50dbae657afd/exec-42213345-2cd3-4485-b56f-21b55591d51b.png`.
+Hypothesis: an image-generation edit could translate labels while preserving
+their exact source canvas, lettering and alpha. Two attempts contradict that
+for these atlas-like UI images. Editing `00039_01565_0003_sbttl` enlarged and
+replaced its `ARM FIGHT DREAM` wordmark and added a second MÄR HEAVEN mark.
+Editing `00039_01631_0025_windisp` replaced the original team-label layout and
+arrows with oversized MÄR/Chess wordmarks. The second output was 1774x887 rather
+than the source's 512x256. Both results were visually rejected; neither created
+an `_eng.tga`. The editor did not accept TGA directly, so PNG views were used.
+The source TGAs and `mar_eng.iso` were unchanged. Rejected outputs remain at
+`~/.codex/generated_images/01a0cbce-e093-7d81-89ab-50dbae657afd/exec-42213345-2cd3-4485-b56f-21b55591d51b.png` and
+`~/.codex/generated_images/01a0cbce-e093-7d81-89ab-50dbae657afd/exec-f00d37e3-f25e-4abd-99e6-25d8d3d941c2.png`.
 
-Do not use that output as a title override. Establish the exact subtitle text
-and rendered atlas region first; use existing in-game English lettering where
-it fits. This result does not rule out image generation for other graphics.
-See [graphic localization evidence](../tasks/GRAPHIC_TEXT_LOCALIZATION.md).
+Do not use these outputs as game overrides. Preserve the source texture layout
+and use a controlled text/glyph replacement anchored to evidenced regions.
+This does not rule out image generation for freestanding art. See
+[graphic localization evidence](../tasks/GRAPHIC_TEXT_LOCALIZATION.md).
 
 ## A leaf-only editable percentage does not measure the expanded game payload
 
