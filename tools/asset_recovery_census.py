@@ -12,14 +12,15 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import hashlib
 import json
 from collections import Counter, defaultdict
 from pathlib import Path
 
 try:
-    from tools.at3 import parse as parse_at3
+    from tools.at3 import parse as parse_at3, rebuild as rebuild_at3
 except ModuleNotFoundError:  # Direct execution places tools/ on sys.path.
-    from at3 import parse as parse_at3
+    from at3 import parse as parse_at3, rebuild as rebuild_at3
 
 
 def _read_json(path: Path):
@@ -129,9 +130,25 @@ def _load_inputs(workspace: Path, catalog_path: Path, graphics_path: Path,
         if leaf.get("source") and _source_extension(leaf["name"]) == ".at3":
             raw = (workspace / leaf["source"]).read_bytes()
             try:
-                leaf["_at3_reference_table_bytes"] = parse_at3(raw)["reference_table_end"]
+                parsed_at3 = parse_at3(raw)
+                leaf["_at3_reference_table_bytes"] = parsed_at3["reference_table_end"]
+                leaf["_at3_node_record_count"] = (
+                    parsed_at3["node_envelope"]["record_count"]
+                    if parsed_at3["node_envelope"] is not None else 0
+                )
+                envelope = parsed_at3["node_envelope"]
+                leaf["_at3_preamble_bytes"] = (
+                    len(bytes.fromhex(envelope["preamble_hex"])) if envelope is not None else 0
+                )
+                leaf["_at3_node_record_bytes"] = (
+                    sum(node["size"] for node in envelope["nodes"])
+                    if envelope is not None else 0
+                )
             except ValueError:
                 leaf["_at3_reference_table_bytes"] = 0
+                leaf["_at3_node_record_count"] = 0
+                leaf["_at3_preamble_bytes"] = 0
+                leaf["_at3_node_record_bytes"] = 0
         if leaf.get("source") and "MOVIE.AFS;1" in leaf["name"]:
             with (workspace / leaf["source"]).open("rb") as stream:
                 leaf["_mpeg_program_stream"] = stream.read(4) == b"\0\0\1\xba"
@@ -143,6 +160,80 @@ def _load_inputs(workspace: Path, catalog_path: Path, graphics_path: Path,
     graphics["_manifest_entries"] = {
         path: _read_json(workspace / path) for path in sorted(manifest_paths)
     }
+
+    # Audit the same structural envelope and exact no-op rebuild for direct
+    # AT3 leaves and AT3 members nested in parsed UI bundles. Nested members
+    # already count as bounded UI-bundle members in Z and must not be added a
+    # second time to the structural numerator.
+    at3_stats = {
+        "direct_resources": {"file_count": 0, "source_bytes": 0,
+                             "parse_successful_count": 0,
+                             "parse_failure_count": 0,
+                             "parsed_node_envelope_count": 0,
+                             "node_preamble_bytes": 0,
+                             "node_record_bytes": 0,
+                             "node_record_count": 0,
+                             "exact_noop_roundtrip_count": 0},
+        "nested_ui_bundle_resources": {"file_count": 0, "source_bytes": 0,
+                                        "parse_successful_count": 0,
+                                        "parse_failure_count": 0,
+                                        "parsed_node_envelope_count": 0,
+                                        "node_preamble_bytes": 0,
+                                        "node_record_bytes": 0,
+                                        "node_record_count": 0,
+                                        "exact_noop_roundtrip_count": 0},
+    }
+
+    def audit_at3(raw: bytes, stats: dict):
+        stats["file_count"] += 1
+        stats["source_bytes"] += len(raw)
+        try:
+            parsed = parse_at3(raw)
+        except ValueError:
+            stats["parse_failure_count"] += 1
+            return
+        stats["parse_successful_count"] += 1
+        envelope = parsed["node_envelope"]
+        if envelope is not None:
+            stats["parsed_node_envelope_count"] += 1
+            stats["node_preamble_bytes"] += len(bytes.fromhex(envelope["preamble_hex"]))
+            stats["node_record_bytes"] += sum(node["size"] for node in envelope["nodes"])
+            stats["node_record_count"] += envelope["record_count"]
+        if rebuild_at3(parsed) == raw:
+            stats["exact_noop_roundtrip_count"] += 1
+
+    direct_sources = {leaf.get("source") for leaf in catalog
+                      if leaf.get("source") and _source_extension(leaf["name"]) == ".at3"}
+    for source in direct_sources:
+        raw = (workspace / source).read_bytes()
+        audit_at3(raw, at3_stats["direct_resources"])
+
+    for manifest_path, manifest in graphics["_manifest_entries"].items():
+        rel = Path(manifest_path)
+        resources_dir = workspace / rel.parent / (rel.name.removesuffix(".bundle.json") + ".resources")
+        for member in manifest.get("entries", []):
+            if _member_extension(member) != ".at3":
+                continue
+            member_path = resources_dir / member["source"]
+            raw = member_path.read_bytes()
+            if len(raw) != member.get("size"):
+                raise ValueError(f"nested AT3 size disagrees with bundle manifest: {member_path}")
+            expected_hash = member.get("source_sha256")
+            if expected_hash and hashlib.sha256(raw).hexdigest() != expected_hash:
+                raise ValueError(f"nested AT3 hash disagrees with bundle manifest: {member_path}")
+            audit_at3(raw, at3_stats["nested_ui_bundle_resources"])
+
+    for kind, stats in at3_stats.items():
+        if stats["exact_noop_roundtrip_count"] != stats["parse_successful_count"]:
+            raise ValueError(f"AT3 no-op round-trip audit failed for {kind}")
+    at3_stats["note"] = (
+        "Validated node-envelope counts are structural only; 192-byte fixed regions and "
+        "112-byte repeated regions remain opaque. Direct resources may contribute their "
+        "bounded preambles and validated node records to Z, alongside the parsed "
+        "reference tables. Nested UI-bundle resources are already counted as bounded "
+        "child extents and are not double-counted."
+    )
+    graphics["_at3_resource_corpus"] = at3_stats
     return catalog, graphics, disc, roundtrip
 
 
@@ -384,7 +475,9 @@ def build_census(catalog, graphics_index, disc, roundtrip):
             row["structural_bytes"] = leaf["size"]
             row["semantic_editable_bytes"] = leaf["size"]
         elif extension == ".at3":
-            row["structural_bytes"] = leaf.get("_at3_reference_table_bytes", 0)
+            row["structural_bytes"] = (leaf.get("_at3_reference_table_bytes", 0) +
+                                        leaf.get("_at3_preamble_bytes", 0) +
+                                        leaf.get("_at3_node_record_bytes", 0))
         expanded_rows.append(row)
 
     expanded_payload_bytes = sum(row["size"] for row in expanded_rows)
@@ -405,17 +498,26 @@ def build_census(catalog, graphics_index, disc, roundtrip):
     if remaining_bytes < 0:
         raise ValueError("semantic editable byte count exceeds the logical content denominator")
 
-    # Z counts only complete RTX3 parses, validated child-member extents,
-    # reversible text/catalog sources, and directly parsed AT3 references.
-    # The known-short RTX3 files have visible headers but failed their complete
+    # Z counts complete RTX3 parses, validated child-member extents,
+    # reversible text/catalog sources, and directly parsed AT3 regions. The
+    # known-short RTX3 files have visible headers but failed their complete
     # extent contract, so their bodies stay outside Z until the format is proven.
     bundle_nontexture_member_bytes = parsed_bundle_member_bytes - nested_txc_bytes
     direct_at3_table_bytes = sum(leaf.get("_at3_reference_table_bytes", 0) for leaf in leaves
                                  if _source_extension(leaf["name"]) == ".at3")
+    direct_at3_preamble_bytes = sum(
+        leaf.get("_at3_preamble_bytes", 0) for leaf in leaves
+        if _source_extension(leaf["name"]) == ".at3"
+    )
+    direct_at3_node_record_bytes = sum(
+        leaf.get("_at3_node_record_bytes", 0) for leaf in leaves
+        if _source_extension(leaf["name"]) == ".at3"
+    )
     txc_structural_bytes = sum(size for entry, size, key in txc_rows
                                if txc_parse_status[key])
     structurally_classified_bytes = (txc_structural_bytes + bundle_nontexture_member_bytes +
-                                     text_bytes + message_bytes + direct_at3_table_bytes)
+                                     text_bytes + message_bytes + direct_at3_table_bytes +
+                                     direct_at3_preamble_bytes + direct_at3_node_record_bytes)
     row_structural_bytes = sum(row["structural_bytes"] for row in expanded_rows)
     if row_structural_bytes != structurally_classified_bytes:
         raise ValueError("parser-backed structural spans overlap or disagree with their components")
@@ -519,7 +621,7 @@ def build_census(catalog, graphics_index, disc, roundtrip):
 
     zero_span_bytes = layout["all_zero_named_member_bytes"] + layout["all_zero_gap_bytes"]
     return {
-        "schema_version": 3,
+        "schema_version": 4,
         "evidence_date": dt.date.today().isoformat(),
         "reference_sha256": reference_hash,
         "scope": "Pinned physical image partition plus a de-duplicated expanded logical content inventory; recovery levels have separate definitions and evidence.",
@@ -581,9 +683,11 @@ def build_census(catalog, graphics_index, disc, roundtrip):
                         "complete_RTX3_parser_validated_extents": txc_structural_bytes,
                         "parsed_UI_bundle_nontexture_member_extents": bundle_nontexture_member_bytes,
                         "reversible_CP932_text_and_message_source_bytes": text_bytes + message_bytes,
-                        "direct_AT3_header_and_reference_table_bytes": direct_at3_table_bytes,
+                        "direct_AT3_reference_table_bytes": direct_at3_table_bytes,
+                        "direct_AT3_bounded_preamble_bytes": direct_at3_preamble_bytes,
+                        "direct_AT3_validated_node_record_bytes": direct_at3_node_record_bytes,
                     },
-                    "meaning": "Bytes assigned to complete parser-validated records or bounded child extents, de-duplicated across nested TXCs. The 43 RTX3 records that fail the complete length contract are excluded; direct AT3 bytes after the parsed reference table are excluded.",
+                    "meaning": "Bytes assigned to complete parser-validated records or bounded child extents, de-duplicated across nested TXCs. The 43 RTX3 records that fail the complete length contract are excluded. Direct AT3 preambles are bounded between the reference table and first node; node records require every name slot and extent to satisfy the observed corpus invariant. Their internal fields remain opaque.",
                 },
                 "losslessly_rebuildable": {
                     "bytes_A": expanded_payload_bytes,
@@ -632,6 +736,7 @@ def build_census(catalog, graphics_index, disc, roundtrip):
             },
         },
         "texture_corpus": texture_corpus,
+        "animation_resource_corpus": graphics_index.get("_at3_resource_corpus", {}),
         "logical_leaf_extensions": extensions,
         "limits": [
             "All-zero members and gaps are measured by byte value only. Their zero contents do not prove intentional padding, placeholder use, or historical purpose.",

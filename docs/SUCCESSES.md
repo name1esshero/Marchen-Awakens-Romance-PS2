@@ -180,15 +180,49 @@ declared number of 64-byte CP932 name slots, each followed by a four-byte field.
 The trailing field values are retained as raw integers because their purpose is
 not established.
 Pathway: run `python3 tools/at3.py SOURCE.at3`; compare each decoded name stem
-with sibling TXC member names. Keep the remaining animation body opaque until
-its layout and UV semantics are evidenced.
+with sibling TXC member names. The corpus-wide follow-up now recognizes bounded
+node envelopes; keep their internal fields opaque until their semantics are
+evidenced.
 Verification: the title file yields four references, all matching names in the
 sibling TXC bundle manifest; the bounded parser passes valid and malformed
 synthetic cases in `tests.test_at3`.
-Scope: observed title AT resource and matching bundle. The AT animation body,
-actual draw order, and UV interpretation remain unresolved.
+Scope: observed title AT resource and matching bundle. Node records are described
+in the following success; actual draw order and UV interpretation remain
+unresolved.
 References: `tools/at3.py`, `tests/test_at3.py`,
 [`TITLE_TEXTURE_RENDERING.md`](../tasks/TITLE_TEXTURE_RENDERING.md).
+
+## AT3 animation node envelopes can be split and rebuilt without guessing field meanings
+
+Symptom: AT3 resources contain animation data after their texture-reference
+table, and treating the entire tail as one opaque byte range hides stable record
+boundaries needed for later decoding.
+Mechanism: across the observed corpus, each node begins with a `u32` value 64
+and a zero-padded 64-byte CP932 name slot. Consecutive name slots and EOF bound
+records whose remaining extent is always 192 bytes plus zero or more 112-byte
+blocks. The invariant establishes envelope boundaries; it does not name fields
+inside those regions.
+Pathway: use `python3 tools/at3.py INPUT.at3 --output-json EDITABLE.json` to expose
+references, fixed-slot node names, the preserved preamble, and opaque regions.
+After a same-size byte/name edit, rebuild with
+`python3 tools/at3.py --build-json EDITABLE.json --output OUTPUT.at3`. The writer
+preserves unknown bytes and refuses reference-count or node-size changes.
+Verification: `make asset-census` audits 723 direct archive leaves and 1,605
+nested UI-bundle resources: all 2,328 parse, all 2,328 rebuild byte-identically,
+and all 26,798 node envelopes satisfy the size invariant. Synthetic tests cover
+name-slot editing, exact round trips, unsupported extents, and rejected growth.
+Scope: the pinned image's current prepared asset tree. Direct AT3 reference
+tables (68,144 bytes), bounded preambles (3,328 bytes), and node records
+(1,769,236 bytes) add 1,772,564 bytes to structural coverage Z; nested AT3
+members were already counted once as bounded UI-bundle extents.
+Limits: the 192-byte regions and 112-byte blocks remain raw, fixed-size hex
+editing is not semantic recovery, texture UVs and layer order are unproven, and
+no edited AT3 has been runtime-tested. Do not grow records until reference and
+relocation semantics are recovered.
+References: `tools/at3.py`, `tools/asset_recovery_census.py`,
+`tests/test_at3.py`, `tests/test_asset_recovery_census.py`,
+[`asset census`](../reports/asset_recovery_census.json),
+[`title evidence`](../tasks/TITLE_TEXTURE_RENDERING.md).
 
 ## UTF-8 translation edits can grow through CP932 and ISO relocation
 
@@ -387,13 +421,15 @@ measurements only; do not infer intentional padding from zero contents.
 
 Verification: `make asset-census` partitions the 4,587,749,376-byte image
 exactly and reports expanded logical payload Y=1,303,947,016. The distinct
-levels are Z/Y=19.0239% parser-backed structure, A/Y=100% unchanged-source
+levels are Z/Y=19.1598% parser-backed structure, A/Y=100% unchanged-source
 rebuildability, B/Y=18.3698% semantic editability, and C/Y=0% runtime-validated
 editability. The 43 short PSMCT32 records (140,648 bytes) are excluded from Z
 because strict RTX3 parsing rejects their complete lengths; they remain in the
 unresolved graphics queue. TXC-only editability is 239,444,320/239,584,968 bytes
-(99.9413%). `Y-B` is 1,064,414,202 bytes; the bridge `Z-B` is 8,528,840 bytes;
-the strictly unclassified `Y-Z` remainder is 1,055,885,362 bytes. Separate
+(99.9413%). The AT3 audit covers 2,328 direct/nested resources and validates
+26,798 node envelopes with exact no-op rebuilds. `Y-B` is 1,064,414,202 bytes;
+the bridge `Z-B` is 10,301,404 bytes; the strictly unclassified `Y-Z` remainder
+is 1,054,112,798 bytes. Separate
 byte-weighted category reports balance each denominator. Tests verify physical
 partitioning, nested accounting, parser-validity gating, distinct level
 numerators, `Y-B` and `Y-Z` category totals, and reference binding.

@@ -24,15 +24,17 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   placeholder use, or historical purpose.
   Expanded logical information payload Y is 1,303,947,016 bytes (28.4224% of
   physical image size) after BPE bundle expansion and de-duplication.
-  Parser-backed structural coverage is Z/Y = 248,061,654/1,303,947,016
-  (19.0239%); unchanged-source rebuildability is A/Y = 100%; semantic
+  Parser-backed structural coverage is Z/Y = 249,834,218/1,303,947,016
+  (19.1598%); unchanged-source rebuildability is A/Y = 100%; semantic
   editability is B/Y = 239,532,814/1,303,947,016 (18.3698%); runtime-validated
   editability is C/Y = 0%. The non-editable queue Y-B is 1,064,414,202 bytes
-  (81.6302% of Y), including 8,528,840 bytes that are structurally classified
-  but not yet editable (Z-B). Strictly unclassified payload Y-Z is 1,055,885,362
-  bytes (80.9761% of Y); of that, video is 64.8850%, model/geometry candidates
-  19.0007%, audio/sound candidates 14.8173%, animation/motion 0.5213%, and
-  unresolved graphics 0.0133%. The report gives the full disjoint breakdown
+  (81.6302% of Y), including 10,301,404 bytes that are structurally classified
+  but not yet editable (Z-B). Strictly unclassified payload Y-Z is 1,054,112,798
+  bytes (80.8402% of Y); of that, video is 64.9941%, model/geometry candidates
+  19.0326%, audio/sound candidates 14.8422%, animation/motion 0.3540%, and
+  unresolved graphics 0.0133%. A validated AT3 envelope parser covers 723 direct
+  and 1,605 nested resources (26,798 named nodes), all of which rebuild exactly;
+  internal animation fields remain opaque. The report gives the full disjoint breakdown
   and evidence basis. These are separate preservation, structure, editability,
   and runtime measures, not one decompilation or translation percentage. The 43
   incomplete RTX3 records are excluded from Z because their complete length
@@ -136,7 +138,9 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   English-image tests now cover nested UI-table/BPE/PAC and standalone TXC/PAC
   reinsertion while preserving source files. AT/UV composition and runtime display
   remain unresolved. The AT inspector confirms all four title animation texture
-  name references match TXC members.
+  name references match TXC members. Node envelopes now parse across all 2,328
+  direct and nested AT3 resources and rebuild byte-exactly; property fields and UV
+  semantics remain unresolved.
   See [title rendering evidence](../tasks/TITLE_TEXTURE_RENDERING.md). All 229 messages have draft translations; names,
   mechanics, and display constraints need review. DMY files, module internals and DVP
   overlay semantics remain open.

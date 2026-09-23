@@ -40,8 +40,11 @@ The `title_00.at3` source is 4,548 bytes with SHA-256
 observed header fields are `3`, reference count `4`, and name-slot width `64`;
 the reference table ends at `0x120`. The post-table region is 4,260 bytes with
 SHA-256 `518d61e203eb5e87c18acbff6ca87cd81742d0655ecad8977872462c419af71f`.
-These hashes pin the evidence sample without claiming meanings for the opaque
-animation records.
+It contains a 16-byte preamble and nine validated node envelopes ending at EOF.
+Each node is a 64-byte name slot followed by 192 fixed opaque bytes and zero or
+more 112-byte opaque blocks. The envelope and raw regions round-trip exactly;
+the hashes pin the evidence sample without claiming meanings for its animation
+properties.
 
 ## Renderer observations
 
@@ -62,12 +65,26 @@ names begin at offsets `0x10`, `0x54`, `0x98`, and `0xdc`; following values are
 `title_marh_jp`, `title_bg`) match TXC member names in the sibling bundle
 manifest. This proves reference-to-texture name linkage, not that `.tga` files
 exist as separate image files or how the animation samples those textures.
-The remaining animation body and mapping from the references to RTX3 UV
-rectangles have not yet been decoded. A first English title-parts draft is now
-inserted into the existing title atlas; it changes only language-bearing regions
-and preserves the canvas and palette. Correlate the AT records with the
-`MarRectDrawTex` call sites and compare the composition with an in-game capture
-before treating the wording or presentation as final.
+The title node record starts and sizes are: `BG` (`0x130`, 484 bytes), `MAR`
+(`0x314`, 372), `Layer02` (`0x488`, 708), `Layer03` (`0x74c`, 484), `Layer04`
+(`0x930`, 484), `Layer05` (`0xb14`, 484), `Scene01` (`0xcf8`, 484), `Layer07`
+(`0xedc`, 484), and `Scene00` (`0x10c0`, 260). Their sizes follow
+`260 + 112*n`; the fixed and repeated data remain raw.
+
+Several 32-bit floats in the title body are exact 1/512 multiples near atlas
+alpha-region boundaries: `0.443359375` (`227/512`) repeats at `0x67c` through
+`0x6ac`; `0.4453125` (`228/512`) at `0x888` through `0x8a0`; `0.888671875`
+(`455/512`) at `0x8b0` through `0x8c8`; and `0.890625` (`456/512`) at `0xa6c`
+through `0xa84`. These are UV candidates, not decoded field meanings. The
+reusable parser now segments all 723 direct AT3 leaves and 1,605 nested UI-bundle
+AT3 members (26,798 node envelopes), and its bounded writer round-trips all of
+them byte-exactly. It rejects node growth and does not claim relocation safety.
+
+A first English title-parts draft is inserted into the existing title atlas; it
+changes only language-bearing regions and preserves the canvas and palette.
+Correlate the candidate values with the `MarRectDrawTex` call sites and compare
+the composition with an in-game capture before treating the wording or
+presentation as final.
 
 ## English title-parts draft and insertion evidence
 

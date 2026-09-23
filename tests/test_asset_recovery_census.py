@@ -118,6 +118,25 @@ class AssetRecoveryCensusTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "different reference"):
             build_census(leaves, index, disc, roundtrip)
 
+    def test_validated_direct_at3_envelopes_extend_structural_coverage(self):
+        leaves, index, disc, roundtrip = self.fixture()
+        at3_leaf = next(leaf for leaf in leaves if leaf["source"] == "00007.bin")
+        at3_leaf["name"] = "disc!/motion/test.at3"
+        at3_leaf["_at3_reference_table_bytes"] = 4
+        at3_leaf["_at3_preamble_bytes"] = 4
+        at3_leaf["_at3_node_record_bytes"] = 8
+
+        census = build_census(leaves, index, disc, roundtrip)
+        level = census["expanded_logical_payload"]["recovery_levels"]["structurally_classified"]
+        self.assertEqual(level["bytes_Z"], 50)
+        self.assertEqual(level["components"]["direct_AT3_reference_table_bytes"], 4)
+        self.assertEqual(level["components"]["direct_AT3_bounded_preamble_bytes"], 4)
+        self.assertEqual(level["components"]["direct_AT3_validated_node_record_bytes"], 8)
+        self.assertEqual(
+            census["expanded_logical_payload"]["recovery_levels"]["semantically_editable"]["bytes_B"],
+            31,
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

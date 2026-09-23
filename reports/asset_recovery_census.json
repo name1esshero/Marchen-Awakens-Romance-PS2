@@ -1,5 +1,5 @@
 {
-  "schema_version": 3,
+  "schema_version": 4,
   "evidence_date": "2026-09-23",
   "reference_sha256": "cc059a3acf818dfbd0a782a9d20ee67e020d167866cd1c4dca77e6eb9224e3ec",
   "scope": "Pinned physical image partition plus a de-duplicated expanded logical content inventory; recovery levels have separate definitions and evidence.",
@@ -52,16 +52,18 @@
         "meaning": "Every nonzero physical terminal member has a named catalog path and a validated parent extent. This says nothing about the member's internal format or semantics."
       },
       "structurally_classified": {
-        "bytes_Z": 248061654,
+        "bytes_Z": 249834218,
         "denominator_bytes_Y": 1303947016,
-        "percent_Z_of_Y": 19.0239,
+        "percent_Z_of_Y": 19.1598,
         "components": {
           "complete_RTX3_parser_validated_extents": 239444320,
           "parsed_UI_bundle_nontexture_member_extents": 8460696,
           "reversible_CP932_text_and_message_source_bytes": 88494,
-          "direct_AT3_header_and_reference_table_bytes": 68144
+          "direct_AT3_reference_table_bytes": 68144,
+          "direct_AT3_bounded_preamble_bytes": 3328,
+          "direct_AT3_validated_node_record_bytes": 1769236
         },
-        "meaning": "Bytes assigned to complete parser-validated records or bounded child extents, de-duplicated across nested TXCs. The 43 RTX3 records that fail the complete length contract are excluded; direct AT3 bytes after the parsed reference table are excluded."
+        "meaning": "Bytes assigned to complete parser-validated records or bounded child extents, de-duplicated across nested TXCs. The 43 RTX3 records that fail the complete length contract are excluded. Direct AT3 preambles are bounded between the reference table and first node; node records require every name slot and extent to satisfy the observed corpus invariant. Their internal fields remain opaque."
       },
       "losslessly_rebuildable": {
         "bytes_A": 1303947016,
@@ -169,21 +171,21 @@
       "accounting_note": "Categories partition Y minus B. This is the complete non-editable work queue, including spans whose container bounds or record structure are known; it is not synonymous with fully opaque bytes."
     },
     "classified_but_not_semantically_editable": {
-      "bytes": 8528840,
+      "bytes": 10301404,
       "denominator_bytes_Y": 1303947016,
-      "percent_of_Y": 0.6541,
+      "percent_of_Y": 0.79,
       "definition": "Z minus B: parser-classified spans without an evidence-backed semantic editing representation."
     },
     "opaque_after_structural_classification": {
-      "bytes": 1055885362,
+      "bytes": 1054112798,
       "denominator_bytes_Y": 1303947016,
-      "percent_of_Y": 80.9761,
+      "percent_of_Y": 80.8402,
       "exclusive_byte_weighted_categories": [
         {
           "name": "video_cinematics",
           "file_count": 13,
           "source_bytes": 685111296,
-          "percent_of_opaque_payload": 64.885,
+          "percent_of_opaque_payload": 64.9941,
           "percent_of_expanded_payload": 52.5413,
           "classification_basis": "MOVIE.AFS path and MPEG program-stream pack-start magic"
         },
@@ -191,7 +193,7 @@
           "name": "model_geometry_candidates",
           "file_count": 1232,
           "source_bytes": 200625168,
-          "percent_of_opaque_payload": 19.0007,
+          "percent_of_opaque_payload": 19.0326,
           "percent_of_expanded_payload": 15.386,
           "classification_basis": "YMP/YPC resource naming; model bodies are not decoded here"
         },
@@ -199,31 +201,31 @@
           "name": "audio_sound_candidates",
           "file_count": 140,
           "source_bytes": 156453642,
-          "percent_of_opaque_payload": 14.8173,
+          "percent_of_opaque_payload": 14.8422,
           "percent_of_expanded_payload": 11.9985,
           "classification_basis": "BGM archive or sound-directory path; payload audio is not decoded"
-        },
-        {
-          "name": "animation_motion_candidates",
-          "file_count": 825,
-          "source_bytes": 5504444,
-          "percent_of_opaque_payload": 0.5213,
-          "percent_of_expanded_payload": 0.4221,
-          "classification_basis": "AT3/YAP/MPC/YMA name or member type; bodies are not fully decoded"
         },
         {
           "name": "executables_and_modules",
           "file_count": 16,
           "source_bytes": 4101870,
-          "percent_of_opaque_payload": 0.3885,
+          "percent_of_opaque_payload": 0.3891,
           "percent_of_expanded_payload": 0.3146,
           "classification_basis": "boot executable/module filename; full semantics are outside this census"
+        },
+        {
+          "name": "animation_motion_candidates",
+          "file_count": 102,
+          "source_bytes": 3731880,
+          "percent_of_opaque_payload": 0.354,
+          "percent_of_expanded_payload": 0.2862,
+          "classification_basis": "AT3/YAP/MPC/YMA name or member type; bodies are not fully decoded"
         },
         {
           "name": "other_unclassified",
           "file_count": 2246,
           "source_bytes": 2184740,
-          "percent_of_opaque_payload": 0.2069,
+          "percent_of_opaque_payload": 0.2073,
           "percent_of_expanded_payload": 0.1675,
           "classification_basis": "fallback for payload without a stronger evidence-backed inventory class"
         },
@@ -231,7 +233,7 @@
           "name": "font_assets",
           "file_count": 2,
           "source_bytes": 896928,
-          "percent_of_opaque_payload": 0.0849,
+          "percent_of_opaque_payload": 0.0851,
           "percent_of_expanded_payload": 0.0688,
           "classification_basis": "font resource directory path; internal font records remain unparsed"
         },
@@ -239,7 +241,7 @@
           "name": "scripts_event_and_data_candidates",
           "file_count": 318,
           "source_bytes": 866626,
-          "percent_of_opaque_payload": 0.0821,
+          "percent_of_opaque_payload": 0.0822,
           "percent_of_expanded_payload": 0.0665,
           "classification_basis": "data/script/event extension or member type; semantics are partial"
         },
@@ -336,6 +338,31 @@
       }
     },
     "accounting_note": "Expanded TXC payload includes standalone and nested members once. Nested textures are not added a second time on top of their expanded UI-bundle members."
+  },
+  "animation_resource_corpus": {
+    "direct_resources": {
+      "file_count": 723,
+      "source_bytes": 1840708,
+      "parse_successful_count": 723,
+      "parse_failure_count": 0,
+      "parsed_node_envelope_count": 723,
+      "node_preamble_bytes": 3328,
+      "node_record_bytes": 1769236,
+      "node_record_count": 5313,
+      "exact_noop_roundtrip_count": 723
+    },
+    "nested_ui_bundle_resources": {
+      "file_count": 1605,
+      "source_bytes": 6979660,
+      "parse_successful_count": 1605,
+      "parse_failure_count": 0,
+      "parsed_node_envelope_count": 1605,
+      "node_preamble_bytes": 12900,
+      "node_record_bytes": 6721780,
+      "node_record_count": 21485,
+      "exact_noop_roundtrip_count": 1605
+    },
+    "note": "Validated node-envelope counts are structural only; 192-byte fixed regions and 112-byte repeated regions remain opaque. Direct resources may contribute their bounded preambles and validated node records to Z, alongside the parsed reference tables. Nested UI-bundle resources are already counted as bounded child extents and are not double-counted."
   },
   "logical_leaf_extensions": {
     ".": {

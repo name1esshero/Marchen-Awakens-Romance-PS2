@@ -98,14 +98,21 @@ python3 tools/rtx3.py export SOURCE.txc /tmp/texture-stored-order.tga --stored-o
 python3 tools/rtx3.py import SOURCE.txc /tmp/texture-edited.txc /tmp/texture.tga
 ```
 
-Run `python3 tools/at3.py SOURCE.at3` to inspect the bounded AT header and
-texture-name table. Observed files have a 16-byte header, a 64-byte CP932
-NUL-terminated name slot followed by a 4-byte field for each declared reference.
-Preserve the trailing fields as uninterpreted values: the title sample uses
-`64` for its first three and `0` for its last, but their semantics are not
-proven. The remaining animation body stays opaque until its record and UV
-semantics are established. Compare name stems with sibling TXC member names to
-identify which textures an AT file references.
+Run `python3 tools/at3.py SOURCE.at3 --output-json EDITABLE.json` to inspect the
+AT header, texture-name table, and observed node envelopes. The builder command
+`python3 tools/at3.py --build-json EDITABLE.json --output REBUILT.at3` preserves
+unknown bytes and rejects reference-count or node-size changes. Observed files
+have a 16-byte header, a 64-byte CP932 NUL-terminated name slot followed by a
+4-byte field for each declared texture reference. Preserve the trailing fields
+as uninterpreted values: the title sample uses `64` for its first three and `0`
+for its last, but their semantics are not proven.
+
+Across 2,328 observed AT3 resources, node records begin with a `u32` 64-byte
+name slot. Consecutive names and EOF bound records with a 192-byte opaque fixed
+region and zero or more 112-byte opaque blocks. The parser exposes these raw
+regions but does not decode their fields, establish UV meaning, or support safe
+growth. Compare reference name stems with sibling TXC member names to identify
+which textures an AT file references.
 
 `--stored-order` is a diagnostic that reads indexed pixels linearly and uses
 palette entries as stored, without the PSMT8 CLUT index permutation or GS alpha
@@ -218,14 +225,28 @@ bytes as editable meaning.
 
 Report each recovery level independently. Every nonzero physical member has a
 validated hierarchy path and extent. Strict parser-backed structural coverage
-is **Z/Y = 248,061,654 / 1,303,947,016 = 19.0239%**: only complete RTX3 parses,
+is **Z/Y = 249,834,218 / 1,303,947,016 = 19.1598%**: complete RTX3 parses,
 non-texture members bounded by parsed UI bundle tables, reversible text/message
-sources, and directly parsed AT3 headers/reference tables. The 43 PSMCT32 RTX3
-records fail the complete declared-length check and are excluded from Z even
-though their headers identify candidate dimensions and storage mode. The graphics
-index records strict parse success separately from image-export support. Full
-unchanged-source rebuild coverage is **A/Y = 100%**, backed by a byte-identical
-full-disc rebuild; it does not mean edited assets have been runtime validated.
+sources, and directly parsed AT3 reference tables and validated node envelopes.
+The 43 PSMCT32 RTX3 records fail the complete declared-length check and are
+excluded from Z even though their headers identify candidate dimensions and
+storage mode. The graphics index records strict parse success separately from
+image-export support. Full unchanged-source rebuild coverage is **A/Y = 100%**,
+backed by a byte-identical full-disc rebuild; it does not mean edited assets have
+been runtime validated.
+
+The AT3 envelope audit covers 723 direct archive leaves (1,840,708 bytes) and
+1,605 nested UI-bundle resources (6,979,660 bytes). All 2,328 resources parse and
+rebuild byte-identically; they contain 26,798 named node envelopes. For each
+node, a 64-byte CP932 name slot is followed by a 192-byte opaque region and zero
+or more 112-byte opaque blocks. Record boundaries satisfy this layout across the
+entire observed corpus. The fixed and repeated regions are preserved raw; their
+field meanings, runtime use, and relocation behavior remain unknown. Direct AT3
+reference tables (68,144 bytes), bounded preambles (3,328), and node records
+(1,769,236) contribute 1,772,564 bytes to Z; nested AT3 resources are already
+counted as bounded UI-bundle members and are not added again. See
+[`AT3 parser evidence`](../tasks/TITLE_TEXTURE_RENDERING.md) and the
+`animation_resource_corpus` section of the census JSON.
 Semantic editability is **B/Y = 239,532,814 / 1,303,947,016 = 18.3698%**,
 comprising 239,444,320 editable texture bytes and 88,494 reversible text/message
 source bytes. This measures available editable representations, not the share
@@ -233,9 +254,9 @@ already translated. Runtime-validated editable coverage is **C/Y = 0%**.
 
 Keep two disjoint work-queue views. The complete non-editable remainder **Y-B**
 is 1,064,414,202 bytes (81.6302% of Y); it includes structurally bounded members
-that do not yet have an editable representation. Of that, **Z-B = 8,528,840**
-bytes (0.6541% of Y) are structurally classified but not semantically editable.
-The strictly unclassified remainder **Y-Z = 1,055,885,362** bytes (80.9761% of
+that do not yet have an editable representation. Of that, **Z-B = 10,301,404**
+bytes (0.7900% of Y) are structurally classified but not semantically editable.
+The strictly unclassified remainder **Y-Z = 1,054,112,798** bytes (80.8402% of
 Y) is the byte base for the opaque-payload breakdown below. These bases answer
 different questions and must not be substituted for one another.
 
@@ -259,13 +280,14 @@ signature, bundle member type, filename or path; they do not claim the opaque
 bodies have been semantically decoded.
 
 For the stricter opaque queue, use `Y - Z`, not `Y - B`. Its disjoint byte shares
-are: video/cinematics 64.8850% (685,111,296 bytes), model/geometry candidates
-19.0007% (200,625,168), audio/sound candidates 14.8173% (156,453,642),
-animation/motion candidates 0.5213% (5,504,444), executables/modules 0.3885%
-(4,101,870), other unclassified 0.2069% (2,184,740), font assets 0.0849%
-(896,928), script/data candidates 0.0821% (866,626), and unresolved graphics
+are: video/cinematics 64.9941% (685,111,296 bytes), model/geometry candidates
+19.0326% (200,625,168), audio/sound candidates 14.8422% (156,453,642),
+executables/modules 0.3891% (4,101,870), animation/motion candidates 0.3540%
+(3,731,880), other unclassified 0.2073% (2,184,740), font assets 0.0851%
+(896,928), script/data candidates 0.0822% (866,626), and unresolved graphics
 0.0133% (140,648). These are evidence-led inventory labels; candidate models,
-audio, animation and script bodies remain opaque.
+audio, animation and script bodies remain opaque. The AT3 node envelopes narrow
+the opaque queue without increasing semantic editability.
 
 Texture-specific coverage remains a distinct measure: 30,397 occurrences
 contain 239,584,968 TXC bytes, of which 239,444,320 (99.9413%) have editable
