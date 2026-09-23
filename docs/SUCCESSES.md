@@ -382,6 +382,60 @@ A section's small size does not guarantee its recovery is risk-free — always
 disassemble before writing a natural-source candidate.
 References: [linkonce cluster task](tasks/LINKONCE_CLUSTER.md), `make verify-ee`.
 
+## An untyped pointer parameter silently mismangles a linkonce section name
+
+Symptom: `compare_sections.py` raises a `KeyError` (missing section), not a
+byte mismatch, after adding a natural-looking candidate method with a
+pointer-typed parameter.
+Mechanism: GNU v2/cfront mangling encodes a pointer parameter's exact pointee
+type in the section name (e.g. `P9objMatrix`, `P12TypeArmParam`). Declaring
+the parameter as `void *` instead of the named class mangles to `Pv`, so EE
+GCC happily compiles and emits a section — just under a different name than
+the one being targeted. The comparison tool correctly reports the target
+section as absent rather than mismatched, which can look like "the method
+wasn't emitted" when the real cause is a wrong parameter type.
+Pathway: when a raw parameter-encoding suffix from
+`tools/linkonce_inventory.py`'s census (or the mangled name directly) shows
+`P<len><Name>`, forward-declare an opaque `class <Name>;` and use `<Name> *`
+for that parameter — never `void *` — even though no members of that class
+are evidenced. This has now been needed twice independently:
+`C3dObject::SetLinkBoneMat(objMatrix *)` and
+`CCharaBase::SetCurrentStatus(int, int, TypeArmParam *, int)`.
+Verification: both cases compile with the unchanged EE GCC `2.96-ee-001003-1`
+`-O2` probe and reproduce the exact target section after the fix, confirmed
+by `make verify-ee`.
+Scope: GNU v2/cfront-style mangling on this EE GCC target; likely generalizes
+to any compiler using the same mangling scheme.
+Limits: this only fixes the *name*; it says nothing about the pointee class's
+real layout, size or members, which remain unrecovered placeholders.
+References: [linkonce cluster task](tasks/LINKONCE_CLUSTER.md).
+
+## The `move` pseudo-op and EE GCC disagree on which register-move encoding to use
+
+Symptom: a hand-written `.s` accessor using `move $rd, $rs` for an
+already-evidenced `daddu`-based register move fails `compare_sections.py`
+with a same-size byte mismatch.
+Mechanism: on this MIPS/R5900 target, Clang's assembler lowers the `move`
+pseudo-instruction to `or $rd, $rs, $0` (opcode 0x25), but the reference
+binary (and independently, EE GCC 2.96 compiling equivalent C++ such as
+`return value;` or `return 0;`) uses `daddu $rd, $rs, $0` (opcode 0x2d) for
+the same logical operation. Both encode the same result register-to-register
+copy; only the raw bytes differ.
+Pathway: in hand-preserved `.s` files for this target, never rely on the
+`move` pseudo-op to reproduce an evidenced register-copy — write
+`daddu $rd, $rs, $0` explicitly. This does not apply at the C++ layer: EE GCC
+chose `daddu` on its own with no steering needed.
+Verification: `llvm-objdump-21` on both a `move`-assembled test object and a
+`daddu`-assembled one, compared against the original bytes at
+`CChara::GetNowGmPadCheck` (`daddu $2, $5, $0`) and several
+`CCharaBase`/`CChara` zero-returning stubs (`daddu $2, $0, $0`).
+Scope: Clang 21.1.8 assembling `-target mipsel-none-elf -march=mips3 -mabi=32`
+for this project's boot ELF; likely generalizes to other MIPS/R5900 pseudo-op
+lowering choices worth double-checking against evidence rather than assuming.
+Limits: does not establish that `or`-based moves never appear in the real
+binary elsewhere, only that this specific evidenced pattern uses `daddu`.
+References: [linkonce cluster task](tasks/LINKONCE_CLUSTER.md).
+
 ## Exclude replaced bytes from bootstrap source intervals
 
 Symptom: a bootstrap can appear to match while silently retaining original bytes

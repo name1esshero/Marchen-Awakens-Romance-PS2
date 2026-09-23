@@ -226,3 +226,70 @@ meaning of the ignored integer parameters are not established. The unchanged EE
 GCC probe matches all thirteen sections. Reconstruction now covers 62 sections
 / 496 bytes across seven partial classes; 3,444,708 bytes remain explicit raw
 debt. `make test verify-boot verify-source-only verify-ee` passes.
+
+## CChara and CCharaBase accessor batch — 2026-09-23
+
+Agent: Claude Sonnet 5; role: Contributor. A gameplay character-code area,
+chosen deliberately because another concurrent session was localizing
+text/graphics assets at the time; this batch touches only `asm/`,
+`candidates/ee_camera/`, `config/camera_sections.txt` and `preserved/boot/`,
+none of which overlap the localization/graphics/asset trees.
+
+Seventy-nine direct 8-byte sections (41 `CCharaBase`, 38 `CChara`) were
+disassembled with `llvm-objdump-21 -j <section>` and confirmed to follow the
+same `jr $ra` + one delay-slot instruction shape already established. Field
+reads/writes (`lw`/`sw`/`lwc1`/`swc1`), embedded-member address returns
+(`addiu $2, $4, N`), and one previously-unseen shape were all present:
+
+- **Zero-register moves via `daddu`, not `move`/`or`.** The reference binary
+  encodes `move $2, $5` and `move $2, $zero` as `daddu $rd, $rs, $0`
+  (`2d 10 ...`). Clang's `move` pseudo-op for this target instead assembles
+  to `or $rd, $rs, $0` (`25 10 ...`) — same semantics, different bytes. This
+  only affects the hand-preserved `.s` assembly layer (the assembler's own
+  instruction-selection default for a pseudo-op); the real EE GCC 2.96
+  compile of equivalent C++ (`return value;`, `return 0;`) independently
+  chose `daddu` on its own and needed no correction. Fix for the `.s` layer:
+  write `daddu $rd, $rs, $0` explicitly instead of `move`.
+- **`mov.s $f0, $f12`**, a float pass-through register move, for
+  `CalcDamage(float damage, int) { return damage; }` — assembles and compiles
+  identically on the first attempt, no correction needed.
+- **A second confirmed case of the class-named-pointer-parameter mangling
+  trap** already seen with `C3dObject::SetLinkBoneMat`'s `objMatrix*`
+  parameter: `SetCurrentStatus__10CCharaBaseiiP12TypeArmParami` requires a
+  parameter of an opaque forward-declared `TypeArmParam` class, not `void *`
+  — `void *` mangles as `Pv` and silently compiles a same-shaped section
+  under a *different* name, so the target section is simply absent (a
+  missing-key error from `compare_sections.py`, not a byte mismatch). This
+  has now happened independently in two different sessions/classes; see the
+  new `SUCCESSES.md` entry.
+
+Many `CCharaBase` methods (`SetCurrentAct`, `SetCurrentStatus`,
+`SetCurrentOwnCtrl`, `SetCurrentMove`, `GetActTblC`, `GetActTblBase`,
+`GetTargetModel`, `CheckPadPress`, `CheckPadOn`, `HitCheckAll`, `ActionCntrl`,
+`IsDoukiAct`, `ActionCntrlExcute`, `PreUpdatePmv`, `PreNutralMotionJump`,
+`PreAction2`) are stub-shaped: they ignore all arguments and either do nothing
+or return a fixed zero. This is presented as observed behavior only — it is
+plausible evidence of unfinished/disabled functionality or of a base-class
+default meant to be overridden elsewhere, but neither is established here.
+Two pairs of accessors alias the same field under different names, as with
+the earlier `CCamera::GetViewAngle`/`GetViewAngleDir`: `CChara::GetLocate`/
+`GetLocateV` (both `0x600`) and `CChara::GetTarget`/`GetTargetModel` (both
+`0xcf4`).
+
+`asm/camera_accessors.s`, `candidates/ee_camera/CCamera.h` and `probe.cpp`
+were extended with the same harness technique as every prior batch (address-
+taking to force out-of-line emission; no codegen attributes, register
+pinning or literal instruction bytes). The unmodified EE GCC
+`2.96-ee-001003-1` `-O2` invocation matches all 79 new sections on the first
+compile after the `TypeArmParam` fix. Reconstruction now covers **141
+sections / 1,128 bytes across nine partial classes**; 3,444,076 bytes remain
+explicit raw debt. `make test verify-boot verify-source-only verify-ee`
+passes (107 tests; full boot ELF and full EE-probe ELF both byte-identical).
+
+Not recovered this batch (left as future candidates, per the wider census):
+CWeapon (27), MenuFrameUI/MenuFrame/MenuFrameSimpleUI/MenuEsy (93 combined —
+skipped deliberately this batch since they are UI/menu-adjacent and the
+concurrent session was working on UI localization), CMotion3, CTexData,
+CMotion, CGameCntrl, and the rest of the 592 still-untouched trivial 8-byte
+sections (`reports/linkonce_text_inventory.json`, recomputed against the
+current `config/camera_sections.txt`).

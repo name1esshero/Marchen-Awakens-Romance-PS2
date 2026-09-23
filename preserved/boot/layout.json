@@ -497,9 +497,561 @@
     },
     {
       "offset": 2345616,
-      "size": 1099588,
+      "size": 13196,
       "kind": "unrecovered_hex",
       "source": "unrecovered_0023ca90.hex"
+    },
+    {
+      "offset": 2358812,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetNowGmPadCheck__6CCharaUl"
+    },
+    {
+      "offset": 2358820,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetNextAction__6CCharai"
+    },
+    {
+      "offset": 2358828,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.IsSyncroSeChk__6CChara"
+    },
+    {
+      "offset": 2358836,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetSyncroSeChk__6CCharai"
+    },
+    {
+      "offset": 2358844,
+      "size": 80,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023fe3c.hex"
+    },
+    {
+      "offset": 2358924,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.StartActPmv__6CChara"
+    },
+    {
+      "offset": 2358932,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetActPmvTgt__6CChara"
+    },
+    {
+      "offset": 2358940,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetHpDamageBlock__6CCharai"
+    },
+    {
+      "offset": 2358948,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetCurrentMove__6CCharaiii"
+    },
+    {
+      "offset": 2358956,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetLocate__6CChara"
+    },
+    {
+      "offset": 2358964,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetLocateV__6CChara"
+    },
+    {
+      "offset": 2358972,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetLocateV_Btm__6CChara"
+    },
+    {
+      "offset": 2358980,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetLocateV_Null__6CChara"
+    },
+    {
+      "offset": 2358988,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetNowLocate__6CChara"
+    },
+    {
+      "offset": 2358996,
+      "size": 156,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023fed4.hex"
+    },
+    {
+      "offset": 2359152,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetRotateY__6CChara"
+    },
+    {
+      "offset": 2359160,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetTargetAngle__6CChara"
+    },
+    {
+      "offset": 2359168,
+      "size": 12,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023ff80.hex"
+    },
+    {
+      "offset": 2359180,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetCharSts__6CChara"
+    },
+    {
+      "offset": 2359188,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetMyPause__6CChara"
+    },
+    {
+      "offset": 2359196,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetPadDisable__6CChara"
+    },
+    {
+      "offset": 2359204,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetPadCnfig__6CChara"
+    },
+    {
+      "offset": 2359212,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetPadChk__6CChara"
+    },
+    {
+      "offset": 2359220,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetPadChk2__6CChara"
+    },
+    {
+      "offset": 2359228,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetPlayerType__6CChara"
+    },
+    {
+      "offset": 2359236,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetActTblC__6CChara"
+    },
+    {
+      "offset": 2359244,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetActTblBase__6CChara"
+    },
+    {
+      "offset": 2359252,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetPadOffMask__6CChara"
+    },
+    {
+      "offset": 2359260,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetTarget__6CChara"
+    },
+    {
+      "offset": 2359268,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetTargetModel__6CChara"
+    },
+    {
+      "offset": 2359276,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetCurrentArmNo__6CChara"
+    },
+    {
+      "offset": 2359284,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetPadNo__6CChara"
+    },
+    {
+      "offset": 2359292,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetPadNoReal__6CChara"
+    },
+    {
+      "offset": 2359300,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetBonusFlg__6CChara"
+    },
+    {
+      "offset": 2359308,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetArmUseCnt__6CChara"
+    },
+    {
+      "offset": 2359316,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetPadType__6CChara"
+    },
+    {
+      "offset": 2359324,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetLastSyncRate__6CChara"
+    },
+    {
+      "offset": 2359332,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetLastSyncRateMax__6CChara"
+    },
+    {
+      "offset": 2359340,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetChrParam__C6CChara"
+    },
+    {
+      "offset": 2359348,
+      "size": 304,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_00240034.hex"
+    },
+    {
+      "offset": 2359652,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetPadOffMask__6CCharai"
+    },
+    {
+      "offset": 2359660,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetAutoGuard__6CCharai"
+    },
+    {
+      "offset": 2359668,
+      "size": 888,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_00240174.hex"
+    },
+    {
+      "offset": 2360556,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetCharCol__10CCharaBase"
+    },
+    {
+      "offset": 2360564,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetCharColG__10CCharaBase"
+    },
+    {
+      "offset": 2360572,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetCharColK__10CCharaBase"
+    },
+    {
+      "offset": 2360580,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetCharSe__10CCharaBase"
+    },
+    {
+      "offset": 2360588,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetIndex__10CCharaBase"
+    },
+    {
+      "offset": 2360596,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetDataIdx__10CCharaBase"
+    },
+    {
+      "offset": 2360604,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetCharNo__10CCharaBase"
+    },
+    {
+      "offset": 2360612,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetColorNo__10CCharaBase"
+    },
+    {
+      "offset": 2360620,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetCharDataSts__10CCharaBase"
+    },
+    {
+      "offset": 2360628,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetShadow__10CCharaBase"
+    },
+    {
+      "offset": 2360636,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetCastIndex__10CCharaBase"
+    },
+    {
+      "offset": 2360644,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetCastIndex__10CCharaBasei"
+    },
+    {
+      "offset": 2360652,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetMotionSpeed__10CCharaBasef"
+    },
+    {
+      "offset": 2360660,
+      "size": 16,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_00240554.hex"
+    },
+    {
+      "offset": 2360676,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetCurrentWeapon__10CCharaBase"
+    },
+    {
+      "offset": 2360684,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetCurrentWeaponTmp__10CCharaBase"
+    },
+    {
+      "offset": 2360692,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetCurWeaponSnd__10CCharaBase"
+    },
+    {
+      "offset": 2360700,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetDoukiParent__10CCharaBase"
+    },
+    {
+      "offset": 2360708,
+      "size": 176,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_00240584.hex"
+    },
+    {
+      "offset": 2360884,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetCurrentAct__10CCharaBaseiii"
+    },
+    {
+      "offset": 2360892,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetCurrentStatus__10CCharaBaseiiP12TypeArmParami"
+    },
+    {
+      "offset": 2360900,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetCurrentOwnCtrl__10CCharaBasei"
+    },
+    {
+      "offset": 2360908,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetCurrentMove__10CCharaBaseiii"
+    },
+    {
+      "offset": 2360916,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetActTblC__10CCharaBase"
+    },
+    {
+      "offset": 2360924,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetActTblBase__10CCharaBase"
+    },
+    {
+      "offset": 2360932,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetTargetModel__10CCharaBase"
+    },
+    {
+      "offset": 2360940,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.CalcDamage__10CCharaBasefi"
+    },
+    {
+      "offset": 2360948,
+      "size": 40,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_00240674.hex"
+    },
+    {
+      "offset": 2360988,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.CheckPadPress__10CCharaBaseUi"
+    },
+    {
+      "offset": 2360996,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.CheckPadOn__10CCharaBaseUi"
+    },
+    {
+      "offset": 2361004,
+      "size": 32,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_002406ac.hex"
+    },
+    {
+      "offset": 2361036,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetRotY__10CCharaBase"
+    },
+    {
+      "offset": 2361044,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetBipRotY__10CCharaBase"
+    },
+    {
+      "offset": 2361052,
+      "size": 56,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_002406dc.hex"
+    },
+    {
+      "offset": 2361108,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetBaseModel__10CCharaBase"
+    },
+    {
+      "offset": 2361116,
+      "size": 92,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0024071c.hex"
+    },
+    {
+      "offset": 2361208,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetNowMotion__10CCharaBase"
+    },
+    {
+      "offset": 2361216,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.PreNutralMotionJump__10CCharaBase"
+    },
+    {
+      "offset": 2361224,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.PreAction2__10CCharaBase"
+    },
+    {
+      "offset": 2361232,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.HitCheckAll__10CCharaBase"
+    },
+    {
+      "offset": 2361240,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.ActionCntrl__10CCharaBase"
+    },
+    {
+      "offset": 2361248,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.IsDoukiAct__10CCharaBasei"
+    },
+    {
+      "offset": 2361256,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.ActionCntrlExcute__10CCharaBasei"
+    },
+    {
+      "offset": 2361264,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.PreUpdatePmv__10CCharaBasef"
+    },
+    {
+      "offset": 2361272,
+      "size": 140,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_002407b8.hex"
+    },
+    {
+      "offset": 2361412,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetYhoseiOffPmv__10CCharaBasei"
+    },
+    {
+      "offset": 2361420,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetYbaseSetPmv__10CCharaBasei"
+    },
+    {
+      "offset": 2361428,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetCharCom__10CCharaBase"
+    },
+    {
+      "offset": 2361436,
+      "size": 1083768,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0024085c.hex"
     }
   ]
 }

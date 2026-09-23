@@ -3,12 +3,12 @@
 Authority: [standards](../../docs/STANDARDS.md).
 
 `layout.json` covers every byte of the 3,445,204-byte boot ELF exactly once.
-Nineteen object sections contribute 152 bytes, assembled from
+141 object sections contribute 1,128 bytes, assembled from
 `asm/camera_accessors.s` in the normal build. The optional EE compiler probe can
-supply those same sections. The remaining **3,445,052 bytes** are five raw
-hexadecimal source intervals. They preserve code, data, ELF metadata, section
-names and gaps without claiming their semantics have been recovered. This is
-explicit technical debt.
+supply those same sections. The remaining **3,444,076 bytes** are raw
+hexadecimal source intervals (one per gap between recovered sections). They
+preserve code, data, ELF metadata, section names and gaps without claiming
+their semantics have been recovered. This is explicit technical debt.
 
 The raw intervals omit the selected methods entirely. The builder cannot fall
 back to their original bytes when the supplied object differs. It rejects missing

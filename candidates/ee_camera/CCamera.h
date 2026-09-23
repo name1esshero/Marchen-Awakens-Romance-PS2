@@ -11,6 +11,9 @@
 #define CANDIDATES_EE_CAMERA_CCAMERA_H
 
 class CCamera;
+// Named only to reproduce the mangled parameter type in
+// SetCurrentStatus__10CCharaBaseiiP12TypeArmParami; no members are evidenced.
+class TypeArmParam;
 
 class CRender {
 public:
@@ -190,6 +193,190 @@ public:
     const void *GetRootMatrix() const { return &localMat; }
     void *GetLocalMatrix(int) { return &localMat; }
     int Draw(CRender *) { return 1; }
+};
+
+class CChara {
+public:
+    unsigned char unknown000[0x50];
+    unsigned int nowLocate;
+    unsigned char unknown054[0x308];
+    float rotateY;
+    unsigned char unknown360[0x34];
+    int charSts;
+    unsigned char unknown398[0x268];
+    unsigned int locate;
+    unsigned char unknown604[0xc];
+    unsigned int locateBtm;
+    unsigned char unknown614[0xc];
+    unsigned int locateNull;
+    unsigned char unknown624[0x404];
+    unsigned int padCnfig;
+    unsigned char unknowna2c[0x2a4];
+    int padType;
+    unsigned char unknowncd4[0x4];
+    int myPause;
+    int padChk;
+    int padChk2;
+    int padDisable;
+    int padOffMask;
+    int armUseCnt;
+    unsigned char unknowncf0[0x4];
+    void *target;
+    void *actTblBase;
+    void *actTblC;
+    unsigned char unknownd00[0x1c];
+    int bonusFlg;
+    unsigned char unknownd20[0x20];
+    int padNo;
+    int padNoReal;
+    unsigned char unknownd48[0x208];
+    void *chrParam;
+    unsigned char unknownf54[0x20];
+    int currentArmNo;
+    float lastSyncRate;
+    float lastSyncRateMax;
+    unsigned char unknownf80[0x28];
+    void *actPmv;
+    void *actPmvTgt;
+    unsigned char unknownfb0[0x8];
+    float targetAngle;
+    unsigned char unknownfbc[0x8];
+    int nextAction;
+    int autoGuard;
+    int playerType;
+    unsigned char unknownfd0[0xb8];
+    int hpDamageBlock;
+    unsigned char unknown108c[0x4];
+    int syncroSeChk;
+
+    // Evidenced body ignores its argument and returns it unchanged.
+    unsigned long GetNowGmPadCheck(unsigned long value) { return value; }
+    void SetNextAction(int value) { nextAction = value; }
+    int IsSyncroSeChk() { return syncroSeChk; }
+    void SetSyncroSeChk(int value) { syncroSeChk = value; }
+    void *StartActPmv() { return actPmv; }
+    void *GetActPmvTgt() { return actPmvTgt; }
+    void SetHpDamageBlock(int value) { hpDamageBlock = value; }
+    // Evidenced body ignores all three arguments and returns void.
+    void SetCurrentMove(int, int, int) {}
+    // GetLocate and GetLocateV read the identical offset (0x600).
+    void *GetLocate() { return &locate; }
+    void *GetLocateV() { return &locate; }
+    void *GetLocateV_Btm() { return &locateBtm; }
+    void *GetLocateV_Null() { return &locateNull; }
+    void *GetNowLocate() { return &nowLocate; }
+    float GetRotateY() { return rotateY; }
+    float GetTargetAngle() { return targetAngle; }
+    int GetCharSts() { return charSts; }
+    int GetMyPause() { return myPause; }
+    int GetPadDisable() { return padDisable; }
+    void *GetPadCnfig() { return &padCnfig; }
+    int GetPadChk() { return padChk; }
+    int GetPadChk2() { return padChk2; }
+    int GetPlayerType() { return playerType; }
+    void *GetActTblC() { return actTblC; }
+    void *GetActTblBase() { return actTblBase; }
+    int GetPadOffMask() { return padOffMask; }
+    // GetTarget and GetTargetModel read the identical offset (0xcf4).
+    void *GetTarget() { return target; }
+    void *GetTargetModel() { return target; }
+    int GetCurrentArmNo() { return currentArmNo; }
+    int GetPadNo() { return padNo; }
+    int GetPadNoReal() { return padNoReal; }
+    int GetBonusFlg() { return bonusFlg; }
+    int GetArmUseCnt() { return armUseCnt; }
+    int GetPadType() { return padType; }
+    float GetLastSyncRate() { return lastSyncRate; }
+    float GetLastSyncRateMax() { return lastSyncRateMax; }
+    void *GetChrParam() const { return chrParam; }
+    void SetPadOffMask(int value) { padOffMask = value; }
+    void SetAutoGuard(int value) { autoGuard = value; }
+};
+
+class CCharaBase {
+public:
+    unsigned char unknown000[0x1bc];
+    int nowMotion;
+    unsigned char unknown1c0[0x150];
+    void *doukiParent;
+    unsigned char unknown314[0x2c];
+    void *baseModel;
+    unsigned char unknown344[0x18];
+    float rotY;
+    float bipRotY;
+    unsigned char unknown364[0x4];
+    int index;
+    int dataIdx;
+    int charNo;
+    int colorNo;
+    unsigned char unknown378[0xc];
+    int castIndex;
+    unsigned char unknown388[0xc];
+    int charDataSts;
+    unsigned char unknown398[0x8];
+    int shadow;
+    unsigned char unknown3a4[0x68];
+    void *currentWeapon;
+    void *currentWeaponTmp;
+    void *curWeaponSnd;
+    unsigned char unknown418[0x18];
+    int charCol;
+    int charColG;
+    int charColK;
+    unsigned char unknown43c[0x4];
+    float motionSpeed;
+    unsigned char unknown444[0xc0];
+    unsigned int charSe;
+    unsigned char unknown508[0xe4];
+    int charCom;
+    int yhoseiOffPmv;
+    int ybaseSetPmv;
+
+    int GetCharCol() { return charCol; }
+    int GetCharColG() { return charColG; }
+    int GetCharColK() { return charColK; }
+    void *GetCharSe() { return &charSe; }
+    int GetIndex() { return index; }
+    int GetDataIdx() { return dataIdx; }
+    int GetCharNo() { return charNo; }
+    int GetColorNo() { return colorNo; }
+    int GetCharDataSts() { return charDataSts; }
+    int GetShadow() { return shadow; }
+    int GetCastIndex() { return castIndex; }
+    void SetCastIndex(int value) { castIndex = value; }
+    void SetMotionSpeed(float value) { motionSpeed = value; }
+    void *GetCurrentWeapon() { return currentWeapon; }
+    void *GetCurrentWeaponTmp() { return currentWeaponTmp; }
+    void *GetCurWeaponSnd() { return curWeaponSnd; }
+    void *GetDoukiParent() { return doukiParent; }
+    // Evidenced bodies ignore all arguments and return a fixed value (usually
+    // zero); this is a stub shape, not a claim about why these are stubs
+    // (e.g. an unfinished feature, disabled debug path, or base-class default
+    // meant to be overridden elsewhere).
+    void SetCurrentAct(int, int, int) {}
+    int SetCurrentStatus(int, int, TypeArmParam *, int) { return 0; }
+    void SetCurrentOwnCtrl(int) {}
+    void SetCurrentMove(int, int, int) {}
+    void *GetActTblC() { return 0; }
+    void *GetActTblBase() { return 0; }
+    void *GetTargetModel() { return 0; }
+    float CalcDamage(float damage, int) { return damage; }
+    int CheckPadPress(unsigned int) { return 0; }
+    int CheckPadOn(unsigned int) { return 0; }
+    float GetRotY() { return rotY; }
+    float GetBipRotY() { return bipRotY; }
+    void *GetBaseModel() { return baseModel; }
+    int GetNowMotion() { return nowMotion; }
+    void PreNutralMotionJump() {}
+    void PreAction2() {}
+    int HitCheckAll() { return 0; }
+    int ActionCntrl() { return 0; }
+    int IsDoukiAct(int) { return 0; }
+    void ActionCntrlExcute(int) {}
+    void PreUpdatePmv(float) {}
+    void SetYhoseiOffPmv(int value) { yhoseiOffPmv = value; }
+    void SetYbaseSetPmv(int value) { ybaseSetPmv = value; }
+    int GetCharCom() { return charCom; }
 };
 
 #endif
