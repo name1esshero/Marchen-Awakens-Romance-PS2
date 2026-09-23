@@ -1,0 +1,2905 @@
+{
+  "format": "marps2-cp932-tsv-v1",
+  "resource": "disc!/_DATA.YFS;1!/data/menu/MenuBinary.pac!/CardList.txt",
+  "source_sha256": "c14b447175e55dd4929dc96ef7916acfc68d5ed152bee3c2849481f6c7add562",
+  "encoding": "cp932",
+  "columns": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "id_column": 0,
+  "rows": [
+    {
+      "id": "key-01C-001",
+      "original_cells": [
+        "01C-001",
+        "ギンタ",
+        "【チェスへの怒り】",
+        "キャラ",
+        "戦ってぶっ倒す。覚悟しろ！",
+        "1000",
+        "2",
+        "Ma_011_ギンタC_01",
+        ""
+      ],
+      "translations": {
+        "1": "Ginta",
+        "2": "[Rage Against Chess]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01C-002",
+      "original_cells": [
+        "01C-002",
+        "ギンタ",
+        "【救世主】",
+        "キャラ",
+        "もしかしたら、救世主になるかもしれないぜ。",
+        "1000",
+        "4",
+        "Ma_070_ギンタD_修1",
+        ""
+      ],
+      "translations": {
+        "1": "Ginta",
+        "2": "[Savior]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01C-003S",
+      "original_cells": [
+        "01C-003S",
+        "ギンタ",
+        "【夢に見た世界】",
+        "キャラ",
+        "でもこれは― 夢じゃない!!!",
+        "1000",
+        "6",
+        "Ma_012_異界の少年ギンタ_修1",
+        ""
+      ],
+      "translations": {
+        "1": "Ginta",
+        "2": "[The World of My Dreams]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01C-004",
+      "original_cells": [
+        "01C-004",
+        "ギンタ",
+        "【異界から来た少年】",
+        "キャラ",
+        "オレはギンタ！ 違う世界から来たんだ！",
+        "1000",
+        "8",
+        "Ma_001_ギンタA_03",
+        ""
+      ],
+      "translations": {
+        "1": "Ginta",
+        "2": "[The Boy from Another World]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01C-005",
+      "original_cells": [
+        "01C-005",
+        "スノウ",
+        "【レスターヴァのお姫様】",
+        "キャラ",
+        "「レスターヴァ」の正統後継者･･･ スノウ姫。",
+        "1000",
+        "10",
+        "Ma_004_ｽﾉｳA_修2",
+        ""
+      ],
+      "translations": {
+        "1": "Snow",
+        "2": "[Princess of Lestava]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01C-006",
+      "original_cells": [
+        "01C-006",
+        "スノウ",
+        "【祝福の笑顔】",
+        "キャラ",
+        "はじめまして、スノウっていいます！",
+        "1000",
+        "12",
+        "Ma_014_スノウC_修1",
+        ""
+      ],
+      "translations": {
+        "1": "Snow",
+        "2": "[A Radiant Smile]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01C-007S",
+      "original_cells": [
+        "01C-007S",
+        "スノウ",
+        "【頑固一徹】",
+        "キャラ",
+        "じゃますると凍らせちゃうぞー（ハート）",
+        "1000",
+        "14",
+        "Ma_071_スノウD_統合",
+        ""
+      ],
+      "translations": {
+        "1": "Snow",
+        "2": "[Stubborn to the Core]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01C-008",
+      "original_cells": [
+        "01C-008",
+        "スノウ",
+        "【囚われの姫】",
+        "キャラ",
+        "姫様は自らを封じたのです。",
+        "1000",
+        "16",
+        "Ma_015_囚われの姫",
+        ""
+      ],
+      "translations": {
+        "1": "Snow",
+        "2": "[The Imprisoned Princess]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01C-009",
+      "original_cells": [
+        "01C-009",
+        "ジャック",
+        "【スコップを持つ少年】",
+        "キャラ",
+        "夢は天まで届く蔓を育てる事!!",
+        "1000",
+        "18",
+        "Ma_005_ｼﾞｬｯｸA_修2",
+        ""
+      ],
+      "translations": {
+        "1": "Jack",
+        "2": "[The Boy with a Shovel]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01C-010",
+      "original_cells": [
+        "01C-010",
+        "ジャック",
+        "【ÅＲＭ初心者】",
+        "キャラ",
+        "てめえらから感じる魔力は･･･ いまだに０!!!",
+        "1000",
+        "20",
+        "Ma_017_ジャックC_修1",
+        ""
+      ],
+      "translations": {
+        "1": "Jack",
+        "2": "[ARM Beginner]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01C-011S",
+      "original_cells": [
+        "01C-011S",
+        "ジャック",
+        "【旅立ち】",
+        "キャラ",
+        "おいらはいくじなしを捨てたい!!!",
+        "1000",
+        "22",
+        "Ma_072_ジャックD_修1",
+        ""
+      ],
+      "translations": {
+        "1": "Jack",
+        "2": "[Setting Out]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01C-012",
+      "original_cells": [
+        "01C-012",
+        "ジャック",
+        "【母を守るキモチ】",
+        "キャラ",
+        "ぶっとばす!!!",
+        "1000",
+        "24",
+        "Ma_018_勇気に目覚めたジャック",
+        ""
+      ],
+      "translations": {
+        "1": "Jack",
+        "2": "[A Son’s Resolve]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01C-013",
+      "original_cells": [
+        "01C-013",
+        "ドロシー",
+        "【美しき魔女】",
+        "キャラ",
+        "あれはドロシー･･･ 悪名高い 魔女だ･･･",
+        "1000",
+        "26",
+        "Ma_006_ﾄﾞﾛｼｰA_03",
+        ""
+      ],
+      "translations": {
+        "1": "Dorothy",
+        "2": "[The Beautiful Witch]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01C-014",
+      "original_cells": [
+        "01C-014",
+        "ドロシー",
+        "【ギンターン∵】",
+        "キャラ",
+        "会いたかったーん（ハート）",
+        "1000",
+        "28",
+        "Ma_073_ドロシーC_修2",
+        ""
+      ],
+      "translations": {
+        "1": "Dorothy",
+        "2": "[Ginta~n]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01C-015",
+      "original_cells": [
+        "01C-015",
+        "アルヴィス",
+        "【異界への導き】",
+        "キャラ",
+        "ARMよ誘え ―そして、応えよ異界の住人!!!!",
+        "1000",
+        "30",
+        "Ma_007_ｱﾙｳﾞｨｽA_02",
+        ""
+      ],
+      "translations": {
+        "1": "Alviss",
+        "2": "[Guide to Another World]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01C-016",
+      "original_cells": [
+        "01C-016",
+        "アルヴィス",
+        "【柱の使い手】",
+        "キャラ",
+        "キミを呼んだのはオレだ。",
+        "1000",
+        "32",
+        "Ma_075_アルヴィスC",
+        ""
+      ],
+      "translations": {
+        "1": "Alviss",
+        "2": "[Master of the Pillar]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01C-017",
+      "original_cells": [
+        "01C-017",
+        "エドワード",
+        "【犬の従者】",
+        "キャラ",
+        "・・・犬？",
+        "1000",
+        "34",
+        "Ma_024_エドワード_03",
+        ""
+      ],
+      "translations": {
+        "1": "Edward",
+        "2": "[The Dog’s Servant]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01C-018",
+      "original_cells": [
+        "01C-018",
+        "アラン",
+        "【信じ続けた男】",
+        "キャラ",
+        "まってたぜ。",
+        "1000",
+        "36",
+        "Ma_025_アラン_03",
+        ""
+      ],
+      "translations": {
+        "1": "Alan",
+        "2": "[The Man Who Never Lost Faith]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01C-019",
+      "original_cells": [
+        "01C-019",
+        "ナナシ",
+        "【ルベリアのボス】",
+        "キャラ",
+        "ルベリアのボス、ナナシや。",
+        "1000",
+        "38",
+        "Ma_009_ﾅﾅｼA_02",
+        ""
+      ],
+      "translations": {
+        "1": "Nanashi",
+        "2": "[Boss of Ruberia]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01C-020",
+      "original_cells": [
+        "01C-020",
+        "ナナシ",
+        "【怒りの雷】",
+        "キャラ",
+        "エレクトリック・アイ!!",
+        "1000",
+        "40",
+        "Ma_080_ナナシC_修3",
+        ""
+      ],
+      "translations": {
+        "1": "Nanashi",
+        "2": "[Thunder of Rage]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01C-021",
+      "original_cells": [
+        "01C-021",
+        "イアン",
+        "【チェス第一の刺客】",
+        "キャラ",
+        "そのARMはファントムって男のモンよォ。",
+        "1000",
+        "42",
+        "Ma_008_ｲｱﾝA",
+        ""
+      ],
+      "translations": {
+        "1": "Ian",
+        "2": "[Chess’s First Assassin]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01C-022",
+      "original_cells": [
+        "01C-022",
+        "イアン",
+        "【ルークとポーン】",
+        "",
+        "見ーつけた!!",
+        "1000",
+        "44",
+        "Ma_077_イアンC_修1",
+        ""
+      ],
+      "translations": {
+        "1": "Ian",
+        "2": "[Rook and Pawn]",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01C-023",
+      "original_cells": [
+        "01C-023",
+        "トム",
+        "【謎の同行者】",
+        "キャラ",
+        "怪しい者じゃない。ボクは―",
+        "1000",
+        "46",
+        "Ma_028_トム_修2",
+        ""
+      ],
+      "translations": {
+        "1": "Tom",
+        "2": "[The Mysterious Companion]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01C-024",
+      "original_cells": [
+        "01C-024",
+        "ファントム",
+        "【No.1ナイト】",
+        "キャラ",
+        "もう一度、暴れてみようか？",
+        "1000",
+        "48",
+        "Ma_029_ファントム_修4",
+        ""
+      ],
+      "translations": {
+        "1": "Phantom",
+        "2": "[No. 1 Knight]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02C-001",
+      "original_cells": [
+        "02C-001",
+        "ギンタ",
+        "【ファントムのÅＲＭを持つ者】",
+        "キャラ",
+        "わたさねえ…約束する。",
+        "2000",
+        "146",
+        "Ma_010_ギンタB_修1",
+        ""
+      ],
+      "translations": {
+        "1": "Ginta",
+        "2": "[Wielder of Phantom’s ARM]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02C-002",
+      "original_cells": [
+        "02C-002",
+        "ギンタ",
+        "【風呂輪中学2年3組】",
+        "キャラ",
+        "ギンタだーっ!!!",
+        "2000",
+        "148",
+        "Ma099_ギンタ_M1",
+        ""
+      ],
+      "translations": {
+        "1": "Ginta",
+        "2": "[Fuuro Junior High, Class 2-3]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02C-003",
+      "original_cells": [
+        "02C-003",
+        "ギンタ",
+        "【シンクロする心】",
+        "キャラ",
+        "シンクロ・・・してみっかバッボ!?　ウム・・・!!!",
+        "2000",
+        "150",
+        "Ma100_ギンタ",
+        ""
+      ],
+      "translations": {
+        "1": "Ginta",
+        "2": "[Hearts in Sync]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02C-004",
+      "original_cells": [
+        "02C-004",
+        "スノウ",
+        "【優しき姫】",
+        "キャラ",
+        "助けてくれてありがとう！",
+        "2000",
+        "152",
+        "Ma_013_スノウB_修1",
+        ""
+      ],
+      "translations": {
+        "1": "Snow",
+        "2": "[The Kind Princess]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02C-005",
+      "original_cells": [
+        "02C-005",
+        "ジャック",
+        "【誇りあるいくじなし】",
+        "キャラ",
+        "オイラはいくじなしを捨てたい！！！",
+        "2000",
+        "154",
+        "Ma_016_ｼﾞｬｯｸB_修1",
+        ""
+      ],
+      "translations": {
+        "1": "Jack",
+        "2": "[The Proud Coward]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02C-006",
+      "original_cells": [
+        "02C-006",
+        "ドロシー",
+        "【悪名高き魔女】",
+        "キャラ",
+        "やるじゃないボウヤ（ハート）",
+        "2000",
+        "156",
+        "Ma_019_ドロシーB",
+        ""
+      ],
+      "translations": {
+        "1": "Dorothy",
+        "2": "[The Infamous Witch]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02C-007",
+      "original_cells": [
+        "02C-007",
+        "ドロシー",
+        "【妖しき魔女】",
+        "キャラ",
+        "秘密だヨ（ハート）　くすくす・・・",
+        "2000",
+        "158",
+        "Ma_020_妖しき魔女ドロシー",
+        ""
+      ],
+      "translations": {
+        "1": "Dorothy",
+        "2": "[The Enigmatic Witch]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02C-008",
+      "original_cells": [
+        "02C-008",
+        "アルヴィス",
+        "【異界に賭けし者】",
+        "キャラ",
+        "レートが上がったんだ。『賭け』はまだ続く。",
+        "2000",
+        "160",
+        "Ma_074_アルヴィスB",
+        ""
+      ],
+      "translations": {
+        "1": "Alviss",
+        "2": "[The Man Who Bet on Another World]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02C-009",
+      "original_cells": [
+        "02C-009",
+        "アルヴィス",
+        "【呪いのタトゥ】",
+        "キャラ",
+        "これはボクがキミを気に入った証だよ。",
+        "2000",
+        "162",
+        "Ma_021_呪われしﾀﾄｩのｱﾙｳﾞｨｽ",
+        ""
+      ],
+      "translations": {
+        "1": "Alviss",
+        "2": "[The Cursed Tattoo]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02C-010",
+      "original_cells": [
+        "02C-010",
+        "ナナシ",
+        "【ケジメ】",
+        "キャラ",
+        "ケジメ。取らせてもらわなアカンなァ。",
+        "2000",
+        "164",
+        "Ma_079_ナナシB",
+        ""
+      ],
+      "translations": {
+        "1": "Nanashi",
+        "2": "[Payback]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02C-011",
+      "original_cells": [
+        "02C-011",
+        "ナナシ",
+        "【雷光一閃】",
+        "キャラ",
+        "ワレの最後の晩餐や。",
+        "2000",
+        "166",
+        "Ma_027_雷使いナナシ",
+        ""
+      ],
+      "translations": {
+        "1": "Nanashi",
+        "2": "[A Flash of Lightning]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02C-012",
+      "original_cells": [
+        "02C-012",
+        "アラン",
+        "【目覚めし戦士】",
+        "キャラ",
+        "いい眠気覚ましになるぜ。",
+        "2000",
+        "168",
+        "Ma_026_豪傑アラン_修3",
+        ""
+      ],
+      "translations": {
+        "1": "Alan",
+        "2": "[The Awakened Warrior]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02C-013",
+      "original_cells": [
+        "02C-013",
+        "イアン",
+        "【復讐鬼】",
+        "キャラ",
+        "許さねえ・・。",
+        "2000",
+        "170",
+        "Ma101_イアン",
+        ""
+      ],
+      "translations": {
+        "1": "Ian",
+        "2": "[The Vengeful Demon]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02C-014",
+      "original_cells": [
+        "02C-014",
+        "オルコ",
+        "【壊し専門】",
+        "キャラ",
+        "はら・・・へった。",
+        "2000",
+        "172",
+        "Ma_023_ｵﾙｺ",
+        ""
+      ],
+      "translations": {
+        "1": "Orco",
+        "2": "[The Demolisher]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02C-015",
+      "original_cells": [
+        "02C-015",
+        "ギロム",
+        "【殺し専門】",
+        "キャラ",
+        "百年早えんだよ、クソガキャーっ!!!",
+        "2000",
+        "174",
+        "Ma_078_ギロム_01",
+        ""
+      ],
+      "translations": {
+        "1": "Girom",
+        "2": "[The Killer]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02C-016",
+      "original_cells": [
+        "02C-016",
+        "レノ",
+        "【ロドキンファミリー】",
+        "キャラ",
+        "ヤローばっかでつまんねーの。",
+        "2000",
+        "176",
+        "Ma102_レノ",
+        ""
+      ],
+      "translations": {
+        "1": "Leno",
+        "2": "[The Rodkin Family]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02C-017",
+      "original_cells": [
+        "02C-017",
+        "パノ",
+        "【ロドキンファミリー】",
+        "キャラ",
+        "ねいちゃんがカタキとったる！",
+        "2000",
+        "178",
+        "Ma103_パノ",
+        ""
+      ],
+      "translations": {
+        "1": "Pano",
+        "2": "[The Rodkin Family]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02C-018",
+      "original_cells": [
+        "02C-018",
+        "ガロン",
+        "【ロドキンファミリー】",
+        "キャラ",
+        "正直、お前には同情を禁じえない。",
+        "2000",
+        "180",
+        "Ma104_ガロン",
+        ""
+      ],
+      "translations": {
+        "1": "Garon",
+        "2": "[The Rodkin Family]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02C-019",
+      "original_cells": [
+        "02C-019",
+        "ロコ",
+        "【幼き？呪具使い】",
+        "キャラ",
+        "ロコ、これでも32歳です。",
+        "2000",
+        "182",
+        "Ma105_ロコ",
+        ""
+      ],
+      "translations": {
+        "1": "Roco",
+        "2": "[The Young(?) Cursed-Tool User]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02C-020",
+      "original_cells": [
+        "02C-020",
+        "ファントム",
+        "【チェスの司令塔】",
+        "キャラ",
+        "思い出させてあげよう。チェスの兵隊の存在を!!!",
+        "2000",
+        "184",
+        "Ma106_ファントム_ani",
+        ""
+      ],
+      "translations": {
+        "1": "Phantom",
+        "2": "[Chess’s Commander]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-001",
+      "original_cells": [
+        "01A-001",
+        "バッボ",
+        "",
+        "ＡＲＭ",
+        "バッボ。それだけは思い出せる!!",
+        "1000",
+        "52",
+        "Ma_081_バッボA",
+        ""
+      ],
+      "translations": {
+        "1": "Babbo",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-002S",
+      "original_cells": [
+        "01A-002S",
+        "バッボ",
+        "",
+        "ＡＲＭ",
+        "「バッボ!!」「うむっ!!」",
+        "1000",
+        "54",
+        "Ma_082_バッボＢ",
+        ""
+      ],
+      "translations": {
+        "1": "Babbo",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-003",
+      "original_cells": [
+        "01A-003",
+        "ハンマーアーム",
+        "",
+        "ＡＲＭ",
+        "バッボ、バージョン①!!!",
+        "1000",
+        "56",
+        "Ma_030_ハンマーアーム",
+        ""
+      ],
+      "translations": {
+        "1": "Hammer Arm",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-004",
+      "original_cells": [
+        "01A-004",
+        "ダガーアーム",
+        "",
+        "ＡＲＭ",
+        "バッボ、バージョン①-Ｂ!!",
+        "1000",
+        "58",
+        "Ma_083_ダガーアーム_修1",
+        ""
+      ],
+      "translations": {
+        "1": "Dagger Arm",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-005",
+      "original_cells": [
+        "01A-005",
+        "ガーゴイル",
+        "",
+        "ＡＲＭ",
+        "出てこい、ガーゴイル!!!",
+        "1000",
+        "60",
+        "Ma_002_ガーコイル",
+        ""
+      ],
+      "translations": {
+        "1": "Gargoyle",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-006",
+      "original_cells": [
+        "01A-006",
+        "出てこい、ガーゴイル!!",
+        "",
+        "ＡＲＭ",
+        "ぶっ飛んで反省しやがれ!!!",
+        "1000",
+        "62",
+        "Ma_032_出てこいガーゴイル_修1",
+        ""
+      ],
+      "translations": {
+        "1": "Come Out, Gargoyle!",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-007",
+      "original_cells": [
+        "01A-007",
+        "スノーマン",
+        "",
+        "ＡＲＭ",
+        "私は「ユキちゃん」て呼んでる。",
+        "1000",
+        "64",
+        "Ma_033_スノーマンA",
+        ""
+      ],
+      "translations": {
+        "1": "Snowman",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-008S",
+      "original_cells": [
+        "01A-008S",
+        "スノーマン",
+        "",
+        "ＡＲＭ",
+        "行くよ、ユキちゃん！",
+        "1000",
+        "66",
+        "Ma_085_スノーマンB_修1",
+        ""
+      ],
+      "translations": {
+        "1": "Snowman",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-009",
+      "original_cells": [
+        "01A-009",
+        "ユキちゃん",
+        "",
+        "ＡＲＭ",
+        "ユキちゃんお願いっ！",
+        "1000",
+        "68",
+        "Ma_034_ユキちゃん_修1",
+        ""
+      ],
+      "translations": {
+        "1": "Yuki-chan",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-010",
+      "original_cells": [
+        "01A-010",
+        "たくさんのユキちゃん！！",
+        "",
+        "ＡＲＭ",
+        "おとなしそうに見えて― たくましい!!!",
+        "1000",
+        "70",
+        "Ma_035_たくさんのユキちゃん",
+        ""
+      ],
+      "translations": {
+        "1": "Lots of Yuki-chans!!",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-011",
+      "original_cells": [
+        "01A-011",
+        "バトルスコップ",
+        "",
+        "ＡＲＭ",
+        "ジャックの父の形見。",
+        "1000",
+        "72",
+        "Ma_036_バトルスコップA_修1",
+        ""
+      ],
+      "translations": {
+        "1": "Battle Shovel",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-012S",
+      "original_cells": [
+        "01A-012S",
+        "バトルスコップ",
+        "",
+        "ＡＲＭ",
+        "このスコップで、母ちゃんを守るっス！",
+        "1000",
+        "74",
+        "Ma_086_バトルスコップB",
+        ""
+      ],
+      "translations": {
+        "1": "Battle Shovel",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-013",
+      "original_cells": [
+        "01A-013",
+        "大地のスコップ",
+        "",
+        "ＡＲＭ",
+        "オイラもこいつで戦うっスよ！",
+        "1000",
+        "76",
+        "Ma_037_大地のスコップA_01",
+        ""
+      ],
+      "translations": {
+        "1": "Earth Shovel",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-014",
+      "original_cells": [
+        "01A-014",
+        "アースウェイブ",
+        "",
+        "ＡＲＭ",
+        "地波!!!（アースウェイブ　←ルビ）",
+        "1000",
+        "78",
+        "Ma_038_アースウェイヴ_修1",
+        ""
+      ],
+      "translations": {
+        "1": "Earth Wave",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-015",
+      "original_cells": [
+        "01A-015",
+        "リングアーマー",
+        "",
+        "ＡＲＭ",
+        "なめてると怪我するわよ！",
+        "1000",
+        "80",
+        "Ma_087_リングアーマー2_修2",
+        ""
+      ],
+      "translations": {
+        "1": "Ring Armor",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-016",
+      "original_cells": [
+        "01A-016",
+        "フライングレオ",
+        "",
+        "ＡＲＭ",
+        "ガーディアンには･･･ ガーディアンで!!",
+        "1000",
+        "82",
+        "Ma_039_フライングレオ_修2",
+        ""
+      ],
+      "translations": {
+        "1": "Flying Leo",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-017",
+      "original_cells": [
+        "01A-017",
+        "行きな!!フライングレオ",
+        "",
+        "ＡＲＭ",
+        "ウォオオオオオ!!",
+        "1000",
+        "84",
+        "Ma_040_行きな！フライングレオ_修1",
+        ""
+      ],
+      "translations": {
+        "1": "Go, Flying Leo!",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-018",
+      "original_cells": [
+        "01A-018",
+        "13トーテムポール",
+        "",
+        "ＡＲＭ",
+        "う･･･ うわあ、いい眺め。",
+        "1000",
+        "86",
+        "Ma_088_13トーテムポール_修1",
+        ""
+      ],
+      "translations": {
+        "1": "13 Totem Poles",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-019",
+      "original_cells": [
+        "01A-019",
+        "キツめの罰が必要だね",
+        "",
+        "ＡＲＭ",
+        "そのARMが何なのかわかっているのか！？　　",
+        "1000",
+        "88",
+        "Ma_041_キツメの罰が必要だね_",
+        ""
+      ],
+      "translations": {
+        "1": "You Need a Harsher Punishment",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-020",
+      "original_cells": [
+        "01A-020",
+        "カゴの鳥",
+        "",
+        "ＡＲＭ",
+        "ダークネスＡＲＭ･･･ 「カゴの鳥」",
+        "1000",
+        "90",
+        "Ma_042_カゴの鳥",
+        ""
+      ],
+      "translations": {
+        "1": "Bird in a Cage",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-021",
+      "original_cells": [
+        "01A-021",
+        "門番ピエロ",
+        "",
+        "ＡＲＭ",
+        "トンネル　カイツウでース（音符）",
+        "1000",
+        "92",
+        "Ma_089_門番ピエロ_修1",
+        ""
+      ],
+      "translations": {
+        "1": "Gatekeeper Clown",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-022",
+      "original_cells": [
+        "01A-022",
+        "エアハンマー",
+        "",
+        "ＡＲＭ",
+        "特殊能力、一定空間の凝固！！",
+        "1000",
+        "94",
+        "Ma_091_エアハンマー_修1",
+        ""
+      ],
+      "translations": {
+        "1": "Air Hammer",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-023",
+      "original_cells": [
+        "01A-023",
+        "エレクトリック・アイ",
+        "",
+        "ＡＲＭ",
+        "こいつを使うたび･･･ 誰かを思い出しそうになる。",
+        "1000",
+        "96",
+        "Ma_092_エレクトリックアイ",
+        ""
+      ],
+      "translations": {
+        "1": "Electric Eye",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-024",
+      "original_cells": [
+        "01A-024",
+        "ここがワレの墓場や",
+        "",
+        "ＡＲＭ",
+        "ワレはもう･･･ 誰も殺せへんよ。",
+        "1000",
+        "98",
+        "Ma_045_ここがワレの墓場や_修1",
+        ""
+      ],
+      "translations": {
+        "1": "This Is Your Grave",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-025",
+      "original_cells": [
+        "01A-025",
+        "パイソンウィップ",
+        "",
+        "ＡＲＭ",
+        "ぐっ！攻撃が速すぎて見えない！！",
+        "1000",
+        "100",
+        "Ma_090_パイソンウィップ",
+        ""
+      ],
+      "translations": {
+        "1": "Python Whip",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-026",
+      "original_cells": [
+        "01A-026",
+        "オクトパス",
+        "",
+        "ＡＲＭ",
+        "左右合わせて8本。しかも再生能力つきね。",
+        "1000",
+        "102",
+        "Ma_043_オクトパス",
+        ""
+      ],
+      "translations": {
+        "1": "Octopus",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-027",
+      "original_cells": [
+        "01A-027",
+        "泣き顔にしてやるよ。",
+        "",
+        "ＡＲＭ",
+        "オレっちやっぱアンタ嫌いだわ。",
+        "1000",
+        "104",
+        "Ma_044_泣き顔にしてやるよ。",
+        ""
+      ],
+      "translations": {
+        "1": "I’ll Make You Cry",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-028",
+      "original_cells": [
+        "01A-028",
+        "癒しの天使",
+        "",
+        "ＡＲＭ",
+        "申し訳ありません･･･　イアン。",
+        "1000",
+        "106",
+        "Ma_046_癒しの天使",
+        ""
+      ],
+      "translations": {
+        "1": "Healing Angel",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-029",
+      "original_cells": [
+        "01A-029",
+        "マジックカーペット",
+        "",
+        "ＡＲＭ",
+        "飛んでる！飛んでんぞーっ！！",
+        "1000",
+        "108",
+        "Ma_051_マジックカーペット_01",
+        ""
+      ],
+      "translations": {
+        "1": "Magic Carpet",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-030",
+      "original_cells": [
+        "01A-030",
+        "アンダータ",
+        "",
+        "ＡＲＭ",
+        "一瞬でヤツらのトコ行けるで！",
+        "1000",
+        "110",
+        "Ma_052_アンダータ_修1",
+        ""
+      ],
+      "translations": {
+        "1": "Andata",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-031",
+      "original_cells": [
+        "01A-031",
+        "ネックレスブレード",
+        "",
+        "ＡＲＭ",
+        "ブレードの能力を解放･･･",
+        "1000",
+        "112",
+        "Ma_053_ネックレスブレード_修2",
+        ""
+      ],
+      "translations": {
+        "1": "Necklace Blade",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01A-032",
+      "original_cells": [
+        "01A-032",
+        "バッボ",
+        "",
+        "ＡＲＭ",
+        "ファントムの忌まわしきARM！",
+        "1000",
+        "114",
+        "Ma_055_バッボ",
+        ""
+      ],
+      "translations": {
+        "1": "Babbo",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02A-001",
+      "original_cells": [
+        "02A-001",
+        "バッボ",
+        "",
+        "ARM",
+        "・・・行くぜバッボ。　むっ。",
+        "2000",
+        "186",
+        "Ma107_バッボ_M1",
+        ""
+      ],
+      "translations": {
+        "1": "Babbo",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02A-002",
+      "original_cells": [
+        "02A-002",
+        "ガーゴイル",
+        "",
+        "ARM",
+        "アレ出すぞ!!",
+        "2000",
+        "188",
+        "Ma_084_ガーゴイルB",
+        ""
+      ],
+      "translations": {
+        "1": "Gargoyle",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02A-003",
+      "original_cells": [
+        "02A-003",
+        "癒しの天使",
+        "",
+        "ARM",
+        "姫様少しお休みくだされ!!",
+        "2000",
+        "190",
+        "Ma108_癒しの天使",
+        ""
+      ],
+      "translations": {
+        "1": "Healing Angel",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02A-004",
+      "original_cells": [
+        "02A-004",
+        "アースビーンズ",
+        "",
+        "ARM",
+        "育てっ!!! 地豆!!!（※ルビ／アースビーンズ）",
+        "2000",
+        "192",
+        "Ma109_アースビーンズ",
+        ""
+      ],
+      "translations": {
+        "1": "Earth Beans",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02A-005",
+      "original_cells": [
+        "02A-005",
+        "ブリキン",
+        "",
+        "ARM",
+        "今、命名。",
+        "2000",
+        "194",
+        "Ma110_ブリキン_M1",
+        ""
+      ],
+      "translations": {
+        "1": "Burikin",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02A-006",
+      "original_cells": [
+        "02A-006",
+        "エアハンマー",
+        "",
+        "ARM",
+        "・・・ずっと一人で退屈してたトコよ。",
+        "2000",
+        "196",
+        "Ma111_エアハンマー",
+        ""
+      ],
+      "translations": {
+        "1": "Air Hammer",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02A-007",
+      "original_cells": [
+        "02A-007",
+        "ケジメ",
+        "",
+        "ARM",
+        "そいつの名前教えんかい。",
+        "2000",
+        "198",
+        "Ma112_ケジメ_M1",
+        ""
+      ],
+      "translations": {
+        "1": "Payback",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02A-008",
+      "original_cells": [
+        "02A-008",
+        "エレクトリック・アイ",
+        "",
+        "ARM",
+        "喰らいや!!",
+        "2000",
+        "200",
+        "Ma113_エレクトリック",
+        ""
+      ],
+      "translations": {
+        "1": "Electric Eye",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02A-009",
+      "original_cells": [
+        "02A-009",
+        "13トーテムポールロッドバージョン",
+        "",
+        "ARM",
+        "これが実戦だというモノを見せてやる。",
+        "2000",
+        "202",
+        "Ma114_13トーテムポールロッドバージョン_r1",
+        ""
+      ],
+      "translations": {
+        "1": "13 Totem Pole: Rod Version",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02A-010",
+      "original_cells": [
+        "02A-010",
+        "13トーテムポール",
+        "",
+        "ARM",
+        "苦痛を伴う方がお気に入りのようだ。",
+        "2000",
+        "204",
+        "Ma115_13トーテム_M1",
+        ""
+      ],
+      "translations": {
+        "1": "13 Totem Poles",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02A-011",
+      "original_cells": [
+        "02A-011",
+        "オレっちのエモノだよ",
+        "",
+        "ARM",
+        "動くな。",
+        "2000",
+        "206",
+        "Ma116_オレッちの_M1",
+        ""
+      ],
+      "translations": {
+        "1": "That’s My Prey",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02A-012",
+      "original_cells": [
+        "02A-012",
+        "パイソンウィップ",
+        "",
+        "ARM",
+        "いたぶっちゃうかぁ。",
+        "2000",
+        "208",
+        "Ma117_パイソンウィップ",
+        ""
+      ],
+      "translations": {
+        "1": "Python Whip",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02A-013",
+      "original_cells": [
+        "02A-013",
+        "身体硬質化",
+        "",
+        "ARM",
+        "なんだよおまえーっ！！？",
+        "2000",
+        "210",
+        "Ma118_身体硬質化",
+        ""
+      ],
+      "translations": {
+        "1": "Body Hardening",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02A-014",
+      "original_cells": [
+        "02A-014",
+        "おまえら･･･なに？てき？",
+        "",
+        "ARM",
+        "おれ・・・きもちわるくないーっ!!!",
+        "2000",
+        "212",
+        "Ma_047_身体硬質化_02",
+        ""
+      ],
+      "translations": {
+        "1": "Who Are You...? Enemies?",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02A-015",
+      "original_cells": [
+        "02A-015",
+        "アイスドアース",
+        "",
+        "ARM",
+        "気に入らねーっ、その態度!!",
+        "2000",
+        "214",
+        "Ma_048_アイスドアース_修1",
+        ""
+      ],
+      "translations": {
+        "1": "Ice Dearth",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02A-016",
+      "original_cells": [
+        "02A-016",
+        "特大アイスドアース",
+        "",
+        "ARM",
+        "くれてやんぜ!!",
+        "2000",
+        "216",
+        "Ma119_特大ｱｲｽﾄﾞｱｰｽ_M1",
+        ""
+      ],
+      "translations": {
+        "1": "Mega Ice Dearth",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02A-017",
+      "original_cells": [
+        "02A-017",
+        "メリロさん",
+        "",
+        "ARM",
+        "トレーニングの内容はAＲＭとの一体化です。",
+        "2000",
+        "218",
+        "Ma_049_メリロさん_修1",
+        ""
+      ],
+      "translations": {
+        "1": "Merillo",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02A-018",
+      "original_cells": [
+        "02A-018",
+        "ブモルさん",
+        "",
+        "ARM",
+        "AＲＭとシンクロしろっての!!シックスセンス!!",
+        "2000",
+        "220",
+        "Ma_050_ブモルさん",
+        ""
+      ],
+      "translations": {
+        "1": "Bumoru",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02A-019",
+      "original_cells": [
+        "02A-019",
+        "マジックミラーリング",
+        "",
+        "ARM",
+        "これを奪い手に入れよ!!",
+        "2000",
+        "222",
+        "Ma_054_マジックミラーリング_修1",
+        ""
+      ],
+      "translations": {
+        "1": "Magic Mirroring",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02A-020",
+      "original_cells": [
+        "02A-020",
+        "フレイムボール",
+        "",
+        "ARM",
+        "喰らって焼けくされ!!!",
+        "2000",
+        "224",
+        "Ma120_フレイムボール",
+        ""
+      ],
+      "translations": {
+        "1": "Flame Ball",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02A-021",
+      "original_cells": [
+        "02A-021",
+        "炎よ、刃にまとわれ!!!",
+        "",
+        "ARM",
+        "アホな事言ってんなオヤジ!!",
+        "2000",
+        "226",
+        "Ma121_炎よ刃にまとわれ",
+        ""
+      ],
+      "translations": {
+        "1": "Flame, Clothe My Blade!!!",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02A-022",
+      "original_cells": [
+        "02A-022",
+        "ボールハンマー",
+        "",
+        "ARM",
+        "なんかキミ弱っちそうだね。",
+        "2000",
+        "228",
+        "Ma122_ボールハンマー_M１",
+        ""
+      ],
+      "translations": {
+        "1": "Ball Hammer",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02A-023",
+      "original_cells": [
+        "02A-023",
+        "ホーミングボールハンマー",
+        "",
+        "ARM",
+        "ドンっ!!",
+        "2000",
+        "230",
+        "Ma123_ホーミング_M1",
+        ""
+      ],
+      "translations": {
+        "1": "Homing Ball Hammer",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02A-024",
+      "original_cells": [
+        "02A-024",
+        "5つの身体硬質化",
+        "",
+        "ARM",
+        "だが・・・効かん。",
+        "2000",
+        "232",
+        "Ma124_五つの身体硬質化",
+        ""
+      ],
+      "translations": {
+        "1": "Fivefold Body Hardening",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02A-025",
+      "original_cells": [
+        "02A-025",
+        "5つの腕力向上型",
+        "",
+        "ARM",
+        "子供にしてはいいパンチだ。",
+        "2000",
+        "234",
+        "Ma125_五つの腕力向上型",
+        ""
+      ],
+      "translations": {
+        "1": "Fivefold Strength Boost",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02A-026",
+      "original_cells": [
+        "02A-026",
+        "呪いのワラ人形",
+        "",
+        "ARM",
+        "レディファーストですから。",
+        "2000",
+        "236",
+        "Ma126_呪いのワラ人形_M1",
+        ""
+      ],
+      "translations": {
+        "1": "Cursed Straw Doll",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02A-027",
+      "original_cells": [
+        "02A-027",
+        "ネグゼロ",
+        "",
+        "ARM",
+        "動きを－封ず!!!",
+        "2000",
+        "238",
+        "Ma127_ネグゼロ",
+        ""
+      ],
+      "translations": {
+        "1": "Negzero",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02A-028",
+      "original_cells": [
+        "02A-028",
+        "リングダガー",
+        "",
+        "ARM",
+        "これ欲しい？",
+        "2000",
+        "240",
+        "Ma128_リングダガー",
+        ""
+      ],
+      "translations": {
+        "1": "Ring Dagger",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02A-029",
+      "original_cells": [
+        "02A-029",
+        "少しはギンタを見習いなよ。",
+        "",
+        "ARM",
+        "来世でね。",
+        "2000",
+        "242",
+        "Ma129_少しはギンタを",
+        ""
+      ],
+      "translations": {
+        "1": "Try to Be More Like Ginta",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01E-001",
+      "original_cells": [
+        "01E-001",
+        "扉の向こうへ",
+        "",
+        "イベント",
+        "この扉の向こうに、ワクワクが待ってる！",
+        "1000",
+        "116",
+        "Ma_003_KNOCKIN'ON",
+        ""
+      ],
+      "translations": {
+        "1": "Beyond the Door",
+        "3": "Event",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01E-002",
+      "original_cells": [
+        "01E-002",
+        "息子の夢 完全否定",
+        "",
+        "イベント",
+        "んなモンねえよ。バカ。",
+        "1000",
+        "118",
+        "Ma_056_息子の夢完全否定_修1",
+        ""
+      ],
+      "translations": {
+        "1": "Crushing My Son’s Dream",
+        "3": "Event",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01E-003",
+      "original_cells": [
+        "01E-003",
+        "頑固一徹モード",
+        "",
+        "イベント",
+        "出た姫様のっ･･･ 頑固一徹モード!!!",
+        "1000",
+        "120",
+        "Ma_057_頑固一徹モード_修1",
+        ""
+      ],
+      "translations": {
+        "1": "Hardheaded Mode",
+        "3": "Event",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01E-004",
+      "original_cells": [
+        "01E-004",
+        "洞窟探検",
+        "",
+        "イベント",
+        "いよいしょおーっ!!",
+        "1000",
+        "122",
+        "Ma_058_洞窟探検Ａ",
+        ""
+      ],
+      "translations": {
+        "1": "Cave Exploration",
+        "3": "Event",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01E-005S",
+      "original_cells": [
+        "01E-005S",
+        "洞窟探検",
+        "",
+        "イベント",
+        "よっしゃあー！洞窟探検すんぞー！",
+        "1000",
+        "124",
+        "Ma_095_洞窟探検B_修1",
+        ""
+      ],
+      "translations": {
+        "1": "Cave Exploration",
+        "3": "Event",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01E-006",
+      "original_cells": [
+        "01E-006",
+        "おやすみ･･･、そんでおはようだ。",
+        "",
+        "イベント",
+        "ワンちゃんが！？オッチャンに化けた！？",
+        "1000",
+        "126",
+        "Ma_061_おやすみそしておはようだ_01",
+        ""
+      ],
+      "translations": {
+        "1": "Goodnight... and Then Good Morning",
+        "3": "Event",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01E-007",
+      "original_cells": [
+        "01E-007",
+        "眠りから覚めた姫",
+        "",
+        "イベント",
+        "今･･･ そこから出してやるぞ。",
+        "1000",
+        "128",
+        "Ma_062_眠りから覚めた姫A_修1",
+        ""
+      ],
+      "translations": {
+        "1": "The Princess Awakens",
+        "3": "Event",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01E-008S",
+      "original_cells": [
+        "01E-008S",
+        "眠りから覚めた姫",
+        "",
+        "イベント",
+        "大変っ。私、はじめてだよ？",
+        "1000",
+        "130",
+        "Ma_096_眠りから覚めた姫B",
+        ""
+      ],
+      "translations": {
+        "1": "The Princess Awakens",
+        "3": "Event",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01E-009",
+      "original_cells": [
+        "01E-009",
+        "修練の門",
+        "",
+        "イベント",
+        "時間の流れが1/60になる異空間。",
+        "1000",
+        "132",
+        "Ma_063_修練の門A",
+        ""
+      ],
+      "translations": {
+        "1": "Gate of Training",
+        "3": "Event",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01E-010S",
+      "original_cells": [
+        "01E-010S",
+        "修練の門",
+        "",
+        "イベント",
+        "どうなるかはてめぇら次第よ！",
+        "1000",
+        "134",
+        "Ma_097_修練の門Ｃ",
+        ""
+      ],
+      "translations": {
+        "1": "Gate of Training",
+        "3": "Event",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01E-011",
+      "original_cells": [
+        "01E-011",
+        "能力データ入力",
+        "",
+        "イベント",
+        "新しいデータを入力してください。",
+        "1000",
+        "136",
+        "Ma_065_能力データ入力_修2",
+        ""
+      ],
+      "translations": {
+        "1": "Enter Ability Data",
+        "3": "Event",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01E-012",
+      "original_cells": [
+        "01E-012",
+        "呪いのタトゥ",
+        "",
+        "イベント",
+        "キミはボクと同類になる。",
+        "1000",
+        "138",
+        "Ma_066_呪いのタトゥ",
+        ""
+      ],
+      "translations": {
+        "1": "Cursed Tattoo",
+        "3": "Event",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01E-013",
+      "original_cells": [
+        "01E-013",
+        "割れずの門",
+        "",
+        "イベント",
+        "腕力じゃないの、ARMとのシンクロが重要！",
+        "1000",
+        "140",
+        "Ma_067_割れずの門_修3",
+        ""
+      ],
+      "translations": {
+        "1": "Unbreakable Gate",
+        "3": "Event",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01E-014",
+      "original_cells": [
+        "01E-014",
+        "スノウちゃんキーック！！",
+        "",
+        "イベント",
+        "ギンタ、ドロシーとばっか話しててつまんない！",
+        "1000",
+        "142",
+        "Ma_068_スノウちゃんキック_修1",
+        ""
+      ],
+      "translations": {
+        "1": "Snow’s Kick!!",
+        "3": "Event",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-01E-015",
+      "original_cells": [
+        "01E-015",
+        "異界からきた男",
+        "",
+        "イベント",
+        "オレたちは「ダンナ」と呼んでいた。",
+        "1000",
+        "144",
+        "Ma_069_異界から来た男_修1",
+        ""
+      ],
+      "translations": {
+        "1": "The Man from Another World",
+        "3": "Event",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02E-001",
+      "original_cells": [
+        "02E-001",
+        "モックとチャップの企み",
+        "",
+        "イベント",
+        "わかっておるな？チャップ!!　ハイ!モック様！",
+        "2000",
+        "244",
+        "Ma130_ﾓｯｸとﾁｬｯﾌﾟ",
+        ""
+      ],
+      "translations": {
+        "1": "Mock and Chap’s Scheme",
+        "3": "Event",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02E-002",
+      "original_cells": [
+        "02E-002",
+        "賭け",
+        "",
+        "イベント",
+        "応えよ　異界の住人!!!!",
+        "2000",
+        "246",
+        "Ma131_賭け",
+        ""
+      ],
+      "translations": {
+        "1": "The Wager",
+        "3": "Event",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02E-003",
+      "original_cells": [
+        "02E-003",
+        "修練の門",
+        "",
+        "イベント",
+        "ダンナもこれで強くなっていった。",
+        "2000",
+        "248",
+        "Ma_064_修練の門B",
+        ""
+      ],
+      "translations": {
+        "1": "Gate of Training",
+        "3": "Event",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02E-004",
+      "original_cells": [
+        "02E-004",
+        "かけがえなきもの",
+        "",
+        "イベント",
+        "やるならオレにしろ!!!",
+        "2000",
+        "250",
+        "Ma_060_かけがえなきもの_修1",
+        ""
+      ],
+      "translations": {
+        "1": "Someone Irreplaceable",
+        "3": "Event",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02E-005",
+      "original_cells": [
+        "02E-005",
+        "思い出す誰か",
+        "",
+        "イベント",
+        "こいつを使うたび・・・、誰かを思い出しそうになるわ。",
+        "2000",
+        "252",
+        "Ma_059_思い出す誰か_修3",
+        ""
+      ],
+      "translations": {
+        "1": "Someone I Remember",
+        "3": "Event",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02E-006",
+      "original_cells": [
+        "02E-006",
+        "妙なムカムカ",
+        "",
+        "イベント",
+        "なァーんかムカムカするわ!!",
+        "2000",
+        "254",
+        "Ma_093_妙なムカムカ_修1",
+        ""
+      ],
+      "translations": {
+        "1": "A Strange Irritation",
+        "3": "Event",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02E-007",
+      "original_cells": [
+        "02E-007",
+        "妙なイライラ",
+        "",
+        "イベント",
+        "なァーんかイライラする!!",
+        "2000",
+        "256",
+        "Ma_094_妙なイライラ",
+        ""
+      ],
+      "translations": {
+        "1": "A Strange Annoyance",
+        "3": "Event",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02E-008",
+      "original_cells": [
+        "02E-008",
+        "おとし前",
+        "",
+        "イベント",
+        "それが\"チェス\"かて…、自分にはカンケイあらへん。",
+        "2000",
+        "258",
+        "Ma132_おとし前_M1",
+        ""
+      ],
+      "translations": {
+        "1": "Payback",
+        "3": "Event",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02E-009",
+      "original_cells": [
+        "02E-009",
+        "選択権",
+        "",
+        "イベント",
+        "\"苦痛を伴う敗北\"と\"伴わない敗北\"─どちらを選ぶ？",
+        "2000",
+        "260",
+        "Ma133_選択権",
+        ""
+      ],
+      "translations": {
+        "1": "The Choice",
+        "3": "Event",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02E-010",
+      "original_cells": [
+        "02E-010",
+        "大事なオヤジ",
+        "",
+        "イベント",
+        "私達にとっては大事なオヤジなんだ!!",
+        "2000",
+        "262",
+        "Ma134_大事なオヤジ",
+        ""
+      ],
+      "translations": {
+        "1": "Our Dear Old Man",
+        "3": "Event",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02E-011",
+      "original_cells": [
+        "02E-011",
+        "ファントム復活",
+        "",
+        "イベント",
+        "ファントムは殺せない。必ずまた甦る。",
+        "2000",
+        "264",
+        "Ma135_ファントム復活",
+        ""
+      ],
+      "translations": {
+        "1": "Phantom Returns",
+        "3": "Event",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02E-012",
+      "original_cells": [
+        "02E-012",
+        "戦慄の伝令",
+        "",
+        "イベント",
+        "チェスの兵隊全員集結せよ!!",
+        "2000",
+        "266",
+        "Ma136_戦慄の伝令",
+        ""
+      ],
+      "translations": {
+        "1": "A Terrifying Order",
+        "3": "Event",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-02E-013",
+      "original_cells": [
+        "02E-013",
+        "開戦!!ウォーゲーム",
+        "",
+        "イベント",
+        "第2次メルヘヴン大戦を開戦する!!!",
+        "2000",
+        "268",
+        "Ma137_ウォーゲーム開戦",
+        ""
+      ],
+      "translations": {
+        "1": "The War Game Begins!!",
+        "3": "Event",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-L01C-001",
+      "original_cells": [
+        "L01C-001",
+        "ギンタ",
+        "【ダンナの息子】",
+        "キャラ",
+        "オレはダンナを越えるぜ!",
+        "10000",
+        "500",
+        "Ma138_ギンタ_M1",
+        ""
+      ],
+      "translations": {
+        "1": "Ginta",
+        "2": "[The Boss’s Son]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-L01C-002",
+      "original_cells": [
+        "L01C-002",
+        "ドロシー",
+        "【西風の魔女】",
+        "キャラ",
+        "ふふふ・・・（ハート）",
+        "10000",
+        "502",
+        "Ma139_ドロシー",
+        ""
+      ],
+      "translations": {
+        "1": "Dorothy",
+        "2": "[The Witch of the West Wind]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-L01C-003",
+      "original_cells": [
+        "L01C-003",
+        "アルヴィス",
+        "【束の間の休息】",
+        "キャラ",
+        "ベルはオレが守ってやる。",
+        "10000",
+        "504",
+        "Ma140_アルヴィス",
+        ""
+      ],
+      "translations": {
+        "1": "Alviss",
+        "2": "[A Brief Respite]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-L01C-004",
+      "original_cells": [
+        "L01C-004",
+        "ファントム",
+        "【座して見る者】",
+        "キャラ",
+        "次は何を見せてくれるんだい?ギンタ!!",
+        "10000",
+        "506",
+        "Ma141_ファントム_M1",
+        ""
+      ],
+      "translations": {
+        "1": "Phantom",
+        "2": "[The One Who Watches]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-L01A-001",
+      "original_cells": [
+        "L01A-001",
+        "バッボ",
+        "",
+        "ARM",
+        "そのARMを武器にファントムは同志を殺していった!",
+        "10000",
+        "508",
+        "Ma142_バッボ_M3",
+        ""
+      ],
+      "translations": {
+        "1": "Babbo",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-P-001",
+      "original_cells": [
+        "P-001",
+        "ギンタ",
+        "【異界の住人】",
+        "キャラ",
+        "ワクワクが止まらねえ！！",
+        "1000",
+        "50",
+        "",
+        ""
+      ],
+      "translations": {
+        "1": "Ginta",
+        "2": "[A Visitor from Another World]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-P-002　 NOT FOR SALE CN331",
+      "original_cells": [
+        "P-002　 NOT FOR SALE CN331",
+        "ギンタ",
+        "【冒険の始まり】",
+        "キャラ",
+        "いくぞバッボ!!",
+        "50000",
+        "600",
+        "Ma143_145",
+        ""
+      ],
+      "translations": {
+        "1": "Ginta",
+        "2": "[The Adventure Begins]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-P-003　 NOT FOR SALE CN330",
+      "original_cells": [
+        "P-003　 NOT FOR SALE CN330",
+        "ギンタ",
+        "【若きリーダー】",
+        "キャラ",
+        "さーて一発。気合い入れっか!!",
+        "50000",
+        "602",
+        "Ma144_ギンタ_M1",
+        ""
+      ],
+      "translations": {
+        "1": "Ginta",
+        "2": "[The Young Leader]",
+        "3": "Character",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "key-P-004　 NOT FOR SALE CN332",
+      "original_cells": [
+        "P-004　 NOT FOR SALE CN332",
+        "バッボ",
+        "",
+        "ARM",
+        "ウムっ!!",
+        "50000",
+        "604",
+        "Ma143_145",
+        ""
+      ],
+      "translations": {
+        "1": "Babbo",
+        "3": "ARM",
+        "4": null
+      },
+      "line_ending": "\r\n"
+    }
+  ]
+}

@@ -8,6 +8,9 @@
       "path": "disc!/_DATA.YFS;1!/data/common.pac!/_msg.dat",
       "size": 20452,
       "sha256": "0a9f5da3da31ce313523ab3f0591583669a9cb48146a3e4a91b04e3a5edd85cb",
+      "tracked_translation_source": "localization/messages.json",
+      "translated_draft_entries": 229,
+      "untranslated_entries": 0,
       "translation_relevance": "confirmed_ui_messages",
       "evidence": "229 CP932 NUL-terminated entries include Japanese memory-card/save/load prompts.",
       "confidence": "VERIFIED: text and table structure recovered for this member",
@@ -25,9 +28,15 @@
       "evidence": "CP932 tab-separated rows include Japanese character names, card titles, categories, and dialogue captions.",
       "confidence": "OBSERVED: language-bearing catalogue content; runtime use not yet traced",
       "extraction_status": "reversible CP932/UTF-8 companion",
-      "editability_status": "plain UTF-8 table; field constraints not yet specified",
-      "rebuild_status": "workspace text encoding path available; changed file not yet tested",
-      "relocation_status": "not yet tested for this member"
+      "editability_status": "source-hash-anchored UTF-8 JSON; stable IDs; tab/blank-cell/CRLF-preserving CP932 apply",
+      "rebuild_status": "catalog translations inserted and reparsed exactly through ISO/YFS/PAC; captions remain untranslated",
+      "relocation_status": "full ISO/YFS/PAC rebuild exercised; runtime acceptance unverified",
+      "tracked_translation_source": "localization/card_list.json",
+      "translated_name_fields": 142,
+      "translated_title_fields": 51,
+      "translated_category_fields": 141,
+      "translated_caption_fields": 0,
+      "limits": "142/142 nonempty name fields, 51/51 character-title fields, and 141/141 categories translated; 0/142 captions translated. Names and titles are draft; runtime use, layout and rendering are unverified."
     },
     {
       "path": "disc!/_DATA.YFS;1!/data/menu/MenuBinary.pac!/DataBase.txt",
@@ -37,9 +46,16 @@
       "evidence": "CP932 tab-separated rows include character, costume, voice, movie, sound, and map labels.",
       "confidence": "OBSERVED: language-bearing menu/catalogue content; runtime use not yet traced",
       "extraction_status": "reversible CP932/UTF-8 companion",
-      "editability_status": "plain UTF-8 table; field constraints not yet specified",
-      "rebuild_status": "workspace text encoding path available; changed file not yet tested",
-      "relocation_status": "not yet tested for this member"
+      "editability_status": "source-hash-anchored UTF-8 JSON; stable row IDs; tab/blank-cell/CRLF-preserving CP932 apply",
+      "rebuild_status": "catalog translations inserted and reparsed exactly through ISO/YFS/PAC",
+      "relocation_status": "full ISO/YFS/PAC rebuild exercised; runtime acceptance unverified",
+      "tracked_translation_source": "localization/database.json",
+      "translated_fields": 87,
+      "eligible_fields": 126,
+      "translated_heading_fields": 7,
+      "translated_label_fields": 70,
+      "translated_password_markers": 10,
+      "limits": "7/7 headings and 70/70 display labels translated; 10 Password markers translated. Other 39 nonempty column-5 unlock-condition metadata fields remain original because their runtime semantics are not established."
     },
     {
       "path": "disc!/_DATA.YFS;1!/data/menu/*.b",

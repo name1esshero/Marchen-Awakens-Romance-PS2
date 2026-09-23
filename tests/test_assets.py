@@ -12,6 +12,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import assets
 import messages
 import message_catalog
+import text_catalog
 from test_bootstrap import iso as make_iso
 
 
@@ -183,6 +184,32 @@ class AssetsTests(unittest.TestCase):
                 result = messages.parse(rebuilt.read(entry['size']))
             self.assertEqual(result['entries'][0]['text'], catalog['entries'][0]['translation'])
             self.assertEqual(result['entries'][1]['key'], 9)
+
+    def test_text_catalog_translation_reinserts_through_archive(self):
+        raw = 'ID\t名前\t\r\n01\tギンタ\t\r\n'.encode('cp932')
+        original = pac([raw])
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d) / 'source'
+            self.export(original, root)
+            layout_path = root / 'layout.json'
+            layout = json.loads(layout_path.read_text())
+            member = next(piece for piece in layout['pieces'] if piece.get('name') == 'test.bin')
+            member['name'] = 'CardList.txt'
+            assets.save_json(layout_path, layout)
+            with redirect_stdout(io.StringIO()):
+                assets.prepare(root, report=None)
+
+            catalog = text_catalog.create(raw, 'disc!/CardList.txt', [1], id_column=0)
+            catalog['rows'][1]['translations']['1'] = 'Ginta'
+            catalog_path = Path(d) / 'card-list.json'
+            assets.save_json(catalog_path, catalog)
+            output = Path(d) / 'mod.pac'
+            assets.build(root, output, relocate=True, text_translations_paths=[catalog_path])
+            with output.open('rb') as stream:
+                member = assets.archive(stream, 0, output.stat().st_size)[2][0]
+                stream.seek(member['offset'])
+                rebuilt = stream.read(member['size'])
+            self.assertEqual(rebuilt, 'ID\t名前\t\r\n01\tGinta\t\r\n'.encode('cp932'))
 
 
 if __name__ == '__main__':

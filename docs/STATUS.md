@@ -25,15 +25,21 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   encoding, member growth, ISO directory relocation, and volume-length update.
   `make build-mod-disc` provides the corresponding experimental workspace build
   command. No retail menu/dialogue table has yet been edited and tested in-game.
-- One 20,452-byte `_msg.dat` message table now has a strict editable JSON
+- One 20,452-byte `_msg.dat` message table has a strict editable JSON
   representation with 229 entries and a tracked source at
-  `localization/messages.json`. One save/start prompt has an initial English
-  rendering; a 193-byte translation grew the 178-byte CP932 original by 15 bytes.
-  The catalog-driven mod ISO inventories and reparses through ISO/YFS/PAC, with
-  all 229 entries recovered and the English prompt at its relocated table record.
-  The authenticated reference comparison reports the expected mismatch. Runtime
-  line layout and acceptance remain untested. The append strategy grows the ISO
-  by the full 428,967,936-byte YFS for this 15-byte message increase.
+  `localization/messages.json`. Initial English drafts now cover all 229 entries
+  across save/load prompts, menus, tutorials, character profiles, battlefields,
+  ARM descriptions, Magic Stones, and the none/unused labels. All message translations
+  encode as CP932. An earlier build snapshot measured 20,702 bytes (+250); the
+  current combined catalog build measures 20,700 bytes (+248). The current 5,016,748,032-byte catalog-driven mod ISO inventories as 42 entries
+  and reparses all three catalog-applied resources through ISO/YFS/PAC.
+  Current source sizes are 20,700 bytes for `_msg.dat` (+248), 13,567 bytes for
+  `CardList.txt`, and 3,319 bytes for `DataBase.txt`. The 142-row card catalog
+  has draft translations for all 142 names, all 51 character titles and all 141
+  categories; all 142 captions remain Japanese. These are unreviewed English drafts. The 71-row database has 87/126 fields
+  translated; 39 unlock-condition fields remain original pending semantic evidence.
+  Runtime line layout and acceptance remain untested. Current append placement adds the
+  full 428,967,936-byte YFS to the 5,016,748,032-byte ISO.
 - The complete 3,445,204-byte boot ELF now rebuilds identically from repository
   text artifacts plus assembled code. `cmp` verifies every output byte.
 - An isolated build containing no ISO, extracted files, reports, existing build
@@ -72,8 +78,8 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   such as YPC geometry, texture payloads, audio, fonts and scripts remain binary;
   moved/grown assets have no runtime validation. The two catalog tables and the
   recovered `_msg.dat` table are translation-bearing surfaces; broader UI `.b`
-  resources remain opaque. The message catalog has 1 initial translation and
-  228 untranslated entries. DMY files, module internals and DVP
+  resources remain opaque. All 229 messages have draft translations; names,
+  mechanics, and display constraints need review. DMY files, module internals and DVP
   overlay semantics remain open.
 - Independent retail-dump authentication remains unestablished.
 

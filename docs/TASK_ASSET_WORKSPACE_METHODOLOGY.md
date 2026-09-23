@@ -50,19 +50,34 @@ all 30 original member/gap hashes intact. See [the message-table evidence](tasks
 
 This inventory is a starting point, not a claim that all game text has been
 found. UI `.b` resources and other binary formats remain candidates for separate
-format work.
+format work. The next localization checkpoint is the 724 menu `.b` leaves: classify
+headers and references, select a representative, and establish decode/re-encode
+byte identity before editing. The sampled `000_top_at.b` begins with `BPE\0`,
+but that signature alone does not establish a codec. For a text-bearing image,
+render the decoded source, make an English graphic variant while preserving the
+verified format constraints, reinsert through the exact PAC/YFS/ISO path, and
+compare/reparse the result. Keep the original leaf and all unsupported structures
+unchanged; do not claim editability or runtime support until both are demonstrated.
 
-For a discovered plain-text leaf, edit its `.utf8.txt` companion. For the observed
-`_msg.dat` surface, use the tracked `localization/messages.json` catalogue. Each
-entry keeps a stable ID, original, nullable translation, context, notes and
-status. Edit the translation and its matching status; the build checks the
-catalogue's source hash and unique record identity, then encodes text as CP932.
+For a discovered plain-text leaf, edit its `.utf8.txt` companion. For `_msg.dat`, use `localization/messages.json`; for the two tab-separated menu
+tables, use `localization/card_list.json` and `localization/database.json`. These
+source-hash-anchored UTF-8 catalogues preserve original cells, stable row IDs,
+blank fields, tabs and line endings. `tools/text_catalog.py` rejects stale sources
+and non-CP932 translations. Their resource paths are applied during
+`make build-mod-disc`; do not change unclassified fields such as database unlock
+metadata until their semantics are established.
 `python3 tools/message_catalog.py create SOURCE.json OUTPUT.json` creates a new
-catalogue from prepared original message JSON; ordinary translation edits belong
-in the tracked catalogue. Retain control codes, delimiters, columns and line
+message catalogue from prepared original JSON. For a plain TSV,
+`python3 tools/text_catalog.py create SOURCE.tsv translations.json --resource RESOURCE --columns 1,2 --id-column 0` creates a hash-anchored catalogue; use
+`python3 tools/text_catalog.py apply SOURCE.tsv translations.json OUTPUT.tsv` to
+produce CP932 bytes. Ordinary translations belong in the tracked catalogues. Retain control codes, delimiters, columns and line
 structure until the format is understood. Same-size edits can use
 `make verify-disc` and should compare exactly only if the workspace has no edits.
-For a growing edit, run `make build-mod-disc`; it enables the observed relocation
+For growing text edits, update the source-hash-anchored catalogue for the exact
+resource path. `CardList.txt` currently has draft English for all 142 nonempty names, all 51
+character titles and all 141 categories, while all 142 captions remain untranslated.
+`DataBase.txt` has 87 translated fields of 126; its 39 unresolved condition
+metadata values remain source text. For a growing edit, run `make build-mod-disc`; it enables the observed relocation
 path and writes `build/assets-modded.iso`. Then run
 `python3 tools/bootstrap.py build/assets-modded.iso --reports /tmp/marps2-mod-check`
 to re-parse and inventory the ISO, and
@@ -81,13 +96,18 @@ rebuilt byte-identically, and grown using the tracked translation catalogue
 through the full ISO build.
 These checks do not prove retail text line wrapping, glyph coverage, or runtime
 relocation behavior.
-The verified mod run also exposes a placement cost: a 15-byte string growth
-appends a complete new PAC member at its parent, then appends the complete
-428,967,936-byte YFS at the ISO end. The resulting 5.016 GB ISO inventories and
-reparses correctly, but the current method is space-heavy and has no runtime
-acceptance evidence. Exact-baseline comparison is therefore an expected mismatch
-for a changed build; verify the authenticated reference hash and inspect changed
-ranges rather than requiring equality.
+The verified mod run also exposes a placement cost: a 15-byte single-prompt
+growth appends a complete new PAC member at its parent, then appends the complete
+428,967,936-byte YFS at the ISO end. The current build uses all three tracked catalogues. It grows `_msg.dat` by 248
+bytes (20,452 to 20,700), `CardList.txt` to 13,567 bytes, and `DataBase.txt` to
+3,319 bytes. The ISO inventory reports 42 entries and nested reparsing matches each
+catalog-applied resource exactly. Current image SHA-256 is
+`15fcacc2ebf2c2fe82fc6153348ca013f9c372202dff1b2c94b7e35eba33bee5`; the
+authenticated comparator reports 751,304,175 differing bytes. This is an
+expected mismatch for translation and append relocation. The current method is
+space-heavy and has no runtime acceptance evidence. Exact-baseline comparison
+is therefore an expected mismatch for a changed build; verify the authenticated
+reference hash and inspect changed ranges rather than requiring equality.
 
 ## Procedure
 

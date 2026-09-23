@@ -1,0 +1,1346 @@
+{
+  "format": "marps2-cp932-tsv-v1",
+  "resource": "disc!/_DATA.YFS;1!/data/menu/MenuBinary.pac!/DataBase.txt",
+  "source_sha256": "b775dfa84567336cce820b5923f424ccea1f52e69e13e1075b45cb7f74f19f1f",
+  "encoding": "cp932",
+  "columns": [
+    0,
+    2,
+    5
+  ],
+  "id_column": null,
+  "rows": [
+    {
+      "id": "row-0000",
+      "original_cells": [
+        "キャラクタ",
+        "",
+        "ギンタ",
+        "1",
+        "",
+        "",
+        "",
+        "1",
+        ""
+      ],
+      "translations": {
+        "0": "Characters",
+        "2": "Ginta"
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0001",
+      "original_cells": [
+        "",
+        "",
+        "ドロシー",
+        "1",
+        "",
+        "",
+        "",
+        "1",
+        ""
+      ],
+      "translations": {
+        "2": "Dorothy"
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0002",
+      "original_cells": [
+        "",
+        "",
+        "ジャック",
+        "1",
+        "",
+        "",
+        "",
+        "1",
+        ""
+      ],
+      "translations": {
+        "2": "Jack"
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0003",
+      "original_cells": [
+        "",
+        "",
+        "スノウ",
+        "1",
+        "",
+        "",
+        "",
+        "1",
+        ""
+      ],
+      "translations": {
+        "2": "Snow"
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0004",
+      "original_cells": [
+        "",
+        "",
+        "アラン",
+        "1",
+        "",
+        "",
+        "",
+        "1",
+        ""
+      ],
+      "translations": {
+        "2": "Alan"
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0005",
+      "original_cells": [
+        "",
+        "",
+        "ナナシ",
+        "1",
+        "",
+        "",
+        "",
+        "1",
+        ""
+      ],
+      "translations": {
+        "2": "Nanashi"
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0006",
+      "original_cells": [
+        "",
+        "",
+        "アルヴィス",
+        "1",
+        "",
+        "",
+        "",
+        "1",
+        ""
+      ],
+      "translations": {
+        "2": "Alviss"
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0007",
+      "original_cells": [
+        "",
+        "",
+        "ロコ",
+        "1",
+        "",
+        "",
+        "",
+        "1",
+        ""
+      ],
+      "translations": {
+        "2": "Roco"
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0008",
+      "original_cells": [
+        "",
+        "",
+        "イアン",
+        "1",
+        "",
+        "",
+        "",
+        "1",
+        ""
+      ],
+      "translations": {
+        "2": "Ian"
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0009",
+      "original_cells": [
+        "",
+        "",
+        "ギロム",
+        "1",
+        "",
+        "",
+        "",
+        "1",
+        ""
+      ],
+      "translations": {
+        "2": "Girom"
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0010",
+      "original_cells": [
+        "",
+        "",
+        "ロラン",
+        "1",
+        "",
+        "",
+        "",
+        "1",
+        ""
+      ],
+      "translations": {
+        "2": "Roland"
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0011",
+      "original_cells": [
+        "",
+        "",
+        "ハロウィン",
+        "1",
+        "",
+        "",
+        "",
+        "1",
+        ""
+      ],
+      "translations": {
+        "2": "Halloween"
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0012",
+      "original_cells": [
+        "",
+        "",
+        "ファントム",
+        "1",
+        "100000",
+        "パスワード",
+        "",
+        "1",
+        ""
+      ],
+      "translations": {
+        "2": "Phantom",
+        "5": "Password"
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0013",
+      "original_cells": [
+        "",
+        "",
+        "オルコ",
+        "1",
+        "",
+        "",
+        "",
+        "1",
+        ""
+      ],
+      "translations": {
+        "2": "Orco"
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0014",
+      "original_cells": [
+        "",
+        "",
+        "キャンディス",
+        "1",
+        "",
+        "",
+        "",
+        "1",
+        ""
+      ],
+      "translations": {
+        "2": "Candice"
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0015",
+      "original_cells": [
+        "",
+        "",
+        "エド",
+        "1",
+        "100000",
+        "パスワード",
+        "",
+        "1",
+        ""
+      ],
+      "translations": {
+        "2": "Edward",
+        "5": "Password"
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0016",
+      "original_cells": [
+        "コスチューム",
+        "",
+        "ギンタ",
+        "1",
+        "10000",
+        "パスワード",
+        "",
+        "2",
+        ""
+      ],
+      "translations": {
+        "0": "Costumes",
+        "2": "Ginta",
+        "5": "Password"
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0017",
+      "original_cells": [
+        "",
+        "",
+        "ドロシー or ナナシ",
+        "1",
+        "10000",
+        "パスワード",
+        "",
+        "2",
+        ""
+      ],
+      "translations": {
+        "2": "Dorothy or Nanashi",
+        "5": "Password"
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0018",
+      "original_cells": [
+        "",
+        "",
+        "スノウ",
+        "1",
+        "10000",
+        "パスワード",
+        "",
+        "2",
+        ""
+      ],
+      "translations": {
+        "2": "Snow",
+        "5": "Password"
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0019",
+      "original_cells": [
+        "",
+        "",
+        "アルヴィス",
+        "1",
+        "10000",
+        "パスワード",
+        "",
+        "2",
+        ""
+      ],
+      "translations": {
+        "2": "Alviss",
+        "5": "Password"
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0020",
+      "original_cells": [
+        "",
+        "",
+        "ナイトクラスイアン",
+        "1",
+        "10000",
+        "パスワード",
+        "",
+        "2",
+        ""
+      ],
+      "translations": {
+        "2": "Ian (Knight Class)",
+        "5": "Password"
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0021",
+      "original_cells": [
+        "キャラボイス",
+        "1",
+        "ギンタ",
+        "1",
+        "1000",
+        "ラビリンスで隠しOFF／試合前後ボイス変わる（バリエーション）",
+        "",
+        "3",
+        ""
+      ],
+      "translations": {
+        "0": "Character Voices",
+        "2": "Ginta",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0022",
+      "original_cells": [
+        "",
+        "2",
+        "ドロシー",
+        "1",
+        "1000",
+        "ラビリンスで隠しOFF／試合前後ボイス変わる（バリエーション）",
+        "",
+        "3",
+        ""
+      ],
+      "translations": {
+        "2": "Dorothy",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0023",
+      "original_cells": [
+        "",
+        "3",
+        "ジャック",
+        "1",
+        "1000",
+        "ラビリンスで隠しOFF／試合前後ボイス変わる（バリエーション）",
+        "",
+        "3",
+        ""
+      ],
+      "translations": {
+        "2": "Jack",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0024",
+      "original_cells": [
+        "",
+        "4",
+        "スノウ",
+        "1",
+        "1000",
+        "ラビリンスで隠しOFF／試合前後ボイス変わる（バリエーション）",
+        "",
+        "3",
+        ""
+      ],
+      "translations": {
+        "2": "Snow",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0025",
+      "original_cells": [
+        "",
+        "5",
+        "アラン",
+        "1",
+        "1000",
+        "ラビリンスで隠しOFF／試合前後ボイス変わる（バリエーション）",
+        "",
+        "3",
+        ""
+      ],
+      "translations": {
+        "2": "Alan",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0026",
+      "original_cells": [
+        "",
+        "6",
+        "ナナシ",
+        "1",
+        "1000",
+        "ラビリンスで隠しOFF／試合前後ボイス変わる（バリエーション）",
+        "",
+        "3",
+        ""
+      ],
+      "translations": {
+        "2": "Nanashi",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0027",
+      "original_cells": [
+        "",
+        "7",
+        "アルヴィス",
+        "1",
+        "1000",
+        "ラビリンスで隠しOFF／試合前後ボイス変わる（バリエーション）",
+        "",
+        "3",
+        ""
+      ],
+      "translations": {
+        "2": "Alviss",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0028",
+      "original_cells": [
+        "",
+        "8",
+        "ロコ",
+        "1",
+        "1000",
+        "ラビリンスで隠しOFF／試合前後ボイス聞ける",
+        "",
+        "3",
+        ""
+      ],
+      "translations": {
+        "2": "Roco",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0029",
+      "original_cells": [
+        "",
+        "9",
+        "イアン",
+        "1",
+        "1000",
+        "ラビリンスで隠しOFF／試合前後ボイス聞ける",
+        "",
+        "3",
+        ""
+      ],
+      "translations": {
+        "2": "Ian",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0030",
+      "original_cells": [
+        "",
+        "10",
+        "ギロム",
+        "1",
+        "1000",
+        "ラビリンスで隠しOFF／試合前後ボイス聞ける",
+        "",
+        "3",
+        ""
+      ],
+      "translations": {
+        "2": "Girom",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0031",
+      "original_cells": [
+        "",
+        "11",
+        "ロラン",
+        "1",
+        "1000",
+        "ラビリンスで隠しOFF／試合前後ボイス聞ける",
+        "",
+        "3",
+        ""
+      ],
+      "translations": {
+        "2": "Roland",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0032",
+      "original_cells": [
+        "",
+        "12",
+        "ハロウィン",
+        "1",
+        "1000",
+        "ラビリンスで隠しOFF／試合前後ボイス聞ける",
+        "",
+        "3",
+        ""
+      ],
+      "translations": {
+        "2": "Halloween",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0033",
+      "original_cells": [
+        "",
+        "13",
+        "ファントム",
+        "1",
+        "1000",
+        "ラビリンスで隠しOFF／試合前後ボイス聞ける",
+        "",
+        "3",
+        ""
+      ],
+      "translations": {
+        "2": "Phantom",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0034",
+      "original_cells": [
+        "",
+        "14",
+        "オルコ",
+        "1",
+        "1000",
+        "ラビリンスで隠しOFF／試合前後ボイス聞ける",
+        "",
+        "3",
+        ""
+      ],
+      "translations": {
+        "2": "Orco",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0035",
+      "original_cells": [
+        "",
+        "15",
+        "キャンディス",
+        "1",
+        "1000",
+        "ラビリンスで隠しOFF／試合前後ボイス聞ける",
+        "",
+        "3",
+        ""
+      ],
+      "translations": {
+        "2": "Candice",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0036",
+      "original_cells": [
+        "",
+        "16",
+        "エド",
+        "1",
+        "1000",
+        "ラビリンスで隠しOFF／試合前後ボイス聞ける",
+        "",
+        "3",
+        ""
+      ],
+      "translations": {
+        "2": "Edward",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0037",
+      "original_cells": [
+        "バトルフィールド情報",
+        "",
+        "バトルフィールド・地",
+        "1",
+        "",
+        "",
+        "",
+        "4",
+        ""
+      ],
+      "translations": {
+        "0": "Battlefield Info",
+        "2": "Battlefield - Earth"
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0038",
+      "original_cells": [
+        "",
+        "",
+        "バトルフィールド・火",
+        "1",
+        "",
+        "",
+        "",
+        "4",
+        ""
+      ],
+      "translations": {
+        "2": "Battlefield - Fire"
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0039",
+      "original_cells": [
+        "",
+        "",
+        "バトルフィールド・風",
+        "1",
+        "",
+        "",
+        "",
+        "4",
+        ""
+      ],
+      "translations": {
+        "2": "Battlefield - Wind"
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0040",
+      "original_cells": [
+        "",
+        "",
+        "バトルフィールド・水",
+        "1",
+        "",
+        "",
+        "",
+        "4",
+        ""
+      ],
+      "translations": {
+        "2": "Battlefield - Water"
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0041",
+      "original_cells": [
+        "",
+        "",
+        "バトルフィールド・木",
+        "1",
+        "",
+        "",
+        "",
+        "4",
+        ""
+      ],
+      "translations": {
+        "2": "Battlefield - Wood"
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0042",
+      "original_cells": [
+        "",
+        "",
+        "バトルフィールド・雷",
+        "1",
+        "",
+        "",
+        "",
+        "4",
+        ""
+      ],
+      "translations": {
+        "2": "Battlefield - Thunder"
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0043",
+      "original_cells": [
+        "",
+        "",
+        "バトルフィールド・無",
+        "1",
+        "",
+        "",
+        "",
+        "4",
+        ""
+      ],
+      "translations": {
+        "2": "Battlefield - Neutral"
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0044",
+      "original_cells": [
+        "ムービー",
+        "1",
+        "オープニング",
+        "1",
+        "10000",
+        "ラビリンスで隠しOFF",
+        "",
+        "5",
+        ""
+      ],
+      "translations": {
+        "0": "Movies",
+        "2": "Opening",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0045",
+      "original_cells": [
+        "",
+        "2",
+        "プロローグ",
+        "1",
+        "10000",
+        "ラビリンスで隠しOFF",
+        "",
+        "5",
+        ""
+      ],
+      "translations": {
+        "2": "Prologue",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0046",
+      "original_cells": [
+        "",
+        "3",
+        "ドアクローズ",
+        "1",
+        "10000",
+        "ラビリンスで隠しOFF",
+        "",
+        "5",
+        ""
+      ],
+      "translations": {
+        "2": "Door Closes",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0047",
+      "original_cells": [
+        "",
+        "4",
+        "ドアオープン",
+        "1",
+        "10000",
+        "ラビリンスで隠しOFF",
+        "",
+        "5",
+        ""
+      ],
+      "translations": {
+        "2": "Door Opens",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0048",
+      "original_cells": [
+        "",
+        "5",
+        "鏡が割れる",
+        "1",
+        "10000",
+        "ラビリンスで隠しOFF",
+        "",
+        "5",
+        ""
+      ],
+      "translations": {
+        "2": "Shattered Mirror",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0049",
+      "original_cells": [
+        "",
+        "6",
+        "エンディング",
+        "1",
+        "10000",
+        "ラビリンスで隠しOFF",
+        "",
+        "5",
+        ""
+      ],
+      "translations": {
+        "2": "Ending",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0050",
+      "original_cells": [
+        "",
+        "7",
+        "スタッフロール",
+        "1",
+        "10000",
+        "ラビリンスで隠しOFF",
+        "",
+        "5",
+        ""
+      ],
+      "translations": {
+        "2": "Staff Roll",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0051",
+      "original_cells": [
+        "サウンド",
+        "1",
+        "タイトル",
+        "1",
+        "10000",
+        "ラビリンスで隠しOFF",
+        "",
+        "6",
+        ""
+      ],
+      "translations": {
+        "0": "Sound",
+        "2": "Title",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0052",
+      "original_cells": [
+        "",
+        "2",
+        "メインメニュー・メニュー共用",
+        "1",
+        "10000",
+        "ラビリンスで隠しOFF",
+        "",
+        "6",
+        ""
+      ],
+      "translations": {
+        "2": "Main Menu (shared with menus)",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0053",
+      "original_cells": [
+        "",
+        "3",
+        "メンバー選択(ウォーゲーム・テーマ)",
+        "1",
+        "10000",
+        "ラビリンスで隠しOFF",
+        "",
+        "6",
+        ""
+      ],
+      "translations": {
+        "2": "Member Select (War Game Theme)",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0054",
+      "original_cells": [
+        "",
+        "4",
+        "ショップ",
+        "1",
+        "10000",
+        "ラビリンスで隠しOFF",
+        "",
+        "6",
+        ""
+      ],
+      "translations": {
+        "2": "Shop",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0055",
+      "original_cells": [
+        "",
+        "5",
+        "データベース",
+        "1",
+        "10000",
+        "ラビリンスで隠しOFF",
+        "",
+        "6",
+        ""
+      ],
+      "translations": {
+        "2": "Database",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0056",
+      "original_cells": [
+        "",
+        "6",
+        "ラビリンススタート",
+        "1",
+        "10000",
+        "ラビリンスで隠しOFF",
+        "",
+        "6",
+        ""
+      ],
+      "translations": {
+        "2": "Labyrinth Start",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0057",
+      "original_cells": [
+        "",
+        "7",
+        "ラビリンスメインメニュー",
+        "1",
+        "10000",
+        "ラビリンスで隠しOFF",
+        "",
+        "6",
+        ""
+      ],
+      "translations": {
+        "2": "Labyrinth Main Menu",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0058",
+      "original_cells": [
+        "",
+        "8",
+        "ステージ0(地)・バトル曲",
+        "1",
+        "10000",
+        "ラビリンスで隠しOFF",
+        "",
+        "6",
+        ""
+      ],
+      "translations": {
+        "2": "Stage 0 (Earth) - Battle Theme",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0059",
+      "original_cells": [
+        "",
+        "9",
+        "ステージ1(火)・バトル曲",
+        "1",
+        "10000",
+        "ラビリンスで隠しOFF",
+        "",
+        "6",
+        ""
+      ],
+      "translations": {
+        "2": "Stage 1 (Fire) - Battle Theme",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0060",
+      "original_cells": [
+        "",
+        "10",
+        "ステージ2(風)・バトル曲",
+        "1",
+        "10000",
+        "ラビリンスで隠しOFF",
+        "",
+        "6",
+        ""
+      ],
+      "translations": {
+        "2": "Stage 2 (Wind) - Battle Theme",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0061",
+      "original_cells": [
+        "",
+        "11",
+        "ステージ3(水)・バトル曲",
+        "1",
+        "10000",
+        "ラビリンスで隠しOFF",
+        "",
+        "6",
+        ""
+      ],
+      "translations": {
+        "2": "Stage 3 (Water) - Battle Theme",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0062",
+      "original_cells": [
+        "",
+        "12",
+        "ステージ4(木)・バトル曲",
+        "1",
+        "10000",
+        "ラビリンスで隠しOFF",
+        "",
+        "6",
+        ""
+      ],
+      "translations": {
+        "2": "Stage 4 (Wood) - Battle Theme",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0063",
+      "original_cells": [
+        "",
+        "13",
+        "ステージ5(雷)・バトル曲",
+        "1",
+        "10000",
+        "ラビリンスで隠しOFF",
+        "",
+        "6",
+        ""
+      ],
+      "translations": {
+        "2": "Stage 5 (Thunder) - Battle Theme",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0064",
+      "original_cells": [
+        "",
+        "14",
+        "ステージ6(無)・バトル曲",
+        "1",
+        "10000",
+        "ラビリンスで隠しOFF",
+        "",
+        "6",
+        ""
+      ],
+      "translations": {
+        "2": "Stage 6 (Neutral) - Battle Theme",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0065",
+      "original_cells": [
+        "",
+        "15",
+        "オープニングムービー",
+        "1",
+        "10000",
+        "ラビリンスで隠しOFF",
+        "",
+        "6",
+        ""
+      ],
+      "translations": {
+        "2": "Opening Movie",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0066",
+      "original_cells": [
+        "",
+        "16",
+        "エンディングムービー",
+        "1",
+        "10000",
+        "ラビリンスをクリアしたら隠しOFF",
+        "",
+        "6",
+        ""
+      ],
+      "translations": {
+        "2": "Ending Movie",
+        "5": null
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0067",
+      "original_cells": [
+        "マップ",
+        "",
+        "隠しマップ1",
+        "1",
+        "1000",
+        "パスワード",
+        "",
+        "7",
+        ""
+      ],
+      "translations": {
+        "0": "Maps",
+        "2": "Hidden Map 1",
+        "5": "Password"
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0068",
+      "original_cells": [
+        "",
+        "",
+        "隠しマップ2",
+        "1",
+        "1000",
+        "パスワード",
+        "",
+        "7",
+        ""
+      ],
+      "translations": {
+        "2": "Hidden Map 2",
+        "5": "Password"
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0069",
+      "original_cells": [
+        "",
+        "",
+        "隠しマップ3",
+        "1",
+        "1000",
+        "パスワード",
+        "",
+        "7",
+        ""
+      ],
+      "translations": {
+        "2": "Hidden Map 3",
+        "5": "Password"
+      },
+      "line_ending": "\r\n"
+    },
+    {
+      "id": "row-0070",
+      "original_cells": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "7",
+        ""
+      ],
+      "translations": {},
+      "line_ending": "\r\n"
+    }
+  ]
+}

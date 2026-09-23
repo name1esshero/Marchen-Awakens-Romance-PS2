@@ -81,13 +81,15 @@ the pinned table identity before applying overrides. Blank translations retain
 the original bytes; stale or unmatched catalogues fail closed.
 Verification: the all-original tracked catalogue built a full image matching the
 pinned reference exactly. One 15-byte translated growth rebuilt through the full
-ISO/YFS/PAC path; inventory passed, reparsing recovered all 229 entries and the
-new string, and the streaming comparator authenticated the baseline while
-reporting the expected changed-image mismatch. Unit tests cover duplicate IDs,
-source drift and catalogue-driven PAC relocation.
+ISO/YFS/PAC path; inventory passed and the streaming comparator authenticated
+the baseline while reporting the expected changed-image mismatch. The current
+227-entry draft also rebuilt and reparsed all 229 messages exactly; the translated
+table grows by 250 bytes in aggregate and the comparator reports the expected
+authenticated mismatch. Unit tests cover duplicate IDs, source drift and
+catalogue-driven PAC relocation.
 Scope: the one observed `disc!/_DATA.YFS;1!/data/common.pac!/_msg.dat` resource.
-Limits: translation coverage is one initial prompt; runtime layout, script call
-sites, and remaining text-bearing formats are still unresolved.
+Limits: the 229 English strings are draft translations; review, runtime layout,
+script call sites, and remaining text-bearing formats are still unresolved.
 References: [message-table evidence](../tasks/MESSAGE_TABLE.md),
 `localization/messages.json`, `tools/message_catalog.py`, `tests/test_message_catalog.py`,
 `Makefile`.
@@ -164,3 +166,29 @@ build tree without reference files all pass.
 Scope: fixed-placement boot ELF, eight position-independent accessor sections.
 Limits: this is not a linker, a full-disc rebuild or semantic recovery of raw regions.
 Reference: [reconstruction procedure](TASK_BOOT_RECONSTRUCTION_METHODOLOGY.md).
+
+
+## Source-hash-anchored TSV localization catalogues
+
+Symptom: CP932 menu catalogues carry player-facing labels and captions in
+fixed tab-separated records, but plain UTF-8 companions alone do not provide
+stable translation identities or guard against stale source data.
+Mechanism: retain each original cell, a row ID (observed key where available,
+otherwise row index), original line ending, resource path and source SHA-256 in
+an editable UTF-8 JSON catalogue. Apply only selected columns, preserving tabs,
+blank trailing cells and line endings; reject source drift and non-CP932 output.
+Pathway: use `tools/text_catalog.py` catalogs and pass their paths through
+`--text-translations`; the nested asset builder applies by exact logical resource
+path and fails if any requested catalogue is unused.
+Verification: tests cover round trip, CRLF, blank fields, source mismatch, duplicate
+IDs, encoding errors and archive reinsertion. The mod ISO inventory and nested
+ISO/YFS/PAC reparse recovered exact catalog-applied `CardList.txt` and `DataBase.txt`
+bytes. The current drafts translate CardList names/titles/categories (captions still
+Japanese) and DataBase headings/display labels/password markers (condition metadata
+still unresolved).
+Scope: the two observed tab-separated resources in `MenuBinary.pac`.
+Limits: runtime use, display constraints, captions, condition-field semantics and
+runtime relocation remain unverified.
+References: `tools/text_catalog.py`, `localization/card_list.json`,
+`localization/database.json`, `tests/test_text_catalog.py`,
+`tests/test_assets.py`, [asset methodology](TASK_ASSET_WORKSPACE_METHODOLOGY.md).
