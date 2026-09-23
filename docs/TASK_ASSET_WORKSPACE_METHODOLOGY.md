@@ -177,8 +177,9 @@ edit or regenerate only that English file. For example,
 `...title_marh_jp.tga` pairs with `...title_marh_eng.tga`. When
 `make build-mod-disc` stages the English ISO, the English sibling takes
 precedence for that resource while the Japanese baseline stays intact. Generated
-`_jp.tga` files and the index are ignored workspace outputs; authored `_eng.tga`
-files remain visible to Git so completed localization art can be versioned. This
+`_jp.tga` files and `graphics/index.json` are version-controlled recovered
+assets; authored `_eng.tga` files are version-controlled localized assets. The
+repository must retain both the source baselines and English replacements. This
 selects a user-authored variant; the tool does not translate or generate its
 contents. Preserve canvas dimensions and use only
 colors in the original palette. `make graphics-stage` writes changed TXCs under

@@ -2,10 +2,6 @@
 /mar_eng.iso
 /extracted/
 /build/
-/graphics/*
-!/graphics/*/
-/graphics/*/*.tga
-!/graphics/*/*_eng.tga
 /movies/*
 !/movies/*_eng.m2v
 /.tools/

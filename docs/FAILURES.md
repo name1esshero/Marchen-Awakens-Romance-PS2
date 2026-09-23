@@ -10,11 +10,19 @@ for these atlas-like UI images. Editing `00039_01565_0003_sbttl` enlarged and
 replaced its `ARM FIGHT DREAM` wordmark and added a second MÄR HEAVEN mark.
 Editing `00039_01631_0025_windisp` replaced the original team-label layout and
 arrows with oversized MÄR/Chess wordmarks. The second output was 1774x887 rather
-than the source's 512x256. Both results were visually rejected; neither created
-an `_eng.tga`. The editor did not accept TGA directly, so PNG views were used.
-The source TGAs and `mar_eng.iso` were unchanged. Rejected outputs remain at
+than the source's 512x256. Both full generated compositions were visually
+rejected and neither raw image was imported. The editor did not accept TGA
+directly, so PNG views were used. The `windisp` lettering was later salvaged as
+text crops only: it was placed in measured Japanese label bands over the
+unchanged source canvas and mapped through the source PSMT4 palette. That
+controlled derivative is recorded in the graphic-localization task note; it
+does not establish in-game UV use or runtime correctness. The Japanese source
+TGAs remain unchanged. The earlier `mar_eng.iso` was unchanged at the time of
+the rejection. Rejected outputs remain at
 `~/.codex/generated_images/01a0cbce-e093-7d81-89ab-50dbae657afd/exec-42213345-2cd3-4485-b56f-21b55591d51b.png` and
 `~/.codex/generated_images/01a0cbce-e093-7d81-89ab-50dbae657afd/exec-f00d37e3-f25e-4abd-99e6-25d8d3d941c2.png`.
+The later 1774x887 output used only as a lettering-crop source was
+`~/.codex/generated_images/01a0cbce-e093-7d81-89ab-50dbae657afd/exec-2b931a9d-28ff-410d-b2c6-36897603c7ec.png`.
 
 Do not use these outputs as game overrides. Preserve the source texture layout
 and use a controlled text/glyph replacement anchored to evidenced regions.

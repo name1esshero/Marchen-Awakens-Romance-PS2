@@ -1,0 +1,126 @@
+{
+  "version": 4,
+  "updated": "2026-09-23",
+  "source_index_sha256": "09c995d2dc10eca5596d5316e33d26f19af7dc09d8f3cab3c73003fb881f4a45",
+  "changed": [
+    {
+      "key": "00039.asset/01556.resources!/0010_shop.txc.bin",
+      "language": "eng",
+      "image": "user_interface/00039_01556_0010_shop_eng.tga",
+      "source_sha256": "2ce74d89398a8032db31a6a7acbaa47be536403f85c7bc84ceea79b5ff02b9a3",
+      "override_sha256": "93f91db29d2ffc26b18136e2136b9f37bec3b9d8ac9ffd8c05bc76117be95d16",
+      "bytes": 17472
+    },
+    {
+      "key": "00039.asset/01556.resources!/0014_subtitle.txc.bin",
+      "language": "eng",
+      "image": "text/00039_01556_0014_subtitle_eng.tga",
+      "source_sha256": "d474b25e22ca2b8b425ee0effece178d96e3d7e5e6526f9537d3af2d5bbba59f",
+      "override_sha256": "ca376525ca57c5612b291c5d2e64b95766dc89c408bffe4f0e416d6a2a667ea6",
+      "bytes": 8320
+    },
+    {
+      "key": "00039.asset/01559.resources!/0003_title.txc.bin",
+      "language": "eng",
+      "image": "title/00039_01559_0003_title_eng.tga",
+      "source_sha256": "e2c3d2913e1999d7460881c3fb3ba5e31ff0cdeaa4960891792f7ea871d3d0fe",
+      "override_sha256": "151eeb12ee18acdb7c3913369f2b5b48f369fb80e69c1b9cd77551149bc296a3",
+      "bytes": 263232
+    },
+    {
+      "key": "00039.asset/01566.resources!/0002_title_marh_jp.txc.bin",
+      "language": "eng",
+      "image": "title/00039_01566_0002_title_marh_eng.tga",
+      "source_sha256": "b67db2f3a834c05de583c3dbd360da3208384c4234072f0ed66b58711dcfc375",
+      "override_sha256": "e974f1ee39f60732fc500ad8ee663f837b98866e0e141127f06332784aa81e66",
+      "bytes": 263232
+    },
+    {
+      "key": "00039.asset/01566.resources!/0003_title_parts.txc.bin",
+      "language": "eng",
+      "image": "title/00039_01566_0003_title_parts_eng.tga",
+      "source_sha256": "f18d908d8201b2433973fb03937748706f3504a80d2d573846ac1f02bfb54f2a",
+      "override_sha256": "dacbf57c36ab281eb1ebc2fd1a205421fdeee2dea77bb703aa11343d3a8e42a0",
+      "bytes": 132160
+    },
+    {
+      "key": "00039.asset/01569.resources!/0007_modename.txc.bin",
+      "language": "eng",
+      "image": "user_interface/00039_01569_0007_modename_eng.tga",
+      "source_sha256": "b682c11fc9cb9dc4ea10a86e93a0e3969a4571ef0a7b2748f2772e4e49af6a3f",
+      "override_sha256": "2f49a0bd1f90adaad74395eebed17bf7045ab6d79b714538f1bcd7032e07eb37",
+      "bytes": 16512
+    },
+    {
+      "key": "00039.asset/01631.resources!/0025_windisp.txc.bin",
+      "language": "eng",
+      "image": "user_interface/00039_01631_0025_windisp_eng.tga",
+      "source_sha256": "b929f05b2f28090770d3cb0d0f1e6275bc440f59314b8c85596b89212ed6c7dd",
+      "override_sha256": "a727d554971d876a5fe7c0690add70042fdcd16714c95a43720f4acf6473f2d1",
+      "bytes": 65664
+    },
+    {
+      "key": "00039.asset/01635.resources!/0028_field_name.txc.bin",
+      "language": "eng",
+      "image": "user_interface/00039_01635_0028_field_name_eng.tga",
+      "source_sha256": "f55a6efde5a1f5fe924c22037cd573421f9de738ff0f05c6444687ea99cc25c8",
+      "override_sha256": "d79ccf43e99f4483571626484ebd7821018ae5af8880f90aa25b9ea95a5f2129",
+      "bytes": 16512
+    }
+  ],
+  "english_overrides": [
+    "00039.asset/01556.resources!/0010_shop.txc.bin",
+    "00039.asset/01556.resources!/0014_subtitle.txc.bin",
+    "00039.asset/01559.resources!/0003_title.txc.bin",
+    "00039.asset/01566.resources!/0002_title_marh_jp.txc.bin",
+    "00039.asset/01566.resources!/0003_title_parts.txc.bin",
+    "00039.asset/01569.resources!/0007_modename.txc.bin",
+    "00039.asset/01631.resources!/0025_windisp.txc.bin",
+    "00039.asset/01635.resources!/0028_field_name.txc.bin"
+  ],
+  "unresolved": [
+    "standalone:/00039.asset/00125.asset/00013.asset/00029.bin",
+    "standalone:/00039.asset/00157.asset/00001.asset/00000.bin",
+    "standalone:/00039.asset/00158.asset/00001.asset/00000.bin",
+    "standalone:/00039.asset/00159.asset/00001.asset/00000.bin",
+    "standalone:/00039.asset/00160.asset/00001.asset/00000.bin",
+    "standalone:/00039.asset/00161.asset/00001.asset/00000.bin",
+    "standalone:/00039.asset/00162.asset/00001.asset/00000.bin",
+    "standalone:/00039.asset/00163.asset/00001.asset/00000.bin",
+    "standalone:/00039.asset/00164.asset/00001.asset/00000.bin",
+    "standalone:/00039.asset/00165.asset/00001.asset/00000.bin",
+    "standalone:/00039.asset/00166.asset/00001.asset/00000.bin",
+    "standalone:/00039.asset/00167.asset/00001.asset/00000.bin",
+    "standalone:/00039.asset/00168.asset/00001.asset/00000.bin",
+    "standalone:/00039.asset/00169.asset/00001.asset/00000.bin",
+    "standalone:/00039.asset/00170.asset/00001.asset/00000.bin",
+    "standalone:/00039.asset/00759.asset/00001.asset/00036.bin",
+    "standalone:/00039.asset/00760.asset/00001.asset/00036.bin",
+    "standalone:/00039.asset/00761.asset/00001.asset/00036.bin",
+    "standalone:/00039.asset/00762.asset/00001.asset/00036.bin",
+    "standalone:/00039.asset/00763.asset/00001.asset/00036.bin",
+    "standalone:/00039.asset/00764.asset/00001.asset/00036.bin",
+    "standalone:/00039.asset/00765.asset/00001.asset/00036.bin",
+    "standalone:/00039.asset/00766.asset/00001.asset/00036.bin",
+    "standalone:/00039.asset/00767.asset/00001.asset/00036.bin",
+    "standalone:/00039.asset/00768.asset/00001.asset/00036.bin",
+    "standalone:/00039.asset/00769.asset/00001.asset/00036.bin",
+    "standalone:/00039.asset/00770.asset/00001.asset/00036.bin",
+    "standalone:/00039.asset/00771.asset/00001.asset/00036.bin",
+    "standalone:/00039.asset/00772.asset/00001.asset/00036.bin",
+    "standalone:/00039.asset/00773.asset/00001.asset/00036.bin",
+    "standalone:/00039.asset/00774.asset/00001.asset/00036.bin",
+    "standalone:/00039.asset/00775.asset/00001.asset/00036.bin",
+    "standalone:/00039.asset/00776.asset/00001.asset/00036.bin",
+    "standalone:/00039.asset/00777.asset/00001.asset/00036.bin",
+    "standalone:/00039.asset/00778.asset/00001.asset/00036.bin",
+    "standalone:/00039.asset/00779.asset/00001.asset/00036.bin",
+    "standalone:/00039.asset/00780.asset/00001.asset/00036.bin",
+    "standalone:/00039.asset/00781.asset/00001.asset/00036.bin",
+    "standalone:/00039.asset/00782.asset/00001.asset/00036.bin",
+    "standalone:/00039.asset/00783.asset/00001.asset/00036.bin",
+    "standalone:/00039.asset/00784.asset/00001.asset/00036.bin",
+    "standalone:/00039.asset/00785.asset/00001.asset/00036.bin",
+    "standalone:/00039.asset/00786.asset/00001.asset/00036.bin"
+  ]
+}

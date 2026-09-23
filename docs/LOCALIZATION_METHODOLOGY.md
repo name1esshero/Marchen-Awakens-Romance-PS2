@@ -272,6 +272,17 @@ Preferred objective:
 Do not regenerate an entire image when only text needs changing unless
 necessary.
 
+For text atlases and compact UI labels, measure each original label's pixel
+bounds and keep independent labels inside their source rows. A generative edit
+that changes the canvas, logo, arrows, background, or layout is not a usable
+replacement. If its text is still legible and correct, reviewed lettering crops
+may be composited over the unchanged source artwork; discard the generated
+composition, preserve the original transparent regions and palette, and center
+translated wording within the evidenced source label area. Reinspect the final
+source-sized, palette-mapped texture before staging it. The generated image is
+only a lettering source, not evidence of translation accuracy or runtime UV
+placement.
+
 Preserve composition, non-text artwork, decorative/spinning effects,
 gradients, outlines, shadows, highlights, transparency, dimensions,
 palette constraints, texture layout, animation frames, and surrounding
@@ -293,8 +304,10 @@ for visual comparison, translation revision, and rebuilding English artwork
 without re-extracting the ISO. The mod-disc build selects the `_eng` sibling
 when present and keeps the `_jp` baseline unchanged. Keep both in the same
 human-readable category folder and preserve the indexed source mapping. Generated
-Japanese baselines/index files are local workspace outputs; authored `_eng.tga`
-variants are not ignored, so they can be committed with the localization.
+Japanese `_jp.tga` baselines, `graphics/index.json`, and authored `_eng.tga`
+variants are all version-controlled so the repository contains both recovered
+source artwork and localized replacements. Keep the larger extracted container
+workspace separate; `/extracted/` remains a reproducible generated workspace.
 
 ------------------------------------------------------------------------
 

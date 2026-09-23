@@ -603,6 +603,40 @@ References: `graphics/text/00039_01556_0014_subtitle_eng.tga`,
 [`GRAPHIC_TEXT_LOCALIZATION.md`](../tasks/GRAPHIC_TEXT_LOCALIZATION.md),
 `tools/rtx3.py`, `tools/verify_graphics_in_iso.py`.
 
+## Preserve UI atlas layout by reusing only reviewed English lettering
+
+Symptom: an image-generation edit of `00039_01631_0025_windisp` returned a
+1774x887 composition for the 512x256 source and redrew its team labels, logo,
+and arrows. Importing the whole image would have changed the original screen
+layout.
+Mechanism: discard the generated composition, retain only the reviewed English
+lettering crops, clear Japanese text inside measured label bands on the original
+mapped texture, position the new labels within those bands, and import through
+the source PSMT4 palette. The source logo, arrows, existing English player labels,
+canvas, palette and unrelated alpha remain from the recovered artwork.
+Successful pathway: map `メルチーム`, `チェスチーム`, `リマッチ`, `終了`,
+`ネクストバトル`, and `ウォーゲーム` to `MÄR TEAM`, `CHESS TEAM`, `REMATCH`,
+`EXIT`, `NEXT BATTLE`, and glossary-backed `WAR GAMES`. Preserve the `_jp.tga`
+baseline and write only the same-size `_eng.tga` sibling.
+Verification: the complete graphics audit recognized eight English overrides,
+30,354 editable images and 43 unresolved records, with zero edited Japanese
+baselines. The 524,306-byte English TGA has SHA-256
+`52a8a4cc7e08aaf4e97d36db1ad64a4b8b950ff372e349576e7f26fcf5e985dd`; its imported
+65,664-byte TXC has SHA-256
+`a727d554971d876a5fe7c0690add70042fdcd16714c95a43720f4acf6473f2d1`. The built
+ISO reparses all eight English textures exactly (783,104 combined TXC bytes), and
+`make test` passes 107 tests.
+Scope: this winner-screen atlas and the existing same-size graphics override
+pipeline.
+Limits: source bounds are observed from the mapped texture, not recovered runtime
+UV rectangles. There is no emulator confirmation of final screen placement,
+translation readability, or gameplay behavior. The rejected full generated image
+does not prove other UI atlases can be edited the same way.
+References: `graphics/user_interface/00039_01631_0025_windisp_eng.tga`,
+[`GRAPHIC_TEXT_LOCALIZATION.md`](../tasks/GRAPHIC_TEXT_LOCALIZATION.md),
+[`FAILURES.md`](FAILURES.md), `tools/graphics.py`, `tools/rtx3.py`,
+`tools/verify_graphics_in_iso.py`.
+
 ## Byte-weight recovery levels after editable YOBJ coordinate surfaces
 
 Symptom: one "decompiled percentage" conflates file preservation, parser

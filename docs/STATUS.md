@@ -77,13 +77,13 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   across save/load prompts, menus, tutorials, character profiles, battlefields,
   ARM descriptions, Magic Stones, and the none/unused labels. All message translations
   encode as CP932. The current combined catalog build is recorded below.
-  Current root-level `mar_eng.iso` is 5,020,790,784 bytes (SHA-256
-  `1883a3a699edaa887b1358e5b3eb53dc115c1abd9a836a12092713c8ea2daf7a`). The
-  reusable `make verify-graphics-image` gate reparses all seven English TXCs
-  through ISO/YFS/BPE/UI tables and confirms 717,440 bytes exactly match staged
-  overrides. The authenticated pinned-reference comparison reports 755,346,929
+  Current root-level `mar_eng.iso` is 5,021,163,520 bytes (SHA-256
+  `16d64f38ba9295e3654a428e22afa3bb28d65d1631a15a00bf6ee217f4a31f28`). The
+  reusable `make verify-graphics-image` gate reparses all eight English TXCs
+  through ISO/YFS/BPE/UI tables and confirms 783,104 bytes exactly match staged
+  overrides. The authenticated pinned-reference comparison reports 755,719,665
   differing bytes, expected for this translated/relocated image; see
-  `reports/mar_eng_compare_7_graphics.json` and
+  `reports/mar_eng_compare_8_graphics.json` and
   [`GRAPHIC_TEXT_LOCALIZATION.md`](../tasks/GRAPHIC_TEXT_LOCALIZATION.md).
   The prior ISO reparse confirmed resource sizes of 20,714 bytes for `_msg.dat`,
   14,120 bytes for `CardList.txt`, and 3,320 bytes for `DataBase.txt`; each matched
@@ -98,9 +98,9 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   relocates the rebuilt YFS in the ISO. Updating `title_tex.b` through
   the current literal-identity BPE writer expands that wrapper from 301,071 to
   922,091 bytes; relocation remains valid but the build is space-heavy. No
-  runtime display has been validated. Other title variants and the Japanese
-  labels in the `windisp` texture remain queued pending exact text and UV-use
-  confirmation.
+  runtime display has been validated. The winner-screen `windisp` labels now have
+  an English sibling; exact source text is recorded, while its runtime UV use and
+  final screen placement remain unresolved. Other title variants remain queued.
 - The complete 3,445,204-byte boot ELF now rebuilds identically from repository
   text artifacts plus assembled code. `cmp` verifies every output byte.
 - An isolated build containing no ISO, extracted files, reports, existing build
@@ -150,12 +150,14 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   sample previews are coherent, but do not
   validate GS sampling, UV composition or runtime. Images sit directly
   in flat semantic folders: title, icon, user_interface, effects, characters,
-  cards, backgrounds, maps, weapons, environments and text. Japanese baselines end
-  in `_jp.tga`, stay unchanged, and are ignored as generated workspace files;
-  authored `_eng.tga` siblings are Git-trackable and take precedence in
-  `mar_eng.iso` builds. English drafts now cover the title marks and four UI
-  surfaces (shop wordmark, shop-action labels, mode names, and field names); all
-  seven reinsert byte-exactly from the rebuilt ISO. The main draft reuses native
+  cards, backgrounds, maps, weapons, environments and text. All 30,354 editable
+  TGA baselines and the index are version-controlled in `graphics/`. Japanese
+  baselines end in `_jp.tga`, stay unchanged, and remain the recovered artwork;
+  authored `_eng.tga` siblings are version-controlled localization assets and
+  take precedence in `mar_eng.iso` builds. English drafts now cover the title
+  marks and five UI surfaces (shop wordmark, shop-action labels, mode names,
+  field names, and winner-screen labels); all eight reinsert byte-exactly from the
+  rebuilt ISO. The main draft reuses native
   English lettering, but possible repeated
   branding and AT/UV screen composition remain unresolved. Indexed exports use
   linear pixel order, mapped PSMT8 CLUT
