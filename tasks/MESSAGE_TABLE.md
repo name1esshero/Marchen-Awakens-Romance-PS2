@@ -64,9 +64,42 @@ Verified outcomes:
   relocation. `python3 -m json.tool reports/translation_surfaces.json` and
   `git diff --check` passed.
 
+## Tracked translation catalogue and full growth loop
+
+`localization/messages.json` is the version-controlled source catalogue for this
+one table. Its 229 entries preserve the exact original Japanese text and expose
+nullable `translation`, stable ID, context, notes and status. IDs combine the
+observed `kind`/`key` pair with an occurrence index so the single duplicate pair
+remains distinct. The catalogue is anchored to original table SHA-256
+`0a9f5da3da31ce313523ab3f0591583669a9cb48146a3e4a91b04e3a5edd85cb`.
+`make build-mod-disc` applies this catalogue; the builder rejects a stale source
+or failure to apply it to exactly one table. Untranslated entries emit their
+original strings. One initial English rendering is present; 228 rows remain
+untranslated.
+
+The first prompt is a save/start question. Its CP932 original is 178 bytes; the
+English rendering is 193 bytes (+15), including explicit newlines. The changed
+catalogue-driven build produced a 5,016,717,312-byte ISO with SHA-256
+`b0cb3764533e9c958babd56e5d1819832be93703f21259e6232e2c8d17f14dc7`. Its ISO
+inventory passed with 42 entries. Following the moved `_DATA.YFS;1`,
+`data/common.pac`, and `_msg.dat` records recovered all 229 messages, the full
+English prompt, and the unchanged second entry. The message table grew from
+20,452 to 20,467 bytes; the PAC is 295,072 bytes and the enclosing YFS remains
+428,967,936 bytes but is appended at the ISO end. The authenticated comparator
+reported the expected mismatch: 751,273,457 differing bytes against the pinned
+4,587,749,376-byte original. The generated ISO was removed after verification.
+
+The canonical catalogue with all translations empty was also passed through
+`make build-mod-disc`; its 4,587,749,376-byte output matched the pinned reference
+with zero differing bytes. This confirms catalog integration leaves reference
+reconstruction uncontaminated. The English build proves encoding, table growth,
+container relocation and ISO packaging, not legibility or gameplay: runtime
+line wrapping, glyph behavior, prompt timing, and save/load interaction remain
+unverified.
+
 Runtime loading, on-screen line breaks, glyph support, controller/message
 parameter substitution, and growth relocation acceptance have not been tested.
-The full build, byte comparison and nested ISO/YFS/PAC parse loop is verified;
-runtime validation, a version-controlled original/translation catalog, and a
-more space-efficient placement strategy remain open. The generated message JSON
-currently lives in the ignored extraction workspace.
+A fuller translation and runtime validation, additional translation-bearing
+surface recovery, and a more space-efficient placement strategy remain open.
+The generated editable message JSON remains in the ignored extraction workspace;
+the tracked localization catalogue is the source for translated builds.

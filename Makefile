@@ -48,7 +48,7 @@ build-disc:
 	python3 tools/assets.py build extracted/assets build/assets-rebuilt.iso
 
 build-mod-disc:
-	python3 tools/assets.py build extracted/assets build/assets-modded.iso --relocate
+	python3 tools/assets.py build extracted/assets build/assets-modded.iso --relocate --translations localization/messages.json
 
 compare-disc:
 	python3 tools/compare_disc.py build/assets-rebuilt.iso

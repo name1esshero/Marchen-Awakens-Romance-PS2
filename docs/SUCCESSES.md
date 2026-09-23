@@ -68,6 +68,30 @@ acceptance are unresolved.
 References: [task evidence](../tasks/MESSAGE_TABLE.md), `tools/messages.py`,
 `tools/assets.py`, `tests/test_messages.py`, `tests/test_assets.py`.
 
+## Stable translation IDs keep catalogue edits attached to the authenticated source
+
+Symptom: editable extraction JSON is useful for experiments but is ignored
+workspace state, so translation edits are not reviewable or reproducible in Git.
+Mechanism: preserve the source table hash and each exact original string in a
+tracked catalogue. Identify records by observed `kind`, `key`, and their
+occurrence among duplicate pairs; use the table index as corroborating evidence.
+Pathway: generate the catalogue once from the prepared source, edit only the
+nullable translation/status/context fields, and let `build-mod-disc` validate
+the pinned table identity before applying overrides. Blank translations retain
+the original bytes; stale or unmatched catalogues fail closed.
+Verification: the all-original tracked catalogue built a full image matching the
+pinned reference exactly. One 15-byte translated growth rebuilt through the full
+ISO/YFS/PAC path; inventory passed, reparsing recovered all 229 entries and the
+new string, and the streaming comparator authenticated the baseline while
+reporting the expected changed-image mismatch. Unit tests cover duplicate IDs,
+source drift and catalogue-driven PAC relocation.
+Scope: the one observed `disc!/_DATA.YFS;1!/data/common.pac!/_msg.dat` resource.
+Limits: translation coverage is one initial prompt; runtime layout, script call
+sites, and remaining text-bearing formats are still unresolved.
+References: [message-table evidence](../tasks/MESSAGE_TABLE.md),
+`localization/messages.json`, `tools/message_catalog.py`, `tests/test_message_catalog.py`,
+`Makefile`.
+
 ## Section names survive removal of the symbol table
 
 Symptom: ELF has no SHT_SYMTAB but thousands of named sections.

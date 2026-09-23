@@ -26,11 +26,14 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   `make build-mod-disc` provides the corresponding experimental workspace build
   command. No retail menu/dialogue table has yet been edited and tested in-game.
 - One 20,452-byte `_msg.dat` message table now has a strict editable JSON
-  representation with 229 entries. Its untouched parse/build is byte-identical;
-  a longer test entry has been grown and relocated through a full mod ISO build.
-  The output inventories and reparses through YFS/PAC to recover the edited text.
-  Runtime acceptance remains untested. The append strategy grows the ISO by the
-  full 428,967,936-byte YFS for this 24-byte message increase.
+  representation with 229 entries and a tracked source at
+  `localization/messages.json`. One save/start prompt has an initial English
+  rendering; a 193-byte translation grew the 178-byte CP932 original by 15 bytes.
+  The catalog-driven mod ISO inventories and reparses through ISO/YFS/PAC, with
+  all 229 entries recovered and the English prompt at its relocated table record.
+  The authenticated reference comparison reports the expected mismatch. Runtime
+  line layout and acceptance remain untested. The append strategy grows the ISO
+  by the full 428,967,936-byte YFS for this 15-byte message increase.
 - The complete 3,445,204-byte boot ELF now rebuilds identically from repository
   text artifacts plus assembled code. `cmp` verifies every output byte.
 - An isolated build containing no ISO, extracted files, reports, existing build
@@ -69,8 +72,8 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   such as YPC geometry, texture payloads, audio, fonts and scripts remain binary;
   moved/grown assets have no runtime validation. The two catalog tables and the
   recovered `_msg.dat` table are translation-bearing surfaces; broader UI `.b`
-  resources remain opaque. The extracted message JSON is ignored workspace data;
-  a tracked original/translation catalog has not been created. DMY files, module internals and DVP
+  resources remain opaque. The message catalog has 1 initial translation and
+  228 untranslated entries. DMY files, module internals and DVP
   overlay semantics remain open.
 - Independent retail-dump authentication remains unestablished.
 

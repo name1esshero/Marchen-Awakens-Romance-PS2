@@ -13,6 +13,7 @@ import tempfile
 
 from bootstrap import inventory, read_at, record, SECTOR
 import messages
+import message_catalog
 
 CHUNK = 1024 * 1024
 
@@ -223,7 +224,7 @@ def export(image, dest, hash_file):
     print(json.dumps(census, ensure_ascii=False, indent=2))
 
 
-def build_node(root, output, relocate=False):
+def build_node(root, output, relocate=False, translations=None):
     m = json.loads((root / 'layout.json').read_text())
     if m['version'] != 1 or m['kind'] not in ('ISO', 'YFS', 'PAC', 'AFS'):
         raise ValueError('unsupported workspace')
@@ -241,7 +242,7 @@ def build_node(root, output, relocate=False):
             source = safe(root, p['source'])
             if p.get('container'):
                 nested = Path(temp) / str(i)
-                build_node(source, nested, relocate)
+                build_node(source, nested, relocate, translations)
                 source = nested
             if p.get('text_source'):
                 text_path = safe(root, p['text_source'])
@@ -250,6 +251,9 @@ def build_node(root, output, relocate=False):
             elif p.get('message_source'):
                 source = Path(temp) / f'messages-{i}'
                 document = json.loads(safe(root, p['message_source']).read_text(encoding='utf-8'))
+                if translations is not None:
+                    document = message_catalog.apply(document, translations['catalog'])
+                    translations['applied'] += 1
                 source.write_bytes(messages.build(document))
             length = source.stat().st_size
             location = p['offset']
@@ -293,14 +297,18 @@ def build_node(root, output, relocate=False):
                 out.write(struct.pack('<I', tail // SECTOR) + struct.pack('>I', tail // SECTOR))
 
 
-def build(root, output, relocate=False):
+def build(root, output, relocate=False, translations_path=None):
     if output.exists() or output.resolve().is_relative_to(root.resolve()):
         raise ValueError('output must be new and outside the source workspace')
     output.parent.mkdir(parents=True, exist_ok=True)
     fd, tmp = tempfile.mkstemp(dir=output.parent, prefix='.assets-')
     os.close(fd)
     try:
-        build_node(root, Path(tmp), relocate)
+        translations = ({'catalog': json.loads(translations_path.read_text(encoding='utf-8')),
+                         'applied': 0} if translations_path is not None else None)
+        build_node(root, Path(tmp), relocate, translations)
+        if translations is not None and translations['applied'] != 1:
+            raise ValueError('translation catalogue was not applied to exactly one message table')
         os.replace(tmp, output)
     finally:
         if os.path.exists(tmp):
@@ -392,13 +400,15 @@ def main():
     b.add_argument('workspace', type=Path)
     b.add_argument('output', type=Path)
     b.add_argument('--relocate', action='store_true', help='allow growth by appending members; runtime unverified')
+    b.add_argument('--translations', type=Path,
+                   help='apply a validated original/translation message catalogue')
     args = p.parse_args()
     if args.command == 'export':
         export(args.image, args.workspace, args.hash_file)
     elif args.command == 'prepare':
         prepare(args.workspace, args.report)
     else:
-        build(args.workspace, args.output, args.relocate)
+        build(args.workspace, args.output, args.relocate, args.translations)
 
 
 if __name__ == '__main__':

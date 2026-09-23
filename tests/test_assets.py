@@ -11,6 +11,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import assets
 import messages
+import message_catalog
 from test_bootstrap import iso as make_iso
 
 
@@ -167,18 +168,20 @@ class AssetsTests(unittest.TestCase):
             assets.build(root, untouched)
             self.assertEqual(untouched.read_bytes(), original)
 
-            translated = json.loads(editable.read_text(encoding='utf-8'))
-            translated['entries'][0]['text'] = 'Would you like to save? 保存しますか？'
-            editable.write_text(json.dumps(translated, ensure_ascii=False), encoding='utf-8')
+            catalog = message_catalog.create(messages.parse(messages.build(document)))
+            catalog['entries'][0]['translation'] = 'Would you like to save? 保存しますか？'
+            catalog['entries'][0]['status'] = 'translated'
+            catalog_path = Path(d) / 'messages.catalog.json'
+            assets.save_json(catalog_path, catalog)
             modded = Path(d) / 'translated.pac'
-            assets.build(root, modded, relocate=True)
+            assets.build(root, modded, relocate=True, translations_path=catalog_path)
 
             with modded.open('rb') as rebuilt:
                 entry = assets.archive(rebuilt, 0, modded.stat().st_size)[2][0]
                 self.assertGreater(entry['offset'], 0)
                 rebuilt.seek(entry['offset'])
                 result = messages.parse(rebuilt.read(entry['size']))
-            self.assertEqual(result['entries'][0]['text'], translated['entries'][0]['text'])
+            self.assertEqual(result['entries'][0]['text'], catalog['entries'][0]['translation'])
             self.assertEqual(result['entries'][1]['key'], 9)
 
 

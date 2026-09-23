@@ -50,9 +50,14 @@ companions that are encoded back to the game's observed CP932 encoding. `--reloc
 allows larger members to be appended and their observed container table offsets
 updated, but game runtime support for moved resources is not yet verified.
 `prepare-assets` also exports the observed 229-entry `_msg.dat` table as editable
-JSON. For a mod build, run the streaming comparator against the mod ISO (an
-intentional edit returns mismatch status 1) using
-`python3 tools/compare_disc.py build/assets-modded.iso`, then parse its filesystem with
+JSON. The tracked original/translation source is `localization/messages.json`;
+edit a row's `translation` and matching `status` (`translated` or
+`untranslated`), then `make build-mod-disc` applies it. The builder checks the
+authenticated source table hash and stable record identity, encodes CP932, and
+requires that exactly one supported table was found. For a mod build, run the
+streaming comparator against the mod ISO (an intentional edit returns mismatch
+status 1) using `python3 tools/compare_disc.py build/assets-modded.iso`, then
+parse its filesystem with
 `python3 tools/bootstrap.py build/assets-modded.iso --reports /tmp/marps2-mod-check`.
 Formats inside PAC leaves such as YPC models, fonts, audio and script bytecode
 remain binary until their internal structures and conversion round trips are

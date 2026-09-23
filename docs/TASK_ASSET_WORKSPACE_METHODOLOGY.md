@@ -53,9 +53,14 @@ found. UI `.b` resources and other binary formats remain candidates for separate
 format work.
 
 For a discovered plain-text leaf, edit its `.utf8.txt` companion. For the observed
-`_msg.dat` surface, edit each JSON entry's `text` while preserving its `kind` and
-`key`. Retain control codes, delimiters, columns, and line structure until the
-format is understood. The builder encodes edited text as CP932. Same-size edits can use
+`_msg.dat` surface, use the tracked `localization/messages.json` catalogue. Each
+entry keeps a stable ID, original, nullable translation, context, notes and
+status. Edit the translation and its matching status; the build checks the
+catalogue's source hash and unique record identity, then encodes text as CP932.
+`python3 tools/message_catalog.py create SOURCE.json OUTPUT.json` creates a new
+catalogue from prepared original message JSON; ordinary translation edits belong
+in the tracked catalogue. Retain control codes, delimiters, columns and line
+structure until the format is understood. Same-size edits can use
 `make verify-disc` and should compare exactly only if the workspace has no edits.
 For a growing edit, run `make build-mod-disc`; it enables the observed relocation
 path and writes `build/assets-modded.iso`. Then run
@@ -72,10 +77,11 @@ validator.
 The synthetic regressions exercise UTF-8 editing, CP932 encoding, ISO directory
 extent growth, and volume-length update, plus structured message editing with
 offset updates through a PAC. The real `_msg.dat` table has also been extracted,
-rebuilt byte-identically, and grown in a temporary copy of its containing PAC.
+rebuilt byte-identically, and grown using the tracked translation catalogue
+through the full ISO build.
 These checks do not prove retail text line wrapping, glyph coverage, or runtime
 relocation behavior.
-The verified mod run also exposes a placement cost: a 24-byte string growth
+The verified mod run also exposes a placement cost: a 15-byte string growth
 appends a complete new PAC member at its parent, then appends the complete
 428,967,936-byte YFS at the ISO end. The resulting 5.016 GB ISO inventories and
 reparses correctly, but the current method is space-heavy and has no runtime
@@ -90,13 +96,13 @@ ranges rather than requiring equality.
    existing destination. The parser fails on unsupported directory features,
    malformed archive tables, overlapping/out-of-range extents, duplicate YFS
    ownership, or unsupported member flags.
-3. Run `make prepare-assets` to discover nested PAC tables, write the catalog and
+3. Run `make prepare-assets` to discover nested PAC tables, write the asset index and
    text companions, and expose the observed `_msg.dat` as UTF-8 JSON. Existing
    editable companions are retained on repeated prepare runs. Plain-text
    conversion is accepted only when CP932 encode/decode reproduces the exact
    input bytes.
-4. Edit a raw leaf, UTF-8 companion, or `text` field in a message JSON document.
-   Preserve table-defined names, record keys and member order. Same-size edits
+4. Edit a raw leaf, UTF-8 companion, or the `translation` field in
+   `localization/messages.json`. Preserve table-defined names, record keys and member order. Same-size edits
    can retain the original
    location. Changed sizes require `python3 tools/assets.py build extracted/assets
    build/mod.iso --relocate`; relocation is an experimental packaging pathway.
@@ -122,9 +128,11 @@ PAC containers, generates catalog/plain-text source files, and parses a leaf nam
 contract. By default
 it also updates the compact census at `reports/assets_census.json`; use `--report`
 to choose another evidence path or `/dev/null` to suppress that copy.
-`build WORKSPACE OUTPUT [--relocate]` reads only workspace files, verifies complete
-non-overlapping byte coverage and updates only table fields already located during
-export. Unknown bytes are preserved.
+`build WORKSPACE OUTPUT [--relocate] [--translations CATALOG.json]` reads only
+workspace files, verifies complete non-overlapping byte coverage and updates only
+table fields already located during export. When given a catalogue, it verifies
+the original table SHA-256 and requires exactly one matching message table.
+Unknown bytes are preserved. `make build-mod-disc` supplies the tracked catalogue.
 `messages.py extract INPUT OUTPUT.json` and `messages.py build INPUT.json OUTPUT`
 operate on the observed 8-byte-header/12-byte-record message-table shape. They
 reject invalid ranges, embedded NULs, invalid CP932 and unencodable translations;
@@ -144,7 +152,8 @@ provenance. It reports differing byte count, not a semantic diff.
 
 Focused tests cover nested round trips, malformed tables, unsafe source paths,
 plain UTF-8-to-CP932 translation growth through ISO relocation, structured message
-growth and PAC relocation, comparator chunk boundaries, truncation, and
+growth and PAC relocation, stable catalogue IDs and stale-source rejection,
+catalogue-driven repacking, comparator chunk boundaries, truncation, and
 pinned-reference rejection. Final verification for the workspace is `make test`
 and unchanged full-disc `make verify-disc`. The changed real `_msg.dat` member has
 also been built through the full ISO, authenticated against the pinned baseline,
