@@ -1049,9 +1049,207 @@
     },
     {
       "offset": 2361436,
-      "size": 1083768,
+      "size": 1740,
       "kind": "unrecovered_hex",
       "source": "unrecovered_0024085c.hex"
+    },
+    {
+      "offset": 2363176,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetChara__7CWeapon"
+    },
+    {
+      "offset": 2363184,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetArmParam__7CWeapon"
+    },
+    {
+      "offset": 2363192,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetLinkBoneType__7CWeapon"
+    },
+    {
+      "offset": 2363200,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.IsSubWeapon__7CWeapon"
+    },
+    {
+      "offset": 2363208,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetArmType__7CWeapon"
+    },
+    {
+      "offset": 2363216,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetTblNo__7CWeapon"
+    },
+    {
+      "offset": 2363224,
+      "size": 52,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_00240f58.hex"
+    },
+    {
+      "offset": 2363276,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetPmv__7CWeaponi"
+    },
+    {
+      "offset": 2363284,
+      "size": 16,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_00240f94.hex"
+    },
+    {
+      "offset": 2363300,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.InitWeapon__7CWeapon"
+    },
+    {
+      "offset": 2363308,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.InitColFlag__7CWeapon"
+    },
+    {
+      "offset": 2363316,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetAttackFlag__7CWeaponi"
+    },
+    {
+      "offset": 2363324,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetCatchFlag__7CWeaponi"
+    },
+    {
+      "offset": 2363332,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetCol__7CWeaponi"
+    },
+    {
+      "offset": 2363340,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetSubMotion__7CWeaponG8MotionNoif"
+    },
+    {
+      "offset": 2363348,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetWeapon__7CWeaponi"
+    },
+    {
+      "offset": 2363356,
+      "size": 12,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_00240fdc.hex"
+    },
+    {
+      "offset": 2363368,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.ResetWeapon__7CWeapon"
+    },
+    {
+      "offset": 2363376,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.IsAirAction__7CWeapon"
+    },
+    {
+      "offset": 2363384,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetEffect__7CWeaponii"
+    },
+    {
+      "offset": 2363392,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetWeponCng__7CWeapon"
+    },
+    {
+      "offset": 2363400,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.ReSetWeponCng__7CWeapon"
+    },
+    {
+      "offset": 2363408,
+      "size": 12,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_00241010.hex"
+    },
+    {
+      "offset": 2363420,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.ActionUpdate__7CWeapon"
+    },
+    {
+      "offset": 2363428,
+      "size": 12,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_00241024.hex"
+    },
+    {
+      "offset": 2363440,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.DebRender__7CWeapon"
+    },
+    {
+      "offset": 2363448,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.RenderN__7CWeapon"
+    },
+    {
+      "offset": 2363456,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.RenderA__7CWeapon"
+    },
+    {
+      "offset": 2363464,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.RenderE__7CWeapon"
+    },
+    {
+      "offset": 2363472,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetModel__7CWeapon"
+    },
+    {
+      "offset": 2363480,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetSubModelNum__7CWeaponi"
+    },
+    {
+      "offset": 2363488,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetCurrentSubModel__7CWeaponii"
+    },
+    {
+      "offset": 2363496,
+      "size": 1081708,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_00241068.hex"
     }
   ]
 }

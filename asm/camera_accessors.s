@@ -426,3 +426,84 @@ sw $5, 0x5f4($4)
 .section .gnu.linkonce.t.GetCharCom__10CCharaBase,"ax",@progbits
 jr $31
 lw $2, 0x5ec($4)
+.section .gnu.linkonce.t.GetChara__7CWeapon,"ax",@progbits
+jr $31
+lw $2, 0x8($4)
+.section .gnu.linkonce.t.GetArmParam__7CWeapon,"ax",@progbits
+jr $31
+lw $2, 0x0($4)
+.section .gnu.linkonce.t.GetLinkBoneType__7CWeapon,"ax",@progbits
+jr $31
+lw $2, 0xc($4)
+.section .gnu.linkonce.t.IsSubWeapon__7CWeapon,"ax",@progbits
+jr $31
+lw $2, 0x1c($4)
+.section .gnu.linkonce.t.GetArmType__7CWeapon,"ax",@progbits
+jr $31
+lw $2, 0x14($4)
+.section .gnu.linkonce.t.GetTblNo__7CWeapon,"ax",@progbits
+jr $31
+lw $2, 0x18($4)
+.section .gnu.linkonce.t.SetPmv__7CWeaponi,"ax",@progbits
+jr $31
+sw $5, 0x20($4)
+.section .gnu.linkonce.t.InitWeapon__7CWeapon,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.InitColFlag__7CWeapon,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.SetAttackFlag__7CWeaponi,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.SetCatchFlag__7CWeaponi,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.GetCol__7CWeaponi,"ax",@progbits
+jr $31
+daddu $2, $0, $0
+.section .gnu.linkonce.t.SetSubMotion__7CWeaponG8MotionNoif,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.SetWeapon__7CWeaponi,"ax",@progbits
+jr $31
+daddu $2, $0, $0
+.section .gnu.linkonce.t.ResetWeapon__7CWeapon,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.IsAirAction__7CWeapon,"ax",@progbits
+jr $31
+daddu $2, $0, $0
+.section .gnu.linkonce.t.SetEffect__7CWeaponii,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.SetWeponCng__7CWeapon,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.ReSetWeponCng__7CWeapon,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.ActionUpdate__7CWeapon,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.DebRender__7CWeapon,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.RenderN__7CWeapon,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.RenderA__7CWeapon,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.RenderE__7CWeapon,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.GetModel__7CWeapon,"ax",@progbits
+jr $31
+daddu $2, $0, $0
+.section .gnu.linkonce.t.GetSubModelNum__7CWeaponi,"ax",@progbits
+jr $31
+daddu $2, $0, $0
+.section .gnu.linkonce.t.SetCurrentSubModel__7CWeaponii,"ax",@progbits
+jr $31
+nop

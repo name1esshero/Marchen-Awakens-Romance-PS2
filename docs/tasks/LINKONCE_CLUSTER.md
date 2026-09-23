@@ -293,3 +293,39 @@ concurrent session was working on UI localization), CMotion3, CTexData,
 CMotion, CGameCntrl, and the rest of the 592 still-untouched trivial 8-byte
 sections (`reports/linkonce_text_inventory.json`, recomputed against the
 current `config/camera_sections.txt`).
+
+## CWeapon accessor batch — 2026-09-23
+
+Agent: Claude Sonnet 5; role: Contributor. Continues the same deliberate
+scoping: gameplay logic only, no UI/menu/graphics classes, since a concurrent
+session remained active on text and graphics localization throughout.
+
+All 27 remaining trivial 8-byte `CWeapon` sections (`0x33ff28`–`0x340064`)
+were disassembled and confirmed to follow the established shapes: six field
+reads (`GetArmParam`, `GetChara` at offsets `0x0`/`0x8`, both pointers;
+`GetLinkBoneType`, `GetArmType`, `GetTblNo`, `IsSubWeapon` — plain ints at
+`0xc`/`0x14`/`0x18`/`0x1c`), one field write (`SetPmv` at `0x20`), and twenty
+stub bodies (empty or fixed-zero-return, ignoring all arguments) — `CWeapon`
+is, like `CCharaBase`, mostly a base-class-shaped stub surface with only a
+handful of real fields near offset zero.
+
+This batch produced a second, distinct parameter-mangling correction beyond
+the pointer-type trap already in `SUCCESSES.md`:
+`SetSubMotion__7CWeaponG8MotionNoif`'s `G8MotionNo` is **not** a reference
+(`R`) as first guessed — a standalone probe showed `MotionNo &` compiles to
+`R8MotionNoif`, a different name. `G` is this compiler's encoding for a class
+passed **by value** whose non-trivial (here, merely user-declared, empty)
+constructor forces old-ABI hidden-reference argument passing. Confirmed via
+a minimal isolated probe before touching the real candidate; see the updated
+`SUCCESSES.md` entry for the full three-way `P`/`R`/`G` distinction.
+
+`asm/camera_accessors.s`, `CCamera.h` and `probe.cpp` were extended with the
+same harness technique as every prior batch. The unmodified EE GCC
+`2.96-ee-001003-1` `-O2` invocation matches all 27 new sections after the `G`
+correction. Reconstruction now covers **168 sections / 1,344 bytes across ten
+partial classes**; 3,443,860 bytes remain explicit raw debt. `make test
+verify-boot verify-source-only verify-ee` passes (full boot ELF and full
+EE-probe ELF both byte-identical).
+
+Not recovered this batch: the rest of the 592-minus-27 still-untouched
+trivial 8-byte sections, still excluding all UI/menu-adjacent classes.

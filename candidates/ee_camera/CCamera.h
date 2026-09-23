@@ -14,6 +14,16 @@ class CCamera;
 // Named only to reproduce the mangled parameter type in
 // SetCurrentStatus__10CCharaBaseiiP12TypeArmParami; no members are evidenced.
 class TypeArmParam;
+// Named and given a user-declared (non-trivial) constructor only to reproduce
+// SetSubMotion__7CWeaponG8MotionNoif's mangled parameter: 'G' is this old ABI's
+// encoding for a class passed BY VALUE whose non-trivial constructor forces
+// hidden-reference-style parameter passing, distinct from 'P' (pointer) and
+// 'R' (genuine C++ reference) seen elsewhere. Confirmed with a minimal
+// standalone probe before use here. No other members are evidenced.
+class MotionNo {
+public:
+    MotionNo() {}
+};
 
 class CRender {
 public:
@@ -377,6 +387,50 @@ public:
     void SetYhoseiOffPmv(int value) { yhoseiOffPmv = value; }
     void SetYbaseSetPmv(int value) { ybaseSetPmv = value; }
     int GetCharCom() { return charCom; }
+};
+
+class CWeapon {
+public:
+    void *armParam;
+    unsigned char unknown004[0x4];
+    void *chara;
+    int linkBoneType;
+    unsigned char unknown010[0x4];
+    int armType;
+    int tblNo;
+    int subWeapon;
+    int pmv;
+
+    void *GetArmParam() { return armParam; }
+    void *GetChara() { return chara; }
+    int GetLinkBoneType() { return linkBoneType; }
+    int IsSubWeapon() { return subWeapon; }
+    int GetArmType() { return armType; }
+    int GetTblNo() { return tblNo; }
+    void SetPmv(int value) { pmv = value; }
+    // Evidenced bodies ignore all arguments and either do nothing or return a
+    // fixed zero; a stub shape only, not a claim about why (see the same note
+    // on CCharaBase's stub methods).
+    void InitWeapon() {}
+    void InitColFlag() {}
+    void SetAttackFlag(int) {}
+    void SetCatchFlag(int) {}
+    int GetCol(int) { return 0; }
+    void SetSubMotion(MotionNo, int, float) {}
+    int SetWeapon(int) { return 0; }
+    void ResetWeapon() {}
+    int IsAirAction() { return 0; }
+    void SetEffect(int, int) {}
+    void SetWeponCng() {}
+    void ReSetWeponCng() {}
+    void ActionUpdate() {}
+    void DebRender() {}
+    void RenderN() {}
+    void RenderA() {}
+    void RenderE() {}
+    int GetModel() { return 0; }
+    int GetSubModelNum(int) { return 0; }
+    void SetCurrentSubModel(int, int) {}
 };
 
 #endif
