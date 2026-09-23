@@ -302,25 +302,43 @@ declared work or existing uncommitted changes. Once the scope is demonstrably
 disjoint, it may proceed without waiting for another approval when autonomous
 work has been authorized.
 
-Workers preserve unrelated changes, avoid shared high-conflict files unless
-assigned, stage only their own files, run the scope's applicable verification,
-update isolated task evidence and reusable knowledge as appropriate, and
-commit with all required `STANDARDS.md` §17 trailers. Report the commit and
-verification outcome to the coordinator. The coordinator integrates results,
-resolves conflicts, and owns shared status/queue updates unless explicitly
-delegated.
+Before editing, each simultaneous worker must create its own Git worktree and
+branch. It owns its implementation, task evidence, applicable verification,
+scoped staging, and commit with all required `STANDARDS.md` §17 trailers. It
+must inspect its own final commit and verify that the changed-file list matches
+its task and trailers, then report the commit hash and verification outcome.
+This leaves routine commit and task-check work with the worker. The coordinator
+handles task decomposition, integration conflicts, combined gates, and shared
+status/queue updates unless explicitly delegated.
+
+When the operator supplies a delegated-contributor label, use it exactly in
+the `Agent-Model` trailer. For example, `GPT-6: Luna (Subagent)` records the
+coordinator's requested attribution for delegated work; `Agent-Role` still
+describes the worker's selected task. Without an operator-supplied label, use
+the runtime identity or the fail-closed value required by `STANDARDS.md` §17.
+
+### Concurrent Git safety
+
+Disjoint file paths do not isolate Git staging: agents in one checkout share
+the same index and branch. Separate worktrees are required for concurrent
+workers that commit independently. Do not run simultaneous `git add` or
+`git commit` operations from one shared checkout. A worker that discovers it
+cannot use an isolated worktree must stop before editing and ask the coordinator
+to serialize its work/commit. If an unintended file is included, preserve
+history, notify the coordinator, and record the incident; do not amend or reset
+without owner authorization.
 
 ## Nested delegation
 
 An agent may spawn up to two simultaneous workers only when the user or
 coordinator explicitly grants permission to delegate further. General support
 for subagents is not itself permission. Each nested worker must receive the
-same acclimation, bounded-scope, non-interference, evidence, and commit
-instructions above. Its task must be unrelated to the spawning agent's
-selected task and disjoint from all other active work; the spawning agent
-remains responsible for reporting, integrating, and verifying its workers'
-results. Do not recursively delegate again unless that authority is explicitly
-granted too.
+same acclimation, bounded-scope, non-interference, separate-worktree,
+self-verification, and commit instructions above. Its task must be unrelated
+to the spawning agent's selected task and disjoint from all other active work;
+the spawning agent remains responsible for their coordination and integration.
+Do not recursively delegate again unless that authority is explicitly granted
+too.
 
 # 10. Automated specialist escalation
 

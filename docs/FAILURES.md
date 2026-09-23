@@ -306,3 +306,24 @@ independent parser, format sample, or runtime/tool trace establishes the PSMCT32
 variant. This does not imply the payloads are corrupt; it establishes only that
 they fail the current bounded RTX3 contract. Evidence: `graphics/index.json`,
 `reports/rtx3_format_survey.json`, and the full source-hash/TGA-dimension audit.
+
+## Concurrent agents shared one Git index
+
+Hypothesis: workers changing disjoint paths in one checkout can safely stage
+and commit independently if each checks its staged diff first. Commit
+`035740012bd231d03a5a898485fafe33d0e054dc` included an IOP-inventory worker's
+two files and a concurrently staged `btst_txt` English TGA plus its task note.
+The IOP worker had checked a staged diff containing only its own report and task
+note before the other files entered the shared index. The commit's required
+trailers describe the IOP inventory and omit those two additional files. No
+files were lost; the worker reported the race and existing history was
+preserved without amendment or reset.
+
+Mechanism: the Git index and branch belong to the checkout, not to an agent or
+path. Concurrent `git add` and `git commit` operations therefore race even when
+workers chose non-overlapping files. Separate worktrees are required for
+independently committing concurrent workers; do not use one shared checkout for
+their staging and commits. A worker must inspect its own committed file list
+and trailer coverage before reporting completion. This failure does not show
+that parallel editing itself is unsafe; it identifies shared-index commit
+isolation as the missing boundary. See [agent environment procedure](AGENT_ENVIRONMENT.md).
