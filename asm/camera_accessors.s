@@ -507,3 +507,57 @@ daddu $2, $0, $0
 .section .gnu.linkonce.t.SetCurrentSubModel__7CWeaponii,"ax",@progbits
 jr $31
 nop
+.section .gnu.linkonce.t.OnOpenNewMotion__8CMotion3,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.GetLoopCount__8CMotion3,"ax",@progbits
+jr $31
+lw $2, 0xe4($4)
+.section .gnu.linkonce.t.IsLoop__8CMotion3,"ax",@progbits
+jr $31
+lw $2, 0xec($4)
+.section .gnu.linkonce.t.GetDataBase__8CMotion3,"ax",@progbits
+jr $31
+lw $2, 0xa4($4)
+.section .gnu.linkonce.t.GetMotionNo__8CMotion3,"ax",@progbits
+jr $31
+lw $2, 0xbc($4)
+.section .gnu.linkonce.t.GetSubMotionNo__8CMotion3,"ax",@progbits
+jr $31
+lw $2, 0xc0($4)
+.section .gnu.linkonce.t.GetMotionIndex__8CMotion3,"ax",@progbits
+jr $31
+lw $2, 0xc4($4)
+.section .gnu.linkonce.t.GetNextMotionNo__8CMotion3,"ax",@progbits
+jr $31
+lw $2, 0xc8($4)
+.section .gnu.linkonce.t.GetNextSubMotionNo__8CMotion3,"ax",@progbits
+jr $31
+lw $2, 0xcc($4)
+.section .gnu.linkonce.t.GetNextIndex__8CMotion3,"ax",@progbits
+jr $31
+lw $2, 0xd0($4)
+.section .gnu.linkonce.t.GetNextMotionNoS__8CMotion3,"ax",@progbits
+jr $31
+lw $2, 0xd4($4)
+.section .gnu.linkonce.t.GetNextSubMotionNoS__8CMotion3,"ax",@progbits
+jr $31
+lw $2, 0xd8($4)
+.section .gnu.linkonce.t.GetNextIndexS__8CMotion3,"ax",@progbits
+jr $31
+lw $2, 0xdc($4)
+.section .gnu.linkonce.t.SetNextJumpDC__8CMotion3P8CMotion3,"ax",@progbits
+jr $31
+sw $5, 0xb8($4)
+.section .gnu.linkonce.t.GetNextFrame__8CMotion3,"ax",@progbits
+jr $31
+lwc1 $f0, 0xb0($4)
+.section .gnu.linkonce.t.GetNextLabel__8CMotion3,"ax",@progbits
+jr $31
+lw $2, 0xb4($4)
+.section .gnu.linkonce.t.GetJumpMode__8CMotion3,"ax",@progbits
+jr $31
+lw $2, 0xe0($4)
+.section .gnu.linkonce.t.IsError__8CMotion3,"ax",@progbits
+jr $31
+lw $2, 0xf0($4)

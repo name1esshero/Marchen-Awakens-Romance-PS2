@@ -433,4 +433,48 @@ public:
     void SetCurrentSubModel(int, int) {}
 };
 
+class CMotion3 {
+public:
+    unsigned char unknown000[0xa4];
+    void *dataBase;
+    unsigned char unknown0a8[0x8];
+    float nextFrame;
+    int nextLabel;
+    CMotion3 *nextJumpDC;
+    int motionNo;
+    int subMotionNo;
+    int motionIndex;
+    int nextMotionNo;
+    int nextSubMotionNo;
+    int nextIndex;
+    int nextMotionNoS;
+    int nextSubMotionNoS;
+    int nextIndexS;
+    int jumpMode;
+    int loopCount;
+    unsigned char unknown0e8[0x4];
+    int isLoop;
+    int isError;
+
+    // Evidenced body ignores its arguments and returns void.
+    void OnOpenNewMotion() {}
+    int GetLoopCount() { return loopCount; }
+    int IsLoop() { return isLoop; }
+    void *GetDataBase() { return dataBase; }
+    int GetMotionNo() { return motionNo; }
+    int GetSubMotionNo() { return subMotionNo; }
+    int GetMotionIndex() { return motionIndex; }
+    int GetNextMotionNo() { return nextMotionNo; }
+    int GetNextSubMotionNo() { return nextSubMotionNo; }
+    int GetNextIndex() { return nextIndex; }
+    int GetNextMotionNoS() { return nextMotionNoS; }
+    int GetNextSubMotionNoS() { return nextSubMotionNoS; }
+    int GetNextIndexS() { return nextIndexS; }
+    void SetNextJumpDC(CMotion3 *value) { nextJumpDC = value; }
+    float GetNextFrame() { return nextFrame; }
+    int GetNextLabel() { return nextLabel; }
+    int GetJumpMode() { return jumpMode; }
+    int IsError() { return isError; }
+};
+
 #endif

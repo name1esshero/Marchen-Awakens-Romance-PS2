@@ -497,9 +497,135 @@
     },
     {
       "offset": 2345616,
-      "size": 13196,
+      "size": 3692,
       "kind": "unrecovered_hex",
       "source": "unrecovered_0023ca90.hex"
+    },
+    {
+      "offset": 2349308,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.OnOpenNewMotion__8CMotion3"
+    },
+    {
+      "offset": 2349316,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetLoopCount__8CMotion3"
+    },
+    {
+      "offset": 2349324,
+      "size": 48,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023d90c.hex"
+    },
+    {
+      "offset": 2349372,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.IsLoop__8CMotion3"
+    },
+    {
+      "offset": 2349380,
+      "size": 32,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023d944.hex"
+    },
+    {
+      "offset": 2349412,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetDataBase__8CMotion3"
+    },
+    {
+      "offset": 2349420,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetMotionNo__8CMotion3"
+    },
+    {
+      "offset": 2349428,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetSubMotionNo__8CMotion3"
+    },
+    {
+      "offset": 2349436,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetMotionIndex__8CMotion3"
+    },
+    {
+      "offset": 2349444,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetNextMotionNo__8CMotion3"
+    },
+    {
+      "offset": 2349452,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetNextSubMotionNo__8CMotion3"
+    },
+    {
+      "offset": 2349460,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetNextIndex__8CMotion3"
+    },
+    {
+      "offset": 2349468,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetNextMotionNoS__8CMotion3"
+    },
+    {
+      "offset": 2349476,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetNextSubMotionNoS__8CMotion3"
+    },
+    {
+      "offset": 2349484,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetNextIndexS__8CMotion3"
+    },
+    {
+      "offset": 2349492,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetNextJumpDC__8CMotion3P8CMotion3"
+    },
+    {
+      "offset": 2349500,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetNextFrame__8CMotion3"
+    },
+    {
+      "offset": 2349508,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetNextLabel__8CMotion3"
+    },
+    {
+      "offset": 2349516,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetJumpMode__8CMotion3"
+    },
+    {
+      "offset": 2349524,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.IsError__8CMotion3"
+    },
+    {
+      "offset": 2349532,
+      "size": 9280,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023d9dc.hex"
     },
     {
       "offset": 2358812,

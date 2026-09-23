@@ -329,3 +329,31 @@ EE-probe ELF both byte-identical).
 
 Not recovered this batch: the rest of the 592-minus-27 still-untouched
 trivial 8-byte sections, still excluding all UI/menu-adjacent classes.
+
+## CMotion3 accessor batch — 2026-09-23
+
+Agent: Claude Sonnet 5; role: Contributor. Same deliberate scoping as every
+prior batch: gameplay logic only.
+
+All 18 remaining trivial 8-byte `CMotion3` sections (`0x33c8fc`–`0x33c9d8`)
+were disassembled and confirmed to follow the established shapes: sixteen
+field reads (mostly `int`, one `float` at `0xb0`, one `void*` at `0xa4`), one
+field write (`SetNextJumpDC`, a self-referencing `CMotion3 *` at `0xb8`), and
+one no-argument-effect stub (`OnOpenNewMotion`). `SetNextJumpDC`'s parameter
+mangles as `P8CMotion3` — the class referencing its own (still-incomplete at
+that point in its own body) type by pointer, which C++ permits without any
+special handling, unlike the `CWeapon`/`CCharaBase` cases needing a separate
+forward-declared class.
+
+`asm/camera_accessors.s`, `CCamera.h` and `probe.cpp` were extended with the
+same harness technique as every prior batch; the unmodified EE GCC
+`2.96-ee-001003-1` `-O2` invocation matched all 18 new sections on the first
+attempt (no mangling correction needed this time). Reconstruction now covers
+**186 sections / 1,488 bytes across eleven partial classes**; 3,443,716 bytes
+remain explicit raw debt. `make test verify-boot verify-source-only
+verify-ee` passes (full boot ELF and full EE-probe ELF both byte-identical).
+
+Not recovered this batch: the remaining ~547 still-untouched trivial 8-byte
+sections, still excluding all UI/menu-adjacent and texture-adjacent classes
+(`MenuFrame*`, `MenuEsy`, `CTexData`, `CTexGroup`) given the concurrent
+localization session's territory.
