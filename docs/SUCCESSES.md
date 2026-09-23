@@ -696,6 +696,23 @@ References: `graphics/user_interface/00039_01631_0025_windisp_eng.tga`,
 [`FAILURES.md`](FAILURES.md), `tools/graphics.py`, `tools/rtx3.py`,
 `tools/verify_graphics_in_iso.py`.
 
+## Translate the title-screen mark and credit while preserving its indexed texture
+
+Symptom: the `title000` texture contains a Japanese title mark and author/publisher
+credit beside English tagline, prompt, and Konami text. Recreating the mark with
+a generic font would lose the recovered game's lettering.
+Mechanism: reuse the existing English MÄR HEAVEN and credit lettering from sibling
+title assets, replacing only the mark and credit bands in a same-size `_eng.tga`.
+Keep the Japanese baseline and original PSMT8 palette intact.
+Verification: decoded source/output comparison found all 32,701 changed pixels
+inside the two declared edit regions. RTX3 import retained the header and full
+palette; importing the final TGA again yielded byte-identical TXC, and export
+reproduced the TGA exactly.
+Limits: static texture inspection does not establish runtime UV placement or
+on-screen readability; no ISO or emulator validation was performed.
+References: `graphics/user_interface/00039_00985_00000_title000_eng.tga`,
+[`title000 task evidence`](../tasks/GRAPHIC_TEXT_TITLE000.md), `tools/rtx3.py`.
+
 ## Byte-weight recovery levels after editable YOBJ coordinate surfaces
 
 Symptom: one "decompiled percentage" conflates file preservation, parser
