@@ -611,6 +611,31 @@ References: `graphics/title/00039_01566_0002_title_marh_eng.tga`,
 [`TITLE_TEXTURE_RENDERING.md`](../tasks/TITLE_TEXTURE_RENDERING.md),
 `tools/graphics.py`, `tools/verify_graphics_in_iso.py`, `tools/rtx3.py`.
 
+## Reuse localized title lettering in the ttlprts atlas
+
+Symptom: `title_new_tex.b`'s 512x512 `ttlprts` atlas contains three Japanese
+wordmark treatments and a vertical Japanese creator/publisher credit alongside
+English title prompts. Replacing the full image would also discard existing
+English lettering and layout.
+Mechanism: leave the `_jp.tga` baseline immutable; reuse the reviewed native
+English `MÄR HEAVEN` gray/color marks for the three matching slots and the
+localized creator/publisher credit from the sibling title-parts texture. Keep
+the source canvas and import through its existing PSMT8 palette.
+Verification: the 512x512 English TGA changes pixels only in the three logo
+regions and credit strip. `tools/rtx3.py` import retained the source TXC's
+263,232-byte size, dimensions, header, and palette; exporting it returned a
+512x512 TGA. The source and re-export previews were inspected at native texture
+scale. The baseline TGA SHA-256 remains
+`a528447c14929d7d16fc62254d6fdca90ff6d3f336c8b3a27b53f303d646542c`.
+Scope and limits: this is one atlas's local palette round-trip evidence. It
+does not validate ISO reinsertion, runtime UVs, draw order, or whether the
+three marks are separate display layers. No ISO build/reparse or emulator
+runtime validation was run.
+References: `graphics/title/00039_01565_0000_ttlprts_jp.tga`,
+`graphics/title/00039_01565_0000_ttlprts_eng.tga`,
+[`GRAPHIC_TEXT_TTLPRTS.md`](../tasks/GRAPHIC_TEXT_TTLPRTS.md),
+`tools/rtx3.py`.
+
 ## Preserve source line positions when replacing small UI text
 
 Symptom: generated English labels fit the words onto the texture but collapse
