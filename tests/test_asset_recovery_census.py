@@ -1,6 +1,10 @@
 import unittest
 
-from tools.asset_recovery_census import build_census, format_census_summary
+from tools.asset_recovery_census import (
+    build_census,
+    format_census_markdown,
+    format_census_summary,
+)
 
 
 class AssetRecoveryCensusTests(unittest.TestCase):
@@ -135,6 +139,29 @@ class AssetRecoveryCensusTests(unittest.TestCase):
         self.assertIn("video cinematics: 16 bytes (43.2432%)", summary)
         opaque_breakdown = summary.split("Y-Z structurally unclassified inventory", 1)[1]
         self.assertNotIn("video cinematics", opaque_breakdown)
+
+    def test_markdown_report_keeps_physical_and_logical_denominators_explicit(self):
+        leaves, index, disc, roundtrip = self.fixture()
+        movie = next(leaf for leaf in leaves if leaf["source"] == "00007.bin")
+        movie["name"] = "disc!/MOVIE.AFS;1!/00000.bin"
+        movie["_mpeg_program_stream"] = True
+        movie["_mpeg_ps_structural_bytes"] = movie["size"]
+        report = build_census(leaves, index, disc, roundtrip)
+        markdown = format_census_markdown(report)
+
+        self.assertIn("# Byte-weighted asset recovery census", markdown)
+        self.assertIn("**Intentional zero/padding: not established.**", markdown)
+        self.assertIn("Expanded information-bearing payload Y:", markdown)
+        self.assertIn("Structurally classified Z/Y", markdown)
+        self.assertIn("Losslessly rebuildable A/Y", markdown)
+        self.assertIn("Semantically editable B/Y", markdown)
+        self.assertIn("Runtime-validated editable C/Y", markdown)
+        self.assertIn("Full non-editable queue Y-B:", markdown)
+        self.assertIn("Strictly structurally unclassified queue Y-Z:", markdown)
+        self.assertIn("Catalog records", markdown)
+        self.assertIn("This is not a measure of every opaque field", markdown)
+        self.assertNotIn("decompiled percentage", markdown.lower())
+        self.assertTrue(all(line == line.rstrip() for line in markdown.splitlines()))
 
     def test_requires_explicit_rtx3_parse_evidence(self):
         leaves, index, disc, roundtrip = self.fixture()

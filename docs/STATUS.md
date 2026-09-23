@@ -15,7 +15,8 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   tracked `reports/assets_census.json` and ignored
   `extracted/assets/catalog.json`. Translation-bearing evidence is tracked in
   `reports/translation_surfaces.json`.
-- The byte-weighted census in `reports/asset_recovery_census.json` reports
+- The byte-weighted census in [`reports/asset_recovery_census.json`](../reports/asset_recovery_census.json)
+  and its [human-readable companion](../reports/asset_recovery_census.md) report
   disjoint physical-disc spans and a separate expanded logical payload. The
   4,587,749,376-byte image has 3,327,295,881 measured all-zero member/gap bytes
   (72.5257%), 1,237,522,725 nonzero terminal-member bytes (26.9745%), and

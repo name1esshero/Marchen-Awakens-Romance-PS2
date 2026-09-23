@@ -1152,6 +1152,161 @@ def format_census_summary(report: dict) -> str:
     return "\n".join(lines)
 
 
+def format_census_markdown(report: dict) -> str:
+    """Render a durable human-readable report without merging evidence levels."""
+    physical = report["physical_disc_accounting"]
+    logical = report["expanded_logical_payload"]
+    recovery = logical["recovery_levels"]
+    image_bytes = physical["image_bytes"]
+    payload_bytes = logical["information_bearing_payload_bytes_Y"]
+
+    def gb(byte_count: int) -> str:
+        return f"{byte_count / 1_000_000_000:.2f} GB"
+
+    def byte_label(byte_count: int) -> str:
+        return f"{gb(byte_count)} ({byte_count:,} bytes)"
+
+    def category_label(name: str) -> str:
+        labels = {
+            "audio_sound_candidates": "Audio/sound candidates",
+            "model_geometry_candidates": "Model/geometry candidates",
+            "animation_motion_candidates": "Animation/motion candidates",
+            "video_container_and_packetization": "Video container/packetization",
+            "executables_and_modules": "Executables/modules",
+            "other_unclassified": "Other unclassified",
+            "font_assets": "Font assets",
+            "scripts_event_and_data_candidates": "Scripts/event/data candidates",
+            "unresolved_graphics": "Unresolved graphics",
+        }
+        return labels.get(name, name.replace("_", " ").capitalize())
+
+    lines = [
+        "# Byte-weighted asset recovery census",
+        "",
+        f"Evidence date: {report['evidence_date']}",
+        "",
+        f"Pinned reference SHA-256: `{report['reference_sha256']}`",
+        "",
+        "## Physical disc accounting",
+        "",
+        f"**Disc image:** {byte_label(image_bytes)}.",
+        "",
+        "These disjoint physical spans sum to the image size:",
+        "",
+        "| Physical span | Bytes | Share of image |",
+        "| --- | ---: | ---: |",
+        (f"| All-zero named members | {physical['all_zero_named_member_bytes']:,} | "
+         f"{physical['all_zero_named_member_percent_of_image']:.4f}% |"),
+        (f"| All-zero gaps | {physical['all_zero_gap_bytes']:,} | "
+         f"{physical['all_zero_gap_percent_of_image']:.4f}% |"),
+        (f"| Information-bearing terminal members | "
+         f"{physical['information_bearing_terminal_member_bytes']:,} | "
+         f"{physical['information_bearing_terminal_member_percent_of_image']:.4f}% |"),
+        (f"| Nonzero unassigned gaps/structure | "
+         f"{physical['nonzero_unassigned_gap_or_structure_bytes']:,} | "
+         f"{physical['nonzero_unassigned_gap_or_structure_percent_of_image']:.4f}% |"),
+        "",
+        (f"Measured all-zero bytes total {byte_label(physical['measured_all_zero_bytes'])} "
+         f"({physical['measured_all_zero_percent_of_image']:.4f}% of the image). "
+         "**Intentional zero/padding: not established.** Zero contents alone do not "
+         "prove the spans were padding or placeholders."),
+        "",
+        "## Recovery levels",
+        "",
+        (f"**Expanded information-bearing payload Y:** {byte_label(payload_bytes)} "
+         f"({logical['expanded_payload_percent_of_physical_image']:.4f}% of the physical image). "
+         "Compressed BPE wrappers are replaced by their decoded member payloads once; "
+         "bundle control and gap bytes are excluded."),
+        "",
+        "| Measure | Covered bytes / denominator | Coverage | Evidence represented |",
+        "| --- | ---: | ---: | --- |",
+        (f"| Container hierarchy addressed | "
+         f"{recovery['container_hierarchy_addressed']['bytes']:,} / "
+         f"{recovery['container_hierarchy_addressed']['denominator_bytes']:,} physical member bytes | "
+         f"{recovery['container_hierarchy_addressed']['percent']:.4f}% | "
+         "Named path and validated parent extent; separate from Y |"),
+        (f"| Structurally classified Z/Y | {recovery['structurally_classified']['bytes_Z']:,} / "
+         f"{payload_bytes:,} | {recovery['structurally_classified']['percent_Z_of_Y']:.4f}% | "
+         "Parser-backed records or bounded extents |"),
+        (f"| Losslessly rebuildable A/Y | {recovery['losslessly_rebuildable']['bytes_A']:,} / "
+         f"{payload_bytes:,} | {recovery['losslessly_rebuildable']['percent_A_of_Y']:.4f}% | "
+         "Authenticated unchanged-input rebuild |"),
+        (f"| Semantically editable B/Y | {recovery['semantically_editable']['bytes_B']:,} / "
+         f"{payload_bytes:,} | {recovery['semantically_editable']['percent_B_of_Y']:.4f}% | "
+         "Editable source representation and insertion path |"),
+        (f"| Runtime-validated editable C/Y | {recovery['runtime_validated_editable']['bytes_C']:,} / "
+         f"{payload_bytes:,} | {recovery['runtime_validated_editable']['percent_C_of_Y']:.4f}% | "
+         "Edited payload passed in-game runtime validation |"),
+        "",
+        "These are independent evidence levels, not a combined decompilation or translation percentage. "
+        "In particular, B measures available editable representations, not how much content has been translated.",
+        "",
+        "### Editable source bytes counted in B",
+        "",
+        "| Editable source surface | Source bytes | Share of Y |",
+        "| --- | ---: | ---: |",
+    ]
+    editable = recovery["semantically_editable"]
+    component_labels = {
+        "supported_editable_TGA_texture_source_bytes": "Editable texture source bytes",
+        "reversible_text_companion_source_bytes": "Reversible text companions",
+        "structured_message_catalog_source_bytes": "Structured message catalog",
+        "editable_YOBJ_position_and_normal_source_bytes": "YOBJ position/normal XYZ fields",
+        "editable_MPEG2_video_elementary_stream_source_bytes": "MPEG-2 video elementary streams",
+    }
+    for name, source_bytes in editable["components"].items():
+        lines.append(
+            f"| {component_labels.get(name, name.replace('_source_bytes', '').replace('_', ' '))} | "
+            f"{source_bytes:,} | {editable['component_percentages_of_Y'][name]:.4f}% |"
+        )
+
+    remaining = logical["remaining_after_semantic_editability"]
+    classified_only = logical["classified_but_not_semantically_editable"]
+    opaque = logical["opaque_after_structural_classification"]
+    lines.extend((
+        "",
+        "## Remaining payload, with denominators kept separate",
+        "",
+        (f"**Full non-editable queue Y-B:** {byte_label(remaining['bytes'])} "
+         f"({remaining['percent_of_Y']:.4f}% of Y). It includes both structurally "
+         "classified but non-editable bytes and structurally unclassified bytes."),
+        "",
+        (f"Structurally classified but not semantically editable Z-B: "
+         f"{classified_only['bytes']:,} bytes ({classified_only['percent_of_Y']:.4f}% of Y)."),
+        "",
+        "| Y-B inventory class | Bytes | Share of Y-B | Share of Y | Catalog records |",
+        "| --- | ---: | ---: | ---: | ---: |",
+    ))
+    for item in remaining["exclusive_byte_weighted_categories"]:
+        lines.append(
+            f"| {category_label(item['name'])} | {item['source_bytes']:,} | "
+            f"{item['percent_of_remaining_payload']:.4f}% | "
+            f"{item['percent_of_expanded_payload']:.4f}% | {item['file_count']:,} |"
+        )
+    lines.extend((
+        "",
+        (f"**Strictly structurally unclassified queue Y-Z:** {byte_label(opaque['bytes'])} "
+         f"({opaque['percent_of_Y']:.4f}% of Y). This is not a measure of every "
+         "opaque field: a structurally bounded record may still contain uninterpreted data."),
+        "",
+        "| Y-Z inventory class | Bytes | Share of Y-Z | Share of Y | Catalog records |",
+        "| --- | ---: | ---: | ---: | ---: |",
+    ))
+    for item in opaque["exclusive_byte_weighted_categories"]:
+        lines.append(
+            f"| {category_label(item['name'])} | {item['source_bytes']:,} | "
+            f"{item['percent_of_opaque_payload']:.4f}% | "
+            f"{item['percent_of_expanded_payload']:.4f}% | {item['file_count']:,} |"
+        )
+    lines.extend((
+        "",
+        "Category names are evidence-led inventory labels based on parsed signatures, member types, "
+        "extensions, or paths. They do not claim semantic decoding of every listed payload.",
+        "",
+    ))
+    return "\n".join(lines)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--workspace", type=Path, default=Path("extracted/assets"))
@@ -1162,6 +1317,8 @@ def main():
     parser.add_argument("--movies", type=Path, default=Path("movies"),
                         help="movie workspace containing index.json and immutable *_jp streams")
     parser.add_argument("--output", type=Path, default=Path("reports/asset_recovery_census.json"))
+    parser.add_argument("--summary-output", type=Path,
+                        help="Markdown report path (defaults to --output with .md suffix)")
     args = parser.parse_args()
     inputs = _load_inputs(args.workspace, args.catalog, args.graphics_index,
                           args.disc_report, args.roundtrip, args.movies)
@@ -1169,8 +1326,12 @@ def main():
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n",
                            encoding="utf-8")
+    summary_output = args.summary_output or args.output.with_suffix(".md")
+    summary_output.parent.mkdir(parents=True, exist_ok=True)
+    summary_output.write_text(format_census_markdown(report), encoding="utf-8")
     print(format_census_summary(report))
-    print(f"report: {args.output}")
+    print(f"JSON report: {args.output}")
+    print(f"Markdown report: {summary_output}")
 
 
 if __name__ == "__main__":

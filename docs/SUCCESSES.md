@@ -592,3 +592,36 @@ References: `tools/sofdec.py`, `tools/movies.py`,
 [`movie evidence`](tasks/VIDEO_STREAM_RECOVERY.md),
 [`asset census report`](../reports/asset_recovery_census.json),
 [`asset methodology`](TASK_ASSET_WORKSPACE_METHODOLOGY.md).
+
+## Human-readable census preserves recovery levels and remainder denominators
+
+Symptom: the machine-readable census and terminal summary contain the byte
+measurements, but readers need a durable view that distinguishes physical image
+space, expanded logical payload, independent recovery levels, and more than one
+definition of "what remains."
+Mechanism: render the Markdown report from the same in-memory census object as
+the JSON file. Its physical partition does not infer zero-padding purpose, its
+Z/A/B/C rows retain separate definitions, and it reports `Y-B` and `Y-Z` as
+different disjoint work queues with byte-weighted categories.
+Pathway: run `make asset-census`; it writes
+`reports/asset_recovery_census.json` and
+`reports/asset_recovery_census.md`. A custom `--output` path gets a matching
+`.md` companion unless `--summary-output` is supplied.
+Verification: `make asset-census` completed on 2026-09-23. It measured a
+4,587,749,376-byte physical image, Y=1,303,947,016 bytes, Z/Y=86.8157%,
+A/Y=100%, B/Y=68.1261%, and C/Y=0%. The complete `Y-B` remainder is
+415,618,129 bytes, led by audio/sound (51.9940%) and model/geometry candidates
+(40.4335%); `Y-Z` is 171,916,194 bytes, 91.0058% of which is audio/sound
+candidates. The 3,327,295,881 all-zero bytes remain measurements; intentional
+padding is not established. Focused formatter tests and the full test suite are
+recorded with this change.
+Scope: human-readable presentation of the current pinned-image census; JSON
+remains the source data for tooling.
+Limits: category labels use signatures, member types, extensions, or paths and
+do not prove semantic understanding of those payloads. B is editable source
+coverage, not translation completion; C remains zero until in-game validation.
+References: `tools/asset_recovery_census.py`,
+`tests/test_asset_recovery_census.py`,
+[`readable report`](../reports/asset_recovery_census.md),
+[`machine-readable report`](../reports/asset_recovery_census.json),
+[`asset methodology`](TASK_ASSET_WORKSPACE_METHODOLOGY.md).

@@ -216,14 +216,23 @@ reference hash and inspect changed ranges rather than requiring equality.
 
 ## Byte-weighted recovery census
 
-Use `make asset-census` to regenerate
-[`reports/asset_recovery_census.json`](../reports/asset_recovery_census.json).
+Use `make asset-census` to regenerate both the machine-readable
+[`reports/asset_recovery_census.json`](../reports/asset_recovery_census.json)
+and the readable
+[`reports/asset_recovery_census.md`](../reports/asset_recovery_census.md).
 The generator combines the prepared leaf catalog, recursively validated layout
 pieces, TXC index, parsed UI-bundle manifests, reversible text and message
 catalogs, AT3 and YOBJ geometry parser evidence, pinned disc inventory, and
 authenticated unchanged-round-trip report. It fails if the reference or physical partition
 does not balance, a standalone TXC is missing, a nested member hash disagrees,
 or exclusive byte categories do not sum to their denominator.
+
+The Markdown companion presents the physical image partition, the independent
+Z/A/B/C recovery measures, and both byte-weighted remaining queues. It keeps
+`Y-B` (all bytes without an editable representation) separate from `Y-Z`
+(bytes without the census's parser-backed structural evidence). All-zero spans
+are reported as measured values; intentional padding remains unknown unless
+there is separate evidence for that purpose.
 
 Keep physical-disc accounting separate from the normalized logical payload.
 The **physical image** is 4,587,749,376 bytes (4.588 decimal GB). It contains
