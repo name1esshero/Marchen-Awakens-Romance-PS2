@@ -49,15 +49,23 @@ The strict parser and builder are `tools/messages.py`. The untouched
 all 30 original member/gap hashes intact. See [the message-table evidence](tasks/MESSAGE_TABLE.md).
 
 This inventory is a starting point, not a claim that all game text has been
-found. UI `.b` resources and other binary formats remain candidates for separate
-format work. The next localization checkpoint is the 724 menu `.b` leaves: classify
-headers and references, select a representative, and establish decode/re-encode
-byte identity before editing. The sampled `000_top_at.b` begins with `BPE\0`,
-but that signature alone does not establish a codec. For a text-bearing image,
-render the decoded source, make an English graphic variant while preserving the
-verified format constraints, reinsert through the exact PAC/YFS/ISO path, and
-compare/reparse the result. Keep the original leaf and all unsupported structures
-unchanged; do not claim editability or runtime support until both are demonstrated.
+found. The 724 menu `.b` resources share a 16-byte `BPE\0` wrapper: table-size
+field 256, payload length at +8, and decoded length at +12. `tools/bpe.py` now
+decodes every prepared menu `.b` to its declared output length. The asset workspace
+keeps the original compressed bytes for untouched files; edited decoded files are
+wrapped with a literal identity table, and normal container relocation can carry
+their growth. This is a decoded binary editing layer, not yet image editing.
+
+The decoded bundles begin with a little-endian resource count and 32-byte records
+containing a name, type (`at3` or `txc` in examined menu examples), size, and offset.
+`at3` payloads begin `AT  ` and contain animation/resource metadata with references
+such as `window.tga` and `icon.tga`; texture resources in examined bundles begin
+`RTX3`. The `.tga` names identify authoring-image references; they do not mean the
+decoded `.b` itself is a standalone TGA. Next establish the nested table contract,
+then recover an RTX3-to-editable-image decoder and matching importer. Prove pixel
+and container round-trips on one representative before changing a graphical
+translation, and keep unknown fields/palette or texture constraints unresolved
+until observed. Runtime support remains unverified.
 
 For a discovered plain-text leaf, edit its `.utf8.txt` companion. For `_msg.dat`, use `localization/messages.json`; for the two tab-separated menu
 tables, use `localization/card_list.json` and `localization/database.json`. These

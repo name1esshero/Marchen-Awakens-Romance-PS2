@@ -77,8 +77,11 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
 - No runtime/emulator test or gameplay validation has been performed. Asset leaves
   such as YPC geometry, texture payloads, audio, fonts and scripts remain binary;
   moved/grown assets have no runtime validation. The two catalog tables and the
-  recovered `_msg.dat` table are translation-bearing surfaces; broader UI `.b`
-  resources remain opaque. All 229 messages have draft translations; names,
+  recovered `_msg.dat` table are translation-bearing surfaces. All 724 menu `.b`
+  leaves now have a verified decoded-binary layer and experimental edited-payload
+  reinsertion, but their nested `at3`/`txc` resources are not yet editable as images;
+  sampled `AT  ` records reference authoring names such as `window.tga`, and sampled
+  texture data begins `RTX3`. All 229 messages have draft translations; names,
   mechanics, and display constraints need review. DMY files, module internals and DVP
   overlay semantics remain open.
 - Independent retail-dump authentication remains unestablished.

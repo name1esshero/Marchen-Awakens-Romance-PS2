@@ -11,6 +11,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import assets
 import messages
+import bpe
 import message_catalog
 import text_catalog
 from test_bootstrap import iso as make_iso
@@ -210,6 +211,38 @@ class AssetsTests(unittest.TestCase):
                 stream.seek(member['offset'])
                 rebuilt = stream.read(member['size'])
             self.assertEqual(rebuilt, 'ID\t名前\t\r\n01\tGinta\t\r\n'.encode('cp932'))
+
+    def test_bpe_prepare_preserves_original_and_reinserts_edited_decoded_asset(self):
+        original_payload = b'UI structure\0' + bytes(range(64))
+        original = bytearray(pac([bpe.encode(original_payload)]))
+        original[16 + 16:16 + 20] = b'b\0\0\0'
+        original = bytes(original)
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d) / 'source'
+            self.export(original, root)
+            with redirect_stdout(io.StringIO()):
+                assets.prepare(root, report=None)
+
+            layout_path = root / 'layout.json'
+            leaf = next(piece for piece in json.loads(layout_path.read_text())['pieces']
+                        if piece.get('name') == 'test.b')
+            decoded_path = root / leaf['bpe_source']
+            self.assertEqual(decoded_path.read_bytes(), original_payload)
+            untouched = Path(d) / 'untouched.pac'
+            assets.build(root, untouched)
+            self.assertEqual(untouched.read_bytes(), original)
+
+            edited = original_payload + b'English UI label'
+            decoded_path.write_bytes(edited)
+            rebuilt_path = Path(d) / 'edited.pac'
+            assets.build(root, rebuilt_path, relocate=True)
+            with rebuilt_path.open('rb') as stream:
+                member = next(e for e in assets.archive(stream, 0, rebuilt_path.stat().st_size)[2]
+                              if e['name'] == 'test.b')
+                stream.seek(member['offset'])
+                rebuilt_bpe = stream.read(member['size'])
+            self.assertEqual(bpe.decode(rebuilt_bpe), edited)
+            self.assertGreater(len(rebuilt_bpe), len(bpe.encode(edited)) - 1)
 
 
 if __name__ == '__main__':

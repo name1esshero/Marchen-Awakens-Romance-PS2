@@ -15,6 +15,7 @@ from bootstrap import inventory, read_at, record, SECTOR
 import messages
 import message_catalog
 import text_catalog
+import bpe
 
 CHUNK = 1024 * 1024
 
@@ -246,6 +247,15 @@ def build_node(root, output, relocate=False, translations=None, text_translation
                 nested = Path(temp) / str(i)
                 build_node(source, nested, relocate, translations, text_translations, logical_path)
                 source = nested
+            if p.get('bpe_source'):
+                original = source.read_bytes()
+                if hashlib.sha256(original).hexdigest() != p.get('bpe_original_sha256'):
+                    raise ValueError(f'BPE source differs from prepared original: {logical_path}')
+                decoded = safe(root, p['bpe_source']).read_bytes()
+                if hashlib.sha256(decoded).hexdigest() != p.get('bpe_decoded_sha256'):
+                    patched = Path(temp) / f'bpe-{i}'
+                    patched.write_bytes(bpe.encode(decoded))
+                    source = patched
             if text_translations is not None and logical_path in text_translations['catalogs']:
                 patched = Path(temp) / f'tsv-{i}'
                 patched.write_bytes(text_catalog.apply(
@@ -390,10 +400,29 @@ def prepare(root, report=Path('reports/assets_census.json')):
                     editable.write_text(json.dumps(document, ensure_ascii=False, indent=2) + '\n',
                                         encoding='utf-8')
                 e['message_source'] = editable.name
+            if source and e['name'].lower().endswith('.b'):
+                raw = source.read_bytes()
+                if e.get('bpe_source'):
+                    if hashlib.sha256(raw).hexdigest() != e.get('bpe_original_sha256'):
+                        raise ValueError(f'BPE source differs from prepared original: {name}')
+                    decoded_raw = bpe.decode(raw)
+                    if (hashlib.sha256(decoded_raw).hexdigest() != e.get('bpe_decoded_sha256')
+                            or len(decoded_raw) != e.get('bpe_decoded_size')):
+                        raise ValueError(f'BPE decode differs from prepared metadata: {name}')
+                else:
+                    decoded_raw = bpe.decode(raw)
+                    editable = source.with_name(source.stem + '.decoded.bin')
+                    if not editable.exists():
+                        editable.write_bytes(decoded_raw)
+                    e['bpe_source'] = editable.name
+                    e['bpe_original_sha256'] = hashlib.sha256(raw).hexdigest()
+                    e['bpe_decoded_sha256'] = hashlib.sha256(decoded_raw).hexdigest()
+                    e['bpe_decoded_size'] = len(decoded_raw)
             rows.append(dict(name=name, size=e['size'],
                              source=str(source.relative_to(root)) if source else None,
                              text_source=str((folder / e['text_source']).relative_to(root)) if e.get('text_source') else None,
                              message_source=str((folder / e['message_source']).relative_to(root)) if e.get('message_source') else None,
+                             bpe_source=str((folder / e['bpe_source']).relative_to(root)) if e.get('bpe_source') else None,
                              zero=e.get('zero', False)))
             census['leaves'] += 1
             census['extensions'][extension] = census['extensions'].get(extension, 0) + 1

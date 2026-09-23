@@ -27,6 +27,36 @@ References: [asset methodology](TASK_ASSET_WORKSPACE_METHODOLOGY.md),
 `tools/assets.py`, `tools/compare_disc.py`, `tests/test_assets.py`,
 `tests/test_compare_disc.py`.
 
+## BPE-wrapped menu bundles can be edited and reinserted as decoded payloads
+
+Symptom: 724 menu `.b` leaves expose no useful image/string structure while
+sharing a `BPE\0` header whose +0x0c field appears to be a decoded byte count.
+Mechanism: the 16-byte wrapper has a 256-entry translation-table size, packed
+payload length at +8 and decoded length at +12. Its recursive pair table can be
+decoded with bounded expansion checks. A valid literal identity table can wrap
+edited payloads in blocks up to 65535 bytes. The asset workspace saves each
+decoded payload beside its compressed source and compares source/decoded hashes:
+untouched assets retain original compressed bytes; edits are wrapped and fed into
+the existing archive/ISO relocation path.
+Pathway: run `make prepare-assets`, edit a `.decoded.bin`, then build through
+`tools/assets.py build ... --relocate`; use the regular untouched `make verify-disc`
+gate when proving no-op source-byte preservation.
+Verification: all 724 prepared menu `.b` leaves decode to exactly their declared
+output size. Tests cover malformed wrappers, cyclic expansion, block boundaries,
+edited-payload reinsertion and growth relocation; `make test` passed all 51 tests.
+The no-op full-disc build and `make verify-disc` compare match exactly at
+4,587,749,376 bytes, SHA-256
+`cc059a3acf818dfbd0a782a9d20ee67e020d167866cd1c4dca77e6eb9224e3ec`, with zero
+differing bytes.
+Scope: the sampled menu BPE wrapper and generic asset builder integration.
+Limits: identity-table packing does not reproduce original compressed bytes after
+an edit and is larger than source; nested resource records are only sampled, TGA
+references are not images, `RTX3` pixels are not decoded, and no runtime test has
+been performed.
+References: [asset methodology](TASK_ASSET_WORKSPACE_METHODOLOGY.md),
+`tools/bpe.py`, `tools/assets.py`, `tests/test_bpe.py`, `tests/test_assets.py`,
+`reports/ui_b_format_survey.json`.
+
 ## UTF-8 translation edits can grow through CP932 and ISO relocation
 
 Symptom: translated text may encode to more bytes than the original Japanese
