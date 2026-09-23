@@ -283,6 +283,45 @@ The coordinator remains responsible for decomposition, dependencies,
 integration, verification, conflict resolution, and knowledge
 extraction. Subagent output is untrusted until it passes normal gates.
 
+## Queue-worker onboarding and scope
+
+Give a queue worker an acclimation prompt before delegating implementation:
+
+> Acclimate yourself to this workspace and choose a job from the queue
+> without interfering with other work, then commit your results according
+> to procedure.
+
+The prompt is a starting point, not a substitute for repository instructions.
+Before editing, each worker must read `AGENTS.md`, `STANDARDS.md`,
+`AGENT_ENVIRONMENT.md`, current status and work queue, the relevant
+methodology, and applicable successes/failures. It must inspect the live
+worktree and recent activity, then select one bounded queue item and report
+its exact files/scope and intended evidence to the coordinator. The worker
+must choose another item if its proposed scope touches another worker's
+declared work or existing uncommitted changes. Once the scope is demonstrably
+disjoint, it may proceed without waiting for another approval when autonomous
+work has been authorized.
+
+Workers preserve unrelated changes, avoid shared high-conflict files unless
+assigned, stage only their own files, run the scope's applicable verification,
+update isolated task evidence and reusable knowledge as appropriate, and
+commit with all required `STANDARDS.md` §17 trailers. Report the commit and
+verification outcome to the coordinator. The coordinator integrates results,
+resolves conflicts, and owns shared status/queue updates unless explicitly
+delegated.
+
+## Nested delegation
+
+An agent may spawn up to two simultaneous workers only when the user or
+coordinator explicitly grants permission to delegate further. General support
+for subagents is not itself permission. Each nested worker must receive the
+same acclimation, bounded-scope, non-interference, evidence, and commit
+instructions above. Its task must be unrelated to the spawning agent's
+selected task and disjoint from all other active work; the spawning agent
+remains responsible for reporting, integrating, and verifying its workers'
+results. Do not recursively delegate again unless that authority is explicitly
+granted too.
+
 # 10. Automated specialist escalation
 
 A modest coordinator may invoke stronger models as temporary
