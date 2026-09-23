@@ -327,3 +327,17 @@ their staging and commits. A worker must inspect its own committed file list
 and trailer coverage before reporting completion. This failure does not show
 that parallel editing itself is unsafe; it identifies shared-index commit
 isolation as the missing boundary. See [agent environment procedure](AGENT_ENVIRONMENT.md).
+
+## Generated lettering crops showed scanline artifacts at native size
+
+Hypothesis: an image-generation edit could replace only the Japanese subtitle
+letters in `00039_01565_0003_sbttl` while retaining clean, game-resolution
+letter edges. Several lettering-only outputs contained horizontal scanline
+artifacts when checked at native pixels; none was imported. The full-composition
+attempt had already changed the title logo and added another title mark, so it
+was also rejected. Use the original title texture as the base and, for this
+short uppercase phrase, compose from the game's own ASCII glyph atlas instead.
+The resulting 512x128 TGA imports to the original 66,624-byte TXC and reparses
+from the built ISO with an exact byte match. This establishes texture
+reinsertion, not runtime UV placement or on-screen acceptance. See
+[`graphic localization evidence`](../tasks/GRAPHIC_TEXT_LOCALIZATION.md).

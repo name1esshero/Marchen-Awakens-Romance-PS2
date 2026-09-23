@@ -4,6 +4,14 @@
   "source_index_sha256": "09c995d2dc10eca5596d5316e33d26f19af7dc09d8f3cab3c73003fb881f4a45",
   "changed": [
     {
+      "key": "00039.asset/00991.resources!/0002_btst_txt.txc.bin",
+      "language": "eng",
+      "image": "text/00039_00991_0002_btst_txt_eng.tga",
+      "source_sha256": "e4a44a3dc6e4cd8faa16d97ce9040108275effce7e89820c7e58073b280bf09a",
+      "override_sha256": "57cf1bd649038147717712a117a9ab255ea46a718f9b2b0e4e173a3813509879",
+      "bytes": 2176
+    },
+    {
       "key": "00039.asset/01556.resources!/0010_shop.txc.bin",
       "language": "eng",
       "image": "user_interface/00039_01556_0010_shop_eng.tga",
@@ -26,6 +34,14 @@
       "source_sha256": "e2c3d2913e1999d7460881c3fb3ba5e31ff0cdeaa4960891792f7ea871d3d0fe",
       "override_sha256": "151eeb12ee18acdb7c3913369f2b5b48f369fb80e69c1b9cd77551149bc296a3",
       "bytes": 263232
+    },
+    {
+      "key": "00039.asset/01565.resources!/0003_sbttl.txc.bin",
+      "language": "eng",
+      "image": "title/00039_01565_0003_sbttl_eng.tga",
+      "source_sha256": "ef51e198b1b52dbbe4f149e9ef345509e2581565beb13792e81ce21eb16e0fd7",
+      "override_sha256": "09634dd20da8f76e674bd60a4ece841ec6f02f10f55c96e999dd038d671a2295",
+      "bytes": 66624
     },
     {
       "key": "00039.asset/01566.resources!/0002_title_marh_jp.txc.bin",
@@ -69,9 +85,11 @@
     }
   ],
   "english_overrides": [
+    "00039.asset/00991.resources!/0002_btst_txt.txc.bin",
     "00039.asset/01556.resources!/0010_shop.txc.bin",
     "00039.asset/01556.resources!/0014_subtitle.txc.bin",
     "00039.asset/01559.resources!/0003_title.txc.bin",
+    "00039.asset/01565.resources!/0003_sbttl.txc.bin",
     "00039.asset/01566.resources!/0002_title_marh_jp.txc.bin",
     "00039.asset/01566.resources!/0003_title_parts.txc.bin",
     "00039.asset/01569.resources!/0007_modename.txc.bin",

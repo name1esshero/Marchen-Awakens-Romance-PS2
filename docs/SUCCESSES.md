@@ -778,3 +778,28 @@ References: `tools/asset_recovery_census.py`,
 [`readable report`](../reports/asset_recovery_census.md),
 [`machine-readable report`](../reports/asset_recovery_census.json),
 [`asset methodology`](TASK_ASSET_WORKSPACE_METHODOLOGY.md).
+
+## Native game glyphs produce a stable English subtitle texture
+
+Symptom: generated title-lettering edits changed the full composition, and
+lettering-only outputs showed horizontal artifacts at native resolution.
+Mechanism: the game already contains a 128x128 atlas with 8x16 Latin glyphs.
+For the short `ARM FIGHT DREAM` subtitle in `00039_01565_0003_sbttl`, compose
+those native glyph shapes inside the measured subtitle band, preserve the
+512x128 source canvas and surrounding logo, then map the edited colors through
+the source TXC palette.
+Verification: the English TGA imports as a 66,624-byte TXC, and
+`make verify-graphics-image` reparses that exact TXC from the rebuilt ISO. The
+full graphics audit finds ten English overrides and zero modified Japanese
+baselines. Source atlas and output hashes, band bounds, and TXC bytes are in
+[`graphic localization evidence`](../tasks/GRAPHIC_TEXT_LOCALIZATION.md).
+Scope: this single uppercase title subtitle and the current atlas/palette.
+Limits: the atlas glyph-cell interpretation is visually observed rather than
+recovered from the renderer; static layout and ISO reinsertion do not establish
+runtime UV placement or screen readability. This does not establish that every
+Japanese UI surface can be translated with the same glyph set.
+References: `graphics/text/00039_00825_font_jp.tga`,
+`graphics/title/00039_01565_0003_sbttl_eng.tga`, `tools/rtx3.py`,
+`tools/graphics.py`, `tools/verify_graphics_in_iso.py`,
+[`graphic localization evidence`](../tasks/GRAPHIC_TEXT_LOCALIZATION.md),
+[`negative result`](FAILURES.md).

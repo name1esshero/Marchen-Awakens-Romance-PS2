@@ -1,0 +1,91 @@
+{
+  "authenticated": true,
+  "match": false,
+  "reference_size": 4587749376,
+  "rebuilt_size": 5023174656,
+  "reference_sha256": "cc059a3acf818dfbd0a782a9d20ee67e020d167866cd1c4dca77e6eb9224e3ec",
+  "rebuilt_sha256": "b5344203f78392318dfe37fa9118ca3046e1b3f52bc88ab38c3b73ac2ae50842",
+  "differing_bytes": 757730801,
+  "first_differences": [
+    {
+      "offset": 32848,
+      "reference": 112,
+      "rebuilt": 242
+    },
+    {
+      "offset": 32849,
+      "reference": 46,
+      "rebuilt": 108
+    },
+    {
+      "offset": 32850,
+      "reference": 34,
+      "rebuilt": 37
+    },
+    {
+      "offset": 32853,
+      "reference": 34,
+      "rebuilt": 37
+    },
+    {
+      "offset": 32854,
+      "reference": 46,
+      "rebuilt": 108
+    },
+    {
+      "offset": 32855,
+      "reference": 112,
+      "rebuilt": 242
+    },
+    {
+      "offset": 534918,
+      "reference": 99,
+      "rebuilt": 112
+    },
+    {
+      "offset": 534919,
+      "reference": 233,
+      "rebuilt": 46
+    },
+    {
+      "offset": 534920,
+      "reference": 29,
+      "rebuilt": 34
+    },
+    {
+      "offset": 534923,
+      "reference": 29,
+      "rebuilt": 34
+    },
+    {
+      "offset": 534924,
+      "reference": 233,
+      "rebuilt": 46
+    },
+    {
+      "offset": 534925,
+      "reference": 99,
+      "rebuilt": 112
+    },
+    {
+      "offset": 534927,
+      "reference": 0,
+      "rebuilt": 16
+    },
+    {
+      "offset": 534928,
+      "reference": 141,
+      "rebuilt": 244
+    },
+    {
+      "offset": 534931,
+      "reference": 141,
+      "rebuilt": 244
+    },
+    {
+      "offset": 534932,
+      "reference": 0,
+      "rebuilt": 16
+    }
+  ]
+}

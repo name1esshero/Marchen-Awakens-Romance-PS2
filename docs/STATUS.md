@@ -15,6 +15,15 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   tracked `reports/assets_census.json` and ignored
   `extracted/assets/catalog.json`. Translation-bearing evidence is tracked in
   `reports/translation_surfaces.json`.
+- Bounded archive/overlay inventories now cover the 40 `.DVP` overlay sections
+  and their 40 matching table rows, 14 standalone IOP IRX modules and 16 IOPRP
+  module records, plus filename TOCs for both AFS archives. The AFS parser has
+  malformed-input tests and an exact synthetic no-op rebuild. The IOPRP no-op
+  reconstruction is exact. Overlay loader/fixup behavior, module semantics,
+  detailed YFS internals and the AFS trailing 16-byte TOC fields remain
+  unresolved. See `reports/dvp_overlay_inventory.json`,
+  `reports/iop_module_inventory.json`, `reports/afs_inventory.json`, and their
+  linked task notes.
 - The byte-weighted census in [`reports/asset_recovery_census.json`](../reports/asset_recovery_census.json)
   and its [human-readable companion](../reports/asset_recovery_census.md) report
   disjoint physical-disc spans and a separate expanded logical payload. The
@@ -77,13 +86,14 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   across save/load prompts, menus, tutorials, character profiles, battlefields,
   ARM descriptions, Magic Stones, and the none/unused labels. All message translations
   encode as CP932. The current combined catalog build is recorded below.
-  Current root-level `mar_eng.iso` is 5,021,163,520 bytes (SHA-256
-  `16d64f38ba9295e3654a428e22afa3bb28d65d1631a15a00bf6ee217f4a31f28`). The
-  reusable `make verify-graphics-image` gate reparses all eight English TXCs
-  through ISO/YFS/BPE/UI tables and confirms 783,104 bytes exactly match staged
-  overrides. The authenticated pinned-reference comparison reports 755,719,665
-  differing bytes, expected for this translated/relocated image; see
-  `reports/mar_eng_compare_8_graphics.json` and
+  Current root-level `mar_eng.iso` is 5,023,174,656 bytes (SHA-256
+  `b5344203f78392318dfe37fa9118ca3046e1b3f52bc88ab38c3b73ac2ae50842`). The
+  reusable `make verify-graphics-image` gate reparses all ten English TXCs
+  through ISO/YFS/BPE/UI tables and confirms 851,904 bytes exactly match staged
+  overrides. The fresh graphics audit found ten overrides, 43 unresolved TXCs,
+  and zero modified Japanese baselines. The authenticated pinned-reference
+  comparison reports 757,730,801 differing bytes, expected for this
+  translated/relocated image; see `reports/mar_eng_compare_10_graphics.json` and
   [`GRAPHIC_TEXT_LOCALIZATION.md`](../tasks/GRAPHIC_TEXT_LOCALIZATION.md).
   The prior ISO reparse confirmed resource sizes of 20,714 bytes for `_msg.dat`,
   14,120 bytes for `CardList.txt`, and 3,320 bytes for `DataBase.txt`; each matched
@@ -100,7 +110,11 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   922,091 bytes; relocation remains valid but the build is space-heavy. No
   runtime display has been validated. The winner-screen `windisp` labels now have
   an English sibling; exact source text is recorded, while its runtime UV use and
-  final screen placement remain unresolved. Other title variants remain queued.
+  final screen placement remain unresolved. English siblings now also cover the
+  title subtitle `sbttl` and `BATTLE START` UI label. The currently identified
+  remaining title text surfaces are `ttlprts` and repeated `title000`; their
+  drafts are in isolated worktrees. A corpus-wide UI/title text audit remains
+  open.
 - The complete 3,445,204-byte boot ELF now rebuilds identically from repository
   text artifacts plus assembled code. `cmp` verifies every output byte.
 - An isolated build containing no ISO, extracted files, reports, existing build
@@ -158,9 +172,9 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   baselines end in `_jp.tga`, stay unchanged, and remain the recovered artwork;
   authored `_eng.tga` siblings are version-controlled localization assets and
   take precedence in `mar_eng.iso` builds. English drafts now cover the title
-  marks and five UI surfaces (shop wordmark, shop-action labels, mode names,
-  field names, and winner-screen labels); all eight reinsert byte-exactly from the
-  rebuilt ISO. The main draft reuses native
+  marks and six UI surfaces (shop wordmark, shop-action labels, mode names,
+  field names, winner-screen labels, and the Battle Start label); all ten reinsert
+  byte-exactly from the rebuilt ISO. The subtitle draft reuses native
   English lettering, but possible repeated
   branding and AT/UV screen composition remain unresolved. Indexed exports use
   linear pixel order, mapped PSMT8 CLUT
