@@ -243,3 +243,16 @@ int (CPAppear::*gPAppearIsDisplayAddress)() = &CPAppear::IsDisplay;
 int (CPAppear::*gPAppearIsMotionEndAddress)() = &CPAppear::IsMotionEnd;
 void (CPAppear::*gPAppearOnMotionJumpPreAddress)(AprMotion *, AprMotion *) = &CPAppear::OnMotionJumpPre;
 void (CPAppear::*gPAppearOnMotionJumpAfterAddress)(AprMotion *, AprMotion *) = &CPAppear::OnMotionJumpAfter;
+
+void (CCharaDataSts::*gCDSStatusCngAttrCheckAddress)() = &CCharaDataSts::StatusCngAttrCheck;
+void (CCharaDataSts::*gCDSStatusCheckAddress)() = &CCharaDataSts::StatusCheck;
+void (CCharaDataSts::*gCDSStatusCheckPmvAddress)() = &CCharaDataSts::StatusCheckPmv;
+void (CCharaDataSts::*gCDSStatusJmpParamAddress)() = &CCharaDataSts::StatusJmpParam;
+void (CCharaDataSts::*gCDSOnJmpMotionAddress)() = &CCharaDataSts::OnJmpMotion;
+void (CCharaDataSts::*gCDSInitializeStatDataExAddress)() = &CCharaDataSts::InitializeStatDataEx;
+void (CCharaDataSts::*gCDSInitializeDataExAddress)() = &CCharaDataSts::InitializeDataEx;
+void (CCharaDataSts::*gCDSCheckGatyaStsArmAddress)(SArmTypeD) = &CCharaDataSts::CheckGatyaStsArm;
+void *(CCharaDataSts::*gCDSGetPrgStsAddress)() = &CCharaDataSts::GetPrgSts;
+void (CCharaDataSts::*gCDSSetNowMotNoAddress)(int) = &CCharaDataSts::SetNowMotNo;
+void (CCharaDataSts::*gCDSPreNutralJumpAddress)() = &CCharaDataSts::PreNutralJump;
+void (CCharaDataSts::*gCDSReturnArmObjAddress)() = &CCharaDataSts::ReturnArmObj;

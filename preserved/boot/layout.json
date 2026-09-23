@@ -1163,9 +1163,93 @@
     },
     {
       "offset": 2359668,
-      "size": 888,
+      "size": 368,
       "kind": "unrecovered_hex",
       "source": "unrecovered_00240174.hex"
+    },
+    {
+      "offset": 2360036,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.StatusCngAttrCheck__13CCharaDataSts"
+    },
+    {
+      "offset": 2360044,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.StatusCheck__13CCharaDataSts"
+    },
+    {
+      "offset": 2360052,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.StatusCheckPmv__13CCharaDataSts"
+    },
+    {
+      "offset": 2360060,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.StatusJmpParam__13CCharaDataSts"
+    },
+    {
+      "offset": 2360068,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.OnJmpMotion__13CCharaDataSts"
+    },
+    {
+      "offset": 2360076,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.InitializeStatDataEx__13CCharaDataSts"
+    },
+    {
+      "offset": 2360084,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.InitializeDataEx__13CCharaDataSts"
+    },
+    {
+      "offset": 2360092,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.CheckGatyaStsArm__13CCharaDataSts9SArmTypeD"
+    },
+    {
+      "offset": 2360100,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetPrgSts__13CCharaDataSts"
+    },
+    {
+      "offset": 2360108,
+      "size": 56,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0024032c.hex"
+    },
+    {
+      "offset": 2360164,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetNowMotNo__13CCharaDataStsi"
+    },
+    {
+      "offset": 2360172,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.PreNutralJump__13CCharaDataSts"
+    },
+    {
+      "offset": 2360180,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.ReturnArmObj__13CCharaDataSts"
+    },
+    {
+      "offset": 2360188,
+      "size": 368,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0024037c.hex"
     },
     {
       "offset": 2360556,

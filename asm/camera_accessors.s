@@ -684,3 +684,39 @@ nop
 .section .gnu.linkonce.t.OnMotionJumpAfter__8CPAppearP9AprMotionT1,"ax",@progbits
 jr $31
 nop
+.section .gnu.linkonce.t.StatusCngAttrCheck__13CCharaDataSts,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.StatusCheck__13CCharaDataSts,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.StatusCheckPmv__13CCharaDataSts,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.StatusJmpParam__13CCharaDataSts,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.OnJmpMotion__13CCharaDataSts,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.InitializeStatDataEx__13CCharaDataSts,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.InitializeDataEx__13CCharaDataSts,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.CheckGatyaStsArm__13CCharaDataSts9SArmTypeD,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.GetPrgSts__13CCharaDataSts,"ax",@progbits
+jr $31
+addiu $2, $4, 0x180
+.section .gnu.linkonce.t.SetNowMotNo__13CCharaDataStsi,"ax",@progbits
+jr $31
+sw $5, 0xad0($4)
+.section .gnu.linkonce.t.PreNutralJump__13CCharaDataSts,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.ReturnArmObj__13CCharaDataSts,"ax",@progbits
+jr $31
+nop

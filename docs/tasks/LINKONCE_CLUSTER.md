@@ -434,3 +434,41 @@ passes (full boot ELF and full EE-probe ELF both byte-identical).
 
 Not recovered this batch: the remaining 506 still-untouched trivial 8-byte
 sections, still excluding UI/menu/texture-adjacent classes.
+
+## CCharaDataSts accessor batch and a mangling-trap correction — 2026-09-23
+
+Agent: Claude Sonnet 5; role: Contributor. Same deliberate scoping.
+
+All 12 remaining trivial 8-byte `CCharaDataSts` sections (`0x33f2e4`–
+`0x33f378`) were disassembled: ten are no-argument-effect stubs, one reads
+an address (`GetPrgSts`, offset `0x180`), and one writes an int
+(`SetNowMotNo`, offset `0xad0`) — another almost-entirely-stub class, like
+`CCharaBase`/`CWeapon`/`CGameCntrl`.
+
+**Correction to the P/R/G mangling entry.** One stub,
+`CheckGatyaStsArm__13CCharaDataSts9SArmTypeD`, has a bare `9SArmTypeD`
+parameter suffix (no `P`/`R`/`G` letter). Modeled first as an empty class
+`class SArmTypeD {};` by analogy with the earlier `G`-prefixed cases — this
+compiled cleanly but produced `G9SArmTypeD`, not the target. Standalone
+probes then showed the previously recorded belief that `G` requires a
+non-trivial constructor was never actually correct: a bare empty class and a
+class with a plain data member both mangle by-value as `G<len><Name>` with
+*no* constructor at all, and retesting the original `MotionNo` case with its
+constructor removed reproduced the identical `G8MotionNoif`. So `G` simply
+marks "class passed by value," full stop, and the bare (letterless)
+`9SArmTypeD` here could not be a class parameter — it is an **enum**,
+confirmed with a standalone probe declaring `enum SArmTypeD { ... };` and
+reproducing the exact target name. `SUCCESSES.md`'s entry is corrected
+accordingly (marked as a correction, not silently rewritten) and
+`candidates/ee_camera/CCamera.h`'s `MotionNo` was simplified to drop its
+now-shown-unnecessary constructor, reverified against `make verify-ee`
+before this batch's own changes were layered on top.
+
+The unmodified EE GCC `2.96-ee-001003-1` `-O2` invocation matched all 12 new
+sections after the enum correction. Reconstruction now covers **239 sections
+/ 1,912 bytes across fifteen partial classes**; 3,443,292 bytes remain
+explicit raw debt. `make test verify-boot verify-source-only verify-ee`
+passes (full boot ELF and full EE-probe ELF both byte-identical).
+
+Not recovered this batch: the remaining 494 still-untouched trivial 8-byte
+sections, still excluding UI/menu/texture-adjacent classes.

@@ -14,16 +14,13 @@ class CCamera;
 // Named only to reproduce the mangled parameter type in
 // SetCurrentStatus__10CCharaBaseiiP12TypeArmParami; no members are evidenced.
 class TypeArmParam;
-// Named and given a user-declared (non-trivial) constructor only to reproduce
-// SetSubMotion__7CWeaponG8MotionNoif's mangled parameter: 'G' is this old ABI's
-// encoding for a class passed BY VALUE whose non-trivial constructor forces
-// hidden-reference-style parameter passing, distinct from 'P' (pointer) and
-// 'R' (genuine C++ reference) seen elsewhere. Confirmed with a minimal
-// standalone probe before use here. No other members are evidenced.
-class MotionNo {
-public:
-    MotionNo() {}
-};
+// Named only to reproduce SetSubMotion__7CWeaponG8MotionNoif's mangled
+// parameter: 'G' is this old ABI's encoding for a class passed BY VALUE
+// (any class type, trivial or not — an earlier belief that this required a
+// non-trivial constructor was tested and disproved; see SUCCESSES.md),
+// distinct from 'P' (pointer) and 'R' (genuine C++ reference) seen
+// elsewhere. No members are evidenced.
+class MotionNo {};
 
 class CRender {
 public:
@@ -586,6 +583,37 @@ public:
     // Evidenced bodies ignore both arguments and return void.
     void OnMotionJumpPre(AprMotion *, AprMotion *) {}
     void OnMotionJumpAfter(AprMotion *, AprMotion *) {}
+};
+
+// Named only to reproduce CheckGatyaStsArm__13CCharaDataSts9SArmTypeD's
+// mangled parameter. The bare name (no P/R/G letter) shows this is an enum,
+// not a class -- a same-shaped `class SArmTypeD {};` was tried first and
+// produced the wrong name (`G9SArmTypeD`, the by-value-class encoding);
+// confirmed as an enum on a standalone probe before use here. No
+// enumerators beyond the placeholder are evidenced.
+enum SArmTypeD { SARM_TYPE_D_UNKNOWN };
+
+class CCharaDataSts {
+public:
+    unsigned char unknown000[0x180];
+    unsigned int prgSts;
+    unsigned char unknown184[0x94c];
+    int nowMotNo;
+
+    // Evidenced bodies ignore all arguments and return void; a stub shape
+    // only (see the same note on CCharaBase's stub methods).
+    void StatusCngAttrCheck() {}
+    void StatusCheck() {}
+    void StatusCheckPmv() {}
+    void StatusJmpParam() {}
+    void OnJmpMotion() {}
+    void InitializeStatDataEx() {}
+    void InitializeDataEx() {}
+    void CheckGatyaStsArm(SArmTypeD) {}
+    void *GetPrgSts() { return &prgSts; }
+    void SetNowMotNo(int value) { nowMotNo = value; }
+    void PreNutralJump() {}
+    void ReturnArmObj() {}
 };
 
 #endif

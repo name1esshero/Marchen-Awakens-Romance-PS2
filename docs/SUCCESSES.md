@@ -392,9 +392,17 @@ Mechanism: GNU v2/cfront mangling encodes a class-typed parameter's exact type
 emits a section under whatever name that produces — just not the target name,
 if any of these differ from the evidence. Three confirmed letter codes:
 `P<len><Name>` (pointer, e.g. `P9objMatrix`), `R<len><Name>` (a genuine C++
-reference, `Type &`), and `G<len><Name>` (a class passed **by value** whose
-non-trivial constructor/destructor forces this ABI's hidden-reference-style
-argument passing — different from a real `&` reference in the source).
+reference, `Type &`), and `G<len><Name>` (a class passed **by value**,
+distinct from a real `&` reference in the source).
+**Correction (superseding the original wording of this entry):** `G` was
+first believed to require a non-trivial constructor/destructor specifically
+(reasoning backward from one case where adding an empty constructor "fixed"
+a mismatch). Two later standalone probes disproved this: a completely empty
+`class SArmTypeD {};` and a class with a plain data member both mangle their
+by-value parameter as `G<len><Name>` with no constructor at all, and
+retesting the original `MotionNo` case with the constructor removed produced
+the identical `G8MotionNoif`. The constructor was never necessary — `G`
+simply marks *any* class type passed by value, trivial or not.
 Declaring the parameter as `void *` instead of the named class mangles to
 `Pv`; guessing `R` for a `G` case (or vice versa) also produces a different
 name. A related shape is a bare `T<n>` suffix (e.g.
@@ -409,18 +417,19 @@ rather than mismatched, which can look like "the method wasn't emitted" when
 the real cause is a wrong parameter type or passing convention.
 Pathway: when a raw parameter-encoding suffix from
 `tools/linkonce_inventory.py`'s census (or the mangled name directly) shows
-`P<len><Name>`, `R<len><Name>`, or `G<len><Name>`, forward-declare an opaque
-`class <Name>;` (adding a user-declared, even empty, constructor for the `G`
-case specifically — a trivial class does not trigger hidden-reference
-passing) and match the encoded pointer/reference/by-value shape exactly —
+`P<len><Name>`, `R<len><Name>`, or `G<len><Name>`, define a class `<Name>`
+(a bare `class <Name> {};` suffices — no constructor needed for any of the
+three) and match the encoded pointer/reference/by-value shape exactly —
 never substitute `void *` or guess between `R`/`G`. Before committing a guess,
 verify it on a small standalone probe (compile, inspect the emitted section
-name) rather than assuming a letter's meaning. This has now been needed three
+name) rather than assuming a letter's meaning. This has now been needed four
 times independently: `C3dObject::SetLinkBoneMat(objMatrix *)` (`P`),
-`CCharaBase::SetCurrentStatus(int, int, TypeArmParam *, int)` (`P`), and
+`CCharaBase::SetCurrentStatus(int, int, TypeArmParam *, int)` (`P`),
 `CWeapon::SetSubMotion(MotionNo, int, float)` (`G`, after an initial `R` guess
 compiled cleanly but produced `R8MotionNoif` instead of the target
-`G8MotionNoif`). The same length-prefixed-name shape also applies to enum
+`G8MotionNoif`), and `CCharaDataSts::CheckGatyaStsArm(SArmTypeD)` (`G` again,
+this time confirmed directly with an empty class on the first try). The same
+length-prefixed-name shape also applies to enum
 parameters (no `P`/`R`/`G` letter — an enum is a value type, so it just needs
 a matching-named definition, e.g. `enum InterpType { ... };` for
 `SetInterpolateType__7CMotion10InterpType`); unlike the class/`G` case, no

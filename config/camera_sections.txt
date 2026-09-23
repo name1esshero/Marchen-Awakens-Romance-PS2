@@ -225,3 +225,15 @@
 .gnu.linkonce.t.IsMotionEnd__8CPAppear
 .gnu.linkonce.t.OnMotionJumpPre__8CPAppearP9AprMotionT1
 .gnu.linkonce.t.OnMotionJumpAfter__8CPAppearP9AprMotionT1
+.gnu.linkonce.t.StatusCngAttrCheck__13CCharaDataSts
+.gnu.linkonce.t.StatusCheck__13CCharaDataSts
+.gnu.linkonce.t.StatusCheckPmv__13CCharaDataSts
+.gnu.linkonce.t.StatusJmpParam__13CCharaDataSts
+.gnu.linkonce.t.OnJmpMotion__13CCharaDataSts
+.gnu.linkonce.t.InitializeStatDataEx__13CCharaDataSts
+.gnu.linkonce.t.InitializeDataEx__13CCharaDataSts
+.gnu.linkonce.t.CheckGatyaStsArm__13CCharaDataSts9SArmTypeD
+.gnu.linkonce.t.GetPrgSts__13CCharaDataSts
+.gnu.linkonce.t.SetNowMotNo__13CCharaDataStsi
+.gnu.linkonce.t.PreNutralJump__13CCharaDataSts
+.gnu.linkonce.t.ReturnArmObj__13CCharaDataSts
