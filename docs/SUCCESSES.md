@@ -891,3 +891,24 @@ References: `graphics/text/00039_00825_font_jp.tga`,
 `tools/graphics.py`, `tools/verify_graphics_in_iso.py`,
 [`graphic localization evidence`](../tasks/GRAPHIC_TEXT_LOCALIZATION.md),
 [`negative result`](FAILURES.md).
+
+## Special-font atlases contain button/control glyph sheets, not general fonts
+
+Symptom: two resources named `sp_font` might be mistaken for a complete
+Japanese or Latin text font based on their filenames. Mechanism: read their
+indexed 128×64 exports as coordinate-addressed sprite sheets: three 16×16
+control-symbol rows sit above a full-width 16-pixel visual strip. They include
+the colored ○/×/△/□ marks, R1/R2 and L1/L2 labels, arrows and plus, plus four
+unmapped character-like marks. The same visible layout occurs once as PSMT8H
+and once as PSMT8, with distinct source TXCs, alpha distributions and color
+pixels; pair each TGA with its own source and palette.
+Verification: both image SHA-256 values match `graphics/index.json`; direct
+header/pixel inspection confirms uncompressed 128×64 RGBA TGAs with transparency
+and antialiased alpha. Their alpha-mask IoU is 0.993096, but 2,550/8,192 RGBA
+pixels differ. Coordinates and alpha counts are in the task note.
+Scope: `gm2d_tex.pac`'s cockpit copy and `shop_tex.b`'s menu copy only.
+Limits: the atlas does not establish a general alphabet, code-point lookup,
+glyph metrics, screen use, or renderer sampling; no ISO/runtime validation was
+run. The four top-row character-like forms remain unmapped.
+References: [`SPECIAL_FONT_ATLASES.md`](../tasks/SPECIAL_FONT_ATLASES.md),
+`graphics/index.json`, `tools/rtx3.py`, and localization methodology §14.
