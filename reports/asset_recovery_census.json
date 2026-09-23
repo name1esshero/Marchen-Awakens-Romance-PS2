@@ -1,20 +1,32 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "evidence_date": "2026-09-23",
   "reference_sha256": "cc059a3acf818dfbd0a782a9d20ee67e020d167866cd1c4dca77e6eb9224e3ec",
-  "scope": "Prepared logical leaf payloads plus the indexed TXC corpus. A leaf byte is counted once; embedded TXC member bytes are reported separately because they reside inside counted .b leaf payloads.",
-  "disc": {
+  "scope": "Pinned physical image partition plus a de-duplicated expanded logical content inventory; recovery levels have separate definitions and evidence.",
+  "physical_disc_accounting": {
     "image_bytes": 4587749376,
-    "logical_leaf_count": 34486,
-    "logical_leaf_bytes": 4562290725,
-    "logical_leaf_percent_of_image": 99.4451,
-    "zero_or_empty_leaf_count": 26,
-    "zero_filled_leaf_bytes": 3324768000,
-    "zero_filled_percent_of_leaf_bytes": 72.875,
-    "nonzero_leaf_payload_bytes": 1237522725,
-    "nonzero_leaf_percent_of_image": 26.9745,
-    "image_bytes_outside_terminal_leaf_payloads": 25458651,
-    "prepared_round_trip": {
+    "named_member_count": 34486,
+    "all_zero_named_member_count": 26,
+    "all_zero_named_placeholder_bytes": 3324768000,
+    "all_zero_named_placeholder_percent_of_image": 72.4706,
+    "all_zero_gap_or_padding_bytes": 2527881,
+    "all_zero_gap_or_padding_percent_of_image": 0.0551,
+    "known_all_zero_placeholder_or_gap_bytes": 3327295881,
+    "known_all_zero_placeholder_or_gap_percent_of_image": 72.5257,
+    "information_bearing_terminal_member_bytes": 1237522725,
+    "information_bearing_terminal_member_count": 34460,
+    "information_bearing_terminal_member_percent_of_image": 26.9745,
+    "nonzero_unassigned_gap_or_structure_bytes": 22930770,
+    "all_zero_gap_span_count": 4098,
+    "nonzero_unassigned_gap_or_structure_percent_of_image": 0.4998,
+    "nonzero_gap_span_count": 3577,
+    "partition_bytes": 4587749376,
+    "partition_matches_image": true,
+    "terminal_leaf_count": 34486,
+    "zero_length_terminal_leaf_count": 6,
+    "terminal_leaf_source_bytes_including_zero_placeholders": 4562290725,
+    "layout_evidence": "Recursively validated ISO/AFS/YFS/PAC layout pieces; parent container extents are replaced by child pieces to avoid double counting.",
+    "round_trip": {
       "authenticated": true,
       "byte_identical": true,
       "differing_bytes": 0,
@@ -23,59 +35,140 @@
       "evidence_file": "reports/assets-roundtrip-prepared.json"
     }
   },
-  "exclusive_nonzero_leaf_categories": [
-    {
-      "name": "standalone_txc_with_editable_image",
-      "file_count": 27513,
-      "source_bytes": 106835744,
-      "percent_of_nonzero_leaf_bytes": 8.633,
-      "description": "Standalone TXC leaf bytes with indexed PSMT4/PSMT8 TGA exports."
+  "expanded_logical_payload": {
+    "information_bearing_payload_bytes_Y": 1303947016,
+    "expanded_payload_percent_of_physical_image": 28.4224,
+    "definition": "Sum of nonzero terminal member payloads, replacing each compressed BPE .b source leaf with its decoded UI-bundle member extents or raw decoded payload. Bundle table/gap bytes and compressed wrappers are excluded; nested members are counted once.",
+    "physical_nonzero_terminal_member_bytes_before_expansion": 1237522725,
+    "compressed_bpe_wrapper_bytes_replaced": 61240661,
+    "parsed_ui_bundle_member_payload_bytes_added": 127660056,
+    "raw_unparsed_bpe_payload_bytes_added": 4896,
+    "expansion_delta_vs_physical_terminal_members": 66424291,
+    "recovery_levels": {
+      "container_hierarchy_addressed": {
+        "bytes": 1237522725,
+        "denominator_bytes": 1237522725,
+        "percent": 100.0,
+        "meaning": "Every nonzero physical terminal member has a named catalog path and a validated parent extent. This says nothing about the member's internal format or semantics."
+      },
+      "structurally_classified": {
+        "bytes_Z": 248202302,
+        "denominator_bytes_Y": 1303947016,
+        "percent_Z_of_Y": 19.0347,
+        "components": {
+          "indexed_RTX3_record_and_pixel_extents": 239584968,
+          "parsed_UI_bundle_nontexture_member_extents": 8460696,
+          "reversible_CP932_text_and_message_source_bytes": 88494,
+          "direct_AT3_header_and_reference_table_bytes": 68144
+        },
+        "meaning": "Validated internal extents or records, de-duplicated across nested TXCs. An AT3 body after its parsed reference table is not counted."
+      },
+      "losslessly_rebuildable": {
+        "bytes_A": 1303947016,
+        "denominator_bytes_Y": 1303947016,
+        "percent_A_of_Y": 100.0,
+        "evidence": "The authenticated prepared workspace rebuild is byte-identical to the pinned full disc; parsed UI bundles also have exact no-op reassembly evidence.",
+        "meaning": "Unchanged source preservation/rebuild only; not evidence that edited output is correct or runtime-safe."
+      },
+      "semantically_editable": {
+        "bytes_B": 226123598,
+        "denominator_bytes_Y": 1303947016,
+        "percent_B_of_Y": 17.3415,
+        "components": {
+          "supported_editable_TGA_texture_source_bytes": 226035104,
+          "reversible_text_companion_source_bytes": 68042,
+          "structured_message_catalog_source_bytes": 20452
+        },
+        "meaning": "A source representation has an evidence-backed editable representation and insertion path. This measures editability, not the fraction already translated."
+      },
+      "runtime_validated_editable": {
+        "bytes_C": 0,
+        "denominator_bytes_Y": 1303947016,
+        "percent_C_of_Y": 0.0,
+        "meaning": "No edited payload in this census has passed in-game runtime validation."
+      }
     },
-    {
-      "name": "parsed_menu_bpe_bundle",
-      "file_count": 721,
-      "source_bytes": 61239144,
-      "percent_of_nonzero_leaf_bytes": 4.9485,
-      "description": "Original compressed .b leaf bytes whose decoded UI resource tables and members are extractable/rebuildable."
-    },
-    {
-      "name": "reversible_utf8_text_companion",
-      "file_count": 6,
-      "source_bytes": 68042,
-      "percent_of_nonzero_leaf_bytes": 0.0055,
-      "description": "Original text leaf bytes with reversible UTF-8 companions; includes system/source text as well as game tables."
-    },
-    {
-      "name": "structured_message_catalog",
-      "file_count": 1,
-      "source_bytes": 20452,
-      "percent_of_nonzero_leaf_bytes": 0.0017,
-      "description": "Original _msg.dat leaf bytes with an editable structured JSON catalog."
-    },
-    {
-      "name": "standalone_txc_unresolved",
-      "file_count": 1427,
-      "source_bytes": 13549864,
-      "percent_of_nonzero_leaf_bytes": 1.0949,
-      "description": "Standalone TXC leaf bytes indexed but without an editable image for the current decoder."
-    },
-    {
-      "name": "bpe_decoded_but_bundle_unparsed",
-      "file_count": 3,
-      "source_bytes": 1517,
-      "percent_of_nonzero_leaf_bytes": 0.0001,
-      "description": "BPE leaf bytes decode losslessly, but the decoded .yma payloads have no parsed resource table."
-    },
-    {
-      "name": "other_nonzero_leaves_not_in_editable_groups",
-      "file_count": 4789,
-      "source_bytes": 1055807962,
-      "percent_of_nonzero_leaf_bytes": 85.3162,
-      "description": "Losslessly extracted terminal payload bytes not included in the listed editable/structured groups; retained raw or still opaque to this census."
+    "remaining_after_semantic_editability": {
+      "bytes": 1077823418,
+      "denominator_bytes_Y": 1303947016,
+      "percent_of_Y": 82.6585,
+      "exclusive_byte_weighted_categories": [
+        {
+          "name": "video_cinematics",
+          "file_count": 13,
+          "source_bytes": 685111296,
+          "percent_of_remaining_payload": 63.5643,
+          "percent_of_expanded_payload": 52.5413,
+          "classification_basis": "MOVIE.AFS path and MPEG program-stream pack-start magic"
+        },
+        {
+          "name": "model_geometry_candidates",
+          "file_count": 1246,
+          "source_bytes": 201632448,
+          "percent_of_remaining_payload": 18.7074,
+          "percent_of_expanded_payload": 15.4632,
+          "classification_basis": "YMP/YPC resource naming; model bodies are not decoded here"
+        },
+        {
+          "name": "audio_sound_candidates",
+          "file_count": 140,
+          "source_bytes": 156453642,
+          "percent_of_remaining_payload": 14.5157,
+          "percent_of_expanded_payload": 11.9985,
+          "classification_basis": "BGM archive or sound-directory path; payload audio is not decoded"
+        },
+        {
+          "name": "unresolved_graphics",
+          "file_count": 1427,
+          "source_bytes": 13549864,
+          "percent_of_remaining_payload": 1.2572,
+          "percent_of_expanded_payload": 1.0391,
+          "classification_basis": "TXC indexed, current pixel decoder has no editable export"
+        },
+        {
+          "name": "animation_motion_candidates",
+          "file_count": 2430,
+          "source_bytes": 12552248,
+          "percent_of_remaining_payload": 1.1646,
+          "percent_of_expanded_payload": 0.9626,
+          "classification_basis": "AT3/YAP/MPC/YMA name or member type; bodies are not fully decoded"
+        },
+        {
+          "name": "executables_and_modules",
+          "file_count": 16,
+          "source_bytes": 4101870,
+          "percent_of_remaining_payload": 0.3806,
+          "percent_of_expanded_payload": 0.3146,
+          "classification_basis": "boot executable/module filename; full semantics are outside this census"
+        },
+        {
+          "name": "other_unclassified",
+          "file_count": 2253,
+          "source_bytes": 2644996,
+          "percent_of_remaining_payload": 0.2454,
+          "percent_of_expanded_payload": 0.2028,
+          "classification_basis": "fallback for payload without a stronger evidence-backed inventory class"
+        },
+        {
+          "name": "font_assets",
+          "file_count": 2,
+          "source_bytes": 896928,
+          "percent_of_remaining_payload": 0.0832,
+          "percent_of_expanded_payload": 0.0688,
+          "classification_basis": "font resource directory path; internal font records remain unparsed"
+        },
+        {
+          "name": "scripts_event_and_data_candidates",
+          "file_count": 319,
+          "source_bytes": 880126,
+          "percent_of_remaining_payload": 0.0817,
+          "percent_of_expanded_payload": 0.0675,
+          "classification_basis": "data/script/event extension or member type; semantics are partial"
+        }
+      ],
+      "accounting_note": "Categories partition Y minus B. Names indicate evidence-backed inventory classes, not complete reverse engineering; filename/path-led candidates and opaque bodies are explicitly labeled."
     }
-  ],
-  "editable_group_source_bytes": 168163382,
-  "editable_group_percent_of_nonzero_leaf_bytes": 13.5887,
+  },
   "texture_corpus": {
     "entry_count": 30397,
     "expanded_txc_payload_bytes": 239584968,
@@ -156,10 +249,10 @@
         "editable_percent_of_psm_bytes": 100.0
       }
     },
-    "accounting_note": "Expanded TXC payload bytes include TXCs extracted from the 721 parsed .b bundles. These nested bytes are a separate texture-corpus denominator and are not added to the logical leaf-byte denominator."
+    "accounting_note": "Expanded TXC payload includes standalone and nested members once. Nested textures are not added a second time on top of their expanded UI-bundle members."
   },
   "logical_leaf_extensions": {
-    ".;1": {
+    ".": {
       "file_count": 20,
       "source_bytes": 3324768000
     },
@@ -191,7 +284,7 @@
       "file_count": 333,
       "source_bytes": 3539860
     },
-    ".56;1": {
+    ".56": {
       "file_count": 1,
       "source_bytes": 3445204
     },
@@ -219,11 +312,11 @@
       "file_count": 92,
       "source_bytes": 398856
     },
-    ".irx;1": {
+    ".irx": {
       "file_count": 14,
       "source_bytes": 381321
     },
-    ".img;1": {
+    ".img": {
       "file_count": 1,
       "source_bytes": 275345
     },
@@ -283,19 +376,22 @@
       "file_count": 1,
       "source_bytes": 1600
     },
-    ".cnf;1": {
+    ".cnf": {
       "file_count": 1,
       "source_bytes": 57
     },
-    ".dir;1": {
+    ".dir": {
       "file_count": 1,
       "source_bytes": 31
     }
   },
   "limits": [
-    "Percentages describe this pinned image and the prepared/catalogued surfaces, not every possible hidden or runtime-generated asset.",
-    "A reversible extraction or supported rebuild path does not prove semantic understanding or in-game visual/runtime correctness.",
-    "One nested tex.pac candidate remains unparsed and is included among other nonzero leaf payloads.",
+    "Zero placeholders and zero-filled gaps are reported as measured spans; the gap label does not prove historical intent.",
+    "Information-bearing means a named terminal member extent that is not wholly zero. Zero-valued bytes inside a nonzero member are retained in its full extent.",
+    "Expanded logical payload is a normalized content inventory, not a second physical disc size; it replaces compressed BPE wrappers with decoded child payloads and excludes bundle control/gap bytes.",
+    "The structural numerator counts only the explicit parser-backed extents listed. Container hierarchy addressing is reported separately and must not be mistaken for semantic understanding.",
+    "A byte-identical unchanged rebuild proves source preservation. It does not prove relocation correctness for every edit or runtime correctness.",
+    "Candidate remainder classes rely on signatures, member types, extensions, or directory names as documented; unparsed member bodies are not claimed to be semantically recovered.",
     "Generated TGAs are editable representations; their uncompressed output sizes are not counted as original source bytes."
   ]
 }

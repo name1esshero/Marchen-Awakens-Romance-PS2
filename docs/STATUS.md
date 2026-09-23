@@ -15,16 +15,22 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   tracked `reports/assets_census.json` and ignored
   `extracted/assets/catalog.json`. Translation-bearing evidence is tracked in
   `reports/translation_surfaces.json`.
-- The byte-weighted census in `reports/asset_recovery_census.json` separates
-  terminal leaves from embedded TXC members. An unchanged 4,587,749,376-byte
-  disc rebuild remains byte-identical (100% preservation). Of 239,584,968
-  expanded TXC payload bytes, 226,035,104 (94.3444%) have editable TGA exports;
-  13,549,864 (5.6556%) remain unresolved. Supported editable/structured
-  companions cover 168,163,382 bytes (13.5887%) of 1,237,522,725 nonzero leaf
-  bytes. Twenty zero-filled DMY files contribute 3,324,768,000 bytes, kept
-  separate from content percentages. These are format-coverage measures, not
-  translation completion or semantic-recovery claims. Regenerate with
-  `make asset-census`.
+- The byte-weighted census in `reports/asset_recovery_census.json` now reports
+  disjoint physical-disc spans and a separate expanded logical payload. The
+  4,587,749,376-byte image has 3,327,295,881 known all-zero placeholder/gap
+  bytes, 1,237,522,725 nonzero terminal-member bytes, and 22,930,770 nonzero
+  gap/structure bytes; these sum exactly to the image. Expanded logical payload
+  Y is 1,303,947,016 bytes after BPE bundle expansion and de-duplication.
+  Parser-backed structural coverage is Z/Y = 248,202,302/1,303,947,016
+  (19.0347%); unchanged-source rebuildability is A/Y = 100%; semantic
+  editability is B/Y = 226,123,598/1,303,947,016 (17.3415%); runtime-validated
+  editability is C/Y = 0%. Of the 1,077,823,418 bytes remaining after B, video
+  accounts for 63.5643%, model/geometry candidates 18.7074%, audio/sound
+  candidates 14.5157%, unresolved graphics 1.2572%, and animation/motion
+  candidates 1.1646%; the report gives the full disjoint breakdown and evidence
+  basis. These are separate preservation, structure, editability, and runtime
+  measures, not a single decompilation or translation percentage. Regenerate
+  with `make asset-census`.
 - Both the initial and fully prepared 4,587,749,376-byte disc rebuilds from
   workspace files compare byte-for-byte with the pinned ISO; the streaming
   comparator authenticates both source hashes and whole-image equality. This

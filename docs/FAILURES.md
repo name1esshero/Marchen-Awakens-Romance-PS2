@@ -2,6 +2,32 @@
 
 Authority: [STANDARDS.md](STANDARDS.md).
 
+## A leaf-only editable percentage does not measure the expanded game payload
+
+Hypothesis: editable/structured terminal-leaf bytes divided by nonzero terminal
+leaf bytes give a census-wide semantic-editability percentage. That ratio is
+not valid when compressed `.b` leaves contain individually indexed resources.
+The prior 13.5887% figure treated whole parsed BPE wrapper leaves as editable
+while excluding their decoded child members from both the numerator and
+denominator. It therefore mixed rebuildable containers with semantic source
+surfaces and omitted the nested editable texture payloads.
+
+Use a normalized logical denominator: remove each compressed BPE wrapper once,
+add its decoded child member extents once, and exclude bundle table/gap bytes.
+Count only editable texture and text/catalog source representations in B. Keep
+parser-backed structure Z, unchanged-source rebuildability A, and runtime
+validation C separate. Preserve physical disc accounting as its own partition;
+do not call either ratio a generic decompilation percentage. The revised tool
+fails if physical spans or exclusive `Y - B` remainder categories do not
+balance.
+
+Evidence: v2 `reports/asset_recovery_census.json` reports Y=1,303,947,016,
+Z/Y=19.0347%, A/Y=100%, B/Y=17.3415%, and C/Y=0%, alongside the exact physical
+partition. The revision supersedes the former 13.5887% leaf-only headline.
+See `tools/asset_recovery_census.py`,
+`tests/test_asset_recovery_census.py`, and
+[`TASK_ASSET_WORKSPACE_METHODOLOGY.md`](TASK_ASSET_WORKSPACE_METHODOLOGY.md).
+
 ## One nested `.pac` file does not meet the observed PAC table contract
 
 Hypothesis: every file named `.pac` in the recognized asset tree uses the same

@@ -182,44 +182,53 @@ reference hash and inspect changed ranges rather than requiring equality.
 
 Use `make asset-census` to regenerate
 [`reports/asset_recovery_census.json`](../reports/asset_recovery_census.json).
-The generator uses the prepared logical-leaf catalog, TXC index and bundle
-manifests, pinned disc inventory, and authenticated unchanged-round-trip report.
-It fails if the reference differs, a standalone TXC is missing from the index,
-an embedded member disagrees with its manifest, or category byte totals do not
-balance.
+The generator combines the prepared leaf catalog, recursively validated layout
+pieces, TXC index, parsed UI-bundle manifests, reversible text and message
+catalogs, AT3 parser evidence, pinned disc inventory, and authenticated
+unchanged-round-trip report. It fails if the reference or physical partition
+does not balance, a standalone TXC is missing, a nested member hash disagrees,
+or exclusive byte categories do not sum to their denominator.
 
-The main denominator is **4,562,290,725 bytes of terminal leaf payloads** across
-34,486 catalog rows. Each logical leaf is counted once. Twenty zero-filled DMY
-files account for 3,324,768,000 bytes (72.8750% of leaf bytes); they are shown
-separately from the **1,237,522,725 nonzero leaf bytes** so placeholders do not
-inflate the content-recovery percentage. Six additional zero-length records
-contribute no bytes. The remaining 25,458,651 disc bytes are outside terminal
-leaf payloads, such as filesystem/container structure and alignment gaps.
+Keep the two byte bases separate. The **physical image** is 4,587,749,376
+bytes. It contains 3,324,768,000 bytes in all-zero named members, 2,527,881
+bytes in all-zero gaps, 1,237,522,725 bytes in nonzero terminal members, and
+22,930,770 bytes in nonzero gap/structure extents. Those four disjoint spans
+sum exactly to the image. The gap measurement proves the bytes are zero, not
+that every gap was intentionally reserved as padding.
 
-On that nonzero-leaf denominator, 168,163,382 bytes (13.5887%) currently have
-one of the census's explicit editable/structured paths: supported standalone
-TXC images, parsed/rebuildable menu BPE bundles, reversible UTF-8 text
-companions, or the structured message catalog. This is a byte-weighted measure
-of represented source leaves, not a claim that 13.5887% of game meaning is
-translated or semantically understood. A further 13,551,381 bytes (1.0950%)
-are indexed or decoded but remain unresolved (1,427 TXCs and three unparsed
-bundle payloads). The remaining 1,055,807,962 nonzero bytes (85.3162%) are
-other leaves retained raw/opaque by this census.
+The **expanded logical information payload Y** is 1,303,947,016 bytes. It
+starts with nonzero terminal member extents, replaces the 61,240,661 compressed
+BPE wrapper bytes with 127,660,056 decoded UI-bundle member bytes plus 4,896
+decoded raw bytes, and excludes UI-bundle control/gap bytes. This makes nested
+assets visible without counting them twice or treating compressed wrapper
+bytes as editable meaning.
 
-Texture coverage uses a second, expanded-member denominator: **239,584,968 TXC
-payload bytes** across 30,397 occurrences, including TXCs nested in menu
-bundles. Editable TGA exports represent 226,035,104 bytes (94.3444%); 13,549,864
-bytes (5.6556%) remain unresolved. This denominator intentionally does not add
-nested TXC bytes to the terminal-leaf total: each nested texture is already
-inside a counted compressed `.b` leaf. By count, 28,970/30,397 (95.3055%) have
-editable exports. The unweighted and byte-weighted percentages differ because
-the unresolved formats have different typical sizes.
+Report each recovery level independently. Every nonzero physical member has a
+validated hierarchy path and extent. Strict parser-backed structural coverage
+is **Z/Y = 248,202,302 / 1,303,947,016 = 19.0347%**: indexed RTX3 extents,
+non-texture members under parsed UI bundle tables, reversible text/message
+sources, and parsed direct AT3 headers/reference tables. Full unchanged-source
+rebuild coverage is **A/Y = 100%**, backed by a byte-identical full-disc
+rebuild; it does not mean edited assets have been runtime validated. Semantic
+editability is **B/Y = 226,123,598 / 1,303,947,016 = 17.3415%**, comprising
+226,035,104 editable texture bytes and 88,494 reversible text/message source
+bytes. This measures available editable representations, not the share already
+translated. Runtime-validated editable coverage is **C/Y = 0%**.
 
-The report also records 100% byte-identical prepared-disc round-trip evidence
-for the pinned 4,587,749,376-byte image. That is preservation coverage, distinct
-from the 13.5887% explicit editable/structured leaf share and 94.3444% TXC
-imageability. Regenerate the report after refreshing the prepared catalog or
-graphics index. The tool's nested-accounting invariant is covered by
+The disjoint `Y - B` remainder is 1,077,823,418 bytes. Its largest evidence-led
+inventory groups are video/cinematics 685,111,296 bytes (63.5643% of the
+remainder), model/geometry candidates 201,632,448 (18.7074%), audio/sound
+candidates 156,453,642 (14.5157%), unresolved graphics 13,549,864 (1.2572%),
+and animation/motion candidates 12,552,248 (1.1646%). Modules, font assets,
+script/data candidates and the 2,644,996-byte unclassified fallback are also
+listed in the JSON report. These group names classify inventory by validated
+signature, bundle member type, filename or path; they do not claim the opaque
+bodies have been semantically decoded.
+
+Texture-specific coverage remains a distinct measure: 30,397 occurrences
+contain 239,584,968 TXC bytes, of which 226,035,104 (94.3444%) have editable
+TGA exports. The tool tests exact physical partitioning, expanded accounting,
+separate Z/A/B/C levels, and remainder balance in
 `tests/test_asset_recovery_census.py`.
 
 ## Procedure
