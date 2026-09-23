@@ -87,7 +87,9 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   atlas/tiled-looking textures, and animation/UV references are not yet decoded, so
   they are not evidence of correct whole-screen composition. The title-marh-jp
   TXC member matches its bundle hash, and a stored-order diagnostic shows a
-  coherent stacked logo atlas; renderer/AT-to-UV composition remains unresolved.
+  coherent stacked logo atlas. The AT inspector confirms all four title
+  animation texture-name references match TXC members; renderer/AT-to-UV
+  composition remains unresolved.
   See [title rendering evidence](../tasks/TITLE_TEXTURE_RENDERING.md). All 229 messages have draft translations; names,
   mechanics, and display constraints need review. DMY files, module internals and DVP
   overlay semantics remain open.

@@ -124,6 +124,26 @@ References: `tools/rtx3.py`, `tests/test_rtx3.py`,
 Title-specific renderer and composition evidence is tracked in
 [`TITLE_TEXTURE_RENDERING.md`](../tasks/TITLE_TEXTURE_RENDERING.md).
 
+## AT header inspection links animation texture names to TXC members
+
+Symptom: `.at3` files refer to `.tga` names, but the texture payloads are stored
+as TXC resources and the relationship needs verification before composing a
+menu screen.
+Mechanism: observed AT files begin with `AT  `, a 16-byte header, then the
+declared number of 64-byte CP932 name slots, each followed by a four-byte field.
+The trailing field values are retained as raw integers because their purpose is
+not established.
+Pathway: run `python3 tools/at3.py SOURCE.at3`; compare each decoded name stem
+with sibling TXC member names. Keep the remaining animation body opaque until
+its layout and UV semantics are evidenced.
+Verification: the title file yields four references, all matching names in the
+sibling TXC bundle manifest; the bounded parser passes valid and malformed
+synthetic cases in `tests.test_at3`.
+Scope: observed title AT resource and matching bundle. The AT animation body,
+actual draw order, and UV interpretation remain unresolved.
+References: `tools/at3.py`, `tests/test_at3.py`,
+[`TITLE_TEXTURE_RENDERING.md`](../tasks/TITLE_TEXTURE_RENDERING.md).
+
 ## UTF-8 translation edits can grow through CP932 and ISO relocation
 
 Symptom: translated text may encode to more bytes than the original Japanese

@@ -22,6 +22,14 @@ atlas-like surface. The attempted generic GS page/block mapping produced a
 more corrupted, striped image and was discarded; raw GS VRAM address layout is
 therefore not established as the RTX3 payload layout.
 
+The `title_00.at3` source is 4,548 bytes with SHA-256
+`b9d5f2e26e57f51e6b936f55763de5b9618b47d652b2577c94d2812e5f1cb263`. Its
+observed header fields are `3`, reference count `4`, and name-slot width `64`;
+the reference table ends at `0x120`. The post-table region is 4,260 bytes with
+SHA-256 `518d61e203eb5e87c18acbff6c1ae49377202e4e661e91be5fc5601bd3cd921a`.
+These hashes pin the evidence sample without claiming meanings for the opaque
+animation records.
+
 ## Renderer observations
 
 The `MarTitleMenu` vtable is at ELF address `0x003ddc48`; its Display override
@@ -33,11 +41,18 @@ shows rectangle coordinates converted to four corners and passed to the GS
 draw path; coordinates are scaled by 16 (`0x41800000`) in one conversion.
 Interpreting all object fields and their source animation records remains open.
 
-The companion `title_at.b` has an `AT  ` member with four `.tga` references,
-including `title_marh_jp.tga`. Its entry-field semantics and the mapping from
-those references to RTX3 UV rectangles have not yet been proven. Next, correlate
-the AT records with the `MarRectDrawTex` call sites and the matching TXC atlas,
-then compare the composed result with an in-game capture before editing art.
+The companion `title_at.b` has an `AT  ` member with four `.tga` references.
+`tools/at3.py` reads its 16-byte header as observed fields and validates four
+64-byte CP932 name slots, each followed by a 4-byte uninterpreted value. The
+names begin at offsets `0x10`, `0x54`, `0x98`, and `0xdc`; following values are
+`64`, `64`, `64`, and `0`. All four name stems (`title_parts`, `title_mar`,
+`title_marh_jp`, `title_bg`) match TXC member names in the sibling bundle
+manifest. This proves reference-to-texture name linkage, not that `.tga` files
+exist as separate image files or how the animation samples those textures.
+The remaining animation body and mapping from the references to RTX3 UV
+rectangles have not yet been decoded. Next, correlate the AT records with the
+`MarRectDrawTex` call sites, then compare the composition with an in-game capture
+before editing art.
 
 ## Evidence limits
 

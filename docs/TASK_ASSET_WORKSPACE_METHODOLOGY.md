@@ -88,6 +88,15 @@ python3 tools/rtx3.py export SOURCE.txc /tmp/texture-stored-order.tga --stored-o
 python3 tools/rtx3.py import SOURCE.txc /tmp/texture-edited.txc /tmp/texture.tga
 ```
 
+Run `python3 tools/at3.py SOURCE.at3` to inspect the bounded AT header and
+texture-name table. Observed files have a 16-byte header, a 64-byte CP932
+NUL-terminated name slot followed by a 4-byte field for each declared reference.
+Preserve the trailing fields as uninterpreted values: the title sample uses
+`64` for its first three and `0` for its last, but their semantics are not
+proven. The remaining animation body stays opaque until its record and UV
+semantics are established. Compare name stems with sibling TXC member names to
+identify which textures an AT file references.
+
 `--stored-order` reads indexed pixels linearly and uses palette entries as
 stored, without PSM swizzling, the GS CLUT index permutation, or alpha
 expansion. It is a raw layout diagnostic, not an editable spatial representation; the normal export

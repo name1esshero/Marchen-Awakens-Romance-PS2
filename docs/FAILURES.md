@@ -56,6 +56,20 @@ the legacy image swizzler remains unchanged. Reconsider the GS map only if TXC
 serialization evidence or runtime comparison demonstrates that the file stores
 raw GS VRAM order. See `tasks/TITLE_TEXTURE_RENDERING.md`.
 
+## AT texture-reference rows are not a flat array of 64-byte names
+
+Hypothesis: the AT header's `0x40` field is the complete stride, so the declared
+count can be parsed as consecutive 64-byte strings. On `title_00.at3`, that
+interpretation returned `@` and empty names after the first reference. The raw
+bytes instead show each 64-byte CP932 name slot followed by a four-byte field;
+the next name begins 68 bytes after the prior one. This yields names at offsets
+`0x10`, `0x54`, `0x98`, and `0xdc`, with trailing values `64`, `64`, `64`, and
+`0`. The field's semantics remain unknown and are preserved without
+interpretation. Do not reuse a 64-byte flat-stride parser. `tools/at3.py` checks
+the file extent and NUL-terminated names; tests cover malformed headers and
+truncated tables. Evidence and the four matching TXC resource names are in
+`tasks/TITLE_TEXTURE_RENDERING.md`.
+
 ## A 16-byte copy does not establish a four-float aggregate
 
 Hypothesis: `CCamera::GetViewRect` returns a four-float rectangle by value.
