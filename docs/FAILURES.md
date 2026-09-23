@@ -59,10 +59,11 @@ antialiased edges. Evidence: `reports/rtx3_layout_diagnostics.json`,
 `tasks/TITLE_TEXTURE_RENDERING.md`, and `tests/test_rtx3.py`.
 
 Limits: this selection is a human visual reference and a 20-resource sample, not
-proof of the complete RTX3 corpus or in-game rendering. It covers only the 1,457
-TXCs currently exposed by parsed menu bundles; UV/AT composition and the other
-29k census records remain unresolved. Keep the old pixel-unswizzle path as a
-diagnostic until a runtime capture validates sampling and alpha behavior.
+proof of the complete RTX3 corpus or in-game rendering. The graphics workspace
+now exports 28,970 supported TXCs, but only the 20 sampled images have this
+visual layout comparison. The remaining 1,427 TXCs have unresolved storage
+formats; AT/UV composition remains unknown. Keep the old pixel-unswizzle path as
+a diagnostic until a runtime capture validates sampling and alpha behavior.
 
 ## AT texture-reference rows are not a flat array of 64-byte names
 
@@ -139,3 +140,20 @@ fail-closed error; the existing ISO remained untouched. Rebuilding to a new
 temporary path and running `tools/compare_disc.py` against the pinned reference
 passed with zero differing bytes. Preserve or inspect stale build outputs before
 choosing another path.
+
+## Forty-three PSMCT32 TXCs are eight bytes short of their declared pixel extent
+
+Hypothesis: every catalogued PSMCT32 RTX3 payload has the standard 0x40-byte
+header followed by the declared `width * height * 4` pixel bytes. The 43 PSM=0
+records parse far enough to identify dimensions and pixel size, but every body
+ends eight bytes before `0x40 + pixel_size`, while the RTX3 size field still
+correctly equals `file_size - 8`. The set has 28 8x8 files, 14 32x64 files, and
+one 64x64 file. No TGA is emitted for them.
+
+Keep all 43 records raw. Do not trim the declared size, pad pixels, or shift the
+pixel-data start based on this repeated discrepancy alone; each would invent
+pixel values or a header variant without evidence. Revisit after a second
+independent parser, format sample, or runtime/tool trace establishes the PSMCT32
+variant. This does not imply the payloads are corrupt; it establishes only that
+they fail the current bounded RTX3 contract. Evidence: `graphics/index.json`,
+`reports/rtx3_format_survey.json`, and the full source-hash/TGA-dimension audit.

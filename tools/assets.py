@@ -19,6 +19,7 @@ import bpe
 import ui_bundle
 
 CHUNK = 1024 * 1024
+GRAPHICS_STANDALONE_MANIFEST = 'standalone-txc-overrides.json'
 
 
 def save_json(path, data):
@@ -40,6 +41,34 @@ def name_string(b):
 def member(name, offset, size, offset_field=None, size_field=None, unit=1):
     return dict(name=name, offset=offset, size=size, offset_field=offset_field,
                 size_field=size_field, unit=unit)
+
+
+def graphics_override_state(overrides):
+    """Load hash-anchored edits for TXCs that are archive leaves."""
+    if overrides is None:
+        return None
+    manifest_path = safe(overrides, GRAPHICS_STANDALONE_MANIFEST)
+    if not manifest_path.is_file():
+        return dict(root=Path(overrides).resolve(), entries={}, applied=set())
+    document = json.loads(manifest_path.read_text(encoding='utf-8'))
+    if document.get('version') != 1 or not isinstance(document.get('entries'), list):
+        raise ValueError('unsupported standalone graphics override manifest')
+    entries = {}
+    for entry in document['entries']:
+        target = Path(entry.get('target', ''))
+        if target.is_absolute() or not target.parts or '..' in target.parts:
+            raise ValueError('unsafe standalone graphics override target')
+        target = target.as_posix()
+        if target in entries:
+            raise ValueError(f'duplicate standalone graphics override target: {target}')
+        for field in ('source_sha256', 'override_sha256'):
+            digest = entry.get(field, '')
+            if len(digest) != 64 or any(ch not in '0123456789abcdef' for ch in digest):
+                raise ValueError(f'invalid standalone graphics {field}')
+        if not isinstance(entry.get('bytes'), int) or entry['bytes'] < 0:
+            raise ValueError('invalid standalone graphics override length')
+        entries[target] = entry
+    return dict(root=Path(overrides).resolve(), entries=entries, applied=set())
 
 
 def archive(stream, base, size):
@@ -228,7 +257,8 @@ def export(image, dest, hash_file):
 
 
 def build_node(root, output, relocate=False, translations=None, text_translations=None,
-               logical='disc', graphics_overrides=None, workspace_root=None):
+               logical='disc', graphics_overrides=None, workspace_root=None,
+               graphics_state=None):
     if workspace_root is None:
         workspace_root = Path(root).resolve()
     m = json.loads((root / 'layout.json').read_text())
@@ -250,8 +280,28 @@ def build_node(root, output, relocate=False, translations=None, text_translation
             if p.get('container'):
                 nested = Path(temp) / str(i)
                 build_node(source, nested, relocate, translations, text_translations,
-                           logical_path, graphics_overrides, workspace_root)
+                           logical_path, graphics_overrides, workspace_root,
+                           graphics_state)
                 source = nested
+            if (not p.get('container') and graphics_state is not None and
+                    p.get('name', '').lower().endswith('.txc')):
+                workspace_relative = root.resolve().relative_to(workspace_root.resolve())
+                target = (workspace_relative / p['source']).as_posix()
+                entry = graphics_state['entries'].get(target)
+                if entry is not None:
+                    original = source.read_bytes()
+                    if hashlib.sha256(original).hexdigest() != entry['source_sha256']:
+                        raise ValueError(f'standalone TXC source differs from graphics manifest: {target}')
+                    override = safe(graphics_state['root'], Path('standalone') / target)
+                    if not override.is_file():
+                        raise ValueError(f'missing standalone TXC graphics override: {target}')
+                    if (override.stat().st_size != entry['bytes'] or
+                            entry['bytes'] != len(original) or
+                            hashlib.sha256(override.read_bytes()).hexdigest() !=
+                            entry['override_sha256']):
+                        raise ValueError(f'standalone TXC graphics override hash/size mismatch: {target}')
+                    source = override
+                    graphics_state['applied'].add(target)
             if p.get('bpe_source'):
                 original = source.read_bytes()
                 if hashlib.sha256(original).hexdigest() != p.get('bpe_original_sha256'):
@@ -358,14 +408,20 @@ def build(root, output, relocate=False, translations_path=None,
                     raise ValueError(f'duplicate text catalogue resource {catalog["resource"]}')
                 catalogs[catalog['resource']] = catalog
             text_translations = {'catalogs': catalogs, 'applied': set()}
+        graphics_state = graphics_override_state(graphics_overrides)
         build_node(root, Path(tmp), relocate, translations, text_translations,
                    graphics_overrides=graphics_overrides,
-                   workspace_root=Path(root).resolve())
+                   workspace_root=Path(root).resolve(),
+                   graphics_state=graphics_state)
         if translations is not None and translations['applied'] != 1:
             raise ValueError('translation catalogue was not applied to exactly one message table')
         if text_translations is not None and text_translations['applied'] != set(text_translations['catalogs']):
             missing = sorted(set(text_translations['catalogs']) - text_translations['applied'])
             raise ValueError(f'text catalogues were not applied to all resources: {missing}')
+        if (graphics_state is not None and
+                graphics_state['applied'] != set(graphics_state['entries'])):
+            missing = sorted(set(graphics_state['entries']) - graphics_state['applied'])
+            raise ValueError(f'standalone TXC graphics overrides were not applied: {missing[:3]}')
         os.replace(tmp, output)
     finally:
         if os.path.exists(tmp):

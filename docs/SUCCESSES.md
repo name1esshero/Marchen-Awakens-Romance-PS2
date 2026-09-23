@@ -86,7 +86,7 @@ References: `tools/ui_bundle.py`, `tools/assets.py`, `tests/test_ui_bundle.py`,
 `tests/test_assets.py`, `reports/ui_bundle_survey.json`,
 [asset methodology](TASK_ASSET_WORKSPACE_METHODOLOGY.md).
 
-## Indexed RTX3 textures export as editable TGAs and reinsert through nested bundles
+## Indexed RTX3 textures export as editable TGAs and reinsert through archive paths
 
 Symptom: menu texture payloads begin with `RTX3` and are not directly editable
 as ordinary raster files. An early TGA pass also copied the PS2's 0..128 alpha
@@ -97,10 +97,11 @@ layout), and expands alpha from the GS 0..128 range to TGA's 0..255 range.
 Import preserves original indexed pixels when unchanged and maps edited colors
 to the existing palette; canvas and palette growth are unsupported. The root
 `graphics/` workspace exports directly into flat, human-readable category
-folders and indexes image/source hashes plus the original bundle path. English
-siblings ending `_eng.tga` are selected over Japanese baselines for the mod ISO;
-staging stays separate from source sidecars and feeds the normal UI-table/BPE/PAC
-builder.
+folders and indexes image/source hashes plus the original logical path. English
+siblings ending `_eng.tga` are selected over Japanese baselines for the mod ISO.
+Menu members stage under their bundle path; standalone TXC leaves stage under a
+hash-anchored manifest and are applied only to the matching raw leaf during
+recursive archive rebuilding. Both paths leave source sidecars intact.
 Pathway: `make graphics-export`; edit same-size files under `graphics/`; name an
 English sibling `*_eng.tga` (replace a trailing `_jp` with `_eng`); run
 `make graphics-audit` and `make graphics-stage`; then run
@@ -109,20 +110,24 @@ Verification: controlled visual comparison covered 10 PSMT8 and 10 PSMT4
 resources; the owner selected the mapped-linear `title_marh_jp` preview matching
 the supplied reference. The corrected title image has 141,269 fully transparent
 pixels, 54,738 alpha-128 source pixels mapped to fully opaque TGA alpha, and
-66,137 intermediate-alpha pixels. The workspace exports 1,457 TXCs (1,226 PSMT8
-and 231 PSMT4). Its post-correction audit verified all source hashes and TGA
-dimensions, with no Japanese-baseline edits and no English variants at audit time.
-The synthetic end-to-end test confirms an English sibling is selected, the
-Japanese TGA remains unchanged, and the replacement reaches the rebuilt nested
-texture. `make test` passed all 69 tests. The focused asset/texture/container
-suite passed 26 tests, including alpha expansion, flat category naming,
-palette-preserving edits and English override reinsertion through UI table, BPE
-and PAC relocation.
-Scope: the 1,457 currently prepared menu-bundle members, not the 30,397-record
-whole-disc RTX3 census. PSMT8H/PSMT4HL/PSMT4HH are parsed but not decoded;
-PSMCT32 retains its legacy conversion and is outside the indexed-layout
-conclusion. AT animation/UV composition and runtime rendering remain unresolved;
-no English graphic has yet been runtime-validated.
+66,137 intermediate-alpha pixels. The workspace indexes 30,397 TXCs (28,940
+standalone leaves and 1,457 menu members) and exports 28,970 supported PSMT4 and
+PSMT8 images (27,316 PSMT4 and 1,654 PSMT8). This direct full-index count
+corrected the swapped PSM labels in the earlier format report. The complete
+source-hash/dimension audit passed with no Japanese-baseline edits and no English
+variants at audit time. Synthetic end-to-end tests confirm English siblings
+reach both nested UI-table/BPE/PAC and standalone TXC/PAC rebuilding while source
+sidecars stay intact. The full audit uses `rtx3.tga_dimensions` to validate TGA
+headers and extents without decoding every pixel. Separate PNG previews of five
+standalone character, environment, sky, effect, and font textures looked coherent
+without visible tile artifacts; their source hashes and raster paths are recorded
+in `reports/rtx3_layout_diagnostics.json`.
+Scope: all catalogued TXCs plus nested menu-bundle TXCs; an unparsed PAC leaf
+could contain undiscovered members. The 1,384 PSMT8H/PSMT4HL/PSMT4HH and 43
+PSMCT32 payloads remain raw (the latter are short by eight bytes against their
+declared pixel extent). The 20-resource visual comparison does not prove layout
+or final composition for the complete corpus. AT/UV composition and runtime
+rendering remain unresolved; no English graphic has yet been runtime-validated.
 References: `tools/rtx3.py`, `tools/graphics.py`, `graphics_rules.mk`,
 `tests/test_rtx3.py`, `tests/test_assets.py`, `reports/rtx3_format_survey.json`,
 `reports/rtx3_layout_diagnostics.json`, `reports/translation_surfaces.json`,

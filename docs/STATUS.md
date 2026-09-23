@@ -76,28 +76,27 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   transfers. Member types/alignment require independent evidence; all original
   bytes remain preserved. See [the probe](tasks/VIEW_RECT_PROBE.md).
 - No runtime/emulator test or gameplay validation has been performed. Asset leaves
-  such as YPC geometry, texture payloads, audio, fonts and scripts remain binary;
-  moved/grown assets have no runtime validation. The two catalog tables and the
-  recovered `_msg.dat` table are translation-bearing surfaces. All 724 menu `.b`
-  leaves now have a verified decoded-binary layer; 721 also have 3,084 individually
-  extracted nested resources that rebuild byte-exactly when untouched. Three `.yma`
-  payloads use a different unresolved layout. The prepared menu workspace exposes
-  1,457 TXCs as editable TGA files (1,226 PSMT8, 231 PSMT4). Images sit directly
+  such as YPC geometry, audio, fonts and scripts remain binary; moved/grown assets
+  have no runtime validation. The two catalog tables and recovered `_msg.dat`
+  table are translation-bearing surfaces. All 724 menu `.b` leaves now have a
+  verified decoded-binary layer; 721 also have 3,084 individually extracted
+  nested resources that rebuild byte-exactly when untouched. Three `.yma` payloads
+  use a different unresolved layout. The graphics index covers all 30,397
+  catalogued TXCs: 28,940 standalone archive leaves and 1,457 nested menu members.
+  A full audit passed source hashes and TGA dimensions for 28,970 editable exports
+  (27,316 PSMT4 and 1,654 PSMT8); 1,427 remain indexed but unresolved (1,384
+  high-bit PSMs and 43 PSMCT32 files short by eight bytes). Images sit directly
   in flat semantic folders: title, icon, user_interface, effects, characters,
-  cards, backgrounds, maps, weapons, environments and text. Filenames carry
-  asset/bundle/member IDs, and `graphics/index.json` maps each image back to its
-  source. Japanese baselines end in `_jp.tga`, stay unchanged, and are ignored as
-  generated workspace files; authored `_eng.tga` siblings are Git-trackable and
-  take precedence in `mar_eng.iso` builds. Indexed exports use linear pixel order,
-  mapped PSMT8 CLUT indices and expanded 0..128 GS alpha. A controlled 20-image
-  comparison favored this over pixel unswizzling, and the owner selected the
-  title view matching the supplied logo reference. The post-correction audit
-  verified all 1,457 source hashes and TGA dimensions, with no baseline edits and
-  no English variants present at audit time. A synthetic English image passed
-  through UI-table/BPE/PAC reinsertion. High-bit PSMs, the remaining full-disc TXC
-  census, AT/UV composition and runtime display remain unresolved. The AT
-  inspector confirms all four title animation texture-name references match TXC
-  members.
+  cards, backgrounds, maps, weapons, environments and text. Japanese baselines end
+  in `_jp.tga`, stay unchanged, and are ignored as generated workspace files;
+  authored `_eng.tga` siblings are Git-trackable and take precedence in
+  `mar_eng.iso` builds. Indexed exports use linear pixel order, mapped PSMT8 CLUT
+  indices and expanded 0..128 GS alpha. This candidate was visually compared on
+  20 resources; it is not proof of whole-corpus screen composition. Synthetic
+  English-image tests now cover nested UI-table/BPE/PAC and standalone TXC/PAC
+  reinsertion while preserving source files. AT/UV composition and runtime display
+  remain unresolved. The AT inspector confirms all four title animation texture
+  name references match TXC members.
   See [title rendering evidence](../tasks/TITLE_TEXTURE_RENDERING.md). All 229 messages have draft translations; names,
   mechanics, and display constraints need review. DMY files, module internals and DVP
   overlay semantics remain open.

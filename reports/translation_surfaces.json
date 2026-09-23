@@ -86,12 +86,12 @@
       "path": "disc!/_DATA.YFS;1!/**/*.txc",
       "count": 28940,
       "translation_relevance": "candidate_graphical_text_and_ui_art",
-      "evidence": "The prepared menu-resource workspace contains 1,457 TXCs (1,226 PSMT8, 231 PSMT4) exported and audited as TGA using a visually selected linear-pixel/mapped-CLUT candidate. The whole-disc census has 30,397 RTX3 records; most are not currently in the prepared editable graphics workspace. Other PSM modes and runtime composition remain unresolved.",
-      "confidence": "OBSERVED for selected menu samples and 1,457 workspace members; whole-corpus semantics remain a hypothesis from path and role",
-      "extraction_status": "1,457 parsed menu-bundle members have flat-category TGA exports indexed by exact source path/hash; remaining TXC census members remain raw or unprepared",
-      "editability_status": "prepared PSMT4/PSMT8 menu members editable as same-size TGA using existing palette; PSMCT32 retains legacy conversion; unsupported PSMs raw; same-size *_eng.tga sibling overrides supported for English ISO builds",
-      "rebuild_status": "changed prepared menu members stage as overrides and reinsert through UI table/BPE/PAC relocation",
-      "relocation_status": "synthetic nested growth tested; UV references, palette/canvas growth, and runtime behavior are not audited"
+      "evidence": "The prepared workspace indexes 30,397 RTX3 records: 28,940 standalone archive leaves and 1,457 nested menu members. All 27,316 PSMT4 and 1,654 PSMT8 records exported as TGA and passed source-hash/dimension audit using the current linear-pixel/mapped-CLUT candidate. The remaining 1,427 high-bit or short PSMCT32 records stay unresolved. AT/UV composition and runtime remain unverified.",
+      "confidence": "OBSERVED for the format census, source-hash/dimension audit, sampled indexed layout, and synthetic reinsertion paths; final on-screen semantics and runtime acceptance remain unverified",
+      "extraction_status": "All 30,397 catalogued RTX3 records are indexed in graphics/index.json; 28,970 have flat-category TGA exports indexed by exact source path/hash; 1,427 unresolved TXCs remain raw with explicit reasons",
+      "editability_status": "PSMT4/PSMT8 exports editable as same-size TGA using the original palette; Japanese *_jp.tga baselines remain unchanged and adjacent *_eng.tga variants are selected for English ISO builds; unsupported storage modes remain raw",
+      "rebuild_status": "Nested menu overrides reinsert through UI table/BPE/PAC; standalone TXC overrides are hash-anchored and reinsert through the containing archive; both paths have synthetic end-to-end tests",
+      "relocation_status": "Standalone edits preserve TXC byte length; generic archive relocation remains available for surrounding growth. UV references, palette/canvas growth, and runtime behavior are not audited"
     }
   ]
 }

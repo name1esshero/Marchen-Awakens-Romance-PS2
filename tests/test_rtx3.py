@@ -28,7 +28,14 @@ class RTX3Tests(unittest.TestCase):
                 decoded = rtx3.decode_rgba(raw)
                 tga = rtx3.write_tga(*decoded)
                 self.assertEqual(rtx3.read_tga(tga), decoded)
+                self.assertEqual(rtx3.tga_dimensions(tga), (width, height))
                 self.assertEqual(rtx3.encode_tga(raw, tga), raw)
+
+    def test_tga_dimensions_validates_extent_without_pixel_decode(self):
+        tga = rtx3.write_tga(2, 1, bytes((255, 0, 0, 255, 0, 255, 0, 255)))
+        self.assertEqual(rtx3.tga_dimensions(tga), (2, 1))
+        with self.assertRaisesRegex(ValueError, 'pixel extent'):
+            rtx3.tga_dimensions(tga[:-1])
 
     def test_stored_order_preview_skips_pixel_and_palette_mapping(self):
         raw = bytearray(fixture(19, 128, 64))

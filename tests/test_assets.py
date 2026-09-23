@@ -401,6 +401,62 @@ class AssetsTests(unittest.TestCase):
             self.assertEqual(rebuilt_texture, override)
             self.assertNotEqual(rebuilt_texture, texture)
 
+    def test_standalone_txc_english_override_reinserts_through_pac(self):
+        width = height = 16
+        pixel_size = width * height
+        header = bytearray(rtx3.HEADER_SIZE)
+        header[:4] = b'RTX3'
+        struct.pack_into('<I', header, 4, 0x40 + pixel_size + 1024 - 8)
+        struct.pack_into('<Q', header, 8,
+                         (rtx3.PSMT8 << 20) | (4 << 26) | (4 << 30))
+        struct.pack_into('<HHI', header, 0x20, width, height, pixel_size)
+        texture = (bytes(header) + bytes(range(256)) +
+                   b''.join(bytes((i, i, i, 0x80)) for i in range(256)))
+        packed = bytearray(pac([pac([texture])]))
+        inner_base = 16 + 32
+        packed[inner_base + 16 + 16:inner_base + 16 + 20] = b'txc\0'
+
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d) / 'source'
+            self.export(bytes(packed), root)
+            with redirect_stdout(io.StringIO()):
+                assets.prepare(root, report=None)
+            graphics_root = Path(d) / 'graphics'
+            with redirect_stdout(io.StringIO()):
+                index = graphics.export(root, graphics_root)
+            row = next(item for item in index['entries']
+                       if item['source_kind'] == 'standalone')
+            self.assertEqual(row['logical_path'], 'disc!/test.bin!/test.txc')
+            self.assertEqual(row['category'], 'user_interface')
+            baseline = graphics_root / row['image']
+            width, height, rgba = rtx3.read_tga(baseline.read_bytes())
+            edited = bytearray(rgba)
+            edited[:4] = bytes((255, 0, 0, 255))
+            english = graphics.english_variant_path(baseline)
+            english.write_bytes(rtx3.write_tga(width, height, edited))
+
+            overrides = Path(d) / 'overrides'
+            with redirect_stdout(io.StringIO()):
+                report = graphics.build(root, graphics_root, overrides)
+            self.assertEqual(len(report['changed']), 1)
+            manifest = json.loads((overrides / graphics.STANDALONE_MANIFEST).read_text())
+            self.assertEqual(len(manifest['entries']), 1)
+            staged = (overrides / 'standalone' /
+                      manifest['entries'][0]['target']).read_bytes()
+
+            output = Path(d) / 'mod.pac'
+            assets.build(root, output, relocate=True, graphics_overrides=overrides)
+            rebuilt_bytes = output.read_bytes()
+            outer = assets.archive(io.BytesIO(rebuilt_bytes), 0,
+                                   len(rebuilt_bytes))[2][0]
+            inner_base = outer['offset']
+            inner = assets.archive(io.BytesIO(rebuilt_bytes), inner_base,
+                                   outer['size'])[2][0]
+            start = inner_base + inner['offset']
+            rebuilt = rebuilt_bytes[start:start + inner['size']]
+            self.assertEqual(rebuilt, staged)
+            self.assertNotEqual(rebuilt, texture)
+
 
 if __name__ == '__main__':
     unittest.main()

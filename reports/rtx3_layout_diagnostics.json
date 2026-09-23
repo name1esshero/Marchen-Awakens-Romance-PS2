@@ -13,6 +13,47 @@
     "alpha": "PS2 GS alpha values in the 0..128 range are expanded to TGA 0..255 by multiplying by two and clamping. The stored-order diagnostic intentionally leaves alpha unexpanded.",
     "owner_reference": "The owner selected the mapped-linear title preview, showing Japanese logo artwork in gray and color variants stacked vertically, matching the supplied inspected image."
   },
+  "standalone_sample_review": {
+    "method": "Viewed PNG conversions of five new standalone-TXC TGA exports; PNGs were temporary inspection files and did not modify the indexed TGA baselines.",
+    "observation": "The selected character, environment, sky, thunder-effect, and font-atlas images appear coherent without the earlier tile/stripe artifacts. This is visual evidence for these samples only; it does not establish UV composition or runtime rendering.",
+    "samples": [
+      {
+        "logical_path": "disc!/_DATA.YFS;1!/data/loading/char_15_tex.pac!/15_edo.txc",
+        "source_sha256": "4dae63e9add42986a2dae69392b13167247df1fdcaf1a5a9d3fd4a8f221c430c",
+        "psm": "psmt8",
+        "dimensions": [256, 256],
+        "image": "graphics/characters/00039_00881_00000_15_edo_jp.tga"
+      },
+      {
+        "logical_path": "disc!/_DATA.YFS;1!/data/loading/stage_06_tex.pac!/field_06.txc",
+        "source_sha256": "18e3dba1916a7f5426a11ee8b8a59cd1942594f143600e5e7b6b6acc00699a5a",
+        "psm": "psmt8",
+        "dimensions": [512, 256],
+        "image": "graphics/environments/00039_00898_00000_field_06_jp.tga"
+      },
+      {
+        "logical_path": "disc!/_DATA.YFS;1!/data/bg/th.pac!/tex.pac!/sky.txc",
+        "source_sha256": "4eb10ed38840f454a1f3bdf9b007357e2b2cd0b341ff14b9af9f888e7fbcbc09",
+        "psm": "psmt8",
+        "dimensions": [256, 256],
+        "image": "graphics/backgrounds/00039_00127_00015_00011_sky_jp.tga"
+      },
+      {
+        "logical_path": "disc!/_DATA.YFS;1!/data/bg/th.pac!/tex.pac!/thunder.txc",
+        "source_sha256": "ee31329a06ab4fb53f5efd95b48a748b3d78dbc126c028c3699b862637b5510a",
+        "psm": "psmt4",
+        "dimensions": [128, 256],
+        "image": "graphics/effects/00039_00127_00015_00013_thunder_jp.tga"
+      },
+      {
+        "logical_path": "disc!/_DATA.YFS;1!/data/gef/font.txc",
+        "source_sha256": "8d155d8a86ed4fdf2c1c7be845700ffbd83be5fc81e0cbe1704154c6f5239825",
+        "psm": "psmt4",
+        "dimensions": [128, 128],
+        "image": "graphics/text/00039_00857_font_jp.tga"
+      }
+    ]
+  },
   "alpha_observation_title_marh_jp": {
     "image": "graphics/title/00039_01566_0002_title_marh_jp.tga",
     "source_sha256": "b67db2f3a834c05de583c3dbd360da3208384c4234072f0ed66b58711dcfc375",
@@ -23,7 +64,7 @@
   },
   "limitations": [
     "Owner visual selection identifies the preferred candidate for the sampled menu textures but does not prove runtime sampling or final AT/UV composition.",
-    "Only 1,457 TXCs are currently exported into the editable graphics workspace; the remaining corpus is not covered.",
+    "The visual comparison covers 20 menu TXCs only. The graphics workspace now exports 28,970 TGA images across the catalogued corpus, but this comparison does not validate their full-corpus layout or runtime composition.",
     "No emulator/runtime capture has been used to validate this texture decode."
   ],
   "samples": [

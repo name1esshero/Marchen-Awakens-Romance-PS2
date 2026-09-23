@@ -356,7 +356,8 @@ def encode_linear_mapped_tga(original, tga):
     return _encode_indexed_tga(original, tga, map_clut=True)
 
 
-def read_tga(raw):
+def tga_dimensions(raw):
+    """Validate an uncompressed true-color TGA extent without decoding pixels."""
     if len(raw) < 18:
         raise ValueError('truncated TGA header')
     id_length, color_map_type, image_type = raw[:3]
@@ -369,6 +370,15 @@ def read_tga(raw):
     start = 18 + id_length
     if len(raw) != start + width * height * channels:
         raise ValueError('TGA pixel extent does not match dimensions')
+    return width, height
+
+
+def read_tga(raw):
+    width, height = tga_dimensions(raw)
+    id_length = raw[0]
+    channels = raw[16] // 8
+    descriptor = raw[17]
+    start = 18 + id_length
     rgba = bytearray(width * height * 4)
     for file_y in range(height):
         y = file_y if descriptor & 0x20 else height - 1 - file_y

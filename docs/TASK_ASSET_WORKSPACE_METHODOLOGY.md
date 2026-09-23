@@ -26,8 +26,9 @@ The prepared-workspace comparison evidence is recorded in
 `reports/assets-roundtrip-prepared.json`.
 
 This is lossless container extraction/reinsertion, not semantic editing for every
-format. YPC models, texture encodings, audio, font bitmaps, script bytecode and
-other unknown leaves remain raw. `--relocate` appends a grown member and updates
+format. Evidence-supported PSMT4/PSMT8 TXCs now have indexed TGA companions;
+high-bit/short TXCs, YPC models, audio, script bytecode and other unknown leaves
+remain raw. `--relocate` appends a grown member and updates
 its observed parent-table offset/size fields, recursively; for ISO files it also
 updates the directory record and volume length. Whether the game accepts these
 relocations, enlarged archives, changed model geometry, or changed text layout is
@@ -114,19 +115,28 @@ sampled indexed resources; it does not establish AT animation, UVs, or runtime
 appearance. Sample paths and source hashes are in
 `reports/rtx3_layout_diagnostics.json`.
 
-The prepared workspace currently exposes 1,457 TXC members from parsed menu
-resource bundles (1,226 PSMT8 and 231 PSMT4); this is only a subset of the
-30,397 TXC records in the full-disc census. Generate editable local images and
-their source-hash index with `make graphics-export`. Images live directly inside
-flat, human-readable category folders such as `graphics/title/`,
+The full prepared asset catalog plus parsed menu resource bundles contains
+30,397 TXC records: 28,940 standalone archive leaves and 1,457 nested menu
+bundle members. `make graphics-export` indexes every record and writes editable
+images for 28,970 PSMT4/PSMT8 textures (27,316 PSMT4 and 1,654 PSMT8). A full
+source-hash and TGA-dimension audit passed with no Japanese baseline edits and
+no English variants present at audit time. The remaining 1,427 records stay in
+the index without guessed images: 1,384 high-bit PSMs (677 PSMT8H, 690
+PSMT4HL, 17 PSMT4HH) and 43 PSMCT32 files whose declared pixel extents exceed
+their file bodies by eight bytes. See `reports/rtx3_format_survey.json`.
+
+Images live directly inside flat, human-readable category folders such as
+`graphics/title/`,
 `graphics/icon/`, `graphics/user_interface/`, `graphics/effects/`,
 `graphics/characters/`, `graphics/cards/`, and `graphics/backgrounds/`; there
 are no PSM or source-container subfolders inside these art folders. Filenames
-include source asset, bundle and member IDs to prevent collisions. The adjacent
-`graphics/index.json` maps each image to its exact TXC source and original menu
-bundle path. Category labels are based on resource/bundle names; generic menu
-assets fall into `user_interface` rather than receiving a guessed subtype.
-`make graphics-audit` checks source hashes, TGA dimensions, and local edits.
+include stable archive IDs and resource names to prevent collisions. The
+adjacent `graphics/index.json` maps each image to its exact TXC source and
+original logical path, whether the TXC came from a menu bundle or a standalone
+archive leaf. Category labels use path/resource evidence; generic assets fall
+into `user_interface` rather than receiving a guessed subtype.
+`make graphics-audit` checks source hashes, TGA dimensions, and local edits
+across the entire indexed corpus.
 
 Every exported baseline ends in `_jp.tga`, represents the recovered game artwork,
 and must never be edited for localization. Keep it as the comparison and recovery
@@ -141,10 +151,12 @@ selects a user-authored variant; the tool does not translate or generate its
 contents. Preserve canvas dimensions and use only
 colors in the original palette. `make graphics-stage` writes changed TXCs under
 `build/graphics-overrides/`, outside both `graphics/` and the extracted source
-sidecars. The normal mod-disc build consumes those overrides and reinserts
-changes through the validated UI table, BPE and archive relocation path. It
-builds `mar_eng.iso` in the workspace root. The synthetic nested-growth
-regression exercises this path; in-game display is not yet validated.
+sidecars. Nested menu TXCs reinsert through the UI table/BPE path; standalone
+TXCs are applied only when a generated manifest matches both their original and
+replacement hashes, then reinsert through the containing archive. Synthetic
+regressions cover both paths, and the unchanged source sidecars remain intact.
+The normal mod-disc build consumes those overrides and builds `mar_eng.iso` in
+the workspace root. In-game display is not yet validated.
 
 The synthetic regressions exercise UTF-8 editing, CP932 encoding, ISO directory
 extent growth, and volume-length update, plus structured message editing with

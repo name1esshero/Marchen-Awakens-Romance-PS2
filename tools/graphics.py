@@ -18,9 +18,10 @@ SUPPORTED = {
     rtx3.PSMCT32: 'psmct32',
 }
 INDEX_NAME = 'index.json'
-INDEX_VERSION = 2
+INDEX_VERSION = 3
 OVERRIDES_MARKER = '.generated-by-marps2-graphics'
 OVERRIDES_MARKER_TEXT = 'Generated RTX3 overrides; safe to replace.\n'
+STANDALONE_MANIFEST = 'standalone-txc-overrides.json'
 
 
 def _sha256(data):
@@ -48,6 +49,41 @@ def _name_from_entry(entry):
     return raw.decode('ascii', errors='replace')
 
 
+def _source_path(workspace, row):
+    if row.get('source_kind') == 'standalone':
+        return workspace / _safe_relative(row['source_path'])
+    return workspace / _safe_relative(row['bundle_dir']) / _safe_relative(row['source'])
+
+
+def _image_name_for_standalone(row, category):
+    source = _safe_relative(row['source_path'])
+    # Extracted archive IDs make repeated TXC names unambiguous while keeping
+    # the original resource name visible to artists browsing a flat folder.
+    ids = [part.removesuffix('.asset') for part in source.parts[:-1]]
+    ids.append(source.stem)
+    stable_id = '_'.join(ids)
+    raw_name = row['key'].rsplit('!/', 1)[-1].rsplit('/', 1)[-1]
+    stem = Path(raw_name).stem
+    safe_stem = re.sub(r'[^A-Za-z0-9_.-]+', '_', stem).strip('._') or 'texture'
+    return (Path(category) / f'{stable_id}_{safe_stem}_jp.tga').as_posix()
+
+
+def _raw_psm(raw):
+    if len(raw) < 16 or raw[:4] != rtx3.MAGIC:
+        return None
+    return (int.from_bytes(raw[8:16], 'little') >> 20) & 0x3F
+
+
+def _image_support(info):
+    if info['psm'] in (rtx3.PSMT4, rtx3.PSMT8):
+        return None
+    if info['psm'] == rtx3.PSMCT32:
+        if info['width'] % 64 or info['height'] % 32:
+            return 'PSMCT32 dimensions do not meet the evidenced page geometry'
+        return None
+    return 'pixel storage mode has no evidence-backed editable TGA conversion'
+
+
 def _asset_paths(workspace):
     catalog_path = Path(workspace) / 'catalog.json'
     if not catalog_path.exists():
@@ -69,8 +105,9 @@ def _category(name, asset_path):
         return 'cards'
     if any(token.startswith(('arm', 'weapon')) for token in tokens):
         return 'weapons'
-    if tokens & {'char', 'chara', 'character', 'characters', 'chr', 'mych',
-                  'face', 'faces', 'chsface', 'voice', 'voi'}:
+    if (tokens & {'char', 'chara', 'character', 'characters', 'chr', 'mych',
+                  'face', 'faces', 'chsface', 'voice', 'voi', 'acter'} or
+            any(token.startswith(('char2d', 'chara', 'character')) for token in tokens)):
         return 'characters'
     if tokens & {'eff', 'effect', 'effects', 'flare', 'flash', 'thunder',
                   'rainbow', 'flame', 'flear'} or any(
@@ -118,8 +155,8 @@ def _discover(workspace):
                 asset_path = asset_paths.get(bundle_rel.as_posix(), '')
                 category = _category(_name_from_entry(entry), asset_path)
                 image_rel = None
-                reason = None
-                if psm in SUPPORTED:
+                reason = _image_support(info)
+                if reason is None:
                     asset_id = bundle_rel.parent.name.removesuffix('.asset')
                     bundle_id = bundle_rel.name.removesuffix('.resources')
                     source_stem = member_name.name.removesuffix('.txc.bin')
@@ -152,6 +189,54 @@ def _discover(workspace):
                 height=info['height'] if info else None,
                 image=image_rel.as_posix() if image_rel else None,
                 unsupported_reason=reason,
+                source_kind='bundle',
+            ))
+
+    catalog_path = workspace / 'catalog.json'
+    if catalog_path.exists():
+        catalog = json.loads(catalog_path.read_text(encoding='utf-8'))
+        for catalog_row in catalog:
+            logical_path = catalog_row.get('name', '')
+            if (not logical_path.lower().endswith('.txc') or
+                    catalog_row.get('ui_bundle_dir')):
+                continue
+            source_rel = _safe_relative(catalog_row['source'])
+            source_path = workspace / source_rel
+            raw = source_path.read_bytes()
+            source_hash = _sha256(raw)
+            name = logical_path.rsplit('!/', 1)[-1].rsplit('/', 1)[-1]
+            asset_path = logical_path.rsplit('!/', 1)[0] if '!/' in logical_path else ''
+            category = _category(Path(name).stem, asset_path)
+            info = None
+            psm = _raw_psm(raw)
+            psm_name = f'psm{psm}' if psm is not None else 'unresolved'
+            image_rel = None
+            reason = None
+            try:
+                info = rtx3.parse(raw)
+                psm = info['psm']
+                psm_name = SUPPORTED.get(psm, f'psm{psm}')
+                reason = _image_support(info)
+                if reason is None:
+                    image_rel = _image_name_for_standalone(
+                        dict(source_path=source_rel.as_posix(), key=logical_path), category)
+            except ValueError as exc:
+                reason = str(exc)
+            found.append(dict(
+                key=f'standalone:/{source_rel.as_posix()}',
+                logical_path=logical_path,
+                source_path=source_rel.as_posix(),
+                source_sha256=source_hash,
+                source_kind='standalone',
+                name=Path(name).stem,
+                asset_path=asset_path,
+                category=category,
+                psm=psm,
+                psm_name=psm_name,
+                width=info['width'] if info else None,
+                height=info['height'] if info else None,
+                image=image_rel,
+                unsupported_reason=reason,
             ))
     return found
 
@@ -165,7 +250,7 @@ def export(workspace, graphics_root):
     previous = None
     if index_path.exists():
         previous = json.loads(index_path.read_text(encoding='utf-8'))
-        if previous.get('version') != INDEX_VERSION:
+        if previous.get('version') not in (2, INDEX_VERSION):
             raise ValueError('unsupported graphics index version')
     old_by_key = {row['key']: row for row in previous.get('entries', [])} if previous else {}
 
@@ -178,9 +263,27 @@ def export(workspace, graphics_root):
     for row in discovered:
         old = old_by_key.get(row['key'])
         if old:
-            for field in ('source_sha256', 'image', 'psm', 'width', 'height'):
+            for field in ('source_sha256', 'psm', 'width', 'height'):
                 if old.get(field) != row.get(field):
                     raise ValueError(f'graphics source changed since export: {row["key"]} ({field})')
+            if old.get('image') != row.get('image') and old.get('image'):
+                old_image = graphics_root / _safe_relative(old['image'])
+                new_image = (graphics_root / _safe_relative(row['image'])
+                             if row.get('image') else None)
+                if (new_image is None or not old_image.is_file() or
+                        _sha256(old_image.read_bytes()) != old.get('image_sha256')):
+                    raise ValueError(f'cannot safely move edited or missing graphics baseline: {row["key"]}')
+                if new_image.exists():
+                    raise ValueError(f'graphics category migration would overwrite: {row["image"]}')
+                old_english = english_variant_path(old_image)
+                new_english = english_variant_path(new_image)
+                move_english = old_english.exists()
+                if move_english and new_english.exists():
+                    raise ValueError(f'graphics category migration would overwrite: {new_english}')
+                new_image.parent.mkdir(parents=True, exist_ok=True)
+                old_image.replace(new_image)
+                if move_english:
+                    old_english.replace(new_english)
         if row['image']:
             image_path = graphics_root / _safe_relative(row['image'])
             if image_path.exists():
@@ -188,8 +291,7 @@ def export(workspace, graphics_root):
                     raise ValueError(f'image exists without a graphics index record: {row["image"]}')
                 row['image_sha256'] = old['image_sha256']
             else:
-                source_path = workspace / _safe_relative(row['bundle_dir']) / \
-                    _safe_relative(row['source'])
+                source_path = _source_path(workspace, row)
                 decode = rtx3.decode_rgba(source_path.read_bytes())
                 image_path.parent.mkdir(parents=True, exist_ok=True)
                 image_path.write_bytes(rtx3.write_tga(*decode))
@@ -249,12 +351,12 @@ def build(workspace, graphics_root, overrides_dir=None):
     changed = []
     unresolved = []
     english_overrides = []
+    standalone_overrides = []
     for row in document['entries']:
         if not row.get('image'):
             unresolved.append(row['key'])
             continue
-        bundle_dir = workspace / _safe_relative(row['bundle_dir'])
-        source_path = bundle_dir / _safe_relative(row['source'])
+        source_path = _source_path(workspace, row)
         original = source_path.read_bytes()
         if _sha256(original) != row['source_sha256']:
             raise ValueError(f'TXC source changed since graphics export: {row["key"]}')
@@ -272,13 +374,29 @@ def build(workspace, graphics_root, overrides_dir=None):
             raise ValueError(f'RTX3 image edit changed texture size: {row["key"]}')
         if rebuilt == original:
             continue
-        output = overrides / _safe_relative(row['bundle_dir']) / _safe_relative(row['source'])
+        if row.get('source_kind') == 'standalone':
+            target = _safe_relative(row['source_path']).as_posix()
+            output = overrides / 'standalone' / _safe_relative(target)
+        else:
+            target = None
+            output = (overrides / _safe_relative(row['bundle_dir']) /
+                      _safe_relative(row['source']))
         output.parent.mkdir(parents=True, exist_ok=True)
         output.write_bytes(rebuilt)
-        changed.append(dict(key=row['key'], language='eng' if is_english else 'base',
-                            image=selected_path.relative_to(graphics_root).as_posix(),
-                            source_sha256=row['source_sha256'],
-                            override_sha256=_sha256(rebuilt), bytes=len(rebuilt)))
+        record = dict(key=row['key'], language='eng' if is_english else 'base',
+                      image=selected_path.relative_to(graphics_root).as_posix(),
+                      source_sha256=row['source_sha256'],
+                      override_sha256=_sha256(rebuilt), bytes=len(rebuilt))
+        changed.append(record)
+        if target is not None:
+            standalone_overrides.append(dict(
+                target=target, source_sha256=row['source_sha256'],
+                override_sha256=record['override_sha256'], bytes=len(rebuilt),
+                key=row['key']))
+
+    (overrides / STANDALONE_MANIFEST).write_text(
+        json.dumps(dict(version=1, entries=standalone_overrides), indent=2) + '\n',
+        encoding='utf-8')
 
     report = dict(version=INDEX_VERSION, updated=date.today().isoformat(),
                   source_index_sha256=_sha256(
@@ -307,18 +425,19 @@ def audit(workspace, graphics_root):
             counts[f'unresolved:{row["psm_name"]}'] += 1
             continue
         counts[row['psm_name']] += 1
-        source = workspace / _safe_relative(row['bundle_dir']) / _safe_relative(row['source'])
+        source = _source_path(workspace, row)
         if _sha256(source.read_bytes()) != row['source_sha256']:
             raise ValueError(f'TXC source hash mismatch: {row["key"]}')
         image = graphics_root / _safe_relative(row['image'])
-        width, height, _ = rtx3.read_tga(image.read_bytes())
+        image_raw = image.read_bytes()
+        width, height = rtx3.tga_dimensions(image_raw)
         if (width, height) != (row['width'], row['height']):
             raise ValueError(f'edited image dimensions changed: {row["image"]}')
-        if _sha256(image.read_bytes()) != row['image_sha256']:
+        if _sha256(image_raw) != row['image_sha256']:
             edited.append(row['key'])
         english = english_variant_path(image)
         if english.exists():
-            width, height, _ = rtx3.read_tga(english.read_bytes())
+            width, height = rtx3.tga_dimensions(english.read_bytes())
             if (width, height) != (row['width'], row['height']):
                 raise ValueError(f'English TGA dimensions changed: {english}')
             english_overrides.append(row['key'])
