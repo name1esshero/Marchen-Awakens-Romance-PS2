@@ -181,3 +181,20 @@ sections / 232 bytes across four partial classes. The explicit bootstrap export
 splits the affected raw interval around every selected section; 3,444,972 bytes
 remain raw. `make test verify-boot verify-source-only verify-ee` passes, with
 full byte comparison for both assembled and EE-probe boot ELFs.
+
+## CRender2 accessor batch — 2026-09-22
+
+Fourteen further 8-byte sections establish direct field operations for a new
+partial `CRender2` class: six address returns (`0x30`, `0x360`, `0x3e0`,
+`0x420`, `0x460`, `0x548`), six integer loads (`0x4c4`, `0x534`, `0x578`,
+`0x610`, `0x740`, with the near-clip field read by two names), and two integer
+stores (`0x600`, `0x610`). The method count includes the paired get/set methods
+and two names reading `0x534`.
+
+The natural EE probe uses one word at each address-return target only to model
+the observed address calculation; it does not establish the pointed-to object
+types, full member sizes, inheritance, or class extent. The same unmodified EE
+GCC `2.96-ee-001003-1` `-O2` invocation matches all fourteen sections. The
+assembly and probe reconstruction now cover 43 sections / 344 bytes across five
+partial classes, leaving 3,444,860 explicitly raw bytes. `make test
+verify-boot verify-source-only verify-ee` passes.

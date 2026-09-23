@@ -90,3 +90,45 @@ addiu $2, $4, 0x4a0
 .section .gnu.linkonce.t.GetFreeList__7CRender,"ax",@progbits
 jr $31
 lw $2, 0x554($4)
+.section .gnu.linkonce.t.ClearFrameBuffer__8CRender2i,"ax",@progbits
+jr $31
+sw $5, 0x600($4)
+.section .gnu.linkonce.t.GetBgCol__8CRender2,"ax",@progbits
+jr $31
+addiu $2, $4, 0x548
+.section .gnu.linkonce.t.GetWipeCnt__8CRender2,"ax",@progbits
+jr $31
+lw $2, 0x610($4)
+.section .gnu.linkonce.t.SetWipeCnt__8CRender2i,"ax",@progbits
+jr $31
+sw $5, 0x610($4)
+.section .gnu.linkonce.t.GetFlickerFree__C8CRender2,"ax",@progbits
+jr $31
+lw $2, 0x578($4)
+.section .gnu.linkonce.t.GetPacketCount__8CRender2,"ax",@progbits
+jr $31
+lw $2, 0x4c4($4)
+.section .gnu.linkonce.t.GetDBuffDc__8CRender2,"ax",@progbits
+jr $31
+addiu $2, $4, 0x30
+.section .gnu.linkonce.t.GetLightTmp__8CRender2,"ax",@progbits
+jr $31
+addiu $2, $4, 0x460
+.section .gnu.linkonce.t.GetLightMat__8CRender2,"ax",@progbits
+jr $31
+addiu $2, $4, 0x3e0
+.section .gnu.linkonce.t.GetLightCol__8CRender2,"ax",@progbits
+jr $31
+addiu $2, $4, 0x420
+.section .gnu.linkonce.t.GetProjectionMatrix__8CRender2,"ax",@progbits
+jr $31
+addiu $2, $4, 0x360
+.section .gnu.linkonce.t.GetNearClipMode__8CRender2,"ax",@progbits
+jr $31
+lw $2, 0x534($4)
+.section .gnu.linkonce.t.GetRegState__8CRender2,"ax",@progbits
+jr $31
+lw $2, 0x740($4)
+.section .gnu.linkonce.t.IsNearClipMode__8CRender2,"ax",@progbits
+jr $31
+lw $2, 0x534($4)

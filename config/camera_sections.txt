@@ -27,3 +27,17 @@
 .gnu.linkonce.t.GetCamera__7CRender
 .gnu.linkonce.t.GetPRMODE__7CRender
 .gnu.linkonce.t.GetFreeList__7CRender
+.gnu.linkonce.t.ClearFrameBuffer__8CRender2i
+.gnu.linkonce.t.GetBgCol__8CRender2
+.gnu.linkonce.t.GetWipeCnt__8CRender2
+.gnu.linkonce.t.SetWipeCnt__8CRender2i
+.gnu.linkonce.t.GetFlickerFree__C8CRender2
+.gnu.linkonce.t.GetPacketCount__8CRender2
+.gnu.linkonce.t.GetDBuffDc__8CRender2
+.gnu.linkonce.t.GetLightTmp__8CRender2
+.gnu.linkonce.t.GetLightMat__8CRender2
+.gnu.linkonce.t.GetLightCol__8CRender2
+.gnu.linkonce.t.GetProjectionMatrix__8CRender2
+.gnu.linkonce.t.GetNearClipMode__8CRender2
+.gnu.linkonce.t.GetRegState__8CRender2
+.gnu.linkonce.t.IsNearClipMode__8CRender2

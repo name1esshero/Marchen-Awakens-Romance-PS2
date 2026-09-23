@@ -179,9 +179,117 @@
     },
     {
       "offset": 2343512,
-      "size": 640,
+      "size": 160,
       "kind": "unrecovered_hex",
       "source": "unrecovered_0023c258.hex"
+    },
+    {
+      "offset": 2343672,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.ClearFrameBuffer__8CRender2i"
+    },
+    {
+      "offset": 2343680,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetBgCol__8CRender2"
+    },
+    {
+      "offset": 2343688,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetWipeCnt__8CRender2"
+    },
+    {
+      "offset": 2343696,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetWipeCnt__8CRender2i"
+    },
+    {
+      "offset": 2343704,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetFlickerFree__C8CRender2"
+    },
+    {
+      "offset": 2343712,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetPacketCount__8CRender2"
+    },
+    {
+      "offset": 2343720,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetDBuffDc__8CRender2"
+    },
+    {
+      "offset": 2343728,
+      "size": 196,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023c330.hex"
+    },
+    {
+      "offset": 2343924,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetLightTmp__8CRender2"
+    },
+    {
+      "offset": 2343932,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetLightMat__8CRender2"
+    },
+    {
+      "offset": 2343940,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetLightCol__8CRender2"
+    },
+    {
+      "offset": 2343948,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetProjectionMatrix__8CRender2"
+    },
+    {
+      "offset": 2343956,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetNearClipMode__8CRender2"
+    },
+    {
+      "offset": 2343964,
+      "size": 72,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023c41c.hex"
+    },
+    {
+      "offset": 2344036,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetRegState__8CRender2"
+    },
+    {
+      "offset": 2344044,
+      "size": 12,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023c46c.hex"
+    },
+    {
+      "offset": 2344056,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.IsNearClipMode__8CRender2"
+    },
+    {
+      "offset": 2344064,
+      "size": 88,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023c480.hex"
     },
     {
       "offset": 2344152,

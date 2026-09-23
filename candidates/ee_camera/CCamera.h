@@ -99,4 +99,47 @@ public:
     int GetTgtChr() { return tgtChr; }
 };
 
+class CRender2 {
+public:
+    unsigned char unknown000[0x30];
+    unsigned int dBuffDc;
+    unsigned char unknown034[0x360 - 0x34];
+    unsigned int projectionMatrix;
+    unsigned char unknown364[0x3e0 - 0x364];
+    unsigned int lightMat;
+    unsigned char unknown3e4[0x420 - 0x3e4];
+    unsigned int lightCol;
+    unsigned char unknown424[0x460 - 0x424];
+    unsigned int lightTmp;
+    unsigned char unknown464[0x4c4 - 0x464];
+    int packetCount;
+    unsigned char unknown4c8[0x534 - 0x4c8];
+    int nearClipMode;
+    unsigned char unknown538[0x548 - 0x538];
+    unsigned int bgCol;
+    unsigned char unknown54c[0x578 - 0x54c];
+    int flickerFree;
+    unsigned char unknown57c[0x600 - 0x57c];
+    int clearFrameBuffer;
+    unsigned char unknown604[0x610 - 0x604];
+    int wipeCnt;
+    unsigned char unknown614[0x740 - 0x614];
+    int regState;
+
+    void *GetDBuffDc() { return &dBuffDc; }
+    void *GetProjectionMatrix() { return &projectionMatrix; }
+    void *GetLightMat() { return &lightMat; }
+    void *GetLightCol() { return &lightCol; }
+    void *GetLightTmp() { return &lightTmp; }
+    int GetPacketCount() { return packetCount; }
+    int GetNearClipMode() { return nearClipMode; }
+    int IsNearClipMode() { return nearClipMode; }
+    void *GetBgCol() { return &bgCol; }
+    int GetFlickerFree() const { return flickerFree; }
+    void ClearFrameBuffer(int value) { clearFrameBuffer = value; }
+    int GetWipeCnt() { return wipeCnt; }
+    void SetWipeCnt(int value) { wipeCnt = value; }
+    int GetRegState() { return regState; }
+};
+
 #endif
