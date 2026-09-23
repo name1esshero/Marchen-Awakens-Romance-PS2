@@ -3,6 +3,25 @@
 Authority: [STANDARDS.md](STANDARDS.md). Updated: 2026-09-23.
 Manager maintains this page and [status](STATUS.md) at each verified milestone.
 
+## Delegation-ready reserve
+
+Keep at least two `READY` cards here, separate from broad workstreams and
+currently active assignments, so both authorized worker slots can begin
+bounded, independent work. Each card defines its scope, exclusions, evidence
+inputs, output, and completion gate. The coordinator marks cards `IN PROGRESS`
+when assigned and replenishes the reserve from documented unresolved work as
+cards are taken or completed. Workers update their own task evidence in their
+isolated branches; the coordinator maintains this shared queue and status.
+
+| ID / state | Bounded task and exclusions | Evidence inputs | Deliverable and completion gate |
+| --- | --- | --- | --- |
+| DQ-01 / READY | Determine what can and cannot be concluded about the repeated eight-byte shortfall in the 43 PSMCT32 RTX3 records. Read-only analysis: do not change the RTX3 parser, emit replacement TGAs, pad/trim data, or modify Japanese baselines. | `graphics/index.json`, `reports/rtx3_format_survey.json`, the 43 source records in the pinned image, and the existing failure note in `docs/FAILURES.md`. | `tasks/RTX3_PSMCT32_VARIANT.md`; record representative/all-record measurements, independent corroborating or falsifying evidence, tested format interpretations, and unresolved limits. Gate: every proposed interpretation is tied to byte-level evidence; if unresolved, preserve all records as raw and state what evidence is needed next. |
+| DQ-02 / READY | Test for evidence explaining the 16-byte suffix in each AFS filename-TOC row across both observed archives. Read-only analysis: do not change `tools/afs.py`, rewrite archives, or assign semantic field names without corroboration. | `reports/afs_inventory.json`, `MOVIE.AFS;1` and `BGM.AFS;1` extents from the pinned image, and [`AFS_INTERNALS.md`](../tasks/AFS_INTERNALS.md). | `tasks/AFS_TOC_SUFFIX.md`; compare all 38 suffixes with names, row indices, member signatures, and other recorded fields; report correlations, negative results, hashes, and limits. Gate: conclusions distinguish measured correlations from hypotheses and leave unsupported bytes uninterpreted. |
+
+Active title-text localization assignments (`ttlprts` and repeated `title000`)
+are tracked in [status](STATUS.md) and the graphics localization task; they do
+not consume these two ready investigation cards.
+
 | Priority | Task | State / next evidence | Completion gate |
 | --- | --- | --- | --- |
 | P0 | Full boot ELF reconstruction | Bootstrap baseline implemented; 1,912 object bytes plus 3,443,292 raw bytes | Full `cmp`, isolated source-only rebuild, regression tests |

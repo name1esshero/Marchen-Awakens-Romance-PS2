@@ -302,6 +302,26 @@ declared work or existing uncommitted changes. Once the scope is demonstrably
 disjoint, it may proceed without waiting for another approval when autonomous
 work has been authorized.
 
+### Rolling queue for delegated work
+
+Keep a rolling pool of at least two `READY` bounded tasks in
+`docs/WORK_QUEUE.md`, in addition to tasks already marked `IN PROGRESS`, so
+both authorized worker slots can take independent work without first waiting
+for task decomposition. A ready card names its exact files or evidence scope,
+what it must not touch, relevant prior findings, expected task-note/report or
+code output, and an objective completion gate. Broad project workstreams do
+not count as ready cards until they are split into such assignable slices.
+
+When a worker finishes, the coordinator integrates or records its commit,
+updates the queue state, checks active scopes again, and assigns that worker a
+different `READY` task while delegated work remains authorized and a disjoint
+task is available. Replenish the ready pool as cards are assigned or completed;
+derive new cards from documented unresolved evidence instead of inventing
+work to satisfy the count. If fewer than two genuinely independent tasks
+exist, document the dependency or conflict and prepare the next evidence-backed
+slice before opening another worker slot. Do not assign overlapping work just
+to keep a worker busy.
+
 Before editing, each simultaneous worker must create its own Git worktree and
 branch. It owns its implementation, task evidence, applicable verification,
 scoped staging, and commit with all required `STANDARDS.md` §17 trailers. It
