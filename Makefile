@@ -49,7 +49,7 @@ build-disc:
 	python3 tools/assets.py build extracted/assets build/assets-rebuilt.iso
 
 build-mod-disc:
-	python3 tools/assets.py build extracted/assets $(ENGLISH_DISC) --relocate --translations localization/messages.json --text-translations localization/card_list.json --text-translations localization/database.json
+	python3 tools/assets.py build extracted/assets $(ENGLISH_DISC) --relocate --translations localization/messages.json --text-translations localization/card_list.json --text-translations localization/database.json --graphics-overrides $(GRAPHICS_OVERRIDES_DIR)
 
 compare-disc:
 	python3 tools/compare_disc.py build/assets-rebuilt.iso
@@ -70,3 +70,5 @@ verify-ee: build/SLPM_661.56.ee-probe
 	python3 tools/compare_sections.py 'extracted/SLPM_661.56;1' build/ee_camera.o config/camera_sections.txt
 	cmp 'extracted/SLPM_661.56;1' build/SLPM_661.56.ee-probe
 	@echo 'PASS: EE GCC candidate sections and full probe ELF match; class/source authenticity remains open'
+
+include graphics_rules.mk

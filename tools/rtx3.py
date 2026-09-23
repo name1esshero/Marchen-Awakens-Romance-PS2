@@ -199,7 +199,13 @@ def _clut_index(index, psm):
     return index
 
 
-def decode_rgba(raw):
+def _expand_gs_alpha(color):
+    """Expand the GS 0..128 alpha range to an 8-bit raster alpha channel."""
+    return color[:3] + (min(255, color[3] * 2),)
+
+
+def decode_legacy_rgba(raw):
+    """Decode with the earlier GS swizzle/CLUT mapping hypothesis."""
     info = parse(raw)
     width, height, psm = info['width'], info['height'], info['psm']
     if psm in (PSMT8H, PSMT4HL, PSMT4HH):
@@ -215,7 +221,7 @@ def decode_rgba(raw):
     for i in range(len(palette)):
         j = _clut_index(i, psm)
         r, g, b, a = palette_raw[i * 4:i * 4 + 4]
-        palette[j] = (r, g, b, min(255, a * 2))
+        palette[j] = _expand_gs_alpha((r, g, b, a))
     if psm in (PSMT8, PSMT8H):
         indices = _unswizzle8(pixels_raw, width, height)
     else:
@@ -232,10 +238,11 @@ def decode_rgba(raw):
 
 
 def decode_stored_order_rgba(raw):
-    """Preview RTX3 payload bytes in linear order with the stored palette order.
+    """Decode indexed pixels linearly with the palette entries as stored.
 
-    This is a diagnostic view, not a claim about the game's spatial layout.
-    It deliberately skips PSM swizzling and the GS CLUT index permutation.
+    This diagnostic deliberately skips PSM swizzling, the GS CLUT index
+    permutation, and alpha expansion. The default PSMT8 path applies the
+    CLUT permutation and expands GS alpha while leaving pixels in stored order.
     """
     info = parse(raw)
     width, height, psm = info['width'], info['height'], info['psm']
@@ -255,6 +262,98 @@ def decode_stored_order_rgba(raw):
         color = palette[index]
         out[i * 4:i * 4 + 4] = color
     return width, height, bytes(out)
+
+
+def decode_linear_mapped_rgba(raw):
+    """Decode indexed pixels linearly and apply the observed CLUT permutation."""
+    info = parse(raw)
+    width, height, psm = info['width'], info['height'], info['psm']
+    if psm not in (PSMT4, PSMT8):
+        raise ValueError(f'RTX3 PSM {psm} has no supported linear indexed decode')
+    pixels = raw[info['pixels_offset']:info['pixels_offset'] + info['pixel_size']]
+    palette_raw = raw[info['palette_offset']:info['palette_offset'] + info['palette_size']]
+    palette = [None] * (info['palette_size'] // 4)
+    for i in range(len(palette)):
+        color = tuple(palette_raw[i * 4:i * 4 + 4])
+        palette[_clut_index(i, psm)] = _expand_gs_alpha(color)
+    out = bytearray(width * height * 4)
+    for i in range(width * height):
+        index = (pixels[i] if psm == PSMT8 else
+                 (pixels[i >> 1] >> (4 if i & 1 else 0)) & 0xF)
+        out[i * 4:i * 4 + 4] = bytes(palette[index])
+    return width, height, bytes(out)
+
+
+def decode_rgba(raw):
+    """Decode supported modes using the current best-supported layout."""
+    info = parse(raw)
+    if info['psm'] in (PSMT4, PSMT8):
+        return decode_linear_mapped_rgba(raw)
+    return decode_legacy_rgba(raw)
+
+
+def _encode_indexed_tga(original, tga, map_clut):
+    info = parse(original)
+    width, height, rgba = read_tga(tga)
+    if (width, height) != (info['width'], info['height']):
+        raise ValueError('replacement TGA dimensions must match RTX3')
+    if info['psm'] not in (PSMT4, PSMT8):
+        raise ValueError('stored-order import supports indexed PSMT4/PSMT8 only')
+    decoder = decode_linear_mapped_rgba if map_clut else decode_stored_order_rgba
+    old_width, old_height, old_rgba = decoder(original)
+    if (width, height, rgba) == (old_width, old_height, old_rgba):
+        return original
+
+    palette_raw = original[info['palette_offset']:info['palette_offset'] + info['palette_size']]
+    stored_palette = [tuple(palette_raw[i:i + 4])
+                      for i in range(0, len(palette_raw), 4)]
+    if map_clut:
+        palette = [None] * len(stored_palette)
+        for i, color in enumerate(stored_palette):
+            palette[_clut_index(i, info['psm'])] = _expand_gs_alpha(color)
+    else:
+        palette = stored_palette
+    pixels_raw = original[info['pixels_offset']:info['pixels_offset'] + info['pixel_size']]
+    if info['psm'] == PSMT8:
+        original_indices = pixels_raw
+    else:
+        original_indices = bytes(
+            (pixels_raw[i >> 1] >> (4 if i & 1 else 0)) & 0xF
+            for i in range(width * height))
+    cache = {}
+    indices = bytearray(width * height)
+    for i in range(width * height):
+        color = tuple(rgba[i * 4:i * 4 + 4])
+        if bytes(color) == old_rgba[i * 4:i * 4 + 4]:
+            indices[i] = original_indices[i]
+            continue
+        index = cache.get(color)
+        if index is None:
+            index = min(range(len(palette)), key=lambda j: sum(
+                (color[k] - palette[j][k]) ** 2 for k in range(4)))
+            cache[color] = index
+        indices[i] = index
+
+    if info['psm'] == PSMT8:
+        packed = indices
+    else:
+        packed = bytearray(info['pixel_size'])
+        for i, index in enumerate(indices):
+            if i & 1:
+                packed[i >> 1] |= index << 4
+            else:
+                packed[i >> 1] = index
+    return original[:HEADER_SIZE] + bytes(packed) + palette_raw
+
+
+def encode_stored_order_tga(original, tga):
+    """Reinsert an indexed TGA using pixel and CLUT entries exactly as stored."""
+    return _encode_indexed_tga(original, tga, map_clut=False)
+
+
+def encode_linear_mapped_tga(original, tga):
+    """Reinsert linear indexed pixels with the CLUT permutation applied."""
+    return _encode_indexed_tga(original, tga, map_clut=True)
 
 
 def read_tga(raw):
@@ -283,12 +382,12 @@ def read_tga(raw):
     return width, height, bytes(rgba)
 
 
-def encode_tga(original, tga):
+def encode_legacy_tga(original, tga):
     info = parse(original)
     width, height, rgba = read_tga(tga)
     if (width, height) != (info['width'], info['height']):
         raise ValueError('replacement TGA dimensions must match RTX3')
-    old_width, old_height, old_rgba = decode_rgba(original)
+    old_width, old_height, old_rgba = decode_legacy_rgba(original)
     if (width, height, rgba) == (old_width, old_height, old_rgba):
         return original
 
@@ -331,6 +430,14 @@ def encode_tga(original, tga):
     return original[:HEADER_SIZE] + packed + palette_raw
 
 
+def encode_tga(original, tga):
+    """Use the current best-supported encoding for the texture's PSM."""
+    info = parse(original)
+    if info['psm'] in (PSMT4, PSMT8):
+        return encode_linear_mapped_tga(original, tga)
+    return encode_legacy_tga(original, tga)
+
+
 def write_tga(width, height, rgba):
     if len(rgba) != width * height * 4 or width > 0xFFFF or height > 0xFFFF:
         raise ValueError('invalid RGBA dimensions')
@@ -365,8 +472,12 @@ def main():
             command.add_argument('output', type=Path)
         if name == 'export':
             command.add_argument('--format', choices=('tga', 'png'), default='tga')
-            command.add_argument('--stored-order', action='store_true',
-                                 help='skip pixel swizzling and CLUT index mapping (diagnostic view)')
+        if name in ('export', 'import'):
+            mapping = command.add_mutually_exclusive_group()
+            mapping.add_argument('--stored-order', action='store_true',
+                                 help='use linear pixels and stored CLUT order (skip CLUT permutation)')
+            mapping.add_argument('--legacy-mapping', action='store_true',
+                                 help='use the previous GS swizzle/CLUT transform for comparison')
         if name == 'import':
             command.add_argument('replacement', type=Path)
     args = parser.parse_args()
@@ -376,7 +487,8 @@ def main():
         if args.command == 'info':
             print(json.dumps(info, indent=2))
         elif args.command == 'export':
-            decoder = decode_stored_order_rgba if args.stored_order else decode_rgba
+            decoder = (decode_legacy_rgba if args.legacy_mapping else
+                       decode_stored_order_rgba if args.stored_order else decode_rgba)
             width, height, rgba = decoder(raw)
             data = write_tga(width, height, rgba) if args.format == 'tga' else write_png(width, height, rgba)
             if args.output.exists():
@@ -387,7 +499,9 @@ def main():
             if args.output.exists():
                 raise ValueError('output already exists')
             args.output.parent.mkdir(parents=True, exist_ok=True)
-            args.output.write_bytes(encode_tga(raw, args.replacement.read_bytes()))
+            encoder = (encode_legacy_tga if args.legacy_mapping else
+                       encode_stored_order_tga if args.stored_order else encode_tga)
+            args.output.write_bytes(encoder(raw, args.replacement.read_bytes()))
     except (OSError, ValueError) as exc:
         print(f'ERROR: {exc}', file=sys.stderr)
         return 2

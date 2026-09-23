@@ -86,42 +86,47 @@ References: `tools/ui_bundle.py`, `tools/assets.py`, `tests/test_ui_bundle.py`,
 `tests/test_assets.py`, `reports/ui_bundle_survey.json`,
 [asset methodology](TASK_ASSET_WORKSPACE_METHODOLOGY.md).
 
-## Common RTX3 modes convert to editable TGA while preserving indexed palettes
+## Indexed RTX3 textures export as editable TGAs and reinsert through nested bundles
 
-Symptom: animation metadata names `.tga` authoring images, but the corresponding
-menu resources are `RTX3` textures whose GS layout cannot be opened directly as a
-normal raster image.
-Mechanism: the 64-byte RTX3 header carries GS TEX0 PSM/TW/TH fields, dimensions,
-pixel extent and (for indexed modes) a trailing CLUT. The PSMCT32, PSMT8 and PSMT4
-pixel swizzles can be decoded to RGBA and exported as uncompressed 32-bit TGA.
-Import keeps the original dimensions and CLUT, maps colors to existing palette
-entries, and swizzles them back into the original layout. When imported pixels
-equal the source, it returns the original bytes to avoid gratuitous changes.
-Pathway: `python3 tools/rtx3.py export SOURCE.txc OUTPUT.tga`, edit at the same
-dimensions, then `python3 tools/rtx3.py import SOURCE.txc OUTPUT.txc INPUT.tga`
-and replace the matching extracted UI-resource sidecar before the normal asset
-build. Bundle/BPE/archive growth handling is already tested independently.
-Verification: synthetic PSMT4/PSMT8/PSMCT32 export/import tests pass, including an
-indexed pixel edit and malformed input checks. Actual 512x512 PSMT8 and 128x128
-PSMT4 textures export/import unchanged byte-identically; one-pixel edits in both
-real samples decode back to the expected RGBA. `python3 -m unittest
-tests.test_rtx3 tests.test_ui_bundle tests.test_assets -v` passed 19 tests.
-The `--stored-order` export option provides a diagnostic RGBA/TGA view by reading
-pixel indices linearly and using CLUT entries as stored, without PSM or CLUT
-permutation or alpha expansion. A synthetic palette-order test distinguishes it from the normal
-decoder. On `title_marh_jp`, the resulting view contains recognizable Japanese
-logo shapes, and its source member span matches the recorded SHA-256 exactly.
-Scope: the observed RTX3 corpus; census has 30,397 resources (PSMCT32 43, PSMT8
-27,316, PSMT4 1,654, PSMT8H 677, PSMT4HL 690, PSMT4HH 17).
-Limits: PSMT8H/PSMT4HL/PSMT4HH are parsed but not rendered because their storage
-ordering has not been corroborated. Indexed palette colors and dimensions cannot
-grow. Initial previews can be transparent atlases or repeat-wrapped textures;
-AT animation/UV composition and runtime rendering are unresolved. No English
-graphic has yet been translated and validated in game.
-References: `tools/rtx3.py`, `tests/test_rtx3.py`,
-`reports/rtx3_format_survey.json`, `reports/translation_surfaces.json`,
-[asset methodology](TASK_ASSET_WORKSPACE_METHODOLOGY.md).
-Title-specific renderer and composition evidence is tracked in
+Symptom: menu texture payloads begin with `RTX3` and are not directly editable
+as ordinary raster files. An early TGA pass also copied the PS2's 0..128 alpha
+range unchanged, making opaque colors display at half opacity.
+Mechanism: indexed PSMT4/PSMT8 export currently keeps pixel bytes in linear
+order, applies the PSMT8 CLUT index permutation (identity for the sampled PSMT4
+layout), and expands alpha from the GS 0..128 range to TGA's 0..255 range.
+Import preserves original indexed pixels when unchanged and maps edited colors
+to the existing palette; canvas and palette growth are unsupported. The root
+`graphics/` workspace exports directly into flat, human-readable category
+folders and indexes image/source hashes plus the original bundle path. English
+siblings ending `_eng.tga` are selected over Japanese baselines for the mod ISO;
+staging stays separate from source sidecars and feeds the normal UI-table/BPE/PAC
+builder.
+Pathway: `make graphics-export`; edit same-size files under `graphics/`; name an
+English sibling `*_eng.tga` (replace a trailing `_jp` with `_eng`); run
+`make graphics-audit` and `make graphics-stage`; then run
+`make build-mod-disc` to produce `mar_eng.iso` in the workspace root.
+Verification: controlled visual comparison covered 10 PSMT8 and 10 PSMT4
+resources; the owner selected the mapped-linear `title_marh_jp` preview matching
+the supplied reference. The corrected title image has 141,269 fully transparent
+pixels, 54,738 alpha-128 source pixels mapped to fully opaque TGA alpha, and
+66,137 intermediate-alpha pixels. The workspace exports 1,457 TXCs (1,226 PSMT8
+and 231 PSMT4). Its post-correction audit verified all source hashes and TGA
+dimensions, with no Japanese-baseline edits and no English variants at audit time.
+The synthetic end-to-end test confirms an English sibling is selected, the
+Japanese TGA remains unchanged, and the replacement reaches the rebuilt nested
+texture. `make test` passed all 69 tests. The focused asset/texture/container
+suite passed 26 tests, including alpha expansion, flat category naming,
+palette-preserving edits and English override reinsertion through UI table, BPE
+and PAC relocation.
+Scope: the 1,457 currently prepared menu-bundle members, not the 30,397-record
+whole-disc RTX3 census. PSMT8H/PSMT4HL/PSMT4HH are parsed but not decoded;
+PSMCT32 retains its legacy conversion and is outside the indexed-layout
+conclusion. AT animation/UV composition and runtime rendering remain unresolved;
+no English graphic has yet been runtime-validated.
+References: `tools/rtx3.py`, `tools/graphics.py`, `graphics_rules.mk`,
+`tests/test_rtx3.py`, `tests/test_assets.py`, `reports/rtx3_format_survey.json`,
+`reports/rtx3_layout_diagnostics.json`, `reports/translation_surfaces.json`,
+[asset methodology](TASK_ASSET_WORKSPACE_METHODOLOGY.md),
 [`TITLE_TEXTURE_RENDERING.md`](../tasks/TITLE_TEXTURE_RENDERING.md).
 
 ## AT header inspection links animation texture names to TXC members

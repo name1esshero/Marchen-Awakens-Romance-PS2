@@ -92,17 +92,22 @@ def extract(raw, destination, manifest_path):
     return manifest
 
 
-def has_edits(manifest, source_root):
-    """Validate extracted member files and report whether any differ."""
+def has_edits(manifest, source_root, overrides_root=None):
+    """Validate extracted members and optional out-of-tree replacements."""
     edited = False
     for entry in manifest.get('entries', []):
         path = _member_path(source_root, entry['source'])
         digest = hashlib.sha256(path.read_bytes()).hexdigest()
         edited |= digest != entry.get('source_sha256')
+        if overrides_root is not None:
+            override = _member_path(overrides_root, entry['source'])
+            if override.is_file():
+                override_digest = hashlib.sha256(override.read_bytes()).hexdigest()
+                edited |= override_digest != entry.get('source_sha256')
     return edited
 
 
-def rebuild(original, manifest, source_root):
+def rebuild(original, manifest, source_root, overrides_root=None):
     """Apply member edits, appending grown members and updating table offsets."""
     parsed = parse(original)
     if parsed['source_sha256'] != manifest.get('source_sha256'):
@@ -121,7 +126,20 @@ def rebuild(original, manifest, source_root):
                 raise ValueError(f'UI bundle entry {current["index"]} metadata drift: {key}')
         member_path = _member_path(source_root, saved['source'])
         member = member_path.read_bytes()
-        if hashlib.sha256(member).hexdigest() == saved.get('source_sha256'):
+        member_digest = hashlib.sha256(member).hexdigest()
+        override_path = (_member_path(overrides_root, saved['source'])
+                         if overrides_root is not None else None)
+        if override_path is not None and override_path.is_file():
+            override = override_path.read_bytes()
+            override_digest = hashlib.sha256(override).hexdigest()
+            base_changed = member_digest != saved.get('source_sha256')
+            override_changed = override_digest != saved.get('source_sha256')
+            if base_changed and override_changed:
+                raise ValueError(f'conflicting UI member and override edits: {saved["source"]}')
+            if override_changed:
+                member = override
+                member_digest = override_digest
+        if member_digest == saved.get('source_sha256'):
             continue
         changed = True
         record_offset = saved['record_offset']

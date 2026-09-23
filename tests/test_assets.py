@@ -15,6 +15,8 @@ import bpe
 import message_catalog
 import text_catalog
 import ui_bundle
+import graphics
+import rtx3
 from test_bootstrap import iso as make_iso
 
 
@@ -32,6 +34,36 @@ def pac(payloads):
 
 
 class AssetsTests(unittest.TestCase):
+    def test_graphics_categories_are_human_readable_and_flat(self):
+        cases = (
+            ('icon_armset', '', 'icon'),
+            ('btnhlptxt', 'disc!/data/menu/option_tex.b', 'user_interface'),
+            ('eff_001', '', 'effects'),
+            ('chr_s001', '', 'characters'),
+            ('card_001', '', 'cards'),
+            ('bg_001', '', 'backgrounds'),
+        )
+        for name, asset_path, expected in cases:
+            with self.subTest(name=name):
+                self.assertEqual(graphics._category(name, asset_path), expected)
+
+    def test_graphics_staging_refuses_user_owned_or_source_paths(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            workspace = root / 'source'
+            graphics_root = root / 'graphics'
+            output = root / 'existing-output'
+            workspace.mkdir()
+            graphics_root.mkdir()
+            output.mkdir()
+            sentinel = output / 'keep.txt'
+            sentinel.write_text('user data')
+            with self.assertRaisesRegex(ValueError, 'unrecognized output directory'):
+                graphics._reset_overrides(workspace, graphics_root, output)
+            self.assertEqual(sentinel.read_text(), 'user data')
+            with self.assertRaisesRegex(ValueError, 'unsafe graphics override'):
+                graphics._reset_overrides(workspace, graphics_root, workspace)
+
     def export(self, data, dest):
         s = io.BytesIO(data)
         census = dict(containers={}, leaves=0, extensions={}, unparsed=[])
@@ -284,6 +316,90 @@ class AssetsTests(unittest.TestCase):
             self.assertEqual(rebuilt_bundle[entry['offset']:entry['offset'] + entry['size']],
                              b'English image replacement')
             self.assertGreater(entry['offset'], 0x30)
+
+    def test_graphics_override_reinserts_through_ui_bundle_bpe_and_pac(self):
+        width, height = 128, 64
+        tex0 = (rtx3.PSMT8 << 20) | (7 << 26) | (6 << 30)
+        pixel_size = width * height
+        header = bytearray(rtx3.HEADER_SIZE)
+        header[:4] = b'RTX3'
+        struct.pack_into('<I', header, 4, 0x40 + pixel_size + 1024 - 8)
+        struct.pack_into('<Q', header, 8, tex0)
+        struct.pack_into('<HHI', header, 0x20, width, height, pixel_size)
+        texture = (bytes(header) + bytes((i * 17) & 0xFF for i in range(pixel_size)) +
+                   b''.join(bytes((i, i, i, 0x80)) for i in range(256)))
+
+        decoded = bytearray(0x30)
+        struct.pack_into('<I', decoded, 0, 1)
+        decoded[4:8] = b'\x01\x01\0\0'
+        decoded[16:29] = b'title_marh_jp'
+        decoded[32:36] = b'txc\0'
+        struct.pack_into('<III', decoded, 36, len(texture), 0x30, 0)
+        decoded.extend(texture)
+        original = bytearray(pac([bpe.encode(bytes(decoded))]))
+        original[16 + 16:16 + 20] = b'b\0\0\0'
+        original = bytes(original)
+
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d) / 'source'
+            self.export(original, root)
+            with redirect_stdout(io.StringIO()):
+                assets.prepare(root, report=None)
+            graphics_root = Path(d) / 'graphics'
+            with redirect_stdout(io.StringIO()):
+                index = graphics.export(root, graphics_root)
+            row = next(item for item in index['entries']
+                       if item['name'] == 'title_marh_jp')
+            self.assertEqual(row['category'], 'title')
+            self.assertEqual(Path(row['image']).parent, Path('title'))
+            self.assertTrue(Path(row['image']).stem.endswith('_jp'))
+            self.assertEqual(row['asset_path'], 'disc!/test.b')
+            image_path = graphics_root / row['image']
+            original_image = image_path.read_bytes()
+            w, h, rgba = rtx3.read_tga(original_image)
+            changed = bytearray(rgba)
+            palette_offset = rtx3.parse(texture)['palette_offset']
+            stored_index = rtx3._clut_index(100, rtx3.PSMT8)
+            target = texture[palette_offset + stored_index * 4:
+                             palette_offset + (stored_index + 1) * 4]
+            changed[:4] = target[:3] + bytes((min(255, target[3] * 2),))
+            english_path = graphics.english_variant_path(image_path)
+            self.assertTrue(english_path.stem.endswith('_eng'))
+            english_path.write_bytes(rtx3.write_tga(w, h, changed))
+            english_image = english_path.read_bytes()
+            with redirect_stdout(io.StringIO()):
+                graphics.export(root, graphics_root)
+                audit = graphics.audit(root, graphics_root)
+            self.assertEqual(image_path.read_bytes(), original_image)
+            self.assertEqual(english_path.read_bytes(), english_image)
+            self.assertEqual(audit['edited_images'], 0)
+            self.assertEqual(audit['english_overrides'], 1)
+            overrides_root = Path(d) / 'graphics-overrides'
+            with redirect_stdout(io.StringIO()):
+                report = graphics.build(root, graphics_root, overrides_root)
+            self.assertEqual(len(report['changed']), 1)
+            self.assertEqual(report['changed'][0]['language'], 'eng')
+            self.assertEqual(report['changed'][0]['image'],
+                             english_path.relative_to(graphics_root).as_posix())
+            self.assertEqual(image_path.read_bytes(), original_image)
+            source_member = root / row['bundle_dir'] / row['source']
+            self.assertEqual(source_member.read_bytes(), texture)
+
+            output = Path(d) / 'mod.pac'
+            assets.build(root, output, relocate=True,
+                          graphics_overrides=overrides_root)
+            with output.open('rb') as stream:
+                pac_entry = assets.archive(stream, 0, output.stat().st_size)[2][0]
+                stream.seek(pac_entry['offset'])
+                packed_bundle = stream.read(pac_entry['size'])
+            rebuilt_bundle = bpe.decode(packed_bundle)
+            bundle_entry = ui_bundle.parse(rebuilt_bundle)['entries'][0]
+            rebuilt_texture = rebuilt_bundle[
+                bundle_entry['offset']:bundle_entry['offset'] + bundle_entry['size']]
+            override = (overrides_root / row['bundle_dir'] /
+                        row['source']).read_bytes()
+            self.assertEqual(rebuilt_texture, override)
+            self.assertNotEqual(rebuilt_texture, texture)
 
 
 if __name__ == '__main__':

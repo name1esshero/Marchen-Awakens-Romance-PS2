@@ -81,15 +81,23 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   recovered `_msg.dat` table are translation-bearing surfaces. All 724 menu `.b`
   leaves now have a verified decoded-binary layer; 721 also have 3,084 individually
   extracted nested resources that rebuild byte-exactly when untouched. Three `.yma`
-  payloads use a different unresolved layout. RTX3 PSMT4/PSMT8/PSMCT32 have an
-  editable-TGA conversion path; PSMT8H/PSMT4HL/PSMT4HH are parsed but deliberately
-  not rendered while their storage ordering is unresolved. Initial previews include
-  atlas/tiled-looking textures, and animation/UV references are not yet decoded, so
-  they are not evidence of correct whole-screen composition. The title-marh-jp
-  TXC member matches its bundle hash, and a stored-order diagnostic shows a
-  coherent stacked logo atlas. The AT inspector confirms all four title
-  animation texture-name references match TXC members; renderer/AT-to-UV
-  composition remains unresolved.
+  payloads use a different unresolved layout. The prepared menu workspace exposes
+  1,457 TXCs as editable TGA files (1,226 PSMT8, 231 PSMT4). Images sit directly
+  in flat semantic folders: title, icon, user_interface, effects, characters,
+  cards, backgrounds, maps, weapons, environments and text. Filenames carry
+  asset/bundle/member IDs, and `graphics/index.json` maps each image back to its
+  source. Japanese baselines end in `_jp.tga`, stay unchanged, and are ignored as
+  generated workspace files; authored `_eng.tga` siblings are Git-trackable and
+  take precedence in `mar_eng.iso` builds. Indexed exports use linear pixel order,
+  mapped PSMT8 CLUT indices and expanded 0..128 GS alpha. A controlled 20-image
+  comparison favored this over pixel unswizzling, and the owner selected the
+  title view matching the supplied logo reference. The post-correction audit
+  verified all 1,457 source hashes and TGA dimensions, with no baseline edits and
+  no English variants present at audit time. A synthetic English image passed
+  through UI-table/BPE/PAC reinsertion. High-bit PSMs, the remaining full-disc TXC
+  census, AT/UV composition and runtime display remain unresolved. The AT
+  inspector confirms all four title animation texture-name references match TXC
+  members.
   See [title rendering evidence](../tasks/TITLE_TEXTURE_RENDERING.md). All 229 messages have draft translations; names,
   mechanics, and display constraints need review. DMY files, module internals and DVP
   overlay semantics remain open.

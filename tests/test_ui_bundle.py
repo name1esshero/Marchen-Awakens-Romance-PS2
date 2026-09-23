@@ -43,6 +43,29 @@ class UiBundleTests(unittest.TestCase):
             self.assertEqual(grown[offset:offset + length], b'English graphic data')
             self.assertEqual(offset % ui_bundle.ALIGNMENT, 0)
 
+    def test_out_of_tree_override_rebuilds_without_mutating_source_members(self):
+        original = bundle()
+        replacement = b'edited texture bytes'
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            members = root / 'members'
+            overrides = root / 'overrides'
+            manifest = ui_bundle.extract(original, members, root / 'bundle.json')
+            source_path = members / manifest['entries'][0]['source']
+            override_path = overrides / manifest['entries'][0]['source']
+            override_path.parent.mkdir(parents=True)
+            override_path.write_bytes(replacement)
+
+            self.assertTrue(ui_bundle.has_edits(manifest, members, overrides))
+            rebuilt = ui_bundle.rebuild(original, manifest, members, overrides)
+            length, offset = struct.unpack_from('<II', rebuilt, 36)
+            self.assertEqual(rebuilt[offset:offset + length], replacement)
+            self.assertEqual(source_path.read_bytes(), b'pixels')
+
+            source_path.write_bytes(b'conflicting direct edit')
+            with self.assertRaisesRegex(ValueError, 'conflicting UI member and override'):
+                ui_bundle.rebuild(original, manifest, members, overrides)
+
     def test_parse_rejects_bad_header_table_and_overlap(self):
         with self.assertRaisesRegex(ValueError, 'header variant'):
             ui_bundle.parse(b'\0' * 64)

@@ -13,14 +13,27 @@ The `title_tex.b` asset is BPE-compressed. Its decoded resource bundle has a
 this texture.
 
 The TXC has RTX3 magic, PSMT8 mode, 512x512 dimensions, 262,144 pixel bytes at
-offset 64 and a 1,024-byte CLUT at offset 262,208. The stored-order diagnostic
-(`tools/rtx3.py export --stored-order`) treats the pixel byte stream as linear
-indices and reads the CLUT in stored order. It shows two vertically stacked
-Japanese logo variants. This is direct evidence about byte interpretation, not
-the texture's spatial layout in game. The normal legacy decode shows a repeated
-atlas-like surface. The attempted generic GS page/block mapping produced a
-more corrupted, striped image and was discarded; raw GS VRAM address layout is
-therefore not established as the RTX3 payload layout.
+offset 64 and a 1,024-byte CLUT at offset 262,208. The current export leaves
+pixel indices linear, applies the PSMT8 CLUT index permutation, and expands
+palette alpha from the PS2 GS 0..128 range to TGA's 0..255 range. The owner
+selected this mapped-linear view, which displays gray and colorful Japanese
+logo variants vertically stacked and matches the supplied reference image.
+`--stored-order` remains a diagnostic that leaves the CLUT in raw order and
+does not expand alpha. A controlled matrix across ten PSMT8 and ten PSMT4
+resources favored linear pixel indexing over the old pixel-unswizzle output;
+the selected title image provides the CLUT-order reference. See
+`reports/rtx3_layout_diagnostics.json` for the sample paths and hashes. The
+editable baseline is `graphics/title/00039_01566_0002_title_marh_jp.tga`; its
+localized sibling is `graphics/title/00039_01566_0002_title_marh_eng.tga`. Keep the
+Japanese baseline unchanged and put localization edits in the English sibling.
+
+The initial exported TGA alpha was wrong for display: it copied the PS2's
+0..128 alpha values into an 8-bit image channel unchanged, making opaque pixels
+look half transparent. The corrected conversion doubles those values, keeping
+0 transparent and mapping 128 to 255. This preserves antialiased intermediate
+alpha values. The texture is still an atlas surface; this choice does not
+establish how the game crops or samples it. The old GS pixel-unswizzle result
+was visibly tiled/garbled and is not the current output.
 
 The `title_00.at3` source is 4,548 bytes with SHA-256
 `b9d5f2e26e57f51e6b936f55763de5b9618b47d652b2577c94d2812e5f1cb263`. Its
@@ -58,9 +71,12 @@ before editing art.
 
 - Exact extraction and hash identity do not prove correct PSM decode or visual
   equivalence in the game.
-- A recognizable stored-order preview does not prove the game samples bytes in
-  that order; it only rules against accidental corruption before the TXC member.
+- A human-selected mapped-linear preview supports a candidate texture
+  representation, but does not prove runtime UV selection or final composition.
 - Disassembly evidence identifies a rectangle-to-GS draw path, but the register
   arguments, object fields, AT record fields, and title draw sequence are not
   fully named or recovered.
+- The 20-resource visual sample is not the entire RTX3 corpus. Only 1,457
+  texture members currently exposed from parsed menu bundles have editable TGAs;
+  the rest of the 30,397-record census is not exported into this workspace.
 - No runtime capture has been made from this workspace.

@@ -38,9 +38,76 @@ class RTX3Tests(unittest.TestCase):
         raw[palette + 8 * 4:palette + 9 * 4] = bytes((11, 22, 33, 64))
         raw[palette + 16 * 4:palette + 17 * 4] = bytes((44, 55, 66, 64))
         stored = rtx3.decode_stored_order_rgba(raw)
-        decoded = rtx3.decode_rgba(raw)
+        mapped_linear = rtx3.decode_rgba(raw)
+        legacy = rtx3.decode_legacy_rgba(raw)
         self.assertEqual(stored[2][:4], bytes((11, 22, 33, 64)))
-        self.assertEqual(decoded[2][:4], bytes((44, 55, 66, 128)))
+        self.assertEqual(mapped_linear[2][:4], bytes((44, 55, 66, 128)))
+        self.assertEqual(legacy[2][:4], bytes((44, 55, 66, 128)))
+
+    def test_default_expands_gs_alpha_to_tga_range(self):
+        raw = bytearray(fixture(19, 128, 64))
+        info = rtx3.parse(raw)
+        palette = info['palette_offset']
+        raw[palette + 3] = 0
+        raw[palette + 4 + 3] = 64
+        raw[palette + 8 + 3] = 128
+        raw[info['pixels_offset']:info['pixels_offset'] + 3] = bytes((0, 1, 2))
+        _, _, decoded = rtx3.decode_rgba(raw)
+        self.assertEqual(decoded[3], 0)
+        self.assertEqual(decoded[7], 128)
+        self.assertEqual(decoded[11], 255)
+
+    def test_stored_order_indexed_import_preserves_raw_layout(self):
+        for psm, index in ((19, 100), (20, 7)):
+            with self.subTest(psm=psm):
+                raw = bytearray(fixture(psm, 128, 64))
+                info = rtx3.parse(raw)
+                if psm == 19:
+                    # A color edit must not collapse untouched pixels that use
+                    # duplicate palette entries to the first equal entry.
+                    palette = info['palette_offset']
+                    raw[palette + 200 * 4:palette + 201 * 4] = raw[palette:palette + 4]
+                raw = bytes(raw)
+                width, height, rgba = rtx3.decode_stored_order_rgba(raw)
+                tga = rtx3.write_tga(width, height, rgba)
+                self.assertEqual(rtx3.encode_stored_order_tga(raw, tga), raw)
+
+                changed = bytearray(rgba)
+                changed[:4] = bytes((index, index, index, 0x80))
+                rebuilt = rtx3.encode_stored_order_tga(
+                    raw, rtx3.write_tga(width, height, changed))
+                self.assertEqual(rtx3.decode_stored_order_rgba(rebuilt),
+                                 (width, height, bytes(changed)))
+                expected = bytearray(raw)
+                if psm == 19:
+                    expected[info['pixels_offset']] = index
+                else:
+                    expected[info['pixels_offset']] = (
+                        expected[info['pixels_offset']] & 0xF0) | index
+                self.assertEqual(rebuilt, bytes(expected))
+
+    def test_default_linear_clut_import_keeps_palette_mapping_and_untouched_indices(self):
+        raw = bytearray(fixture(19, 128, 64))
+        info = rtx3.parse(raw)
+        palette = info['palette_offset']
+        raw[palette + 200 * 4:palette + 201 * 4] = raw[palette:palette + 4]
+        raw = bytes(raw)
+        width, height, rgba = rtx3.decode_rgba(raw)
+        self.assertEqual(rtx3.encode_tga(raw, rtx3.write_tga(width, height, rgba)), raw)
+
+        mapped_index = 100
+        stored_palette_index = rtx3._clut_index(mapped_index, rtx3.PSMT8)
+        target_raw = raw[palette + stored_palette_index * 4:
+                         palette + (stored_palette_index + 1) * 4]
+        target = target_raw[:3] + bytes((min(255, target_raw[3] * 2),))
+        changed = bytearray(rgba)
+        changed[:4] = target
+        rebuilt = rtx3.encode_tga(raw, rtx3.write_tga(width, height, changed))
+        expected = bytearray(raw)
+        expected[info['pixels_offset']] = mapped_index
+        self.assertEqual(rebuilt, bytes(expected))
+        self.assertEqual(rtx3.decode_rgba(rebuilt),
+                         (width, height, bytes(changed)))
 
     def test_high_bit_modes_are_parsed_but_not_guessed(self):
         for psm in (27, 36, 44):

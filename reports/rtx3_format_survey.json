@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "evidence_date": "2026-09-22",
+  "evidence_date": "2026-09-23",
   "reference_sha256": "cc059a3acf818dfbd0a782a9d20ee67e020d167866cd1c4dca77e6eb9224e3ec",
   "scope": "RTX3 texture payload census in the prepared disc workspace",
   "count": 30397,
@@ -22,23 +22,36 @@
     "44_PSMT4HH": 17
   },
   "capabilities": {
-    "export_import": ["PSMCT32", "PSMT8", "PSMT4"],
+    "export_import": [
+      "PSMCT32",
+      "PSMT8",
+      "PSMT4"
+    ],
     "tga_output": "Uncompressed true-color 32-bit TGA",
     "tga_input": "Uncompressed true-color 24- or 32-bit TGA",
     "indexed_palette": "Preserved; imported pixels map to nearest existing palette color",
     "canvas_growth": "Unsupported; replacement dimensions must match the source",
-    "high_bit_psm": "Header and extents parse; pixel decoding is deliberately refused pending swizzle/layout evidence"
+    "high_bit_psm": "Header and extents parse; pixel decoding is deliberately refused pending swizzle/layout evidence",
+    "indexed_pixel_layout": "Current candidate for sampled menu TXCs: pixel indices remain in linear byte order; PSMT8 CLUT indices are permuted with the observed map; PSMT4 CLUT order is unchanged.",
+    "indexed_alpha": "Expand the PS2 GS 0..128 alpha range to 8-bit TGA with min(255, alpha*2); zero remains transparent and 128 becomes opaque.",
+    "psmct32": "Uses the older GS swizzle/alpha path; not covered by the indexed layout comparison.",
+    "graphics_workspace": "Flat semantic category directories contain image files directly; stable source/bundle/member IDs prevent collisions, while index.json preserves original paths and hashes. Japanese baselines are not overwritten.",
+    "english_overrides": "Every untouched exported baseline is named *_jp.tga and is preserved; an adjacent *_eng.tga is the editable localized variant selected for the English mod ISO. Same dimensions and source palette are required."
   },
   "verification": {
     "synthetic": "PSMT4/PSMT8/PSMCT32 TGA export/import tests; unchanged files remain byte-identical; same-size indexed pixel edit reparses and decodes as expected",
     "real_samples": "One PSMT8 512x512 and one PSMT4 128x128 game TXC export/import to TGA without edits and remain byte-identical",
-    "container": "Synthetic grown nested TXC resource reinserted through UI table, BPE wrapper and PAC relocation",
-    "runtime": "Not performed"
+    "container": "Synthetic edited TXC override reinserted through UI table, BPE wrapper and PAC relocation; extracted source sidecar remains unchanged.",
+    "runtime": "Not performed",
+    "visual_layout_samples": "Controlled four-way image matrix for 10 PSMT8 and 10 PSMT4 TXCs favored linear pixel order; owner selected the mapped-linear title image. See reports/rtx3_layout_diagnostics.json.",
+    "graphics_workspace": "1,457 menu TXC members exported in flat semantic folders (1,226 PSMT8, 231 PSMT4); post-correction source-hash/dimension audit passed for all 1,457, with zero edited Japanese baselines and zero English variants at audit time.",
+    "english_override": "Synthetic *_eng.tga selected during staging and reinserted through UI table, BPE and PAC; original Japanese TGA and extracted TXC sidecar remain unchanged."
   },
   "limits": [
-    "TGA pixel data is decoded, but AT animation, atlas regions, UV coordinates and final screen composition are not yet interpreted.",
-    "The preview may show transparent regions or repeated texture content; this alone does not prove a swizzle failure or a complete UI image.",
-    "No English graphic has been translated or validated in game yet.",
+    "The 20-resource visual comparison does not establish layout for the full RTX3 corpus or game runtime.",
+    "The prepared workspace currently exposes only 1,457 menu TXCs from the 30,397-record full-disc census.",
+    "AT animation, atlas regions, UV coordinates and final screen composition remain uninterpreted.",
+    "No English graphic has been runtime-validated yet.",
     "No indexed palette creation, canvas resizing, or PSMT8H/PSMT4HL/PSMT4HH pixel decode is supported."
   ]
 }

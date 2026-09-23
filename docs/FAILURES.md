@@ -44,17 +44,25 @@ swizzler. PSMT8H/PSMT4HL/PSMT4HH stay parse-only pending their own storage-order
 evidence. Evidence: RTX3 census and sample previews in
 `reports/rtx3_format_survey.json`; final in-game rendering has not been tested.
 
-Follow-up hypothesis: the repeated title-logo preview came from a bad outer
-BPE decode or corrupted bundle member. The exact `title_marh_jp` span in the
-decoded bundle matches its manifest SHA-256, and a new stored-order preview
-shows coherent Japanese logo shapes in two stacked variants. This rules out
-corruption in the recorded outer decode/member extraction for this texture,
-but does not prove its game-side pixel layout. Applying a generic GS page/block
-address map directly to RTX3 bytes made the title image more striped and
-garbled. That map is not established for this file format and was discarded;
-the legacy image swizzler remains unchanged. Reconsider the GS map only if TXC
-serialization evidence or runtime comparison demonstrates that the file stores
-raw GS VRAM order. See `tasks/TITLE_TEXTURE_RENDERING.md`.
+Follow-up hypothesis: the title-logo view was only meaningful with pixels and
+palette both left in stored order, and the legacy decoder should remain the
+standard image path. Controlled four-way comparisons across ten PSMT8 and ten
+PSMT4 resources showed the legacy pixel-unswizzle produced tiled/striped results;
+linear pixel indices were the coherent candidate. For PSMT8, the owner selected
+the linear-pixel plus mapped-CLUT title preview, which shows gray and colorful
+Japanese logo variants matching the supplied reference. The title TXC member
+span still hashes exactly to its bundle manifest, ruling out outer extraction
+corruption for this sample. The early output also copied GS alpha values (0..128)
+into TGA unchanged; that made the logo's opaque pixels half-transparent. The
+current indexed decoder expands alpha by two while retaining transparency and
+antialiased edges. Evidence: `reports/rtx3_layout_diagnostics.json`,
+`tasks/TITLE_TEXTURE_RENDERING.md`, and `tests/test_rtx3.py`.
+
+Limits: this selection is a human visual reference and a 20-resource sample, not
+proof of the complete RTX3 corpus or in-game rendering. It covers only the 1,457
+TXCs currently exposed by parsed menu bundles; UV/AT composition and the other
+29k census records remain unresolved. Keep the old pixel-unswizzle path as a
+diagnostic until a runtime capture validates sampling and alpha behavior.
 
 ## AT texture-reference rows are not a flat array of 64-byte names
 
@@ -121,3 +129,13 @@ an instruction mismatch or a rejection of the compiler hypothesis.
 Taking addresses in the separate harness produced definitions using only `-O2`.
 Limits: one class/probe on this compiler; no general claim about other GCC releases.
 Reference: [compiler task](tasks/COMPILER_PROBE.md).
+
+## The full-disc verification target preserves an existing output
+
+`make verify-disc` stops before rebuilding if `build/assets-rebuilt.iso` already
+exists. The builder requires a new output path to avoid silently replacing a
+prior artifact. In this checkpoint the standard target exited with that
+fail-closed error; the existing ISO remained untouched. Rebuilding to a new
+temporary path and running `tools/compare_disc.py` against the pinned reference
+passed with zero differing bytes. Preserve or inspect stale build outputs before
+choosing another path.

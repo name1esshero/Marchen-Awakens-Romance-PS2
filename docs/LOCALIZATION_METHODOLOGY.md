@@ -285,7 +285,16 @@ Workflow:
 
 `original -> identify text region -> preserve non-text content -> translate -> style-match English -> composite -> restore format/palette -> validate dimensions/alpha -> rebuild -> reinsert -> runtime inspect`
 
-Keep original and localized assets side by side where practical.
+Keep original and localized assets side by side. For the extracted RTX3
+graphics workspace, the exported `*_jp.tga` is the immutable recovered-game
+baseline: never edit it for localization. Copy it to a sibling `*_eng.tga` and
+edit or regenerate only that English variant. This preserves the Japanese image
+for visual comparison, translation revision, and rebuilding English artwork
+without re-extracting the ISO. The mod-disc build selects the `_eng` sibling
+when present and keeps the `_jp` baseline unchanged. Keep both in the same
+human-readable category folder and preserve the indexed source mapping. Generated
+Japanese baselines/index files are local workspace outputs; authored `_eng.tga`
+variants are not ignored, so they can be committed with the localization.
 
 ------------------------------------------------------------------------
 

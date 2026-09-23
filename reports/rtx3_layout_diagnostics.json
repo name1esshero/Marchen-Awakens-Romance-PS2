@@ -1,0 +1,211 @@
+{
+  "version": 1,
+  "evidence_date": "2026-09-23",
+  "scope": "Visual layout comparison for 20 indexed TXC members currently exposed by parsed menu bundles. This is a sample, not a conclusion about the full 30,397-record TXC census.",
+  "method": {
+    "variants": [
+      "linear pixels with raw CLUT",
+      "legacy pixel-unswizzle with raw CLUT",
+      "linear pixels with PSMT8 CLUT mapping",
+      "legacy pixel-unswizzle with PSMT8 CLUT mapping"
+    ],
+    "selected": "Linear pixel order with mapped PSMT8 CLUT; PSMT4 CLUT mapping is identity. Do not apply the legacy pixel-unswizzle transform to this sampled class.",
+    "alpha": "PS2 GS alpha values in the 0..128 range are expanded to TGA 0..255 by multiplying by two and clamping. The stored-order diagnostic intentionally leaves alpha unexpanded.",
+    "owner_reference": "The owner selected the mapped-linear title preview, showing Japanese logo artwork in gray and color variants stacked vertically, matching the supplied inspected image."
+  },
+  "alpha_observation_title_marh_jp": {
+    "image": "graphics/title/00039_01566_0002_title_marh_jp.tga",
+    "source_sha256": "b67db2f3a834c05de583c3dbd360da3208384c4234072f0ed66b58711dcfc375",
+    "pixel_count": 262144,
+    "fully_transparent_pixels": 141269,
+    "gs_alpha_128_pixels_become_tga_255": 54738,
+    "other_intermediate_alpha_pixels": 66137
+  },
+  "limitations": [
+    "Owner visual selection identifies the preferred candidate for the sampled menu textures but does not prove runtime sampling or final AT/UV composition.",
+    "Only 1,457 TXCs are currently exported into the editable graphics workspace; the remaining corpus is not covered.",
+    "No emulator/runtime capture has been used to validate this texture decode."
+  ],
+  "samples": [
+    {
+      "key": "00039.asset/00921.resources!/0021_getbase.txc.bin",
+      "source_sha256": "206b1a0fda7a643685749a6b3ec7b2671c7eb8c36de09f26b002d81b8ab5bb8f",
+      "name": "getbase",
+      "psm_name": "psmt8",
+      "width": 128,
+      "height": 256,
+      "image": "weapons/00039_00921_0021_getbase_jp.tga"
+    },
+    {
+      "key": "00039.asset/00979.resources!/0003_07_roc.txc.bin",
+      "source_sha256": "bae2c1fa02b1c80e8292aa9eb2e0c7ac7cf3593f67a1d1bf6f4ee4b52d4a29ac",
+      "name": "07_roc",
+      "psm_name": "psmt8",
+      "width": 512,
+      "height": 256,
+      "image": "characters/00039_00979_0003_07_roc_jp.tga"
+    },
+    {
+      "key": "00039.asset/01091.resources!/0000_card_067.txc.bin",
+      "source_sha256": "ba303871f2293e981512c1828670459fcfbda32d340049c221bb9ff581ccb8e2",
+      "name": "card_067",
+      "psm_name": "psmt8",
+      "width": 512,
+      "height": 512,
+      "image": "cards/00039_01091_0000_card_067_jp.tga"
+    },
+    {
+      "key": "00039.asset/01214.resources!/0000_bg_045.txc.bin",
+      "source_sha256": "2bc938307c4fd6ad0283e0d81efbc4ba2749315a1408e6e4633b569f62ea9ea2",
+      "name": "bg_045",
+      "psm_name": "psmt8",
+      "width": 512,
+      "height": 512,
+      "image": "cards/00039_01214_0000_bg_045_jp.tga"
+    },
+    {
+      "key": "00039.asset/01336.resources!/0000_plt_021.txc.bin",
+      "source_sha256": "315e5d7ad357ac7c50a61a6e93c27e52486655a13e30ccd941f692119bde1e68",
+      "name": "plt_021",
+      "psm_name": "psmt8",
+      "width": 512,
+      "height": 128,
+      "image": "cards/00039_01336_0000_plt_021_jp.tga"
+    },
+    {
+      "key": "00039.asset/01459.resources!/0000_plt_144.txc.bin",
+      "source_sha256": "a8b8463b80bbf98bda2248a881c2ccfdfcdae2b74abe3af031c7b8cec650f15f",
+      "name": "plt_144",
+      "psm_name": "psmt8",
+      "width": 512,
+      "height": 128,
+      "image": "cards/00039_01459_0000_plt_144_jp.tga"
+    },
+    {
+      "key": "00039.asset/01462.resources!/0048_card_s121.txc.bin",
+      "source_sha256": "d34837ef5d82769a6806c6a419bf069bc16ef415e3fdf80f46834e1487f2d0ba",
+      "name": "card_s121",
+      "psm_name": "psmt8",
+      "width": 64,
+      "height": 64,
+      "image": "cards/00039_01462_0048_card_s121_jp.tga"
+    },
+    {
+      "key": "00039.asset/01522.resources!/0000_hdmp_01.txc.bin",
+      "source_sha256": "43db962fe608f1c190491566fcd8df8969ea9c5855269005679c36365d85ed9e",
+      "name": "hdmp_01",
+      "psm_name": "psmt8",
+      "width": 64,
+      "height": 64,
+      "image": "maps/00039_01522_0000_hdmp_01_jp.tga"
+    },
+    {
+      "key": "00039.asset/01575.resources!/0000_00_gnt.txc.bin",
+      "source_sha256": "970c28ca0bff3dcadd8aef9ef6b70cc632770f73da38e59a246dc92610d5b0e2",
+      "name": "00_gnt",
+      "psm_name": "psmt8",
+      "width": 256,
+      "height": 256,
+      "image": "characters/00039_01575_0000_00_gnt_jp.tga"
+    },
+    {
+      "key": "00039.asset/01629.resources!/0015_15card.txc.bin",
+      "source_sha256": "e3bdb191a219e0edbe8c59e9833299f57d509defbef284b58290330101a206d4",
+      "name": "15card",
+      "psm_name": "psmt8",
+      "width": 128,
+      "height": 128,
+      "image": "cards/00039_01629_0015_15card_jp.tga"
+    },
+    {
+      "key": "00039.asset/00940.resources!/0008_slot_cursor.txc.bin",
+      "source_sha256": "441471c30b6565ea42af979b4659b834b3f3ae44e62563fedad870c525a5166b",
+      "name": "slot_cursor",
+      "psm_name": "psmt4",
+      "width": 256,
+      "height": 32,
+      "image": "weapons/00039_00940_0008_slot_cursor_jp.tga"
+    },
+    {
+      "key": "00039.asset/01006.resources!/0008_eff_000.txc.bin",
+      "source_sha256": "b734fe46f90c78af23e6a872517997451fbf612197646ea74a48bd3b93ce8aef",
+      "name": "eff_000",
+      "psm_name": "psmt4",
+      "width": 64,
+      "height": 64,
+      "image": "icon/00039_01006_0008_eff_000_jp.tga"
+    },
+    {
+      "key": "00039.asset/01006.resources!/0035_misson.txc.bin",
+      "source_sha256": "80b3724696dc6f771aaaef39a15d013265492b88ae2db7bc2ed50a5c6f185f9a",
+      "name": "misson",
+      "psm_name": "psmt4",
+      "width": 64,
+      "height": 64,
+      "image": "icon/00039_01006_0035_misson_jp.tga"
+    },
+    {
+      "key": "00039.asset/01556.resources!/0015_wdw_pause.txc.bin",
+      "source_sha256": "065290eb17bd308469636c97b016e55d557d662e57b7d5cb738f2f2a8a58b623",
+      "name": "wdw_pause",
+      "psm_name": "psmt4",
+      "width": 64,
+      "height": 64,
+      "image": "user_interface/00039_01556_0015_wdw_pause_jp.tga"
+    },
+    {
+      "key": "00039.asset/01606.resources!/0003_cas_slate.txc.bin",
+      "source_sha256": "2e041e47f5ae28a024a41f0fc1d1c6b11629193fd55e5d2363afb41c97553b69",
+      "name": "cas_slate",
+      "psm_name": "psmt4",
+      "width": 128,
+      "height": 128,
+      "image": "user_interface/00039_01606_0003_cas_slate_jp.tga"
+    },
+    {
+      "key": "00039.asset/01621.resources!/0003_00_gnt.txc.bin",
+      "source_sha256": "64bb64c893d50fabcd8ecde1aaed4ff3f634420f2f4b3ebf5f1987e1840c9d7f",
+      "name": "00_gnt",
+      "psm_name": "psmt4",
+      "width": 32,
+      "height": 16,
+      "image": "user_interface/00039_01621_0003_00_gnt_jp.tga"
+    },
+    {
+      "key": "00039.asset/01624.resources!/0019_nof_01.txc.bin",
+      "source_sha256": "af40093b8bf40a7746894a4ecd7ccf167775396158660c755f930225257315a0",
+      "name": "nof_01",
+      "psm_name": "psmt4",
+      "width": 128,
+      "height": 128,
+      "image": "environments/00039_01624_0019_nof_01_jp.tga"
+    },
+    {
+      "key": "00039.asset/01624.resources!/0059_yane_01.txc.bin",
+      "source_sha256": "65607ce0fb9ddf0cf39a676075cf22a490cae1cdc96c12004c4dc6c09c5126f3",
+      "name": "yane_01",
+      "psm_name": "psmt4",
+      "width": 64,
+      "height": 32,
+      "image": "environments/00039_01624_0059_yane_01_jp.tga"
+    },
+    {
+      "key": "00039.asset/01631.resources!/0021_mg_circle.txc.bin",
+      "source_sha256": "677a718d3c3954ae4e09e105e29940595afcd1996cb33fcc70964e601d621d17",
+      "name": "mg_circle",
+      "psm_name": "psmt4",
+      "width": 256,
+      "height": 256,
+      "image": "user_interface/00039_01631_0021_mg_circle_jp.tga"
+    },
+    {
+      "key": "00039.asset/01635.resources!/0056_trns.txc.bin",
+      "source_sha256": "5afe52796046836aad19e2ed0fd41c35a9d5270e24530256677e15149c9e0cfa",
+      "name": "trns",
+      "psm_name": "psmt4",
+      "width": 64,
+      "height": 64,
+      "image": "user_interface/00039_01635_0056_trns_jp.tga"
+    }
+  ]
+}

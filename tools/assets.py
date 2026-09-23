@@ -227,7 +227,10 @@ def export(image, dest, hash_file):
     print(json.dumps(census, ensure_ascii=False, indent=2))
 
 
-def build_node(root, output, relocate=False, translations=None, text_translations=None, logical='disc'):
+def build_node(root, output, relocate=False, translations=None, text_translations=None,
+               logical='disc', graphics_overrides=None, workspace_root=None):
+    if workspace_root is None:
+        workspace_root = Path(root).resolve()
     m = json.loads((root / 'layout.json').read_text())
     if m['version'] != 1 or m['kind'] not in ('ISO', 'YFS', 'PAC', 'AFS'):
         raise ValueError('unsupported workspace')
@@ -246,7 +249,8 @@ def build_node(root, output, relocate=False, translations=None, text_translation
             logical_path = logical + '!/' + p['name'] if p.get('name') else logical
             if p.get('container'):
                 nested = Path(temp) / str(i)
-                build_node(source, nested, relocate, translations, text_translations, logical_path)
+                build_node(source, nested, relocate, translations, text_translations,
+                           logical_path, graphics_overrides, workspace_root)
                 source = nested
             if p.get('bpe_source'):
                 original = source.read_bytes()
@@ -259,11 +263,17 @@ def build_node(root, output, relocate=False, translations=None, text_translation
                     bundle_manifest_path = safe(root, p['ui_bundle_source'])
                     bundle_dir = safe(root, p['ui_bundle_dir'])
                     manifest = json.loads(bundle_manifest_path.read_text(encoding='utf-8'))
-                    members_edited = ui_bundle.has_edits(manifest, bundle_dir)
+                    override_dir = None
+                    if graphics_overrides is not None:
+                        workspace_relative = root.resolve().relative_to(workspace_root.resolve())
+                        override_dir = safe(
+                            graphics_overrides,
+                            str(workspace_relative / p['ui_bundle_dir']))
+                    members_edited = ui_bundle.has_edits(manifest, bundle_dir, override_dir)
                     if decoded_edited and members_edited:
                         raise ValueError(f'both decoded BPE payload and UI bundle members edited: {logical_path}')
                     if members_edited:
-                        decoded = ui_bundle.rebuild(decoded, manifest, bundle_dir)
+                        decoded = ui_bundle.rebuild(decoded, manifest, bundle_dir, override_dir)
                         decoded_edited = True
                 if decoded_edited:
                     patched = Path(temp) / f'bpe-{i}'
@@ -328,7 +338,8 @@ def build_node(root, output, relocate=False, translations=None, text_translation
                 out.write(struct.pack('<I', tail // SECTOR) + struct.pack('>I', tail // SECTOR))
 
 
-def build(root, output, relocate=False, translations_path=None, text_translations_paths=None):
+def build(root, output, relocate=False, translations_path=None,
+          text_translations_paths=None, graphics_overrides=None):
     if output.exists() or output.resolve().is_relative_to(root.resolve()):
         raise ValueError('output must be new and outside the source workspace')
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -347,7 +358,9 @@ def build(root, output, relocate=False, translations_path=None, text_translation
                     raise ValueError(f'duplicate text catalogue resource {catalog["resource"]}')
                 catalogs[catalog['resource']] = catalog
             text_translations = {'catalogs': catalogs, 'applied': set()}
-        build_node(root, Path(tmp), relocate, translations, text_translations)
+        build_node(root, Path(tmp), relocate, translations, text_translations,
+                   graphics_overrides=graphics_overrides,
+                   workspace_root=Path(root).resolve())
         if translations is not None and translations['applied'] != 1:
             raise ValueError('translation catalogue was not applied to exactly one message table')
         if text_translations is not None and text_translations['applied'] != set(text_translations['catalogs']):
@@ -480,6 +493,8 @@ def main():
                    help='apply a validated original/translation message catalogue')
     b.add_argument('--text-translations', type=Path, action='append', default=[],
                    help='apply a validated CP932 TSV catalogue; may be repeated')
+    b.add_argument('--graphics-overrides', type=Path,
+                   help='apply generated RTX3 replacements without editing extracted sidecars')
     args = p.parse_args()
     if args.command == 'export':
         export(args.image, args.workspace, args.hash_file)
@@ -487,7 +502,7 @@ def main():
         prepare(args.workspace, args.report)
     else:
         build(args.workspace, args.output, args.relocate, args.translations,
-              args.text_translations)
+              args.text_translations, args.graphics_overrides)
 
 
 if __name__ == '__main__':

@@ -76,13 +76,17 @@ boundary, not malformed input. `at3` payloads begin `AT  ` and contain
 animation/resource metadata with references such as `window.tga` and `icon.tga`;
 sampled `txc` payloads begin `RTX3`. The `.tga` names identify raster-image
 authoring references; the `.b` and `.txc` members contain animation and RTX3
-texture data. `tools/rtx3.py` exports PSMT4, PSMT8 and PSMCT32 to uncompressed
-32-bit TGA, and imports uncompressed 24/32-bit TGA back into the original RTX3
-dimensions and palette. For example:
+texture data. `tools/rtx3.py` exports supported PSMT4, PSMT8 and PSMCT32 modes
+to uncompressed 32-bit TGA, and imports uncompressed 24/32-bit TGA back into the
+original RTX3 dimensions and palette. For indexed PSMT4/PSMT8, current evidence
+supports keeping pixel indices in linear byte order and applying the PSMT8 CLUT
+index map; the PSMT4 CLUT map is identity. The renderer expands GS alpha values
+from 0..128 to TGA's 0..255 range. PSMCT32 still uses the legacy decoder and is
+not covered by this indexed-layout conclusion. For example:
 
 ```sh
 python3 tools/rtx3.py export SOURCE.txc /tmp/texture.tga
-# For an indexed-color diagnostic, leave pixel bytes and CLUT entries in stored order:
+# Raw palette-order diagnostic: leave pixel bytes and CLUT entries in stored order:
 python3 tools/rtx3.py export SOURCE.txc /tmp/texture-stored-order.tga --stored-order
 # Edit /tmp/texture.tga in an image editor, preserving dimensions.
 python3 tools/rtx3.py import SOURCE.txc /tmp/texture-edited.txc /tmp/texture.tga
@@ -97,54 +101,50 @@ proven. The remaining animation body stays opaque until its record and UV
 semantics are established. Compare name stems with sibling TXC member names to
 identify which textures an AT file references.
 
-`--stored-order` reads indexed pixels linearly and uses palette entries as
-stored, without PSM swizzling, the GS CLUT index permutation, or alpha
-expansion. It is a raw layout diagnostic, not an editable spatial representation; the normal export
-remains the starting point for edits. For `title_marh_jp.txc`, the stored-order
-preview draws recognizable Japanese logo shapes in two vertically stacked
-variants. Its extracted TXC bytes match the enclosing bundle member's recorded
-SHA-256 exactly. This separates a bad outer BPE/member extraction from the still
-unresolved game texture layout, but does not establish UVs or runtime appearance.
+`--stored-order` is a diagnostic that reads indexed pixels linearly and uses
+palette entries as stored, without the PSMT8 CLUT index permutation or GS alpha
+expansion. The normal export applies that CLUT map, expands GS alpha, and leaves
+pixel indices linear. In a controlled matrix of 10 PSMT8 and 10 PSMT4 resources,
+this linear-pixel candidate avoided the tile artifacts in the old pixel-unswizzle
+path. The owner selected the mapped-linear `title_marh_jp` preview: it shows the
+Japanese logo in gray and color variants stacked vertically, matching the
+supplied reference image. The TXC bytes match the enclosing bundle member
+SHA-256. This supports an editable texture-surface representation for these
+sampled indexed resources; it does not establish AT animation, UVs, or runtime
+appearance. Sample paths and source hashes are in
+`reports/rtx3_layout_diagnostics.json`.
 
-Copy the rebuilt TXC over its corresponding `.resources/` member sidecar, then
-use the normal relocated asset build. A no-op import returns the exact source
-bytes. Indexed imports choose the nearest color in the existing palette; they do
-not create colors or enlarge a texture. PSMT8H/PSMT4HL/PSMT4HH are recognized by
-the header parser but deliberately rejected by the image decoder until their
-storage order is established. Treat standalone previews as texture surfaces:
-transparency, atlas regions, UVs, and repeated texture coordinates can make them
-look incomplete or tiled. Decode associated `AT  ` metadata and render the
-composition before translating artwork. Runtime support remains unverified.
+The prepared workspace currently exposes 1,457 TXC members from parsed menu
+resource bundles (1,226 PSMT8 and 231 PSMT4); this is only a subset of the
+30,397 TXC records in the full-disc census. Generate editable local images and
+their source-hash index with `make graphics-export`. Images live directly inside
+flat, human-readable category folders such as `graphics/title/`,
+`graphics/icon/`, `graphics/user_interface/`, `graphics/effects/`,
+`graphics/characters/`, `graphics/cards/`, and `graphics/backgrounds/`; there
+are no PSM or source-container subfolders inside these art folders. Filenames
+include source asset, bundle and member IDs to prevent collisions. The adjacent
+`graphics/index.json` maps each image to its exact TXC source and original menu
+bundle path. Category labels are based on resource/bundle names; generic menu
+assets fall into `user_interface` rather than receiving a guessed subtype.
+`make graphics-audit` checks source hashes, TGA dimensions, and local edits.
 
-For a discovered plain-text leaf, edit its `.utf8.txt` companion. For `_msg.dat`, use `localization/messages.json`; for the two tab-separated menu
-tables, use `localization/card_list.json` and `localization/database.json`. These
-source-hash-anchored UTF-8 catalogues preserve original cells, stable row IDs,
-blank fields, tabs and line endings. `tools/text_catalog.py` rejects stale sources
-and non-CP932 translations. Their resource paths are applied during
-`make build-mod-disc`; do not change unclassified fields such as database unlock
-metadata until their semantics are established.
-`python3 tools/message_catalog.py create SOURCE.json OUTPUT.json` creates a new
-message catalogue from prepared original JSON. For a plain TSV,
-`python3 tools/text_catalog.py create SOURCE.tsv translations.json --resource RESOURCE --columns 1,2 --id-column 0` creates a hash-anchored catalogue; use
-`python3 tools/text_catalog.py apply SOURCE.tsv translations.json OUTPUT.tsv` to
-produce CP932 bytes. Ordinary translations belong in the tracked catalogues. Retain control codes, delimiters, columns and line
-structure until the format is understood. Same-size edits can use
-`make verify-disc` and should compare exactly only if the workspace has no edits.
-For growing text edits, update the source-hash-anchored catalogue for the exact
-resource path. `CardList.txt` currently has draft English for all 142 nonempty names, all 51
-character titles and all 141 categories, while all 142 captions remain untranslated.
-`DataBase.txt` has 87 translated fields of 126; its 39 unresolved condition
-metadata values remain source text. For a growing edit, run `make build-mod-disc`; it enables the observed relocation
-path and writes `mar_eng.iso` in the workspace root for emulator testing. Then run
-`python3 tools/bootstrap.py mar_eng.iso --reports /tmp/marps2-mod-check`
-to re-parse and inventory the ISO, and
-`python3 tools/compare_disc.py mar_eng.iso` to authenticate the
-pinned baseline, count all differing bytes, and sample the first differing
-offsets. Comparator result 1 is expected for a modified image; result 2 is an
-authentication or I/O error. Inspect the reported offsets and ISO inventory, and
-test the image in a PS2 runtime before claiming the translation works in game.
-The comparator's byte count is evidence of a change, not a semantic or gameplay
-validator.
+Every exported baseline ends in `_jp.tga`, represents the recovered game artwork,
+and must never be edited for localization. Keep it as the comparison and recovery
+source. To localize an image, copy it to a sibling ending in `_eng.tga`, then
+edit or regenerate only that English file. For example,
+`...title_marh_jp.tga` pairs with `...title_marh_eng.tga`. When
+`make build-mod-disc` stages the English ISO, the English sibling takes
+precedence for that resource while the Japanese baseline stays intact. Generated
+`_jp.tga` files and the index are ignored workspace outputs; authored `_eng.tga`
+files remain visible to Git so completed localization art can be versioned. This
+selects a user-authored variant; the tool does not translate or generate its
+contents. Preserve canvas dimensions and use only
+colors in the original palette. `make graphics-stage` writes changed TXCs under
+`build/graphics-overrides/`, outside both `graphics/` and the extracted source
+sidecars. The normal mod-disc build consumes those overrides and reinserts
+changes through the validated UI table, BPE and archive relocation path. It
+builds `mar_eng.iso` in the workspace root. The synthetic nested-growth
+regression exercises this path; in-game display is not yet validated.
 
 The synthetic regressions exercise UTF-8 editing, CP932 encoding, ISO directory
 extent growth, and volume-length update, plus structured message editing with

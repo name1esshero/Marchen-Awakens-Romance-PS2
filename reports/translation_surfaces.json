@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "evidence_date": "2026-09-22",
+  "evidence_date": "2026-09-23",
   "reference_sha256": "cc059a3acf818dfbd0a782a9d20ee67e020d167866cd1c4dca77e6eb9224e3ec",
   "scope": "Prepared asset workspace for the supplied image; this is a prioritized surface census, not an exhaustive claim that all text is found.",
   "surfaces": [
@@ -61,11 +61,11 @@
       "path": "disc!/_DATA.YFS;1!/data/menu/*.b",
       "count": 724,
       "translation_relevance": "likely_graphical_or_structured_menu_content",
-      "evidence": "All 724 leaves decode to declared sizes. A validated 32-byte bundle table occurs in 721 files: 3,084 members across at3/txc/ymp/pac/txt; three .yma bundles use an unresolved alternate layout. All 721 untouched extracted tables rebuild byte-exactly. AT payloads reference raster TGA authoring names. tools/rtx3.py exports/imports PSMT4, PSMT8 and PSMCT32 at fixed dimensions with the original palette; PSMT8H/PSMT4HL/PSMT4HH are parse-only pending storage-order evidence. Atlas/UV composition and game runtime display remain unverified.",
-      "confidence": "OBSERVED: BPE, common resource-table layouts and selected RTX3 conversions validated; unknown fields, high-bit texture layouts and full UI composition unresolved",
-      "extraction_status": "original, decoded .bin, and separate raw sidecars for 3,084 nested resources; three alternate .yma payloads remain decoded raw",
-      "editability_status": "decoded payload and member sidecars editable; PSMT4/PSMT8/PSMCT32 TXC members convert to fixed-dimension TGA using existing palettes",
-      "rebuild_status": "untouched BPE preserved byte-identically; edited members update inner table and rewrap BPE",
+      "evidence": "All 724 leaves decode to declared sizes. A validated 32-byte bundle table occurs in 721 files: 3,084 members across at3/txc/ymp/pac/txt; three .yma bundles use an unresolved alternate layout. All 721 untouched tables rebuild byte-exactly. The prepared workspace exports 1,457 menu TXCs as TGA (1,226 PSMT8, 231 PSMT4), with linear pixel order, mapped PSMT8 CLUT and GS-alpha expansion. Nested image override rebuild is tested; AT/UV composition and runtime remain unverified.",
+      "confidence": "OBSERVED: BPE, common resource tables, selected indexed texture layout, TGA import/export, and synthetic nested override validated; high-bit texture layouts and full UI composition unresolved",
+      "extraction_status": "original, decoded .bin, and separate raw sidecars for 3,084 nested resources; graphics workspace contains 1,457 editable TGAs; three alternate .yma payloads remain decoded raw; TGA images are stored directly under flat semantic category folders with stable ID filenames",
+      "editability_status": "PSMT4/PSMT8 members in the prepared workspace convert to same-size TGA using original palettes; alpha is expanded for display; edits stage as out-of-tree resource overrides; immutable *_jp.tga baselines with adjacent editable *_eng.tga siblings are selected for English ISO builds",
+      "rebuild_status": "untouched BPE preserved byte-identically; edited members update inner table and rewrap BPE; synthetic TGA override path is tested; English sibling selection tested through nested UI-table/BPE/PAC rebuild",
       "relocation_status": "synthetic edited-resource growth tested through BPE and PAC; game runtime acceptance unverified",
       "header_survey": "reports/ui_b_format_survey.json",
       "resource_table_survey": "reports/ui_bundle_survey.json",
@@ -86,12 +86,12 @@
       "path": "disc!/_DATA.YFS;1!/**/*.txc",
       "count": 28940,
       "translation_relevance": "candidate_graphical_text_and_ui_art",
-      "evidence": "Sampled standalone and bundled texture resources begin RTX3; pixel layout, dimensions/palette semantics and import/export are unresolved.",
-      "confidence": "HYPOTHESIS: translation relevance inferred from path and asset role",
-      "extraction_status": "raw binary leaves",
-      "editability_status": "PSMT4/PSMT8/PSMCT32 editable as fixed-dimension TGA using existing palette; unsupported PSMs retained raw",
-      "rebuild_status": "imported RTX3 replaces its extracted nested TXC member; existing UI-table/BPE/archive builders reinsert it",
-      "relocation_status": "nested container growth is supported; texture canvas/palette growth and runtime references are not audited"
+      "evidence": "The prepared menu-resource workspace contains 1,457 TXCs (1,226 PSMT8, 231 PSMT4) exported and audited as TGA using a visually selected linear-pixel/mapped-CLUT candidate. The whole-disc census has 30,397 RTX3 records; most are not currently in the prepared editable graphics workspace. Other PSM modes and runtime composition remain unresolved.",
+      "confidence": "OBSERVED for selected menu samples and 1,457 workspace members; whole-corpus semantics remain a hypothesis from path and role",
+      "extraction_status": "1,457 parsed menu-bundle members have flat-category TGA exports indexed by exact source path/hash; remaining TXC census members remain raw or unprepared",
+      "editability_status": "prepared PSMT4/PSMT8 menu members editable as same-size TGA using existing palette; PSMCT32 retains legacy conversion; unsupported PSMs raw; same-size *_eng.tga sibling overrides supported for English ISO builds",
+      "rebuild_status": "changed prepared menu members stage as overrides and reinsert through UI table/BPE/PAC relocation",
+      "relocation_status": "synthetic nested growth tested; UV references, palette/canvas growth, and runtime behavior are not audited"
     }
   ]
 }
