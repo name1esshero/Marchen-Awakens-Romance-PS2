@@ -1,0 +1,4229 @@
+{
+  "ioprp": {
+    "bytes": 275345,
+    "embedded_elf_modules": [
+      {
+        "bytes": 6041,
+        "elf": {
+          "class": "ELF32",
+          "data": "little-endian",
+          "entry": 96,
+          "flags": 1,
+          "ident_version": 1,
+          "machine": 8,
+          "osabi": 0,
+          "program_header_count": 2,
+          "program_header_offset": 52,
+          "section_header_count": 11,
+          "section_header_offset": 4544,
+          "section_name_index": 8,
+          "type": 65408,
+          "version": 1
+        },
+        "elf_magic": "7f454c46",
+        "end_offset": 6969,
+        "extinfo": [
+          {
+            "data_length": 4,
+            "data_sha256": "9f946d2459c79f8d7c96b8ea19897ed054b5090e107df163f907ae71bf63e560",
+            "type": 1,
+            "type_name": "DATE",
+            "value": 0
+          },
+          {
+            "data_length": 0,
+            "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "type": 2,
+            "type_name": "VERSION",
+            "value": 515
+          },
+          {
+            "data_length": 24,
+            "data_sha256": "52807d2f1acc14797e7cb674363a60b1b8d600993eb272ba28b044bb7eb80753",
+            "type": 3,
+            "type_name": "COMMENT",
+            "value": 0
+          }
+        ],
+        "name": "SYSMEM",
+        "offset": 928,
+        "program_headers": [
+          {
+            "alignment": 4,
+            "file_size": 48,
+            "flags": 4,
+            "memory_size": 0,
+            "offset": 116,
+            "paddr": 0,
+            "type": 1879048320,
+            "vaddr": 0
+          },
+          {
+            "alignment": 16,
+            "file_size": 4288,
+            "flags": 7,
+            "memory_size": 4320,
+            "offset": 176,
+            "paddr": 0,
+            "type": 1,
+            "vaddr": 0
+          }
+        ],
+        "sha256": "78951a48a2e1179e41b7141a30812c73991040e716a4d04ef76782166947ec1b"
+      },
+      {
+        "bytes": 10433,
+        "elf": {
+          "class": "ELF32",
+          "data": "little-endian",
+          "entry": 0,
+          "flags": 1,
+          "ident_version": 1,
+          "machine": 8,
+          "osabi": 0,
+          "program_header_count": 2,
+          "program_header_offset": 52,
+          "section_header_count": 11,
+          "section_header_offset": 8256,
+          "section_name_index": 8,
+          "type": 65408,
+          "version": 1
+        },
+        "elf_magic": "7f454c46",
+        "end_offset": 17409,
+        "extinfo": [
+          {
+            "data_length": 4,
+            "data_sha256": "9f946d2459c79f8d7c96b8ea19897ed054b5090e107df163f907ae71bf63e560",
+            "type": 1,
+            "type_name": "DATE",
+            "value": 0
+          },
+          {
+            "data_length": 0,
+            "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "type": 2,
+            "type_name": "VERSION",
+            "value": 518
+          },
+          {
+            "data_length": 16,
+            "data_sha256": "d736ea9e3766dfa260633c4cb0c4d1b41782d4b2c06a281656e13d58dbb4b65c",
+            "type": 3,
+            "type_name": "COMMENT",
+            "value": 0
+          }
+        ],
+        "name": "LOADCORE",
+        "offset": 6976,
+        "program_headers": [
+          {
+            "alignment": 4,
+            "file_size": 41,
+            "flags": 4,
+            "memory_size": 0,
+            "offset": 116,
+            "paddr": 0,
+            "type": 1879048320,
+            "vaddr": 0
+          },
+          {
+            "alignment": 16,
+            "file_size": 8016,
+            "flags": 7,
+            "memory_size": 8132,
+            "offset": 160,
+            "paddr": 0,
+            "type": 1,
+            "vaddr": 0
+          }
+        ],
+        "sha256": "f78836df50893f625746b1bc8ff0ff964c44c29e1019dcb23c0b9d1dc50b2e38"
+      },
+      {
+        "bytes": 10529,
+        "elf": {
+          "class": "ELF32",
+          "data": "little-endian",
+          "entry": 208,
+          "flags": 1,
+          "ident_version": 1,
+          "machine": 8,
+          "osabi": 0,
+          "program_header_count": 2,
+          "program_header_offset": 52,
+          "section_header_count": 11,
+          "section_header_offset": 7696,
+          "section_name_index": 8,
+          "type": 65408,
+          "version": 1
+        },
+        "elf_magic": "7f454c46",
+        "end_offset": 27953,
+        "extinfo": [
+          {
+            "data_length": 4,
+            "data_sha256": "9f946d2459c79f8d7c96b8ea19897ed054b5090e107df163f907ae71bf63e560",
+            "type": 1,
+            "type_name": "DATE",
+            "value": 0
+          },
+          {
+            "data_length": 0,
+            "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "type": 2,
+            "type_name": "VERSION",
+            "value": 520
+          },
+          {
+            "data_length": 24,
+            "data_sha256": "5ef13d5af08142f7ca132749c9fccd11319d8c49e375d731c94966da6fdceb19",
+            "type": 3,
+            "type_name": "COMMENT",
+            "value": 0
+          }
+        ],
+        "name": "SIFCMD",
+        "offset": 17424,
+        "program_headers": [
+          {
+            "alignment": 4,
+            "file_size": 48,
+            "flags": 4,
+            "memory_size": 0,
+            "offset": 116,
+            "paddr": 0,
+            "type": 1879048320,
+            "vaddr": 0
+          },
+          {
+            "alignment": 16,
+            "file_size": 7440,
+            "flags": 7,
+            "memory_size": 14400,
+            "offset": 176,
+            "paddr": 0,
+            "type": 1,
+            "vaddr": 0
+          }
+        ],
+        "sha256": "7874b008124038a4bfb70d4069c037f4ded2d0a452133233cf67df8b0066cc47"
+      },
+      {
+        "bytes": 5969,
+        "elf": {
+          "class": "ELF32",
+          "data": "little-endian",
+          "entry": 0,
+          "flags": 1,
+          "ident_version": 1,
+          "machine": 8,
+          "osabi": 0,
+          "program_header_count": 2,
+          "program_header_offset": 52,
+          "section_header_count": 11,
+          "section_header_offset": 4592,
+          "section_name_index": 8,
+          "type": 65408,
+          "version": 1
+        },
+        "elf_magic": "7f454c46",
+        "end_offset": 33937,
+        "extinfo": [
+          {
+            "data_length": 4,
+            "data_sha256": "9f946d2459c79f8d7c96b8ea19897ed054b5090e107df163f907ae71bf63e560",
+            "type": 1,
+            "type_name": "DATE",
+            "value": 0
+          },
+          {
+            "data_length": 0,
+            "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "type": 2,
+            "type_name": "VERSION",
+            "value": 515
+          },
+          {
+            "data_length": 16,
+            "data_sha256": "d9a1adba7f7499802f29556227885eef0e69f9b554fc316bcd5d87d3a385c84b",
+            "type": 3,
+            "type_name": "COMMENT",
+            "value": 0
+          }
+        ],
+        "name": "SIFMAN",
+        "offset": 27968,
+        "program_headers": [
+          {
+            "alignment": 4,
+            "file_size": 42,
+            "flags": 4,
+            "memory_size": 0,
+            "offset": 116,
+            "paddr": 0,
+            "type": 1879048320,
+            "vaddr": 0
+          },
+          {
+            "alignment": 16,
+            "file_size": 4352,
+            "flags": 7,
+            "memory_size": 5952,
+            "offset": 160,
+            "paddr": 0,
+            "type": 1,
+            "vaddr": 0
+          }
+        ],
+        "sha256": "bf3a269a17f13a3eb90224ecb307a4292916eff7254a90a7aab6483d5e61fee6"
+      },
+      {
+        "bytes": 39405,
+        "elf": {
+          "class": "ELF32",
+          "data": "little-endian",
+          "entry": 16,
+          "flags": 1,
+          "ident_version": 1,
+          "machine": 8,
+          "osabi": 0,
+          "program_header_count": 2,
+          "program_header_offset": 52,
+          "section_header_count": 12,
+          "section_header_offset": 29068,
+          "section_name_index": 9,
+          "type": 65408,
+          "version": 1
+        },
+        "elf_magic": "7f454c46",
+        "end_offset": 73357,
+        "extinfo": [
+          {
+            "data_length": 4,
+            "data_sha256": "9f946d2459c79f8d7c96b8ea19897ed054b5090e107df163f907ae71bf63e560",
+            "type": 1,
+            "type_name": "DATE",
+            "value": 0
+          },
+          {
+            "data_length": 0,
+            "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "type": 2,
+            "type_name": "VERSION",
+            "value": 515
+          },
+          {
+            "data_length": 24,
+            "data_sha256": "b372016606979adde617e1c54608bf28159f93a13e1ab9a429f6d50c79d01163",
+            "type": 3,
+            "type_name": "COMMENT",
+            "value": 0
+          }
+        ],
+        "name": "THREADMAN",
+        "offset": 33952,
+        "program_headers": [
+          {
+            "alignment": 4,
+            "file_size": 47,
+            "flags": 4,
+            "memory_size": 0,
+            "offset": 116,
+            "paddr": 0,
+            "type": 1879048320,
+            "vaddr": 0
+          },
+          {
+            "alignment": 16,
+            "file_size": 28800,
+            "flags": 7,
+            "memory_size": 30036,
+            "offset": 176,
+            "paddr": 0,
+            "type": 1,
+            "vaddr": 0
+          }
+        ],
+        "sha256": "d9b5c8c30173338554e637a269680c4d13c8972f6406666e386ad524ca8593d6"
+      },
+      {
+        "bytes": 12545,
+        "elf": {
+          "class": "ELF32",
+          "data": "little-endian",
+          "entry": 0,
+          "flags": 1,
+          "ident_version": 1,
+          "machine": 8,
+          "osabi": 0,
+          "program_header_count": 2,
+          "program_header_offset": 52,
+          "section_header_count": 12,
+          "section_header_offset": 8520,
+          "section_name_index": 9,
+          "type": 65408,
+          "version": 1
+        },
+        "elf_magic": "7f454c46",
+        "end_offset": 85905,
+        "extinfo": [
+          {
+            "data_length": 4,
+            "data_sha256": "9f946d2459c79f8d7c96b8ea19897ed054b5090e107df163f907ae71bf63e560",
+            "type": 1,
+            "type_name": "DATE",
+            "value": 0
+          },
+          {
+            "data_length": 0,
+            "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "type": 2,
+            "type_name": "VERSION",
+            "value": 515
+          },
+          {
+            "data_length": 16,
+            "data_sha256": "7ef68ca0f7aefde92f5362f89473c85ed15183ba809de321599546046caec039",
+            "type": 3,
+            "type_name": "COMMENT",
+            "value": 0
+          }
+        ],
+        "name": "IOMAN",
+        "offset": 73360,
+        "program_headers": [
+          {
+            "alignment": 4,
+            "file_size": 42,
+            "flags": 4,
+            "memory_size": 0,
+            "offset": 116,
+            "paddr": 0,
+            "type": 1879048320,
+            "vaddr": 0
+          },
+          {
+            "alignment": 16,
+            "file_size": 8272,
+            "flags": 7,
+            "memory_size": 8928,
+            "offset": 160,
+            "paddr": 0,
+            "type": 1,
+            "vaddr": 0
+          }
+        ],
+        "sha256": "2194e7d0eaefaea9d4e4c0c3d2e129cec08481c6c990df9e57048607847aa0d1"
+      },
+      {
+        "bytes": 18565,
+        "elf": {
+          "class": "ELF32",
+          "data": "little-endian",
+          "entry": 0,
+          "flags": 1,
+          "ident_version": 1,
+          "machine": 8,
+          "osabi": 0,
+          "program_header_count": 2,
+          "program_header_offset": 52,
+          "section_header_count": 12,
+          "section_header_offset": 14428,
+          "section_name_index": 9,
+          "type": 65408,
+          "version": 1
+        },
+        "elf_magic": "7f454c46",
+        "end_offset": 104485,
+        "extinfo": [
+          {
+            "data_length": 4,
+            "data_sha256": "9f946d2459c79f8d7c96b8ea19897ed054b5090e107df163f907ae71bf63e560",
+            "type": 1,
+            "type_name": "DATE",
+            "value": 0
+          },
+          {
+            "data_length": 0,
+            "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "type": 2,
+            "type_name": "VERSION",
+            "value": 521
+          },
+          {
+            "data_length": 20,
+            "data_sha256": "946fa5b5a456042871e6de39fd88d95abba7e5d5b1f2109675d4781e8358ed57",
+            "type": 3,
+            "type_name": "COMMENT",
+            "value": 0
+          }
+        ],
+        "name": "MODLOAD",
+        "offset": 85920,
+        "program_headers": [
+          {
+            "alignment": 4,
+            "file_size": 46,
+            "flags": 4,
+            "memory_size": 0,
+            "offset": 116,
+            "paddr": 0,
+            "type": 1879048320,
+            "vaddr": 0
+          },
+          {
+            "alignment": 16,
+            "file_size": 14160,
+            "flags": 7,
+            "memory_size": 14196,
+            "offset": 176,
+            "paddr": 0,
+            "type": 1,
+            "vaddr": 0
+          }
+        ],
+        "sha256": "8a70343332d45654e4995fa6f75b5c309ef3cd37cc58db2d372f488b00e9acde"
+      },
+      {
+        "bytes": 19661,
+        "elf": {
+          "class": "ELF32",
+          "data": "little-endian",
+          "entry": 0,
+          "flags": 1,
+          "ident_version": 1,
+          "machine": 8,
+          "osabi": 0,
+          "program_header_count": 2,
+          "program_header_offset": 52,
+          "section_header_count": 13,
+          "section_header_offset": 13300,
+          "section_name_index": 10,
+          "type": 65408,
+          "version": 1
+        },
+        "elf_magic": "7f454c46",
+        "end_offset": 124157,
+        "extinfo": [
+          {
+            "data_length": 4,
+            "data_sha256": "9f946d2459c79f8d7c96b8ea19897ed054b5090e107df163f907ae71bf63e560",
+            "type": 1,
+            "type_name": "DATE",
+            "value": 0
+          },
+          {
+            "data_length": 0,
+            "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "type": 2,
+            "type_name": "VERSION",
+            "value": 530
+          },
+          {
+            "data_length": 16,
+            "data_sha256": "8fe8df1fb3d273170a626ec08d20e3edacdc57d2ed2af69e74a7afafeeab2aad",
+            "type": 3,
+            "type_name": "COMMENT",
+            "value": 0
+          }
+        ],
+        "name": "FILEIO",
+        "offset": 104496,
+        "program_headers": [
+          {
+            "alignment": 4,
+            "file_size": 41,
+            "flags": 4,
+            "memory_size": 0,
+            "offset": 116,
+            "paddr": 0,
+            "type": 1879048320,
+            "vaddr": 0
+          },
+          {
+            "alignment": 16,
+            "file_size": 13040,
+            "flags": 7,
+            "memory_size": 17024,
+            "offset": 160,
+            "paddr": 0,
+            "type": 1,
+            "vaddr": 0
+          }
+        ],
+        "sha256": "270c6408794d7817c5e016dc7f0fba6df4e93db6cb31058dec480fd8270cdb42"
+      },
+      {
+        "bytes": 83053,
+        "elf": {
+          "class": "ELF32",
+          "data": "little-endian",
+          "entry": 0,
+          "flags": 1,
+          "ident_version": 1,
+          "machine": 8,
+          "osabi": 0,
+          "program_header_count": 2,
+          "program_header_offset": 52,
+          "section_header_count": 13,
+          "section_header_offset": 55588,
+          "section_name_index": 10,
+          "type": 65408,
+          "version": 1
+        },
+        "elf_magic": "7f454c46",
+        "end_offset": 207213,
+        "extinfo": [
+          {
+            "data_length": 4,
+            "data_sha256": "81a737fc994215ae7245ebe9cea395e664b8a1e1c344a94e5e315f1e69094bba",
+            "type": 1,
+            "type_name": "DATE",
+            "value": 0
+          },
+          {
+            "data_length": 0,
+            "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "type": 2,
+            "type_name": "VERSION",
+            "value": 549
+          },
+          {
+            "data_length": 12,
+            "data_sha256": "ec45c3331a5c18e0644449bf38a7503e9465b630e70c5b7ee74b87474f150999",
+            "type": 3,
+            "type_name": "COMMENT",
+            "value": 0
+          }
+        ],
+        "name": "CDVDMAN",
+        "offset": 124160,
+        "program_headers": [
+          {
+            "alignment": 4,
+            "file_size": 38,
+            "flags": 4,
+            "memory_size": 0,
+            "offset": 116,
+            "paddr": 0,
+            "type": 1879048320,
+            "vaddr": 0
+          },
+          {
+            "alignment": 16,
+            "file_size": 55328,
+            "flags": 7,
+            "memory_size": 109632,
+            "offset": 160,
+            "paddr": 0,
+            "type": 1,
+            "vaddr": 0
+          }
+        ],
+        "sha256": "726fdae95c34f677b89c7489df4184901f47618ffaae168580aaa8b93977aa8a"
+      },
+      {
+        "bytes": 32653,
+        "elf": {
+          "class": "ELF32",
+          "data": "little-endian",
+          "entry": 256,
+          "flags": 1,
+          "ident_version": 1,
+          "machine": 8,
+          "osabi": 0,
+          "program_header_count": 2,
+          "program_header_offset": 52,
+          "section_header_count": 13,
+          "section_header_offset": 21652,
+          "section_name_index": 10,
+          "type": 65408,
+          "version": 1
+        },
+        "elf_magic": "7f454c46",
+        "end_offset": 239869,
+        "extinfo": [
+          {
+            "data_length": 4,
+            "data_sha256": "81a737fc994215ae7245ebe9cea395e664b8a1e1c344a94e5e315f1e69094bba",
+            "type": 1,
+            "type_name": "DATE",
+            "value": 0
+          },
+          {
+            "data_length": 0,
+            "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "type": 2,
+            "type_name": "VERSION",
+            "value": 549
+          },
+          {
+            "data_length": 16,
+            "data_sha256": "e69886adad200202f398925bd23628e78d097237dc9d9ff198988fc8832fb11c",
+            "type": 3,
+            "type_name": "COMMENT",
+            "value": 0
+          }
+        ],
+        "name": "CDVDFSV",
+        "offset": 207216,
+        "program_headers": [
+          {
+            "alignment": 4,
+            "file_size": 41,
+            "flags": 4,
+            "memory_size": 0,
+            "offset": 116,
+            "paddr": 0,
+            "type": 1879048320,
+            "vaddr": 0
+          },
+          {
+            "alignment": 16,
+            "file_size": 21392,
+            "flags": 7,
+            "memory_size": 26080,
+            "offset": 160,
+            "paddr": 0,
+            "type": 1,
+            "vaddr": 0
+          }
+        ],
+        "sha256": "efff610e5865357260d55409025fd0c7d518c62be4c268b2a9923b978a1ab8e6"
+      },
+      {
+        "bytes": 10505,
+        "elf": {
+          "class": "ELF32",
+          "data": "little-endian",
+          "entry": 0,
+          "flags": 1,
+          "ident_version": 1,
+          "machine": 8,
+          "osabi": 0,
+          "program_header_count": 2,
+          "program_header_offset": 52,
+          "section_header_count": 12,
+          "section_header_offset": 7688,
+          "section_name_index": 9,
+          "type": 65408,
+          "version": 1
+        },
+        "elf_magic": "7f454c46",
+        "end_offset": 250377,
+        "extinfo": [
+          {
+            "data_length": 4,
+            "data_sha256": "9f946d2459c79f8d7c96b8ea19897ed054b5090e107df163f907ae71bf63e560",
+            "type": 1,
+            "type_name": "DATE",
+            "value": 0
+          },
+          {
+            "data_length": 0,
+            "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "type": 2,
+            "type_name": "VERSION",
+            "value": 514
+          },
+          {
+            "data_length": 16,
+            "data_sha256": "b1648d208be32b1df073d35fd587e60ecefe5dd3af8f8766c5430ac1975bdc4a",
+            "type": 3,
+            "type_name": "COMMENT",
+            "value": 0
+          }
+        ],
+        "name": "LOADFILE",
+        "offset": 239872,
+        "program_headers": [
+          {
+            "alignment": 4,
+            "file_size": 41,
+            "flags": 4,
+            "memory_size": 0,
+            "offset": 116,
+            "paddr": 0,
+            "type": 1879048320,
+            "vaddr": 0
+          },
+          {
+            "alignment": 16,
+            "file_size": 7440,
+            "flags": 7,
+            "memory_size": 8108,
+            "offset": 160,
+            "paddr": 0,
+            "type": 1,
+            "vaddr": 0
+          }
+        ],
+        "sha256": "79dbd79942cb241af3116b9ffec425420cdfddf3529b52e8ad3ff3805a32f7a1"
+      },
+      {
+        "bytes": 6085,
+        "elf": {
+          "class": "ELF32",
+          "data": "little-endian",
+          "entry": 0,
+          "flags": 1,
+          "ident_version": 1,
+          "machine": 8,
+          "osabi": 0,
+          "program_header_count": 2,
+          "program_header_offset": 52,
+          "section_header_count": 12,
+          "section_header_offset": 4412,
+          "section_name_index": 9,
+          "type": 65408,
+          "version": 1
+        },
+        "elf_magic": "7f454c46",
+        "end_offset": 256469,
+        "extinfo": [
+          {
+            "data_length": 4,
+            "data_sha256": "9f946d2459c79f8d7c96b8ea19897ed054b5090e107df163f907ae71bf63e560",
+            "type": 1,
+            "type_name": "DATE",
+            "value": 0
+          },
+          {
+            "data_length": 0,
+            "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "type": 2,
+            "type_name": "VERSION",
+            "value": 514
+          },
+          {
+            "data_length": 16,
+            "data_sha256": "796ad98e7d819018cf2e0943fbfbcdfbff6dabfa99b29655bc500ee396e308d6",
+            "type": 3,
+            "type_name": "COMMENT",
+            "value": 0
+          }
+        ],
+        "name": "TIMEMANI",
+        "offset": 250384,
+        "program_headers": [
+          {
+            "alignment": 4,
+            "file_size": 40,
+            "flags": 4,
+            "memory_size": 0,
+            "offset": 116,
+            "paddr": 0,
+            "type": 1879048320,
+            "vaddr": 0
+          },
+          {
+            "alignment": 16,
+            "file_size": 4160,
+            "flags": 7,
+            "memory_size": 4160,
+            "offset": 160,
+            "paddr": 0,
+            "type": 1,
+            "vaddr": 0
+          }
+        ],
+        "sha256": "603d4f54409682d538b7005e0ce396e4a993feafb04ee58d3fd7444f8fb7b291"
+      },
+      {
+        "bytes": 3881,
+        "elf": {
+          "class": "ELF32",
+          "data": "little-endian",
+          "entry": 0,
+          "flags": 1,
+          "ident_version": 1,
+          "machine": 8,
+          "osabi": 0,
+          "program_header_count": 2,
+          "program_header_offset": 52,
+          "section_header_count": 11,
+          "section_header_offset": 2560,
+          "section_name_index": 8,
+          "type": 65408,
+          "version": 1
+        },
+        "elf_magic": "7f454c46",
+        "end_offset": 260361,
+        "extinfo": [
+          {
+            "data_length": 4,
+            "data_sha256": "9f946d2459c79f8d7c96b8ea19897ed054b5090e107df163f907ae71bf63e560",
+            "type": 1,
+            "type_name": "DATE",
+            "value": 0
+          },
+          {
+            "data_length": 0,
+            "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "type": 2,
+            "type_name": "VERSION",
+            "value": 513
+          },
+          {
+            "data_length": 16,
+            "data_sha256": "6b7cf4f340f53dbb6b89d27c3fbc59cd8797faf47fee5909a26339757bc71d27",
+            "type": 3,
+            "type_name": "COMMENT",
+            "value": 0
+          }
+        ],
+        "name": "ROMDRV",
+        "offset": 256480,
+        "program_headers": [
+          {
+            "alignment": 4,
+            "file_size": 42,
+            "flags": 4,
+            "memory_size": 0,
+            "offset": 116,
+            "paddr": 0,
+            "type": 1879048320,
+            "vaddr": 0
+          },
+          {
+            "alignment": 16,
+            "file_size": 2320,
+            "flags": 7,
+            "memory_size": 2528,
+            "offset": 160,
+            "paddr": 0,
+            "type": 1,
+            "vaddr": 0
+          }
+        ],
+        "sha256": "8518392c81f6c8238bf72cc47559c7b9b4a5699449c10690649ae6dcadcf1b24"
+      },
+      {
+        "bytes": 1545,
+        "elf": {
+          "class": "ELF32",
+          "data": "little-endian",
+          "entry": 0,
+          "flags": 1,
+          "ident_version": 1,
+          "machine": 8,
+          "osabi": 0,
+          "program_header_count": 2,
+          "program_header_offset": 52,
+          "section_header_count": 11,
+          "section_header_offset": 928,
+          "section_name_index": 8,
+          "type": 65408,
+          "version": 1
+        },
+        "elf_magic": "7f454c46",
+        "end_offset": 261913,
+        "extinfo": [
+          {
+            "data_length": 4,
+            "data_sha256": "9f946d2459c79f8d7c96b8ea19897ed054b5090e107df163f907ae71bf63e560",
+            "type": 1,
+            "type_name": "DATE",
+            "value": 0
+          },
+          {
+            "data_length": 0,
+            "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "type": 2,
+            "type_name": "VERSION",
+            "value": 514
+          },
+          {
+            "data_length": 8,
+            "data_sha256": "493ae1c1712ce3f89d6a02eecd3dcc06863804bcbfb25ca1d9a367cc283eb454",
+            "type": 3,
+            "type_name": "COMMENT",
+            "value": 0
+          }
+        ],
+        "name": "EESYNC",
+        "offset": 260368,
+        "program_headers": [
+          {
+            "alignment": 4,
+            "file_size": 33,
+            "flags": 4,
+            "memory_size": 0,
+            "offset": 116,
+            "paddr": 0,
+            "type": 1879048320,
+            "vaddr": 0
+          },
+          {
+            "alignment": 16,
+            "file_size": 688,
+            "flags": 7,
+            "memory_size": 688,
+            "offset": 160,
+            "paddr": 0,
+            "type": 1,
+            "vaddr": 0
+          }
+        ],
+        "sha256": "65badfb985e5bba0a0356b5325181137af2d39a7d12c42061b9f19e6cd0f5452"
+      },
+      {
+        "bytes": 10045,
+        "elf": {
+          "class": "ELF32",
+          "data": "little-endian",
+          "entry": 0,
+          "flags": 1,
+          "ident_version": 1,
+          "machine": 8,
+          "osabi": 0,
+          "program_header_count": 2,
+          "program_header_offset": 52,
+          "section_header_count": 12,
+          "section_header_offset": 7276,
+          "section_name_index": 9,
+          "type": 65408,
+          "version": 1
+        },
+        "elf_magic": "7f454c46",
+        "end_offset": 271965,
+        "extinfo": [
+          {
+            "data_length": 4,
+            "data_sha256": "9f946d2459c79f8d7c96b8ea19897ed054b5090e107df163f907ae71bf63e560",
+            "type": 1,
+            "type_name": "DATE",
+            "value": 0
+          },
+          {
+            "data_length": 0,
+            "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "type": 2,
+            "type_name": "VERSION",
+            "value": 515
+          },
+          {
+            "data_length": 16,
+            "data_sha256": "4afd0fa320375c26b625dc663f3d4b6811b1f92320f5e032a4fedc0fa2340ebf",
+            "type": 3,
+            "type_name": "COMMENT",
+            "value": 0
+          }
+        ],
+        "name": "SYSCLIB",
+        "offset": 261920,
+        "program_headers": [
+          {
+            "alignment": 4,
+            "file_size": 39,
+            "flags": 4,
+            "memory_size": 0,
+            "offset": 116,
+            "paddr": 0,
+            "type": 1879048320,
+            "vaddr": 0
+          },
+          {
+            "alignment": 16,
+            "file_size": 7024,
+            "flags": 7,
+            "memory_size": 7024,
+            "offset": 160,
+            "paddr": 0,
+            "type": 1,
+            "vaddr": 0
+          }
+        ],
+        "sha256": "96e8bf4a2cb888c2d81ea7280588ae3afb17ea34802c5d9de80984715631988c"
+      },
+      {
+        "bytes": 3377,
+        "elf": {
+          "class": "ELF32",
+          "data": "little-endian",
+          "entry": 0,
+          "flags": 1,
+          "ident_version": 1,
+          "machine": 8,
+          "osabi": 0,
+          "program_header_count": 2,
+          "program_header_offset": 52,
+          "section_header_count": 12,
+          "section_header_offset": 2184,
+          "section_name_index": 9,
+          "type": 65408,
+          "version": 1
+        },
+        "elf_magic": "7f454c46",
+        "end_offset": 275345,
+        "extinfo": [
+          {
+            "data_length": 4,
+            "data_sha256": "9f946d2459c79f8d7c96b8ea19897ed054b5090e107df163f907ae71bf63e560",
+            "type": 1,
+            "type_name": "DATE",
+            "value": 0
+          },
+          {
+            "data_length": 0,
+            "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "type": 2,
+            "type_name": "VERSION",
+            "value": 515
+          },
+          {
+            "data_length": 8,
+            "data_sha256": "5e6816bdf7c00aa8d5420d919f2e5eecf96df03b46bceac3b390046ce71a04d4",
+            "type": 3,
+            "type_name": "COMMENT",
+            "value": 0
+          }
+        ],
+        "name": "STDIO",
+        "offset": 271968,
+        "program_headers": [
+          {
+            "alignment": 4,
+            "file_size": 32,
+            "flags": 4,
+            "memory_size": 0,
+            "offset": 116,
+            "paddr": 0,
+            "type": 1879048320,
+            "vaddr": 0
+          },
+          {
+            "alignment": 16,
+            "file_size": 1936,
+            "flags": 7,
+            "memory_size": 1952,
+            "offset": 160,
+            "paddr": 0,
+            "type": 1,
+            "vaddr": 0
+          }
+        ],
+        "sha256": "fcd9f4edf55578083675940da2e48e7436c19ad32b69e9910c2ed2faaf1f69ff"
+      }
+    ],
+    "extinfo_pool": {
+      "bytes": 596,
+      "comment_payloads_summarized_by_hash_only": true,
+      "offset": 320,
+      "total_declared_extinfo_bytes": 596,
+      "type_counts": {
+        "COMMENT": 17,
+        "DATE": 17,
+        "VERSION": 16
+      }
+    },
+    "iso_extracted_hash_match": true,
+    "iso_offset": 4179968,
+    "iso_path": "MODULES/IOPRP300.IMG;1",
+    "layout_checks": {
+      "all_module_payloads_elf_magic": true,
+      "all_module_starts_16_byte_aligned": true,
+      "last_module_ends_at_image_eof": true,
+      "no_op_reassembly_byte_exact": true,
+      "nonfinal_alignment_gaps_zero": true,
+      "reassembled_bytes": 275345,
+      "reassembled_sha256": "02d314464c17c715d7e809297b0aba184173a98616b1fafeac27fe33fc480c82",
+      "source_sha256": "02d314464c17c715d7e809297b0aba184173a98616b1fafeac27fe33fc480c82"
+    },
+    "lba": 2041,
+    "limitations": [
+      "The ROMDIR record layout and extinfo envelope fields are cross-checked against PS2SDK source and this image; other IOPRP variants are not tested.",
+      "No replacement, edited growth, runtime module loading, relocation application, dependency graph, or module semantics are validated."
+    ],
+    "named_record_count": 19,
+    "record_count_including_terminator": 20,
+    "reset_prefix_hex": "52455345540000000000080000000000",
+    "romdir_table": {
+      "bytes": 320,
+      "offset": 0,
+      "record_count_including_terminator": 20,
+      "record_width": 16,
+      "records": [
+        {
+          "data_end": 0,
+          "data_offset": 0,
+          "extinfo": [
+            {
+              "data_length": 4,
+              "data_sha256": "81a737fc994215ae7245ebe9cea395e664b8a1e1c344a94e5e315f1e69094bba",
+              "type": 1,
+              "type_name": "DATE",
+              "value": 0
+            }
+          ],
+          "extinfo_size": 8,
+          "index": 0,
+          "name": "RESET",
+          "raw_record_hex": "52455345540000000000080000000000",
+          "size": 0,
+          "table_offset": 0
+        },
+        {
+          "data_end": 320,
+          "data_offset": 0,
+          "extinfo": [
+            {
+              "data_length": 64,
+              "data_sha256": "fff091b5ecd8cec6a13e7c252322195bb1401b874db9a21d39ca7842675177ae",
+              "type": 3,
+              "type_name": "COMMENT",
+              "value": 0
+            }
+          ],
+          "extinfo_size": 68,
+          "index": 1,
+          "name": "ROMDIR",
+          "raw_record_hex": "524f4d44495200000000440040010000",
+          "size": 320,
+          "table_offset": 16
+        },
+        {
+          "data_end": 916,
+          "data_offset": 320,
+          "data_sha256": "d6365a88dd084ca7ca24dcbfc79fb7725cc04bbad1a22c24ea402d8d4f05e387",
+          "extinfo": [],
+          "extinfo_size": 0,
+          "index": 2,
+          "name": "EXTINFO",
+          "raw_record_hex": "455854494e464f000000000054020000",
+          "size": 596,
+          "table_offset": 32
+        },
+        {
+          "data_end": 6969,
+          "data_offset": 928,
+          "extinfo": [
+            {
+              "data_length": 4,
+              "data_sha256": "9f946d2459c79f8d7c96b8ea19897ed054b5090e107df163f907ae71bf63e560",
+              "type": 1,
+              "type_name": "DATE",
+              "value": 0
+            },
+            {
+              "data_length": 0,
+              "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "type": 2,
+              "type_name": "VERSION",
+              "value": 515
+            },
+            {
+              "data_length": 24,
+              "data_sha256": "52807d2f1acc14797e7cb674363a60b1b8d600993eb272ba28b044bb7eb80753",
+              "type": 3,
+              "type_name": "COMMENT",
+              "value": 0
+            }
+          ],
+          "extinfo_size": 40,
+          "index": 3,
+          "name": "SYSMEM",
+          "raw_record_hex": "5359534d454d00000000280099170000",
+          "size": 6041,
+          "table_offset": 48
+        },
+        {
+          "data_end": 17409,
+          "data_offset": 6976,
+          "extinfo": [
+            {
+              "data_length": 4,
+              "data_sha256": "9f946d2459c79f8d7c96b8ea19897ed054b5090e107df163f907ae71bf63e560",
+              "type": 1,
+              "type_name": "DATE",
+              "value": 0
+            },
+            {
+              "data_length": 0,
+              "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "type": 2,
+              "type_name": "VERSION",
+              "value": 518
+            },
+            {
+              "data_length": 16,
+              "data_sha256": "d736ea9e3766dfa260633c4cb0c4d1b41782d4b2c06a281656e13d58dbb4b65c",
+              "type": 3,
+              "type_name": "COMMENT",
+              "value": 0
+            }
+          ],
+          "extinfo_size": 32,
+          "index": 4,
+          "name": "LOADCORE",
+          "raw_record_hex": "4c4f4144434f524500002000c1280000",
+          "size": 10433,
+          "table_offset": 64
+        },
+        {
+          "data_end": 27953,
+          "data_offset": 17424,
+          "extinfo": [
+            {
+              "data_length": 4,
+              "data_sha256": "9f946d2459c79f8d7c96b8ea19897ed054b5090e107df163f907ae71bf63e560",
+              "type": 1,
+              "type_name": "DATE",
+              "value": 0
+            },
+            {
+              "data_length": 0,
+              "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "type": 2,
+              "type_name": "VERSION",
+              "value": 520
+            },
+            {
+              "data_length": 24,
+              "data_sha256": "5ef13d5af08142f7ca132749c9fccd11319d8c49e375d731c94966da6fdceb19",
+              "type": 3,
+              "type_name": "COMMENT",
+              "value": 0
+            }
+          ],
+          "extinfo_size": 40,
+          "index": 5,
+          "name": "SIFCMD",
+          "raw_record_hex": "534946434d4400000000280021290000",
+          "size": 10529,
+          "table_offset": 80
+        },
+        {
+          "data_end": 33937,
+          "data_offset": 27968,
+          "extinfo": [
+            {
+              "data_length": 4,
+              "data_sha256": "9f946d2459c79f8d7c96b8ea19897ed054b5090e107df163f907ae71bf63e560",
+              "type": 1,
+              "type_name": "DATE",
+              "value": 0
+            },
+            {
+              "data_length": 0,
+              "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "type": 2,
+              "type_name": "VERSION",
+              "value": 515
+            },
+            {
+              "data_length": 16,
+              "data_sha256": "d9a1adba7f7499802f29556227885eef0e69f9b554fc316bcd5d87d3a385c84b",
+              "type": 3,
+              "type_name": "COMMENT",
+              "value": 0
+            }
+          ],
+          "extinfo_size": 32,
+          "index": 6,
+          "name": "SIFMAN",
+          "raw_record_hex": "5349464d414e00000000200051170000",
+          "size": 5969,
+          "table_offset": 96
+        },
+        {
+          "data_end": 73357,
+          "data_offset": 33952,
+          "extinfo": [
+            {
+              "data_length": 4,
+              "data_sha256": "9f946d2459c79f8d7c96b8ea19897ed054b5090e107df163f907ae71bf63e560",
+              "type": 1,
+              "type_name": "DATE",
+              "value": 0
+            },
+            {
+              "data_length": 0,
+              "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "type": 2,
+              "type_name": "VERSION",
+              "value": 515
+            },
+            {
+              "data_length": 24,
+              "data_sha256": "b372016606979adde617e1c54608bf28159f93a13e1ab9a429f6d50c79d01163",
+              "type": 3,
+              "type_name": "COMMENT",
+              "value": 0
+            }
+          ],
+          "extinfo_size": 40,
+          "index": 7,
+          "name": "THREADMAN",
+          "raw_record_hex": "5448524541444d414e002800ed990000",
+          "size": 39405,
+          "table_offset": 112
+        },
+        {
+          "data_end": 85905,
+          "data_offset": 73360,
+          "extinfo": [
+            {
+              "data_length": 4,
+              "data_sha256": "9f946d2459c79f8d7c96b8ea19897ed054b5090e107df163f907ae71bf63e560",
+              "type": 1,
+              "type_name": "DATE",
+              "value": 0
+            },
+            {
+              "data_length": 0,
+              "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "type": 2,
+              "type_name": "VERSION",
+              "value": 515
+            },
+            {
+              "data_length": 16,
+              "data_sha256": "7ef68ca0f7aefde92f5362f89473c85ed15183ba809de321599546046caec039",
+              "type": 3,
+              "type_name": "COMMENT",
+              "value": 0
+            }
+          ],
+          "extinfo_size": 32,
+          "index": 8,
+          "name": "IOMAN",
+          "raw_record_hex": "494f4d414e0000000000200001310000",
+          "size": 12545,
+          "table_offset": 128
+        },
+        {
+          "data_end": 104485,
+          "data_offset": 85920,
+          "extinfo": [
+            {
+              "data_length": 4,
+              "data_sha256": "9f946d2459c79f8d7c96b8ea19897ed054b5090e107df163f907ae71bf63e560",
+              "type": 1,
+              "type_name": "DATE",
+              "value": 0
+            },
+            {
+              "data_length": 0,
+              "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "type": 2,
+              "type_name": "VERSION",
+              "value": 521
+            },
+            {
+              "data_length": 20,
+              "data_sha256": "946fa5b5a456042871e6de39fd88d95abba7e5d5b1f2109675d4781e8358ed57",
+              "type": 3,
+              "type_name": "COMMENT",
+              "value": 0
+            }
+          ],
+          "extinfo_size": 36,
+          "index": 9,
+          "name": "MODLOAD",
+          "raw_record_hex": "4d4f444c4f4144000000240085480000",
+          "size": 18565,
+          "table_offset": 144
+        },
+        {
+          "data_end": 124157,
+          "data_offset": 104496,
+          "extinfo": [
+            {
+              "data_length": 4,
+              "data_sha256": "9f946d2459c79f8d7c96b8ea19897ed054b5090e107df163f907ae71bf63e560",
+              "type": 1,
+              "type_name": "DATE",
+              "value": 0
+            },
+            {
+              "data_length": 0,
+              "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "type": 2,
+              "type_name": "VERSION",
+              "value": 530
+            },
+            {
+              "data_length": 16,
+              "data_sha256": "8fe8df1fb3d273170a626ec08d20e3edacdc57d2ed2af69e74a7afafeeab2aad",
+              "type": 3,
+              "type_name": "COMMENT",
+              "value": 0
+            }
+          ],
+          "extinfo_size": 32,
+          "index": 10,
+          "name": "FILEIO",
+          "raw_record_hex": "46494c45494f000000002000cd4c0000",
+          "size": 19661,
+          "table_offset": 160
+        },
+        {
+          "data_end": 207213,
+          "data_offset": 124160,
+          "extinfo": [
+            {
+              "data_length": 4,
+              "data_sha256": "81a737fc994215ae7245ebe9cea395e664b8a1e1c344a94e5e315f1e69094bba",
+              "type": 1,
+              "type_name": "DATE",
+              "value": 0
+            },
+            {
+              "data_length": 0,
+              "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "type": 2,
+              "type_name": "VERSION",
+              "value": 549
+            },
+            {
+              "data_length": 12,
+              "data_sha256": "ec45c3331a5c18e0644449bf38a7503e9465b630e70c5b7ee74b87474f150999",
+              "type": 3,
+              "type_name": "COMMENT",
+              "value": 0
+            }
+          ],
+          "extinfo_size": 28,
+          "index": 11,
+          "name": "CDVDMAN",
+          "raw_record_hex": "434456444d414e0000001c006d440100",
+          "size": 83053,
+          "table_offset": 176
+        },
+        {
+          "data_end": 239869,
+          "data_offset": 207216,
+          "extinfo": [
+            {
+              "data_length": 4,
+              "data_sha256": "81a737fc994215ae7245ebe9cea395e664b8a1e1c344a94e5e315f1e69094bba",
+              "type": 1,
+              "type_name": "DATE",
+              "value": 0
+            },
+            {
+              "data_length": 0,
+              "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "type": 2,
+              "type_name": "VERSION",
+              "value": 549
+            },
+            {
+              "data_length": 16,
+              "data_sha256": "e69886adad200202f398925bd23628e78d097237dc9d9ff198988fc8832fb11c",
+              "type": 3,
+              "type_name": "COMMENT",
+              "value": 0
+            }
+          ],
+          "extinfo_size": 32,
+          "index": 12,
+          "name": "CDVDFSV",
+          "raw_record_hex": "4344564446535600000020008d7f0000",
+          "size": 32653,
+          "table_offset": 192
+        },
+        {
+          "data_end": 250377,
+          "data_offset": 239872,
+          "extinfo": [
+            {
+              "data_length": 4,
+              "data_sha256": "9f946d2459c79f8d7c96b8ea19897ed054b5090e107df163f907ae71bf63e560",
+              "type": 1,
+              "type_name": "DATE",
+              "value": 0
+            },
+            {
+              "data_length": 0,
+              "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "type": 2,
+              "type_name": "VERSION",
+              "value": 514
+            },
+            {
+              "data_length": 16,
+              "data_sha256": "b1648d208be32b1df073d35fd587e60ecefe5dd3af8f8766c5430ac1975bdc4a",
+              "type": 3,
+              "type_name": "COMMENT",
+              "value": 0
+            }
+          ],
+          "extinfo_size": 32,
+          "index": 13,
+          "name": "LOADFILE",
+          "raw_record_hex": "4c4f414446494c450000200009290000",
+          "size": 10505,
+          "table_offset": 208
+        },
+        {
+          "data_end": 256469,
+          "data_offset": 250384,
+          "extinfo": [
+            {
+              "data_length": 4,
+              "data_sha256": "9f946d2459c79f8d7c96b8ea19897ed054b5090e107df163f907ae71bf63e560",
+              "type": 1,
+              "type_name": "DATE",
+              "value": 0
+            },
+            {
+              "data_length": 0,
+              "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "type": 2,
+              "type_name": "VERSION",
+              "value": 514
+            },
+            {
+              "data_length": 16,
+              "data_sha256": "796ad98e7d819018cf2e0943fbfbcdfbff6dabfa99b29655bc500ee396e308d6",
+              "type": 3,
+              "type_name": "COMMENT",
+              "value": 0
+            }
+          ],
+          "extinfo_size": 32,
+          "index": 14,
+          "name": "TIMEMANI",
+          "raw_record_hex": "54494d454d414e4900002000c5170000",
+          "size": 6085,
+          "table_offset": 224
+        },
+        {
+          "data_end": 260361,
+          "data_offset": 256480,
+          "extinfo": [
+            {
+              "data_length": 4,
+              "data_sha256": "9f946d2459c79f8d7c96b8ea19897ed054b5090e107df163f907ae71bf63e560",
+              "type": 1,
+              "type_name": "DATE",
+              "value": 0
+            },
+            {
+              "data_length": 0,
+              "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "type": 2,
+              "type_name": "VERSION",
+              "value": 513
+            },
+            {
+              "data_length": 16,
+              "data_sha256": "6b7cf4f340f53dbb6b89d27c3fbc59cd8797faf47fee5909a26339757bc71d27",
+              "type": 3,
+              "type_name": "COMMENT",
+              "value": 0
+            }
+          ],
+          "extinfo_size": 32,
+          "index": 15,
+          "name": "ROMDRV",
+          "raw_record_hex": "524f4d445256000000002000290f0000",
+          "size": 3881,
+          "table_offset": 240
+        },
+        {
+          "data_end": 261913,
+          "data_offset": 260368,
+          "extinfo": [
+            {
+              "data_length": 4,
+              "data_sha256": "9f946d2459c79f8d7c96b8ea19897ed054b5090e107df163f907ae71bf63e560",
+              "type": 1,
+              "type_name": "DATE",
+              "value": 0
+            },
+            {
+              "data_length": 0,
+              "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "type": 2,
+              "type_name": "VERSION",
+              "value": 514
+            },
+            {
+              "data_length": 8,
+              "data_sha256": "493ae1c1712ce3f89d6a02eecd3dcc06863804bcbfb25ca1d9a367cc283eb454",
+              "type": 3,
+              "type_name": "COMMENT",
+              "value": 0
+            }
+          ],
+          "extinfo_size": 24,
+          "index": 16,
+          "name": "EESYNC",
+          "raw_record_hex": "454553594e4300000000180009060000",
+          "size": 1545,
+          "table_offset": 256
+        },
+        {
+          "data_end": 271965,
+          "data_offset": 261920,
+          "extinfo": [
+            {
+              "data_length": 4,
+              "data_sha256": "9f946d2459c79f8d7c96b8ea19897ed054b5090e107df163f907ae71bf63e560",
+              "type": 1,
+              "type_name": "DATE",
+              "value": 0
+            },
+            {
+              "data_length": 0,
+              "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "type": 2,
+              "type_name": "VERSION",
+              "value": 515
+            },
+            {
+              "data_length": 16,
+              "data_sha256": "4afd0fa320375c26b625dc663f3d4b6811b1f92320f5e032a4fedc0fa2340ebf",
+              "type": 3,
+              "type_name": "COMMENT",
+              "value": 0
+            }
+          ],
+          "extinfo_size": 32,
+          "index": 17,
+          "name": "SYSCLIB",
+          "raw_record_hex": "535953434c494200000020003d270000",
+          "size": 10045,
+          "table_offset": 272
+        },
+        {
+          "data_end": 275345,
+          "data_offset": 271968,
+          "extinfo": [
+            {
+              "data_length": 4,
+              "data_sha256": "9f946d2459c79f8d7c96b8ea19897ed054b5090e107df163f907ae71bf63e560",
+              "type": 1,
+              "type_name": "DATE",
+              "value": 0
+            },
+            {
+              "data_length": 0,
+              "data_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "type": 2,
+              "type_name": "VERSION",
+              "value": 515
+            },
+            {
+              "data_length": 8,
+              "data_sha256": "5e6816bdf7c00aa8d5420d919f2e5eecf96df03b46bceac3b390046ce71a04d4",
+              "type": 3,
+              "type_name": "COMMENT",
+              "value": 0
+            }
+          ],
+          "extinfo_size": 24,
+          "index": 18,
+          "name": "STDIO",
+          "raw_record_hex": "535444494f00000000001800310d0000",
+          "size": 3377,
+          "table_offset": 288
+        },
+        {
+          "data_end": null,
+          "data_offset": null,
+          "extinfo": [],
+          "extinfo_size": 0,
+          "index": 19,
+          "name": "",
+          "raw_record_hex": "00000000000000000000000000000000",
+          "size": 0,
+          "table_offset": 304
+        }
+      ]
+    },
+    "sha256": "02d314464c17c715d7e809297b0aba184173a98616b1fafeac27fe33fc480c82",
+    "terminator_index": 19
+  },
+  "schema_version": 1,
+  "scope": "Inventory of all standalone MODULES/*.IRX;1 files and the IOPRP300.IMG;1 image listed by the pinned disc inventory. DVP overlays and executable semantics are outside this report.",
+  "source_evidence": {
+    "baserom_bytes": 4587749376,
+    "disc_inventory": "reports/disc.json",
+    "leaf_verification": "For each listed standalone module and IOPRP image, bytes read directly from its ISO LBA match the extracted workspace leaf and the SHA-256 in reports/disc.json.",
+    "readelf": "GNU readelf (GNU Binutils for Ubuntu) 2.46",
+    "romdir_struct_reference": "https://github.com/ps2dev/ps2sdk/blob/master/ee/iopreboot/src/SifIopRebootBuffer.c",
+    "section_verification": "Standalone ELF section headers were decoded from source bytes, matched to the existing per-module JSON reports, and file-backed section hashes were recomputed.",
+    "sector_bytes": 2048
+  },
+  "standalone_irx_summary": {
+    "all_iso_leaf_hashes_match": true,
+    "bytes": 381321,
+    "count": 14,
+    "elf_type_counts": {
+      "0xff80": 14
+    },
+    "flags_counts": {
+      "0x1": 14
+    },
+    "machine_counts": {
+      "8": 14
+    },
+    "nobits_section_sizes": {
+      ".bss": 212450,
+      ".sbss": 104
+    },
+    "note": "EM_MIPS and e_flags=0x1 are observed ELF metadata. Host readelf describes the flags as MIPS-I; this does not recover source, loader behavior, or module runtime semantics.",
+    "program_header_count_distribution": {
+      "2": 14
+    },
+    "relocation_entry_counts_by_readelf_type": {
+      "R_MIPS_26": 4610,
+      "R_MIPS_32": 821,
+      "R_MIPS_HI16": 2667,
+      "R_MIPS_LO16": 2667
+    },
+    "relocation_section_presence": {
+      ".rel.data": 14,
+      ".rel.rodata": 8,
+      ".rel.text": 14
+    },
+    "section_header_count_distribution": {
+      "11": 5,
+      "12": 7,
+      "13": 2
+    },
+    "section_name_occurrences": {
+      "": 14,
+      ".bss": 14,
+      ".data": 14,
+      ".iopmod": 14,
+      ".mdebug": 1,
+      ".rel.data": 14,
+      ".rel.rodata": 8,
+      ".rel.text": 14,
+      ".rodata": 14,
+      ".sbss": 2,
+      ".shstrtab": 14,
+      ".strtab": 14,
+      ".symtab": 14,
+      ".text": 14
+    },
+    "section_type_occurrences": {
+      "0": 14,
+      "1": 42,
+      "1879048197": 1,
+      "1879048320": 14,
+      "2": 14,
+      "3": 28,
+      "8": 16,
+      "9": 36
+    }
+  },
+  "standalone_modules": [
+    {
+      "bytes": 68893,
+      "elf": {
+        "class": "ELF32",
+        "data": "little-endian",
+        "entry": 1404,
+        "flags": 1,
+        "ident_version": 1,
+        "machine": 8,
+        "osabi": 0,
+        "program_header_count": 2,
+        "program_header_offset": 52,
+        "program_headers": [
+          {
+            "alignment": 4,
+            "file_size": 41,
+            "flags": 4,
+            "memory_size": 0,
+            "offset": 116,
+            "paddr": 0,
+            "type": 1879048320,
+            "vaddr": 0
+          },
+          {
+            "alignment": 16,
+            "file_size": 50688,
+            "flags": 7,
+            "memory_size": 85744,
+            "offset": 160,
+            "paddr": 0,
+            "type": 1,
+            "vaddr": 0
+          }
+        ],
+        "section_header_count": 13,
+        "section_header_offset": 50948,
+        "section_name_index": 10,
+        "type": 65408,
+        "version": 1
+      },
+      "iopmod": {
+        "bytes": 41,
+        "offset": 116,
+        "printable_ascii_strings": [
+          {
+            "offset": 26,
+            "text": "CRI_ADX_Driver"
+          }
+        ],
+        "sha256": "e82d8f013d8d9f4ce66a0d729028f6600ba4e80127c8188c848a74cff72fa729",
+        "type": 1879048320
+      },
+      "iso_extracted_hash_match": true,
+      "iso_offset": 4083712,
+      "iso_path": "MODULES/CRI_ADXI.IRX;1",
+      "lba": 1994,
+      "relocations_by_readelf_type": {
+        "R_MIPS_26": 922,
+        "R_MIPS_32": 48,
+        "R_MIPS_HI16": 603,
+        "R_MIPS_LO16": 603
+      },
+      "sections": [
+        {
+          "alignment": 0,
+          "flags": 0,
+          "name": "",
+          "offset": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0,
+          "type": 0
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".iopmod",
+          "offset": 116,
+          "sha256": "e82d8f013d8d9f4ce66a0d729028f6600ba4e80127c8188c848a74cff72fa729",
+          "size": 41,
+          "type": 1879048320
+        },
+        {
+          "alignment": 16,
+          "flags": 6,
+          "name": ".text",
+          "offset": 160,
+          "sha256": "daf5829d3b5e9295e2b6240c40075c8a0453344129ead7bae522322eab1d6d9f",
+          "size": 42704,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.text",
+          "offset": 51468,
+          "sha256": "0a3f20bbcf21f12f3b1a0d18cdf0958089152349c8e74201b44653932d8247f6",
+          "size": 17024,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 2,
+          "name": ".rodata",
+          "offset": 42864,
+          "sha256": "e87679862958594b19a5e9cdb48c911f4ba1b387e781b622ffe8a0c374874cb5",
+          "size": 6768,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.rodata",
+          "offset": 68492,
+          "sha256": "572f3f9c0883def5c3f9d5794cdd9d356227720d5953527a3a1cff4a8869db41",
+          "size": 104,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 3,
+          "name": ".data",
+          "offset": 49632,
+          "sha256": "4e16a242066cbad5f0d2de624598a7e57d08972df6bd7fc2169a5cb3ba327579",
+          "size": 1216,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.data",
+          "offset": 68596,
+          "sha256": "b54c1de509773b2702259bc93a0a05b85258c3f3ede07893afe8d209ba4912e8",
+          "size": 280,
+          "type": 9
+        },
+        {
+          "alignment": 8,
+          "flags": 268435459,
+          "name": ".sbss",
+          "offset": 50848,
+          "sha256": null,
+          "size": 100,
+          "type": 8
+        },
+        {
+          "alignment": 16,
+          "flags": 3,
+          "name": ".bss",
+          "offset": 50848,
+          "sha256": null,
+          "size": 34944,
+          "type": 8
+        },
+        {
+          "alignment": 1,
+          "flags": 0,
+          "name": ".shstrtab",
+          "offset": 50848,
+          "sha256": "56c1c603b60d884bc6301108e547be527be66e936b6d5aacffcd223a85d3d257",
+          "size": 98,
+          "type": 3
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".symtab",
+          "offset": 68876,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "size": 16,
+          "type": 2
+        },
+        {
+          "alignment": 1,
+          "flags": 0,
+          "name": ".strtab",
+          "offset": 68892,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+          "size": 1,
+          "type": 3
+        }
+      ],
+      "sha256": "864171baafc279fb74245c99fb48f3cf8e17c0f0cab0efcf02f1854e7bc259d9"
+    },
+    {
+      "bytes": 15653,
+      "elf": {
+        "class": "ELF32",
+        "data": "little-endian",
+        "entry": 0,
+        "flags": 1,
+        "ident_version": 1,
+        "machine": 8,
+        "osabi": 0,
+        "program_header_count": 2,
+        "program_header_offset": 52,
+        "program_headers": [
+          {
+            "alignment": 4,
+            "file_size": 38,
+            "flags": 4,
+            "memory_size": 0,
+            "offset": 116,
+            "paddr": 0,
+            "type": 1879048320,
+            "vaddr": 0
+          },
+          {
+            "alignment": 16,
+            "file_size": 10032,
+            "flags": 7,
+            "memory_size": 20816,
+            "offset": 160,
+            "paddr": 0,
+            "type": 1,
+            "vaddr": 0
+          }
+        ],
+        "section_header_count": 12,
+        "section_header_offset": 10284,
+        "section_name_index": 9,
+        "type": 65408,
+        "version": 1
+      },
+      "iopmod": {
+        "bytes": 38,
+        "offset": 116,
+        "printable_ascii_strings": [
+          {
+            "offset": 26,
+            "text": "Dbc_Manager"
+          }
+        ],
+        "sha256": "661ca6fa7702bde51ed75e30fd42d650c659aaafa6bfaae52ee58f32e022fac4",
+        "type": 1879048320
+      },
+      "iso_extracted_hash_match": true,
+      "iso_offset": 4153344,
+      "iso_path": "MODULES/DBCMAN.IRX;1",
+      "lba": 2028,
+      "relocations_by_readelf_type": {
+        "R_MIPS_26": 193,
+        "R_MIPS_32": 110,
+        "R_MIPS_HI16": 153,
+        "R_MIPS_LO16": 153
+      },
+      "sections": [
+        {
+          "alignment": 0,
+          "flags": 0,
+          "name": "",
+          "offset": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0,
+          "type": 0
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".iopmod",
+          "offset": 116,
+          "sha256": "661ca6fa7702bde51ed75e30fd42d650c659aaafa6bfaae52ee58f32e022fac4",
+          "size": 38,
+          "type": 1879048320
+        },
+        {
+          "alignment": 16,
+          "flags": 6,
+          "name": ".text",
+          "offset": 160,
+          "sha256": "8c22b590bf4703629a29d787bd6e012a319472f3de603495e0bd1014b6bd7850",
+          "size": 8864,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.text",
+          "offset": 10764,
+          "sha256": "2d0cd7e4f543e79b0ef00a84c98af4643eab6130fde041746b5aaae49d9dd360",
+          "size": 4072,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 2,
+          "name": ".rodata",
+          "offset": 9024,
+          "sha256": "dbec23e5c9acbe1a8115f748a6d37ac93ee46a6e22000fe79b3d3b78e2eda1cb",
+          "size": 1136,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.rodata",
+          "offset": 14836,
+          "sha256": "2fc7734bac598e0189d613bc0a0a5a83c0b4369f13dbce7fc206d6a91dd06709",
+          "size": 792,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 3,
+          "name": ".data",
+          "offset": 10160,
+          "sha256": "26042de6932c161225ce9c7f606b0e84230cbd79e96dba480ab4d6f9b1e76f71",
+          "size": 32,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.data",
+          "offset": 15628,
+          "sha256": "3a2bce415e8110292a18ecec4b113d28cd45b1bc172ad54d123f07802c82ecd6",
+          "size": 8,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 3,
+          "name": ".bss",
+          "offset": 10192,
+          "sha256": null,
+          "size": 10784,
+          "type": 8
+        },
+        {
+          "alignment": 1,
+          "flags": 0,
+          "name": ".shstrtab",
+          "offset": 10192,
+          "sha256": "37b54db04aadd038415633861bbd87f009979af5421ef116b1cb8824b6de7e1a",
+          "size": 92,
+          "type": 3
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".symtab",
+          "offset": 15636,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "size": 16,
+          "type": 2
+        },
+        {
+          "alignment": 1,
+          "flags": 0,
+          "name": ".strtab",
+          "offset": 15652,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+          "size": 1,
+          "type": 3
+        }
+      ],
+      "sha256": "60bfea7d0877df3af370676666e5f1043b6e71723fab94cdff790c19e75e12e7"
+    },
+    {
+      "bytes": 9509,
+      "elf": {
+        "class": "ELF32",
+        "data": "little-endian",
+        "entry": 0,
+        "flags": 1,
+        "ident_version": 1,
+        "machine": 8,
+        "osabi": 0,
+        "program_header_count": 2,
+        "program_header_offset": 52,
+        "program_headers": [
+          {
+            "alignment": 4,
+            "file_size": 31,
+            "flags": 4,
+            "memory_size": 0,
+            "offset": 116,
+            "paddr": 0,
+            "type": 1879048320,
+            "vaddr": 0
+          },
+          {
+            "alignment": 16,
+            "file_size": 6960,
+            "flags": 7,
+            "memory_size": 7504,
+            "offset": 160,
+            "paddr": 0,
+            "type": 1,
+            "vaddr": 0
+          }
+        ],
+        "section_header_count": 12,
+        "section_header_offset": 7212,
+        "section_name_index": 9,
+        "type": 65408,
+        "version": 1
+      },
+      "iopmod": {
+        "bytes": 31,
+        "offset": 116,
+        "printable_ascii_strings": [
+          {
+            "offset": 26,
+            "text": "ds1o"
+          }
+        ],
+        "sha256": "1a0768a424c7d02c6fa7bcc463026f42165a61e29481f31fc17b367a63c4ad6b",
+        "type": 1879048320
+      },
+      "iso_extracted_hash_match": true,
+      "iso_offset": 4169728,
+      "iso_path": "MODULES/DS1O.IRX;1",
+      "lba": 2036,
+      "relocations_by_readelf_type": {
+        "R_MIPS_26": 133,
+        "R_MIPS_32": 18,
+        "R_MIPS_HI16": 37,
+        "R_MIPS_LO16": 37
+      },
+      "sections": [
+        {
+          "alignment": 0,
+          "flags": 0,
+          "name": "",
+          "offset": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0,
+          "type": 0
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".iopmod",
+          "offset": 116,
+          "sha256": "1a0768a424c7d02c6fa7bcc463026f42165a61e29481f31fc17b367a63c4ad6b",
+          "size": 31,
+          "type": 1879048320
+        },
+        {
+          "alignment": 16,
+          "flags": 6,
+          "name": ".text",
+          "offset": 160,
+          "sha256": "bda457a7d471f030629ec86a3a09f5b977f6e7ab9907ed962f1046a7189b5dab",
+          "size": 6784,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.text",
+          "offset": 7692,
+          "sha256": "5aff26086a83765f215aa57c1f285a7d5004b9efb6f48ad76de5725a19953937",
+          "size": 1656,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 2,
+          "name": ".rodata",
+          "offset": 6944,
+          "sha256": "66bcddb860bfa5f974457695e66a71b6f37ac1ef099bce9b8425fcfa5fcf7389",
+          "size": 96,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.rodata",
+          "offset": 9348,
+          "sha256": "fd424c579bf7951e30ef219c3a5ecc4d9bba00728545f0158dfa16f24b2e225c",
+          "size": 112,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 3,
+          "name": ".data",
+          "offset": 7040,
+          "sha256": "999c5f5a5754ce93bc46e5b2d056589ff3c7281ca7aa284bbd890452ae160ef4",
+          "size": 80,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.data",
+          "offset": 9460,
+          "sha256": "8f737ca7c5b3dafedf816be84ff544bfa32e3d16dbbd197ca735b3497cd8dcb3",
+          "size": 32,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 3,
+          "name": ".bss",
+          "offset": 7120,
+          "sha256": null,
+          "size": 544,
+          "type": 8
+        },
+        {
+          "alignment": 1,
+          "flags": 0,
+          "name": ".shstrtab",
+          "offset": 7120,
+          "sha256": "37b54db04aadd038415633861bbd87f009979af5421ef116b1cb8824b6de7e1a",
+          "size": 92,
+          "type": 3
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".symtab",
+          "offset": 9492,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "size": 16,
+          "type": 2
+        },
+        {
+          "alignment": 1,
+          "flags": 0,
+          "name": ".strtab",
+          "offset": 9508,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+          "size": 1,
+          "type": 3
+        }
+      ],
+      "sha256": "3292b0b26c17de16cde9b701efbf47ee4802f7d61be38276463ae66a43f9e365"
+    },
+    {
+      "bytes": 30085,
+      "elf": {
+        "class": "ELF32",
+        "data": "little-endian",
+        "entry": 176,
+        "flags": 1,
+        "ident_version": 1,
+        "machine": 8,
+        "osabi": 0,
+        "program_header_count": 2,
+        "program_header_offset": 52,
+        "program_headers": [
+          {
+            "alignment": 4,
+            "file_size": 47,
+            "flags": 4,
+            "memory_size": 0,
+            "offset": 116,
+            "paddr": 0,
+            "type": 1879048320,
+            "vaddr": 0
+          },
+          {
+            "alignment": 16,
+            "file_size": 22144,
+            "flags": 7,
+            "memory_size": 23776,
+            "offset": 176,
+            "paddr": 0,
+            "type": 1,
+            "vaddr": 0
+          }
+        ],
+        "section_header_count": 12,
+        "section_header_offset": 22412,
+        "section_name_index": 9,
+        "type": 65408,
+        "version": 1
+      },
+      "iopmod": {
+        "bytes": 47,
+        "offset": 116,
+        "printable_ascii_strings": [
+          {
+            "offset": 26,
+            "text": "Sound_Device_Library"
+          }
+        ],
+        "sha256": "4b4421fab6dd7639ec26a9aaa2741651cbd9e30306acb9d3ae8374a5bb03cef0",
+        "type": 1879048320
+      },
+      "iso_extracted_hash_match": true,
+      "iso_offset": 4456448,
+      "iso_path": "MODULES/LIBSD.IRX;1",
+      "lba": 2176,
+      "relocations_by_readelf_type": {
+        "R_MIPS_26": 298,
+        "R_MIPS_32": 93,
+        "R_MIPS_HI16": 253,
+        "R_MIPS_LO16": 253
+      },
+      "sections": [
+        {
+          "alignment": 0,
+          "flags": 0,
+          "name": "",
+          "offset": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0,
+          "type": 0
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".iopmod",
+          "offset": 116,
+          "sha256": "4b4421fab6dd7639ec26a9aaa2741651cbd9e30306acb9d3ae8374a5bb03cef0",
+          "size": 47,
+          "type": 1879048320
+        },
+        {
+          "alignment": 16,
+          "flags": 6,
+          "name": ".text",
+          "offset": 176,
+          "sha256": "cc9151a9f6a446dfc1b9d2cae2db686b9b338af8162a74ca4905df33d156cb87",
+          "size": 19376,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.text",
+          "offset": 22892,
+          "sha256": "5e9066b6ce5ddf4af549d535ee6683f35f0d13f7a5c8ec00beddda376203d8a5",
+          "size": 6704,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 2,
+          "name": ".rodata",
+          "offset": 19552,
+          "sha256": "b5294d4c9fca12e6c9e3b703a06606fb3079608989e197ff0ab4ba576dc52327",
+          "size": 464,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.rodata",
+          "offset": 29596,
+          "sha256": "002db94c404f2698dc0977b12af6b761b86c2c17add046ce9b662ee5c9b9f629",
+          "size": 464,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 3,
+          "name": ".data",
+          "offset": 20016,
+          "sha256": "7a99c67d7142b4948182c2f49047f6204176f7cf78cfd07764e366a706d8e00c",
+          "size": 2304,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.data",
+          "offset": 30060,
+          "sha256": "fe0a774497dd38a5c68e302789c93079d02da89f2c2a23c714fedf1a79e9b723",
+          "size": 8,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 3,
+          "name": ".bss",
+          "offset": 22320,
+          "sha256": null,
+          "size": 1632,
+          "type": 8
+        },
+        {
+          "alignment": 1,
+          "flags": 0,
+          "name": ".shstrtab",
+          "offset": 22320,
+          "sha256": "37b54db04aadd038415633861bbd87f009979af5421ef116b1cb8824b6de7e1a",
+          "size": 92,
+          "type": 3
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".symtab",
+          "offset": 30068,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "size": 16,
+          "type": 2
+        },
+        {
+          "alignment": 1,
+          "flags": 0,
+          "name": ".strtab",
+          "offset": 30084,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+          "size": 1,
+          "type": 3
+        }
+      ],
+      "sha256": "94915a3d9673e8a370e144ae493552d5e1f3956bb9ae5bd91e2da5f36c83ce7d"
+    },
+    {
+      "bytes": 20269,
+      "elf": {
+        "class": "ELF32",
+        "data": "little-endian",
+        "entry": 0,
+        "flags": 1,
+        "ident_version": 1,
+        "machine": 8,
+        "osabi": 0,
+        "program_header_count": 2,
+        "program_header_offset": 52,
+        "program_headers": [
+          {
+            "alignment": 4,
+            "file_size": 33,
+            "flags": 4,
+            "memory_size": 0,
+            "offset": 116,
+            "paddr": 0,
+            "type": 1879048320,
+            "vaddr": 0
+          },
+          {
+            "alignment": 16,
+            "file_size": 13856,
+            "flags": 7,
+            "memory_size": 19712,
+            "offset": 160,
+            "paddr": 0,
+            "type": 1,
+            "vaddr": 0
+          }
+        ],
+        "section_header_count": 13,
+        "section_header_offset": 14116,
+        "section_name_index": 10,
+        "type": 65408,
+        "version": 1
+      },
+      "iopmod": {
+        "bytes": 33,
+        "offset": 116,
+        "printable_ascii_strings": [
+          {
+            "offset": 26,
+            "text": "mc2_d "
+          }
+        ],
+        "sha256": "884b6f62788196da696e205fc305358d1fdc3cff8ec7b34aa18c102e941d4f0e",
+        "type": 1879048320
+      },
+      "iso_extracted_hash_match": true,
+      "iso_offset": 4487168,
+      "iso_path": "MODULES/MC2_D.IRX;1",
+      "lba": 2191,
+      "relocations_by_readelf_type": {
+        "R_MIPS_26": 255,
+        "R_MIPS_32": 17,
+        "R_MIPS_HI16": 215,
+        "R_MIPS_LO16": 215
+      },
+      "sections": [
+        {
+          "alignment": 0,
+          "flags": 0,
+          "name": "",
+          "offset": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0,
+          "type": 0
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".iopmod",
+          "offset": 116,
+          "sha256": "884b6f62788196da696e205fc305358d1fdc3cff8ec7b34aa18c102e941d4f0e",
+          "size": 33,
+          "type": 1879048320
+        },
+        {
+          "alignment": 16,
+          "flags": 6,
+          "name": ".text",
+          "offset": 160,
+          "sha256": "1fadafdc6668ce06d607d88feaa7b70a2b0b94dfb04ac828a167b7476a8cee98",
+          "size": 13344,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.text",
+          "offset": 14636,
+          "sha256": "06f0c6b081094ee83e466cb40c91d9df45dba7c43c587dfc86de4d57bf8d89f8",
+          "size": 5480,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 2,
+          "name": ".rodata",
+          "offset": 13504,
+          "sha256": "d52101ff50b8f5326079a2b62c49952fbc5e9e873bec0c5562aba8f5af0301a3",
+          "size": 160,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.rodata",
+          "offset": 20116,
+          "sha256": "25cba40ec3de88315d8cae67f2148239458a7ad39a80427d9ceae6aa1518cc32",
+          "size": 104,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 3,
+          "name": ".data",
+          "offset": 13664,
+          "sha256": "333685c54a0cd97425ba12e669663f5a887c449d049971ab7e46bc34c8bd96b8",
+          "size": 352,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.data",
+          "offset": 20220,
+          "sha256": "c4ef7ed1149728bf2c1bfc2e06b7afafa1025ff45959b1d7d42e4a37794b5593",
+          "size": 32,
+          "type": 9
+        },
+        {
+          "alignment": 4,
+          "flags": 268435459,
+          "name": ".sbss",
+          "offset": 14016,
+          "sha256": null,
+          "size": 4,
+          "type": 8
+        },
+        {
+          "alignment": 16,
+          "flags": 3,
+          "name": ".bss",
+          "offset": 14016,
+          "sha256": null,
+          "size": 5840,
+          "type": 8
+        },
+        {
+          "alignment": 1,
+          "flags": 0,
+          "name": ".shstrtab",
+          "offset": 14016,
+          "sha256": "56c1c603b60d884bc6301108e547be527be66e936b6d5aacffcd223a85d3d257",
+          "size": 98,
+          "type": 3
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".symtab",
+          "offset": 20252,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "size": 16,
+          "type": 2
+        },
+        {
+          "alignment": 1,
+          "flags": 0,
+          "name": ".strtab",
+          "offset": 20268,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+          "size": 1,
+          "type": 3
+        }
+      ],
+      "sha256": "e4c9df69322819807761baff5b3fd33a66054ac4cc76e24d6558f6f210b12a04"
+    },
+    {
+      "bytes": 96181,
+      "elf": {
+        "class": "ELF32",
+        "data": "little-endian",
+        "entry": 376,
+        "flags": 1,
+        "ident_version": 1,
+        "machine": 8,
+        "osabi": 0,
+        "program_header_count": 2,
+        "program_header_offset": 52,
+        "program_headers": [
+          {
+            "alignment": 4,
+            "file_size": 32,
+            "flags": 4,
+            "memory_size": 0,
+            "offset": 116,
+            "paddr": 0,
+            "type": 1879048320,
+            "vaddr": 0
+          },
+          {
+            "alignment": 16,
+            "file_size": 73760,
+            "flags": 7,
+            "memory_size": 160612,
+            "offset": 160,
+            "paddr": 0,
+            "type": 1,
+            "vaddr": 0
+          }
+        ],
+        "section_header_count": 12,
+        "section_header_offset": 74012,
+        "section_name_index": 9,
+        "type": 65408,
+        "version": 1
+      },
+      "iopmod": {
+        "bytes": 32,
+        "offset": 116,
+        "printable_ascii_strings": [
+          {
+            "offset": 26,
+            "text": "mcman"
+          }
+        ],
+        "sha256": "c211a240e05e5a0d391f8f2fd1db72eda825dae4931517d7544566231e8a02ef",
+        "type": 1879048320
+      },
+      "iso_extracted_hash_match": true,
+      "iso_offset": 4507648,
+      "iso_path": "MODULES/MCMAN.IRX;1",
+      "lba": 2201,
+      "relocations_by_readelf_type": {
+        "R_MIPS_26": 1209,
+        "R_MIPS_32": 116,
+        "R_MIPS_HI16": 692,
+        "R_MIPS_LO16": 692
+      },
+      "sections": [
+        {
+          "alignment": 0,
+          "flags": 0,
+          "name": "",
+          "offset": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0,
+          "type": 0
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".iopmod",
+          "offset": 116,
+          "sha256": "c211a240e05e5a0d391f8f2fd1db72eda825dae4931517d7544566231e8a02ef",
+          "size": 32,
+          "type": 1879048320
+        },
+        {
+          "alignment": 16,
+          "flags": 6,
+          "name": ".text",
+          "offset": 160,
+          "sha256": "c8a5d38fa0cab2e684ce9ba2ca97757103eec2a86c1ad6e7f9821c4a71479e31",
+          "size": 72784,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.text",
+          "offset": 74492,
+          "sha256": "674f5c266e770c6dc6514eab0ccb5aa5f26736bdaae013daff0c810d6754d222",
+          "size": 21240,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 2,
+          "name": ".rodata",
+          "offset": 72944,
+          "sha256": "e4283b2988bbb8a09efa9f52127607077c2dcdee403ddd6a4985ba065f72465f",
+          "size": 464,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.rodata",
+          "offset": 95732,
+          "sha256": "bcd19db7c9b6c803da23f8a61cb16c4a5db5318d7c02cd5de583a45d8502da37",
+          "size": 184,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 3,
+          "name": ".data",
+          "offset": 73408,
+          "sha256": "18f9148fc50ffa1cb1b158ae24c3b7873707602ed10e250c45ce8a403416347e",
+          "size": 512,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.data",
+          "offset": 95916,
+          "sha256": "de510f216a448af7aad75b11d78d2fe002b64201800fa0202d09531a0d79e0f7",
+          "size": 248,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 3,
+          "name": ".bss",
+          "offset": 73920,
+          "sha256": null,
+          "size": 86852,
+          "type": 8
+        },
+        {
+          "alignment": 1,
+          "flags": 0,
+          "name": ".shstrtab",
+          "offset": 73920,
+          "sha256": "37b54db04aadd038415633861bbd87f009979af5421ef116b1cb8824b6de7e1a",
+          "size": 92,
+          "type": 3
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".symtab",
+          "offset": 96164,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "size": 16,
+          "type": 2
+        },
+        {
+          "alignment": 1,
+          "flags": 0,
+          "name": ".strtab",
+          "offset": 96180,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+          "size": 1,
+          "type": 3
+        }
+      ],
+      "sha256": "b4df4061f8fdc9c7cf06a329b96227ad6ca69d008df475c1fc4d3e8d06fe3fa4"
+    },
+    {
+      "bytes": 7385,
+      "elf": {
+        "class": "ELF32",
+        "data": "little-endian",
+        "entry": 64,
+        "flags": 1,
+        "ident_version": 1,
+        "machine": 8,
+        "osabi": 0,
+        "program_header_count": 2,
+        "program_header_offset": 52,
+        "program_headers": [
+          {
+            "alignment": 4,
+            "file_size": 33,
+            "flags": 4,
+            "memory_size": 0,
+            "offset": 116,
+            "paddr": 0,
+            "type": 1879048320,
+            "vaddr": 0
+          },
+          {
+            "alignment": 16,
+            "file_size": 4768,
+            "flags": 7,
+            "memory_size": 14144,
+            "offset": 160,
+            "paddr": 0,
+            "type": 1,
+            "vaddr": 0
+          }
+        ],
+        "section_header_count": 11,
+        "section_header_offset": 5008,
+        "section_name_index": 8,
+        "type": 65408,
+        "version": 1
+      },
+      "iopmod": {
+        "bytes": 33,
+        "offset": 116,
+        "printable_ascii_strings": [
+          {
+            "offset": 26,
+            "text": "mcserv"
+          }
+        ],
+        "sha256": "6f144fcac5cf26d4e320c04c6b9d085af40c6ec831682236b1e5b5a8b2d6b167",
+        "type": 1879048320
+      },
+      "iso_extracted_hash_match": true,
+      "iso_offset": 4603904,
+      "iso_path": "MODULES/MCSERV.IRX;1",
+      "lba": 2248,
+      "relocations_by_readelf_type": {
+        "R_MIPS_26": 139,
+        "R_MIPS_32": 9,
+        "R_MIPS_HI16": 46,
+        "R_MIPS_LO16": 46
+      },
+      "sections": [
+        {
+          "alignment": 0,
+          "flags": 0,
+          "name": "",
+          "offset": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0,
+          "type": 0
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".iopmod",
+          "offset": 116,
+          "sha256": "6f144fcac5cf26d4e320c04c6b9d085af40c6ec831682236b1e5b5a8b2d6b167",
+          "size": 33,
+          "type": 1879048320
+        },
+        {
+          "alignment": 16,
+          "flags": 6,
+          "name": ".text",
+          "offset": 160,
+          "sha256": "f77e8a0af9746374cbebaf0532fa87d43ccbbd66a88ac63cd2f7b2476700f9fa",
+          "size": 4672,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.text",
+          "offset": 5448,
+          "sha256": "e1cfd2256b14a010dc55b8416f6dbff771d239de5ecc01e2fcfa439f7fe48933",
+          "size": 1912,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 2,
+          "name": ".rodata",
+          "offset": 4832,
+          "sha256": "20266b5ef5bd83d256207d597cb0e03ba109aaeb4a6d77d7831aa538c4d25362",
+          "size": 64,
+          "type": 1
+        },
+        {
+          "alignment": 16,
+          "flags": 3,
+          "name": ".data",
+          "offset": 4896,
+          "sha256": "b4c2a9173d2092bc05d17f0644ba5690adb7501742ca484196a989420df56b5f",
+          "size": 32,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.data",
+          "offset": 7360,
+          "sha256": "12d430b55dda79b2506f7fcae3adc140f039d27673d3f38486061999ac07a777",
+          "size": 8,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 3,
+          "name": ".bss",
+          "offset": 4928,
+          "sha256": null,
+          "size": 9376,
+          "type": 8
+        },
+        {
+          "alignment": 1,
+          "flags": 0,
+          "name": ".shstrtab",
+          "offset": 4928,
+          "sha256": "9492e7777fff498f8547c3b4552061f6dae164454312824dc16aea3ce2bbe649",
+          "size": 80,
+          "type": 3
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".symtab",
+          "offset": 7368,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "size": 16,
+          "type": 2
+        },
+        {
+          "alignment": 1,
+          "flags": 0,
+          "name": ".strtab",
+          "offset": 7384,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+          "size": 1,
+          "type": 3
+        }
+      ],
+      "sha256": "5006b0dd650fa416d03a559bc8e3bae8a7ae95be81f3e4f3fd9bd524fa27e000"
+    },
+    {
+      "bytes": 63037,
+      "elf": {
+        "class": "ELF32",
+        "data": "little-endian",
+        "entry": 0,
+        "flags": 1,
+        "ident_version": 1,
+        "machine": 8,
+        "osabi": 0,
+        "program_header_count": 2,
+        "program_header_offset": 52,
+        "program_headers": [
+          {
+            "alignment": 4,
+            "file_size": 50,
+            "flags": 4,
+            "memory_size": 0,
+            "offset": 116,
+            "paddr": 0,
+            "type": 1879048320,
+            "vaddr": 0
+          },
+          {
+            "alignment": 16,
+            "file_size": 50336,
+            "flags": 7,
+            "memory_size": 66866,
+            "offset": 176,
+            "paddr": 0,
+            "type": 1,
+            "vaddr": 0
+          }
+        ],
+        "section_header_count": 12,
+        "section_header_offset": 50604,
+        "section_name_index": 9,
+        "type": 65408,
+        "version": 1
+      },
+      "iopmod": {
+        "bytes": 50,
+        "offset": 116,
+        "printable_ascii_strings": [
+          {
+            "offset": 26,
+            "text": "SPU2_Synthesizer_Module"
+          }
+        ],
+        "sha256": "75cb3ec2cc7d8fe3ab46a557e5b45c1414d870195f7c4bbd12031043747c508b",
+        "type": 1879048320
+      },
+      "iso_extracted_hash_match": true,
+      "iso_offset": 4612096,
+      "iso_path": "MODULES/MODHSYN.IRX;1",
+      "lba": 2252,
+      "relocations_by_readelf_type": {
+        "R_MIPS_26": 693,
+        "R_MIPS_32": 243,
+        "R_MIPS_HI16": 278,
+        "R_MIPS_LO16": 278
+      },
+      "sections": [
+        {
+          "alignment": 0,
+          "flags": 0,
+          "name": "",
+          "offset": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0,
+          "type": 0
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".iopmod",
+          "offset": 116,
+          "sha256": "75cb3ec2cc7d8fe3ab46a557e5b45c1414d870195f7c4bbd12031043747c508b",
+          "size": 50,
+          "type": 1879048320
+        },
+        {
+          "alignment": 16,
+          "flags": 6,
+          "name": ".text",
+          "offset": 176,
+          "sha256": "b45feec803d82ca520aa9e871fefc5be5ff6231ec241e9877dc744f3137afeda",
+          "size": 48736,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.text",
+          "offset": 51084,
+          "sha256": "3d3cf931af98815461d8c6c91940ffc482f5d5a0305a6159a95fe5a467854930",
+          "size": 10232,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 2,
+          "name": ".rodata",
+          "offset": 48912,
+          "sha256": "2e2c4581e6ef24fc0399ac6f357681e2f316f8274cb46749a4442f0b49c6e522",
+          "size": 896,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.rodata",
+          "offset": 61316,
+          "sha256": "a73eaa40e381e0a4ddab4dc2b172cbd4c380c22f81db675cebe34fc4ba7a86c3",
+          "size": 1536,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 3,
+          "name": ".data",
+          "offset": 49808,
+          "sha256": "3e135813625b6ffce959f5362b86d9d990012e2a353c9bd7b4c4abd98fb45edb",
+          "size": 704,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.data",
+          "offset": 62852,
+          "sha256": "c6a97679b434d85ac7bcee14492c9a5d6715160df21be621af7b4af70f0a0654",
+          "size": 168,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 3,
+          "name": ".bss",
+          "offset": 50512,
+          "sha256": null,
+          "size": 16530,
+          "type": 8
+        },
+        {
+          "alignment": 1,
+          "flags": 0,
+          "name": ".shstrtab",
+          "offset": 50512,
+          "sha256": "37b54db04aadd038415633861bbd87f009979af5421ef116b1cb8824b6de7e1a",
+          "size": 92,
+          "type": 3
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".symtab",
+          "offset": 63020,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "size": 16,
+          "type": 2
+        },
+        {
+          "alignment": 1,
+          "flags": 0,
+          "name": ".strtab",
+          "offset": 63036,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+          "size": 1,
+          "type": 3
+        }
+      ],
+      "sha256": "804a40a38d620ecc88b81b90afb8aab262f0540187e8db25eed1ede69131fed1"
+    },
+    {
+      "bytes": 9393,
+      "elf": {
+        "class": "ELF32",
+        "data": "little-endian",
+        "entry": 0,
+        "flags": 1,
+        "ident_version": 1,
+        "machine": 8,
+        "osabi": 0,
+        "program_header_count": 2,
+        "program_header_offset": 52,
+        "program_headers": [
+          {
+            "alignment": 4,
+            "file_size": 51,
+            "flags": 4,
+            "memory_size": 0,
+            "offset": 116,
+            "paddr": 0,
+            "type": 1879048320,
+            "vaddr": 0
+          },
+          {
+            "alignment": 16,
+            "file_size": 7792,
+            "flags": 7,
+            "memory_size": 7792,
+            "offset": 176,
+            "paddr": 0,
+            "type": 1,
+            "vaddr": 0
+          }
+        ],
+        "section_header_count": 11,
+        "section_header_offset": 8048,
+        "section_name_index": 8,
+        "type": 65408,
+        "version": 1
+      },
+      "iopmod": {
+        "bytes": 51,
+        "offset": 116,
+        "printable_ascii_strings": [
+          {
+            "offset": 26,
+            "text": "SE_Sequence_Input_Module"
+          }
+        ],
+        "sha256": "c9c413e5d4f5544b50d8210d86e2f0c27ebea65748864d89c2e5bb14deb54829",
+        "type": 1879048320
+      },
+      "iso_extracted_hash_match": true,
+      "iso_offset": 4675584,
+      "iso_path": "MODULES/MODSEIN.IRX;1",
+      "lba": 2283,
+      "relocations_by_readelf_type": {
+        "R_MIPS_26": 88,
+        "R_MIPS_32": 21,
+        "R_MIPS_HI16": 1,
+        "R_MIPS_LO16": 1
+      },
+      "sections": [
+        {
+          "alignment": 0,
+          "flags": 0,
+          "name": "",
+          "offset": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0,
+          "type": 0
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".iopmod",
+          "offset": 116,
+          "sha256": "c9c413e5d4f5544b50d8210d86e2f0c27ebea65748864d89c2e5bb14deb54829",
+          "size": 51,
+          "type": 1879048320
+        },
+        {
+          "alignment": 16,
+          "flags": 6,
+          "name": ".text",
+          "offset": 176,
+          "sha256": "77df5b8328f7317cd5fc9bbef02435a88f804a50505aea20cb9eba8d37405f3b",
+          "size": 7728,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.text",
+          "offset": 8488,
+          "sha256": "66a535f0e99e675f0bfe0176dfa8e320e6d23b4543a430055cddfe557c9c0144",
+          "size": 880,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 2,
+          "name": ".rodata",
+          "offset": 7904,
+          "sha256": "90746d014e384627f0b0b16030c6eece1b9e14bdfefc574187e8f598ebddcce7",
+          "size": 32,
+          "type": 1
+        },
+        {
+          "alignment": 16,
+          "flags": 3,
+          "name": ".data",
+          "offset": 7936,
+          "sha256": "324e65f30b04efb58a1b4a71547c16759894026b36091af3cb1e34baf49483ce",
+          "size": 32,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.data",
+          "offset": 9368,
+          "sha256": "0934b62ee0c2930abba0c08ec0e74e61a1ab39695bf91b525650fa0c1aada5f1",
+          "size": 8,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 3,
+          "name": ".bss",
+          "offset": 7968,
+          "sha256": null,
+          "size": 0,
+          "type": 8
+        },
+        {
+          "alignment": 1,
+          "flags": 0,
+          "name": ".shstrtab",
+          "offset": 7968,
+          "sha256": "9492e7777fff498f8547c3b4552061f6dae164454312824dc16aea3ce2bbe649",
+          "size": 80,
+          "type": 3
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".symtab",
+          "offset": 9376,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "size": 16,
+          "type": 2
+        },
+        {
+          "alignment": 1,
+          "flags": 0,
+          "name": ".strtab",
+          "offset": 9392,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+          "size": 1,
+          "type": 3
+        }
+      ],
+      "sha256": "14eb4e2858121dd69779a1a90e30aa04c48757d28bb349cf629e499c038ad635"
+    },
+    {
+      "bytes": 19069,
+      "elf": {
+        "class": "ELF32",
+        "data": "little-endian",
+        "entry": 0,
+        "flags": 1,
+        "ident_version": 1,
+        "machine": 8,
+        "osabi": 0,
+        "program_header_count": 2,
+        "program_header_offset": 52,
+        "program_headers": [
+          {
+            "alignment": 4,
+            "file_size": 47,
+            "flags": 4,
+            "memory_size": 0,
+            "offset": 116,
+            "paddr": 0,
+            "type": 1879048320,
+            "vaddr": 0
+          },
+          {
+            "alignment": 16,
+            "file_size": 15552,
+            "flags": 7,
+            "memory_size": 15572,
+            "offset": 176,
+            "paddr": 0,
+            "type": 1,
+            "vaddr": 0
+          }
+        ],
+        "section_header_count": 12,
+        "section_header_offset": 15820,
+        "section_name_index": 9,
+        "type": 65408,
+        "version": 1
+      },
+      "iopmod": {
+        "bytes": 47,
+        "offset": 116,
+        "printable_ascii_strings": [
+          {
+            "offset": 26,
+            "text": "SE_Sequencer_Module2"
+          }
+        ],
+        "sha256": "4b110edf662b2047b226af38903ad62ed69dcb5c4b613f1303a0946580894e98",
+        "type": 1879048320
+      },
+      "iso_extracted_hash_match": true,
+      "iso_offset": 4685824,
+      "iso_path": "MODULES/MODSESQ2.IRX;1",
+      "lba": 2288,
+      "relocations_by_readelf_type": {
+        "R_MIPS_26": 195,
+        "R_MIPS_32": 59,
+        "R_MIPS_HI16": 45,
+        "R_MIPS_LO16": 45
+      },
+      "sections": [
+        {
+          "alignment": 0,
+          "flags": 0,
+          "name": "",
+          "offset": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0,
+          "type": 0
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".iopmod",
+          "offset": 116,
+          "sha256": "4b110edf662b2047b226af38903ad62ed69dcb5c4b613f1303a0946580894e98",
+          "size": 47,
+          "type": 1879048320
+        },
+        {
+          "alignment": 16,
+          "flags": 6,
+          "name": ".text",
+          "offset": 176,
+          "sha256": "445a7c8e6cd22ad0d3cfe220357bc8a1a5caf988314db2f8d362f35700d9f988",
+          "size": 15104,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.text",
+          "offset": 16300,
+          "sha256": "6a409ac4cab2dc49c9c24054ae03d111aa5201894230c70f00242acc802e470b",
+          "size": 2432,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 2,
+          "name": ".rodata",
+          "offset": 15280,
+          "sha256": "d3132031bacd1e804814f7a1544cc60c417f38a08fa4790d538745c276186736",
+          "size": 352,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.rodata",
+          "offset": 18732,
+          "sha256": "5ed0872690640fe3a6c820d155aee267f9b9c3d3f964a90aac8e6b2b4f2b4107",
+          "size": 280,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 3,
+          "name": ".data",
+          "offset": 15632,
+          "sha256": "c2d10ab0ce0c9cce316e960633c535f3d531dfecd166fd07984e682f562550d4",
+          "size": 96,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.data",
+          "offset": 19012,
+          "sha256": "b20901a06c29e470125321fd28514d78e6c1fda627c5424b5ec194e51943ac42",
+          "size": 40,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 3,
+          "name": ".bss",
+          "offset": 15728,
+          "sha256": null,
+          "size": 20,
+          "type": 8
+        },
+        {
+          "alignment": 1,
+          "flags": 0,
+          "name": ".shstrtab",
+          "offset": 15728,
+          "sha256": "37b54db04aadd038415633861bbd87f009979af5421ef116b1cb8824b6de7e1a",
+          "size": 92,
+          "type": 3
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".symtab",
+          "offset": 19052,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "size": 16,
+          "type": 2
+        },
+        {
+          "alignment": 1,
+          "flags": 0,
+          "name": ".strtab",
+          "offset": 19068,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+          "size": 1,
+          "type": 3
+        }
+      ],
+      "sha256": "ed00189ce365e2efa4589c074378a9ee2f472d134ac64e13871abad544d754af"
+    },
+    {
+      "bytes": 9161,
+      "elf": {
+        "class": "ELF32",
+        "data": "little-endian",
+        "entry": 928,
+        "flags": 1,
+        "ident_version": 1,
+        "machine": 8,
+        "osabi": 0,
+        "program_header_count": 2,
+        "program_header_offset": 52,
+        "program_headers": [
+          {
+            "alignment": 4,
+            "file_size": 37,
+            "flags": 4,
+            "memory_size": 0,
+            "offset": 116,
+            "paddr": 0,
+            "type": 1879048320,
+            "vaddr": 0
+          },
+          {
+            "alignment": 16,
+            "file_size": 5360,
+            "flags": 7,
+            "memory_size": 7368,
+            "offset": 160,
+            "paddr": 0,
+            "type": 1,
+            "vaddr": 0
+          }
+        ],
+        "section_header_count": 11,
+        "section_header_offset": 5600,
+        "section_name_index": 8,
+        "type": 65408,
+        "version": 1
+      },
+      "iopmod": {
+        "bytes": 37,
+        "offset": 116,
+        "printable_ascii_strings": [
+          {
+            "offset": 26,
+            "text": "sdr_driver"
+          }
+        ],
+        "sha256": "a89556df62a6c22aa40ee737ece10cdf940a4fdcf75f8dbf35e28c0cd8ba769d",
+        "type": 1879048320
+      },
+      "iso_extracted_hash_match": true,
+      "iso_offset": 4706304,
+      "iso_path": "MODULES/SDRDRV.IRX;1",
+      "lba": 2298,
+      "relocations_by_readelf_type": {
+        "R_MIPS_26": 157,
+        "R_MIPS_32": 7,
+        "R_MIPS_HI16": 112,
+        "R_MIPS_LO16": 112
+      },
+      "sections": [
+        {
+          "alignment": 0,
+          "flags": 0,
+          "name": "",
+          "offset": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0,
+          "type": 0
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".iopmod",
+          "offset": 116,
+          "sha256": "a89556df62a6c22aa40ee737ece10cdf940a4fdcf75f8dbf35e28c0cd8ba769d",
+          "size": 37,
+          "type": 1879048320
+        },
+        {
+          "alignment": 16,
+          "flags": 6,
+          "name": ".text",
+          "offset": 160,
+          "sha256": "dd3340168f303b25ce8f029a69f6a5257b720d783994cdf578ab501de1621d56",
+          "size": 4912,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.text",
+          "offset": 6040,
+          "sha256": "15c150ba1ba8b71cefa216980e55aad74703f25ad31d9b56bcdd3dacf62ed4f9",
+          "size": 3096,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 2,
+          "name": ".rodata",
+          "offset": 5072,
+          "sha256": "c659a9819d4a01aae6edb2f55f1b841d95122402a2b13f7677a55e7746ecc437",
+          "size": 400,
+          "type": 1
+        },
+        {
+          "alignment": 16,
+          "flags": 3,
+          "name": ".data",
+          "offset": 5472,
+          "sha256": "e0690855c3c92c80cecba7ed7d2846390c3d575c6a8d23c0f69d4777c7c07eba",
+          "size": 48,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.data",
+          "offset": 9136,
+          "sha256": "2a63e1b8f7558fe46c1dbd499d92a9938284e394b77cc31f196d3d227d964749",
+          "size": 8,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 3,
+          "name": ".bss",
+          "offset": 5520,
+          "sha256": null,
+          "size": 2008,
+          "type": 8
+        },
+        {
+          "alignment": 1,
+          "flags": 0,
+          "name": ".shstrtab",
+          "offset": 5520,
+          "sha256": "9492e7777fff498f8547c3b4552061f6dae164454312824dc16aea3ce2bbe649",
+          "size": 80,
+          "type": 3
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".symtab",
+          "offset": 9144,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "size": 16,
+          "type": 2
+        },
+        {
+          "alignment": 1,
+          "flags": 0,
+          "name": ".strtab",
+          "offset": 9160,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+          "size": 1,
+          "type": 3
+        }
+      ],
+      "sha256": "85a465ab251bde0c3d33151b3a67ec2780d57cc40ebb7df9d5ecb7bad3396b16"
+    },
+    {
+      "bytes": 14756,
+      "elf": {
+        "class": "ELF32",
+        "data": "little-endian",
+        "entry": 3664,
+        "flags": 1,
+        "ident_version": 1,
+        "machine": 8,
+        "osabi": 0,
+        "program_header_count": 2,
+        "program_header_offset": 52,
+        "program_headers": [
+          {
+            "alignment": 4,
+            "file_size": 41,
+            "flags": 4,
+            "memory_size": 0,
+            "offset": 116,
+            "paddr": 0,
+            "type": 1879048320,
+            "vaddr": 0
+          },
+          {
+            "alignment": 16,
+            "file_size": 4320,
+            "flags": 7,
+            "memory_size": 43712,
+            "offset": 160,
+            "paddr": 0,
+            "type": 1,
+            "vaddr": 0
+          }
+        ],
+        "section_header_count": 12,
+        "section_header_offset": 9584,
+        "section_name_index": 9,
+        "type": 65408,
+        "version": 1
+      },
+      "iopmod": {
+        "bytes": 41,
+        "offset": 116,
+        "printable_ascii_strings": [
+          {
+            "offset": 26,
+            "text": "se_play_driver"
+          }
+        ],
+        "sha256": "0c82c2880c01d5cacab17384aa2e4086e57ffe64c115184dfc039d8d020735bf",
+        "type": 1879048320
+      },
+      "iso_extracted_hash_match": true,
+      "iso_offset": 4716544,
+      "iso_path": "MODULES/SE_PLAY.IRX;1",
+      "lba": 2303,
+      "relocations_by_readelf_type": {
+        "R_MIPS_26": 84,
+        "R_MIPS_32": 1,
+        "R_MIPS_HI16": 58,
+        "R_MIPS_LO16": 58
+      },
+      "sections": [
+        {
+          "alignment": 0,
+          "flags": 0,
+          "name": "",
+          "offset": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0,
+          "type": 0
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".iopmod",
+          "offset": 116,
+          "sha256": "0c82c2880c01d5cacab17384aa2e4086e57ffe64c115184dfc039d8d020735bf",
+          "size": 41,
+          "type": 1879048320
+        },
+        {
+          "alignment": 16,
+          "flags": 6,
+          "name": ".text",
+          "offset": 160,
+          "sha256": "b03298289fd15d06de70ec496992f642f356fb3c6dbcf03cd76b42285a17f98a",
+          "size": 4272,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.text",
+          "offset": 10064,
+          "sha256": "3d3f1d47b53c498f4807754856f8be4a4df21c50323f0c69a47512814382ad79",
+          "size": 1600,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 2,
+          "name": ".rodata",
+          "offset": 4432,
+          "sha256": "1bbacbcf521ba4ff88d9c836565e0def2ad83c1807204d5f493ef533469198ae",
+          "size": 16,
+          "type": 1
+        },
+        {
+          "alignment": 16,
+          "flags": 3,
+          "name": ".data",
+          "offset": 4448,
+          "sha256": "4583a511e73e845deb864e3c8f43198cf104fd31e6be8a85b90a220fa201dce0",
+          "size": 32,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.data",
+          "offset": 11664,
+          "sha256": "66ea20e4ba870d7edd85e27b37b31defc9d78bfde8c84ba2779ecabe739bf0f6",
+          "size": 8,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 3,
+          "name": ".bss",
+          "offset": 4480,
+          "sha256": null,
+          "size": 39392,
+          "type": 8
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".mdebug",
+          "offset": 4480,
+          "sha256": "901553f6493365f8fd0418b1e74e53a5578a0b6d06f59dd5aa2909dbf3c6377d",
+          "size": 5016,
+          "type": 1879048197
+        },
+        {
+          "alignment": 1,
+          "flags": 0,
+          "name": ".shstrtab",
+          "offset": 9496,
+          "sha256": "1e04b5526a10090ac7bb2315fde66680df9f86932dfc52216aba96514a248df5",
+          "size": 88,
+          "type": 3
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".symtab",
+          "offset": 11672,
+          "sha256": "e0897bcbe142753132568fdf7f30948cf91f5509403edbb40279c6ddcc8ef13e",
+          "size": 1776,
+          "type": 2
+        },
+        {
+          "alignment": 1,
+          "flags": 0,
+          "name": ".strtab",
+          "offset": 13448,
+          "sha256": "a1f7513ba570772c75ba9fb42d5f540d7c0f977acf4c33d1b1279f0b89d1a3d2",
+          "size": 1308,
+          "type": 3
+        }
+      ],
+      "sha256": "ed0b6bbeb9f3394f4a306bf88de0f6ddc15553417b0bb7f1219d4da3da70f632"
+    },
+    {
+      "bytes": 11289,
+      "elf": {
+        "class": "ELF32",
+        "data": "little-endian",
+        "entry": 3604,
+        "flags": 1,
+        "ident_version": 1,
+        "machine": 8,
+        "osabi": 0,
+        "program_header_count": 2,
+        "program_header_offset": 52,
+        "program_headers": [
+          {
+            "alignment": 4,
+            "file_size": 32,
+            "flags": 4,
+            "memory_size": 0,
+            "offset": 116,
+            "paddr": 0,
+            "type": 1879048320,
+            "vaddr": 0
+          },
+          {
+            "alignment": 16,
+            "file_size": 7136,
+            "flags": 7,
+            "memory_size": 11616,
+            "offset": 160,
+            "paddr": 0,
+            "type": 1,
+            "vaddr": 0
+          }
+        ],
+        "section_header_count": 11,
+        "section_header_offset": 7376,
+        "section_name_index": 8,
+        "type": 65408,
+        "version": 1
+      },
+      "iopmod": {
+        "bytes": 32,
+        "offset": 116,
+        "printable_ascii_strings": [
+          {
+            "offset": 26,
+            "text": "sio2d"
+          }
+        ],
+        "sha256": "9ba651e5dccbc625f0a24e8e0cefcce5208d540c184939adfab7777f82be0238",
+        "type": 1879048320
+      },
+      "iso_extracted_hash_match": true,
+      "iso_offset": 4732928,
+      "iso_path": "MODULES/SIO2D.IRX;1",
+      "lba": 2311,
+      "relocations_by_readelf_type": {
+        "R_MIPS_26": 138,
+        "R_MIPS_32": 14,
+        "R_MIPS_HI16": 140,
+        "R_MIPS_LO16": 140
+      },
+      "sections": [
+        {
+          "alignment": 0,
+          "flags": 0,
+          "name": "",
+          "offset": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0,
+          "type": 0
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".iopmod",
+          "offset": 116,
+          "sha256": "9ba651e5dccbc625f0a24e8e0cefcce5208d540c184939adfab7777f82be0238",
+          "size": 32,
+          "type": 1879048320
+        },
+        {
+          "alignment": 16,
+          "flags": 6,
+          "name": ".text",
+          "offset": 160,
+          "sha256": "4571630d221474c5b5354dc53bff29ff6e78433d730e21106d259d896061346e",
+          "size": 6944,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.text",
+          "offset": 7816,
+          "sha256": "7abf17c15d2084521e2b5b90f2796e81e61693fa352dfd9acb62b2ab216ddd4c",
+          "size": 3448,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 2,
+          "name": ".rodata",
+          "offset": 7104,
+          "sha256": "452d191a9fb378cd36a27c65af82441d820217dfa3d1c0643291b751891435d6",
+          "size": 160,
+          "type": 1
+        },
+        {
+          "alignment": 16,
+          "flags": 3,
+          "name": ".data",
+          "offset": 7264,
+          "sha256": "3cdc6765bfd159d738cac4b9c698a1c601a6b7eeb589ef851ecb6feb8e8f6963",
+          "size": 32,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.data",
+          "offset": 11264,
+          "sha256": "e3045d058fbdc63791dae891ec05f17fba2e5a58b284e13301e4776eedd197ac",
+          "size": 8,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 3,
+          "name": ".bss",
+          "offset": 7296,
+          "sha256": null,
+          "size": 4480,
+          "type": 8
+        },
+        {
+          "alignment": 1,
+          "flags": 0,
+          "name": ".shstrtab",
+          "offset": 7296,
+          "sha256": "9492e7777fff498f8547c3b4552061f6dae164454312824dc16aea3ce2bbe649",
+          "size": 80,
+          "type": 3
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".symtab",
+          "offset": 11272,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "size": 16,
+          "type": 2
+        },
+        {
+          "alignment": 1,
+          "flags": 0,
+          "name": ".strtab",
+          "offset": 11288,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+          "size": 1,
+          "type": 3
+        }
+      ],
+      "sha256": "b07339d0b6ef6021ebb2bd8dba1138f3159b2cdfbf1b29df799694107107d330"
+    },
+    {
+      "bytes": 6641,
+      "elf": {
+        "class": "ELF32",
+        "data": "little-endian",
+        "entry": 1588,
+        "flags": 1,
+        "ident_version": 1,
+        "machine": 8,
+        "osabi": 0,
+        "program_header_count": 2,
+        "program_header_offset": 52,
+        "program_headers": [
+          {
+            "alignment": 4,
+            "file_size": 34,
+            "flags": 4,
+            "memory_size": 0,
+            "offset": 116,
+            "paddr": 0,
+            "type": 1879048320,
+            "vaddr": 0
+          },
+          {
+            "alignment": 16,
+            "file_size": 4032,
+            "flags": 7,
+            "memory_size": 4080,
+            "offset": 160,
+            "paddr": 0,
+            "type": 1,
+            "vaddr": 0
+          }
+        ],
+        "section_header_count": 11,
+        "section_header_offset": 4272,
+        "section_name_index": 8,
+        "type": 65408,
+        "version": 1
+      },
+      "iopmod": {
+        "bytes": 34,
+        "offset": 116,
+        "printable_ascii_strings": [
+          {
+            "offset": 26,
+            "text": "sio2man"
+          }
+        ],
+        "sha256": "7937e6e109108395d14b392f531882db8aca96588612b7ba3d21a318541789ff",
+        "type": 1879048320
+      },
+      "iso_extracted_hash_match": true,
+      "iso_offset": 4745216,
+      "iso_path": "MODULES/SIO2MAN.IRX;1",
+      "lba": 2317,
+      "relocations_by_readelf_type": {
+        "R_MIPS_26": 106,
+        "R_MIPS_32": 65,
+        "R_MIPS_HI16": 34,
+        "R_MIPS_LO16": 34
+      },
+      "sections": [
+        {
+          "alignment": 0,
+          "flags": 0,
+          "name": "",
+          "offset": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0,
+          "type": 0
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".iopmod",
+          "offset": 116,
+          "sha256": "7937e6e109108395d14b392f531882db8aca96588612b7ba3d21a318541789ff",
+          "size": 34,
+          "type": 1879048320
+        },
+        {
+          "alignment": 16,
+          "flags": 6,
+          "name": ".text",
+          "offset": 160,
+          "sha256": "2d0b2db8fcfd6473deb2978eed3d05f9c4828b1b4cfa98510554d2755b6d97d6",
+          "size": 3904,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.text",
+          "offset": 4712,
+          "sha256": "761976aa40b5577d2a98b6ac92dcd1e067157176db526e729261a1c3aed6ad3e",
+          "size": 1904,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 2,
+          "name": ".rodata",
+          "offset": 4064,
+          "sha256": "74896e2092f5684c1992f4dcd58a801cc5adb5200469b40aced928999caac242",
+          "size": 96,
+          "type": 1
+        },
+        {
+          "alignment": 16,
+          "flags": 3,
+          "name": ".data",
+          "offset": 4160,
+          "sha256": "367ad9ac44e4be8bdd639c5511811f7e5aaad07c080b2ed7905ab148e9ab9b96",
+          "size": 32,
+          "type": 1
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".rel.data",
+          "offset": 6616,
+          "sha256": "1d2da7cf51edf52ca220eee181ab681a4c7f9c7d7c8bd411c2bea75f5fd8f353",
+          "size": 8,
+          "type": 9
+        },
+        {
+          "alignment": 16,
+          "flags": 3,
+          "name": ".bss",
+          "offset": 4192,
+          "sha256": null,
+          "size": 48,
+          "type": 8
+        },
+        {
+          "alignment": 1,
+          "flags": 0,
+          "name": ".shstrtab",
+          "offset": 4192,
+          "sha256": "9492e7777fff498f8547c3b4552061f6dae164454312824dc16aea3ce2bbe649",
+          "size": 80,
+          "type": 3
+        },
+        {
+          "alignment": 4,
+          "flags": 0,
+          "name": ".symtab",
+          "offset": 6624,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "size": 16,
+          "type": 2
+        },
+        {
+          "alignment": 1,
+          "flags": 0,
+          "name": ".strtab",
+          "offset": 6640,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+          "size": 1,
+          "type": 3
+        }
+      ],
+      "sha256": "565ec77e75f174cfddf72c41ccc446c1c07a3d5fb0a2ccfefad337cb8a7d0728"
+    }
+  ],
+  "updated": "2026-09-23"
+}
