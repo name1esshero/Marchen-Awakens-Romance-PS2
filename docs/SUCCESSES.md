@@ -446,27 +446,34 @@ bytes. Carry strict parser-success evidence into the asset index: a recognized
 header alone does not qualify a truncated RTX3 member for structural coverage.
 Define parser-backed structural coverage and semantic-editable sources
 explicitly; keep unchanged round-trip and runtime evidence separate. Report both
-the full non-editable queue `Y-B` and the stricter opaque remainder `Y-Z`, with
-the `Z-B` bridge for structurally classified but non-editable bytes. Give every
+the full non-editable queue `Y-B` and the strictly structurally unclassified
+remainder `Y-Z`, with the `Z-B` bridge for structurally classified but
+non-editable bytes. Give every
 remaining byte exactly one evidence-labeled inventory class and assert all
 physical, logical, and category totals balance. Report all-zero spans as byte
 measurements only; do not infer intentional padding from zero contents.
 
-Verification: `make asset-census` partitions the 4,587,749,376-byte image
-exactly and reports expanded logical payload Y=1,303,947,016. The distinct
-levels are Z/Y=34.2744% parser-backed structure, A/Y=100% unchanged-source
-rebuildability, B/Y=18.3698% semantic editability, and C/Y=0% runtime-validated
-editability. The 43 short PSMCT32 records (140,648 bytes) are excluded from Z
-because strict RTX3 parsing rejects their complete lengths; they remain in the
-unresolved graphics queue. TXC-only editability is 239,444,320/239,584,968 bytes
-(99.9413%). The AT3 audit covers 2,328 direct/nested resources and validates
-26,798 node envelopes with exact no-op rebuilds. The YOBJ audit covers 899
-direct and 14 nested resources, validating 807,439 POF0 pointer slots with exact
-no-op rebuilds. `Y-B` is 1,064,414,202 bytes; the bridge `Z-B` is 207,386,712
-bytes; the strictly unclassified `Y-Z` remainder is 857,027,490 bytes. Separate
-byte-weighted category reports balance each denominator. Tests verify physical
-partitioning, nested accounting, parser-validity gating, distinct level
-numerators, `Y-B` and `Y-Z` category totals, and reference binding.
+Verification: `make test` and `python3 tools/asset_recovery_census.py` pass; the
+census audits all 13 video streams, partitions the 4,587,749,376-byte image
+exactly, and reports expanded logical payload Y=1,303,947,016. Its human-readable
+summary prints the zero-byte measurement with intent caveat, physical and
+expanded byte bases, independent recovery levels, and both remaining queues.
+The current levels are Z/Y=86.8157% parser-backed structure, A/Y=100%
+unchanged-input no-op rebuild, B/Y=18.3698% semantic editability, and C/Y=0%
+runtime-validated editability. The increase in Z includes complete packet/sector
+coverage for all 13 direct movie streams (685,111,296 bytes); packet framing
+does not establish video/audio codec semantics or editability. The 43 short
+PSMCT32 records (140,648 bytes) remain excluded from Z because strict RTX3
+parsing rejects their full-length contract. TXC-only editability is
+239,444,320/239,584,968 bytes (99.9413%). The AT3 audit covers 2,328
+direct/nested resources and validates 26,798 node envelopes with exact no-op
+rebuilds. The YOBJ audit covers 899 direct and 14 nested resources, validating
+807,439 POF0 pointer slots with exact no-op rebuilds. `Y-B` is 1,064,414,202
+bytes; `Z-B` is 892,498,008 bytes; the strictly unclassified `Y-Z` remainder is
+171,916,194 bytes. The report gives separate byte-weighted category totals for
+both denominators. Tests verify physical partitioning, nested accounting,
+parser-validity gating, distinct level numerators, both remainder totals,
+summary denominators, and reference binding.
 
 Scope: this pinned image, current prepared catalog, validated layout tree,
 strictly indexed TXCs and parsed bundle manifests. Limits: broad remainder

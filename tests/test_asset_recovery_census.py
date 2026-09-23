@@ -1,6 +1,6 @@
 import unittest
 
-from tools.asset_recovery_census import build_census
+from tools.asset_recovery_census import build_census, format_census_summary
 
 
 class AssetRecoveryCensusTests(unittest.TestCase):
@@ -104,6 +104,27 @@ class AssetRecoveryCensusTests(unittest.TestCase):
         ]
         self.assertEqual(sum(item["source_bytes"] for item in categories), 37)
 
+    def test_summary_keeps_recovery_levels_and_remainder_bases_separate(self):
+        leaves, index, disc, roundtrip = self.fixture()
+        movie = next(leaf for leaf in leaves if leaf["source"] == "00007.bin")
+        movie["name"] = "disc!/MOVIE.AFS;1!/00000.bin"
+        movie["_mpeg_program_stream"] = True
+        movie["_mpeg_ps_structural_bytes"] = movie["size"]
+        summary = format_census_summary(build_census(leaves, index, disc, roundtrip))
+
+        self.assertIn("padding intent unverified", summary)
+        self.assertIn("Structurally classified Z/Y: 50/68 bytes (73.5294%)", summary)
+        self.assertIn("Losslessly rebuildable from unchanged inputs A/Y: 68/68 bytes (100.0000%)",
+                      summary)
+        self.assertIn("Semantically editable B/Y: 31/68 bytes (45.5882%)", summary)
+        self.assertIn("Runtime-validated editable C/Y: 0/68 bytes (0.0000%)", summary)
+        self.assertIn("Y-B byte breakdown (% of Y-B):", summary)
+        self.assertIn("Y-Z structurally unclassified inventory (% of Y-Z; not all semantic opacity):",
+                      summary)
+        self.assertIn("video cinematics: 16 bytes (43.2432%)", summary)
+        opaque_breakdown = summary.split("Y-Z structurally unclassified inventory", 1)[1]
+        self.assertNotIn("video cinematics", opaque_breakdown)
+
     def test_requires_explicit_rtx3_parse_evidence(self):
         leaves, index, disc, roundtrip = self.fixture()
         del index["entries"][0]["rtx3_parse_valid"]
@@ -153,6 +174,40 @@ class AssetRecoveryCensusTests(unittest.TestCase):
             16,
         )
         self.assertEqual(levels["semantically_editable"]["bytes_B"], 31)
+
+    def test_validated_movie_packet_extents_extend_structure_not_editability(self):
+        leaves, index, disc, roundtrip = self.fixture()
+        movie_leaf = next(leaf for leaf in leaves if leaf["source"] == "00007.bin")
+        movie_leaf["name"] = "disc!/MOVIE.AFS;1!/00000.bin"
+        movie_leaf["_mpeg_program_stream"] = True
+        movie_leaf["_mpeg_ps_structural_bytes"] = movie_leaf["size"]
+        index["_mpeg_ps_resource_corpus"] = {
+            "file_count": 1,
+            "source_bytes": movie_leaf["size"],
+            "parse_successful_count": 1,
+            "exact_noop_roundtrip_count": 1,
+        }
+
+        census = build_census(leaves, index, disc, roundtrip)
+        logical = census["expanded_logical_payload"]
+        levels = logical["recovery_levels"]
+        self.assertEqual(levels["structurally_classified"]["bytes_Z"], 50)
+        self.assertEqual(
+            levels["structurally_classified"]["components"][
+                "direct_MPEG_PS_validated_packet_and_sector_bytes"
+            ],
+            16,
+        )
+        self.assertEqual(levels["semantically_editable"]["bytes_B"], 31)
+        self.assertEqual(logical["opaque_after_structural_classification"]["bytes"], 18)
+        opaque_classes = {
+            item["name"]
+            for item in logical["opaque_after_structural_classification"][
+                "exclusive_byte_weighted_categories"
+            ]
+        }
+        self.assertNotIn("video_cinematics", opaque_classes)
+        self.assertEqual(census["video_resource_corpus"]["parse_successful_count"], 1)
 
 
 if __name__ == "__main__":

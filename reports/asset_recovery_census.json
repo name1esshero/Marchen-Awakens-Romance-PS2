@@ -1,5 +1,5 @@
 {
-  "schema_version": 5,
+  "schema_version": 6,
   "evidence_date": "2026-09-23",
   "reference_sha256": "cc059a3acf818dfbd0a782a9d20ee67e020d167866cd1c4dca77e6eb9224e3ec",
   "scope": "Pinned physical image partition plus a de-duplicated expanded logical content inventory; recovery levels have separate definitions and evidence.",
@@ -52,9 +52,9 @@
         "meaning": "Every nonzero physical terminal member has a named catalog path and a validated parent extent. This says nothing about the member's internal format or semantics."
       },
       "structurally_classified": {
-        "bytes_Z": 446919526,
+        "bytes_Z": 1132030822,
         "denominator_bytes_Y": 1303947016,
-        "percent_Z_of_Y": 34.2744,
+        "percent_Z_of_Y": 86.8157,
         "components": {
           "complete_RTX3_parser_validated_extents": 239444320,
           "parsed_UI_bundle_nontexture_member_extents": 8460696,
@@ -62,16 +62,17 @@
           "direct_AT3_reference_table_bytes": 68144,
           "direct_AT3_bounded_preamble_bytes": 3328,
           "direct_AT3_validated_node_record_bytes": 1769236,
-          "direct_YOBJ_YMP_validated_envelope_bytes": 197085308
+          "direct_YOBJ_YMP_validated_envelope_bytes": 197085308,
+          "direct_MPEG_PS_validated_packet_and_sector_bytes": 685111296
         },
-        "meaning": "Bytes assigned to complete parser-validated records or bounded child extents, de-duplicated across nested TXCs. The 43 RTX3 records that fail the complete length contract are excluded. Direct AT3 preambles and node envelopes are validated but internally opaque. Direct YOBJ/YMP files require a bounded header and exact POF0 extent; body and field semantics remain opaque."
+        "meaning": "Bytes assigned to complete parser-validated records or bounded child extents, de-duplicated across nested TXCs. The 43 RTX3 records that fail the complete length contract are excluded. Direct AT3 preambles and node envelopes, YOBJ/YMP envelopes, and sectorized MPEG pack/PES framing are structurally validated but their property, model and media payload semantics remain opaque."
       },
       "losslessly_rebuildable": {
         "bytes_A": 1303947016,
         "denominator_bytes_Y": 1303947016,
         "percent_A_of_Y": 100.0,
         "evidence": "The authenticated prepared workspace rebuild is byte-identical to the pinned full disc; parsed UI bundles also have exact no-op reassembly evidence.",
-        "meaning": "Unchanged source preservation/rebuild only; not evidence that edited output is correct or runtime-safe."
+        "meaning": "All payload bytes are preserved by an authenticated unchanged-input no-op rebuild. This does not claim that arbitrary edits, growth, relocation, or runtime behavior are lossless or correct."
       },
       "semantically_editable": {
         "bytes_B": 239532814,
@@ -102,7 +103,7 @@
           "source_bytes": 685111296,
           "percent_of_remaining_payload": 64.3651,
           "percent_of_expanded_payload": 52.5413,
-          "classification_basis": "MOVIE.AFS path and MPEG program-stream pack-start magic"
+          "classification_basis": "MOVIE.AFS path and MPEG pack-start signature; packet parse is reported separately"
         },
         {
           "name": "model_geometry_candidates",
@@ -172,29 +173,21 @@
       "accounting_note": "Categories partition Y minus B. This is the complete non-editable work queue, including spans whose container bounds or record structure are known; it is not synonymous with fully opaque bytes."
     },
     "classified_but_not_semantically_editable": {
-      "bytes": 207386712,
+      "bytes": 892498008,
       "denominator_bytes_Y": 1303947016,
-      "percent_of_Y": 15.9045,
+      "percent_of_Y": 68.4459,
       "definition": "Z minus B: parser-classified spans without an evidence-backed semantic editing representation."
     },
     "opaque_after_structural_classification": {
-      "bytes": 857027490,
+      "bytes": 171916194,
       "denominator_bytes_Y": 1303947016,
-      "percent_of_Y": 65.7256,
+      "percent_of_Y": 13.1843,
       "exclusive_byte_weighted_categories": [
-        {
-          "name": "video_cinematics",
-          "file_count": 13,
-          "source_bytes": 685111296,
-          "percent_of_opaque_payload": 79.9404,
-          "percent_of_expanded_payload": 52.5413,
-          "classification_basis": "MOVIE.AFS path and MPEG program-stream pack-start magic"
-        },
         {
           "name": "audio_sound_candidates",
           "file_count": 140,
           "source_bytes": 156453642,
-          "percent_of_opaque_payload": 18.2554,
+          "percent_of_opaque_payload": 91.0058,
           "percent_of_expanded_payload": 11.9985,
           "classification_basis": "BGM archive or sound-directory path; payload audio is not decoded"
         },
@@ -202,7 +195,7 @@
           "name": "executables_and_modules",
           "file_count": 16,
           "source_bytes": 4101870,
-          "percent_of_opaque_payload": 0.4786,
+          "percent_of_opaque_payload": 2.386,
           "percent_of_expanded_payload": 0.3146,
           "classification_basis": "boot executable/module filename; full semantics are outside this census"
         },
@@ -210,7 +203,7 @@
           "name": "animation_motion_candidates",
           "file_count": 102,
           "source_bytes": 3731880,
-          "percent_of_opaque_payload": 0.4354,
+          "percent_of_opaque_payload": 2.1708,
           "percent_of_expanded_payload": 0.2862,
           "classification_basis": "AT3/YAP/MPC/YMA name or member type; bodies are not fully decoded"
         },
@@ -218,7 +211,7 @@
           "name": "model_geometry_candidates",
           "file_count": 333,
           "source_bytes": 3539860,
-          "percent_of_opaque_payload": 0.413,
+          "percent_of_opaque_payload": 2.0591,
           "percent_of_expanded_payload": 0.2715,
           "classification_basis": "YMP/YPC resource naming; model bodies are not decoded here"
         },
@@ -226,7 +219,7 @@
           "name": "other_unclassified",
           "file_count": 2246,
           "source_bytes": 2184740,
-          "percent_of_opaque_payload": 0.2549,
+          "percent_of_opaque_payload": 1.2708,
           "percent_of_expanded_payload": 0.1675,
           "classification_basis": "fallback for payload without a stronger evidence-backed inventory class"
         },
@@ -234,7 +227,7 @@
           "name": "font_assets",
           "file_count": 2,
           "source_bytes": 896928,
-          "percent_of_opaque_payload": 0.1047,
+          "percent_of_opaque_payload": 0.5217,
           "percent_of_expanded_payload": 0.0688,
           "classification_basis": "font resource directory path; internal font records remain unparsed"
         },
@@ -242,7 +235,7 @@
           "name": "scripts_event_and_data_candidates",
           "file_count": 318,
           "source_bytes": 866626,
-          "percent_of_opaque_payload": 0.1011,
+          "percent_of_opaque_payload": 0.5041,
           "percent_of_expanded_payload": 0.0665,
           "classification_basis": "data/script/event extension or member type; semantics are partial"
         },
@@ -250,12 +243,12 @@
           "name": "unresolved_graphics",
           "file_count": 43,
           "source_bytes": 140648,
-          "percent_of_opaque_payload": 0.0164,
+          "percent_of_opaque_payload": 0.0818,
           "percent_of_expanded_payload": 0.0108,
           "classification_basis": "TXC indexed, current pixel decoder has no editable export"
         }
       ],
-      "accounting_note": "Categories partition Y minus Z. These spans lack one of the explicit parser-backed structural classifications used by Z; filenames and paths provide only candidate inventory labels."
+      "accounting_note": "Categories partition Y minus Z: bytes without one of the explicit parser-backed structural classifications used by Z. This is not a census of every semantically opaque field inside structurally bounded records; filenames and paths provide only candidate inventory labels."
     }
   },
   "texture_corpus": {
@@ -392,6 +385,25 @@
       }
     },
     "note": "The parser validates the 0x40-byte header envelope, four bounded numeric count/offset pairs, the exact POF0-to-EOF extent, and the delta-coded pointer-slot list. Header/body semantics remain unresolved. Direct YMP envelopes may contribute to Z. Nested UI-bundle YMP files are already counted as bounded child extents and are not double-counted."
+  },
+  "video_resource_corpus": {
+    "file_count": 13,
+    "source_bytes": 685111296,
+    "parse_successful_count": 13,
+    "parse_failure_count": 0,
+    "exact_noop_roundtrip_count": 13,
+    "pack_header_count": 334514,
+    "packet_count": 364158,
+    "packet_counts_by_stream_id": {
+      "0xbb": 26,
+      "0xbe": 29644,
+      "0xbf": 26,
+      "0xc0": 29592,
+      "0xe0": 304870
+    },
+    "terminal_ff_bytes": 26572,
+    "failures": [],
+    "note": "Direct MOVIE.AFS resources are parsed as the observed sectorized MPEG-1 program-stream variant. Pack/PES extents and the 0xff terminal sector are validated and rebuild exactly; PES payloads and codec semantics remain opaque."
   },
   "logical_leaf_extensions": {
     ".": {
@@ -531,7 +543,8 @@
     "All-zero members and gaps are measured by byte value only. Their zero contents do not prove intentional padding, placeholder use, or historical purpose.",
     "Information-bearing means a named terminal member extent that is not wholly zero. Zero-valued bytes inside a nonzero member are retained in its full extent.",
     "Expanded logical payload is a normalized content inventory, not a second physical disc size; it replaces compressed BPE wrappers with decoded child payloads and excludes bundle control/gap bytes.",
-    "The structural numerator counts only the explicit parser-backed extents listed. Container hierarchy addressing is reported separately and must not be mistaken for semantic understanding.",
+    "The structural numerator counts only the explicit parser-backed extents listed. Records counted in Z can still contain semantically opaque fields or payloads. Container hierarchy addressing is reported separately and must not be mistaken for semantic understanding.",
+    "MPEG program-stream packet framing is structural evidence only; a frame/sample decode smoke test does not provide an editable or reinsertable media representation.",
     "A byte-identical unchanged rebuild proves source preservation. It does not prove relocation correctness for every edit or runtime correctness.",
     "Candidate remainder classes rely on signatures, member types, extensions, or directory names as documented; unparsed member bodies are not claimed to be semantically recovered.",
     "Generated TGAs are editable representations; their uncompressed output sizes are not counted as original source bytes."

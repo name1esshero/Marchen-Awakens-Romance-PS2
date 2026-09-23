@@ -17,22 +17,27 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   `reports/translation_surfaces.json`.
 - The byte-weighted census in `reports/asset_recovery_census.json` reports
   disjoint physical-disc spans and a separate expanded logical payload. The
-  4,587,749,376-byte image has 3,327,295,881 measured all-zero bytes (72.5257%),
-  1,237,522,725 nonzero terminal-member bytes (26.9745%), and
+  4,587,749,376-byte image has 3,327,295,881 measured all-zero member/gap bytes
+  (72.5257%), 1,237,522,725 nonzero terminal-member bytes (26.9745%), and
   22,930,770 nonzero gap/structure bytes (0.4998%); these disjoint spans sum
-  exactly to the image. Zero measurements do not establish intentional padding,
-  placeholder use, or historical purpose.
-  Expanded logical information payload Y is 1,303,947,016 bytes (28.4224% of
-  physical image size) after BPE bundle expansion and de-duplication.
-  Parser-backed structural coverage is Z/Y = 446,919,526/1,303,947,016
-  (34.2744%); unchanged-source rebuildability is A/Y = 100%; semantic
-  editability is B/Y = 239,532,814/1,303,947,016 (18.3698%); runtime-validated
-  editability is C/Y = 0%. The non-editable queue Y-B is 1,064,414,202 bytes
-  (81.6302% of Y), including 207,386,712 bytes that are structurally classified
-  but not yet editable (Z-B). Strictly unclassified payload Y-Z is 857,027,490
-  bytes (65.7256% of Y); of that, video is 79.9404%, audio/sound candidates
-  18.2554%, animation/motion 0.4354%, model/geometry candidates 0.4130%, and
-  unresolved graphics 0.0164%. A validated AT3 envelope parser covers 723 direct
+  exactly to the image. The all-zero measurement does not establish intentional
+  padding, placeholder use, or historical purpose. Expanded logical
+  information-bearing payload Y is 1,303,947,016 bytes (28.4224% of the image)
+  after BPE bundle expansion and de-duplication. Container hierarchy addressing
+  covers 100% of nonzero physical terminal members. Parser-backed structural
+  coverage is Z/Y = 1,132,030,822/1,303,947,016 (86.8157%); unchanged-input
+  no-op rebuildability is A/Y = 100%; semantic editability is
+  B/Y = 239,532,814/1,303,947,016 (18.3698%); runtime-validated editability is
+  C/Y = 0%. The non-editable queue Y-B is 1,064,414,202 bytes (81.6302% of Y),
+  including 892,498,008 structurally classified but not semantically editable
+  bytes (Z-B). Strictly unclassified payload Y-Z is 171,916,194 bytes (13.1843%
+  of Y), comprising audio/sound candidates 91.0058%, executables/modules
+  2.3860%, animation/motion 2.1708%, model/geometry candidates 2.0591%, and
+  other classes in the report. The full Y-B queue is largest in video/cinematics
+  (64.3651%), model/geometry candidates (18.9430%), and audio/sound candidates
+  (14.6986%). The census validates packet extents in all 13 movie streams
+  (685,111,296 bytes); this adds structural coverage, not editable video or
+  runtime evidence. A validated AT3 envelope parser covers 723 direct
   and 1,605 nested resources (26,798 named nodes), all of which rebuild exactly;
   internal animation fields remain opaque. A YOBJ/POF0 envelope parser covers
   899 direct YMPs and 14 nested UI resources, all with exact no-op rebuilds and

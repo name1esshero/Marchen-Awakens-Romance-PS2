@@ -19,9 +19,11 @@ from pathlib import Path
 
 try:
     from tools.at3 import parse as parse_at3, rebuild as rebuild_at3
+    from tools.mpeg_ps import parse as parse_mpeg_ps, rebuild as rebuild_mpeg_ps
     from tools.yobj import parse as parse_yobj, rebuild as rebuild_yobj
 except ModuleNotFoundError:  # Direct execution places tools/ on sys.path.
     from at3 import parse as parse_at3, rebuild as rebuild_at3
+    from mpeg_ps import parse as parse_mpeg_ps, rebuild as rebuild_mpeg_ps
     from yobj import parse as parse_yobj, rebuild as rebuild_yobj
 
 
@@ -123,6 +125,18 @@ def _load_inputs(workspace: Path, catalog_path: Path, graphics_path: Path,
 
     # Prepared metadata records exact BPE hashes for the three unparsed YMA
     # payloads, but older catalogs omitted their decoded lengths.
+    mpeg_stats = {
+        "file_count": 0,
+        "source_bytes": 0,
+        "parse_successful_count": 0,
+        "parse_failure_count": 0,
+        "exact_noop_roundtrip_count": 0,
+        "pack_header_count": 0,
+        "packet_count": 0,
+        "packet_counts_by_stream_id": {},
+        "terminal_ff_bytes": 0,
+        "failures": [],
+    }
     for leaf in catalog:
         if leaf.get("bpe_source"):
             decoded_path = workspace / leaf["bpe_source"]
@@ -157,9 +171,40 @@ def _load_inputs(workspace: Path, catalog_path: Path, graphics_path: Path,
                 leaf["_yobj_structural_bytes"] = parse_yobj(raw)["file_size"]
             except ValueError:
                 leaf["_yobj_structural_bytes"] = 0
-        if leaf.get("source") and "MOVIE.AFS;1" in leaf["name"]:
-            with (workspace / leaf["source"]).open("rb") as stream:
-                leaf["_mpeg_program_stream"] = stream.read(4) == b"\0\0\1\xba"
+        if leaf.get("source") and "MOVIE.AFS;1!/" in leaf["name"]:
+            raw = (workspace / leaf["source"]).read_bytes()
+            mpeg_stats["file_count"] += 1
+            mpeg_stats["source_bytes"] += len(raw)
+            leaf["_mpeg_program_stream"] = raw.startswith(b"\0\0\1\xba")
+            try:
+                parsed_mpeg = parse_mpeg_ps(raw)
+                if rebuild_mpeg_ps(parsed_mpeg, raw) != raw:
+                    raise ValueError("MPEG packet reassembly differs from its source")
+            except ValueError as exc:
+                leaf["_mpeg_ps_structural_bytes"] = 0
+                mpeg_stats["parse_failure_count"] += 1
+                mpeg_stats["failures"].append({"name": leaf["name"], "reason": str(exc)})
+            else:
+                leaf["_mpeg_program_stream"] = True
+                leaf["_mpeg_ps_structural_bytes"] = parsed_mpeg["structural_bytes"]
+                leaf["_mpeg_ps_packet_count"] = parsed_mpeg["packet_count"]
+                mpeg_stats["parse_successful_count"] += 1
+                mpeg_stats["exact_noop_roundtrip_count"] += 1
+                mpeg_stats["pack_header_count"] += parsed_mpeg["pack_header_count"]
+                mpeg_stats["packet_count"] += parsed_mpeg["packet_count"]
+                mpeg_stats["terminal_ff_bytes"] += parsed_mpeg["terminal_ff_bytes"]
+                packet_counts = mpeg_stats["packet_counts_by_stream_id"]
+                for stream_id, count in parsed_mpeg["packet_counts_by_stream_id"].items():
+                    packet_counts[stream_id] = packet_counts.get(stream_id, 0) + count
+    if mpeg_stats["parse_successful_count"] != mpeg_stats["exact_noop_roundtrip_count"]:
+        raise ValueError("MPEG program-stream no-op round-trip audit failed")
+    mpeg_stats["note"] = (
+        "Direct MOVIE.AFS resources are parsed as the observed sectorized MPEG-1 "
+        "program-stream variant. Pack/PES extents and the 0xff terminal sector "
+        "are validated and rebuild exactly; PES payloads and codec semantics "
+        "remain opaque."
+    )
+    graphics["_mpeg_ps_resource_corpus"] = mpeg_stats
 
     manifest_paths = {entry["bundle_manifest"] for entry in graphics.get("entries", [])
                       if entry.get("source_kind") == "bundle"}
@@ -327,8 +372,10 @@ def _residual_category(row: dict) -> tuple[str, str]:
         return row["editable_kind"], "indexed editable source representation"
     if row.get("is_txc"):
         return "unresolved_graphics", "TXC indexed, current pixel decoder has no editable export"
-    if "movie.afs;1" in name and leaf.get("_mpeg_program_stream"):
-        return "video_cinematics", "MOVIE.AFS path and MPEG program-stream pack-start magic"
+    if "movie.afs;1" in name:
+        if leaf.get("_mpeg_program_stream"):
+            return "video_cinematics", "MOVIE.AFS path and MPEG pack-start signature; packet parse is reported separately"
+        return "video_cinematics", "MOVIE.AFS path; video format remains a candidate"
     if "bgm.afs;1" in name or "/data/sound/" in name:
         return "audio_sound_candidates", "BGM archive or sound-directory path; payload audio is not decoded"
     if extension in (".ymp", ".ypc"):
@@ -560,6 +607,8 @@ def build_census(catalog, graphics_index, disc, roundtrip):
                                         leaf.get("_at3_node_record_bytes", 0))
         elif extension == ".ymp":
             row["structural_bytes"] = leaf.get("_yobj_structural_bytes", 0)
+        elif leaf.get("_mpeg_ps_structural_bytes"):
+            row["structural_bytes"] = leaf["_mpeg_ps_structural_bytes"]
         expanded_rows.append(row)
 
     expanded_payload_bytes = sum(row["size"] for row in expanded_rows)
@@ -599,12 +648,16 @@ def build_census(catalog, graphics_index, disc, roundtrip):
         leaf.get("_yobj_structural_bytes", 0) for leaf in leaves
         if _source_extension(leaf["name"]) == ".ymp"
     )
+    direct_mpeg_ps_file_bytes = sum(
+        leaf.get("_mpeg_ps_structural_bytes", 0) for leaf in leaves
+        if "MOVIE.AFS;1!/" in leaf["name"]
+    )
     txc_structural_bytes = sum(size for entry, size, key in txc_rows
                                if txc_parse_status[key])
     structurally_classified_bytes = (txc_structural_bytes + bundle_nontexture_member_bytes +
                                      text_bytes + message_bytes + direct_at3_table_bytes +
                                      direct_at3_preamble_bytes + direct_at3_node_record_bytes +
-                                     direct_yobj_file_bytes)
+                                     direct_yobj_file_bytes + direct_mpeg_ps_file_bytes)
     row_structural_bytes = sum(row["structural_bytes"] for row in expanded_rows)
     if row_structural_bytes != structurally_classified_bytes:
         raise ValueError("parser-backed structural spans overlap or disagree with their components")
@@ -708,7 +761,7 @@ def build_census(catalog, graphics_index, disc, roundtrip):
 
     zero_span_bytes = layout["all_zero_named_member_bytes"] + layout["all_zero_gap_bytes"]
     return {
-        "schema_version": 5,
+        "schema_version": 6,
         "evidence_date": dt.date.today().isoformat(),
         "reference_sha256": reference_hash,
         "scope": "Pinned physical image partition plus a de-duplicated expanded logical content inventory; recovery levels have separate definitions and evidence.",
@@ -774,15 +827,16 @@ def build_census(catalog, graphics_index, disc, roundtrip):
                         "direct_AT3_bounded_preamble_bytes": direct_at3_preamble_bytes,
                         "direct_AT3_validated_node_record_bytes": direct_at3_node_record_bytes,
                         "direct_YOBJ_YMP_validated_envelope_bytes": direct_yobj_file_bytes,
+                        "direct_MPEG_PS_validated_packet_and_sector_bytes": direct_mpeg_ps_file_bytes,
                     },
-                    "meaning": "Bytes assigned to complete parser-validated records or bounded child extents, de-duplicated across nested TXCs. The 43 RTX3 records that fail the complete length contract are excluded. Direct AT3 preambles and node envelopes are validated but internally opaque. Direct YOBJ/YMP files require a bounded header and exact POF0 extent; body and field semantics remain opaque.",
+                    "meaning": "Bytes assigned to complete parser-validated records or bounded child extents, de-duplicated across nested TXCs. The 43 RTX3 records that fail the complete length contract are excluded. Direct AT3 preambles and node envelopes, YOBJ/YMP envelopes, and sectorized MPEG pack/PES framing are structurally validated but their property, model and media payload semantics remain opaque.",
                 },
                 "losslessly_rebuildable": {
                     "bytes_A": expanded_payload_bytes,
                     "denominator_bytes_Y": expanded_payload_bytes,
                     "percent_A_of_Y": _percent(expanded_payload_bytes, expanded_payload_bytes),
                     "evidence": "The authenticated prepared workspace rebuild is byte-identical to the pinned full disc; parsed UI bundles also have exact no-op reassembly evidence.",
-                    "meaning": "Unchanged source preservation/rebuild only; not evidence that edited output is correct or runtime-safe.",
+                    "meaning": "All payload bytes are preserved by an authenticated unchanged-input no-op rebuild. This does not claim that arbitrary edits, growth, relocation, or runtime behavior are lossless or correct.",
                 },
                 "semantically_editable": {
                     "bytes_B": semantically_editable_bytes,
@@ -820,23 +874,101 @@ def build_census(catalog, graphics_index, disc, roundtrip):
                 "denominator_bytes_Y": expanded_payload_bytes,
                 "percent_of_Y": _percent(opaque_bytes, expanded_payload_bytes),
                 "exclusive_byte_weighted_categories": opaque_categories,
-                "accounting_note": "Categories partition Y minus Z. These spans lack one of the explicit parser-backed structural classifications used by Z; filenames and paths provide only candidate inventory labels.",
+                "accounting_note": "Categories partition Y minus Z: bytes without one of the explicit parser-backed structural classifications used by Z. This is not a census of every semantically opaque field inside structurally bounded records; filenames and paths provide only candidate inventory labels.",
             },
         },
         "texture_corpus": texture_corpus,
         "animation_resource_corpus": graphics_index.get("_at3_resource_corpus", {}),
         "model_resource_corpus": graphics_index.get("_yobj_resource_corpus", {}),
+        "video_resource_corpus": graphics_index.get("_mpeg_ps_resource_corpus", {}),
         "logical_leaf_extensions": extensions,
         "limits": [
             "All-zero members and gaps are measured by byte value only. Their zero contents do not prove intentional padding, placeholder use, or historical purpose.",
             "Information-bearing means a named terminal member extent that is not wholly zero. Zero-valued bytes inside a nonzero member are retained in its full extent.",
             "Expanded logical payload is a normalized content inventory, not a second physical disc size; it replaces compressed BPE wrappers with decoded child payloads and excludes bundle control/gap bytes.",
-            "The structural numerator counts only the explicit parser-backed extents listed. Container hierarchy addressing is reported separately and must not be mistaken for semantic understanding.",
+            "The structural numerator counts only the explicit parser-backed extents listed. Records counted in Z can still contain semantically opaque fields or payloads. Container hierarchy addressing is reported separately and must not be mistaken for semantic understanding.",
+            "MPEG program-stream packet framing is structural evidence only; a frame/sample decode smoke test does not provide an editable or reinsertable media representation.",
             "A byte-identical unchanged rebuild proves source preservation. It does not prove relocation correctness for every edit or runtime correctness.",
             "Candidate remainder classes rely on signatures, member types, extensions, or directory names as documented; unparsed member bodies are not claimed to be semantically recovered.",
             "Generated TGAs are editable representations; their uncompressed output sizes are not counted as original source bytes.",
         ],
     }
+
+
+def format_census_summary(report: dict) -> str:
+    """Format the independent physical, recovery, and remaining-byte measures."""
+    physical = report["physical_disc_accounting"]
+    logical = report["expanded_logical_payload"]
+    recovery = logical["recovery_levels"]
+    image_bytes = physical["image_bytes"]
+    lines = [
+        f"Disc image: {image_bytes / 1_000_000_000:.3f} GB ({image_bytes:,} bytes)",
+        "Measured all-zero members/gaps (padding intent unverified): "
+        f"{physical['measured_all_zero_bytes'] / 1_000_000_000:.3f} GB "
+        f"({physical['measured_all_zero_percent_of_image']:.4f}% of disc)",
+        "Information-bearing physical terminal members: "
+        f"{physical['information_bearing_terminal_member_bytes'] / 1_000_000_000:.3f} GB "
+        f"({physical['information_bearing_terminal_member_percent_of_image']:.4f}% of disc)",
+        "Nonzero unassigned gap/structure bytes: "
+        f"{physical['nonzero_unassigned_gap_or_structure_bytes'] / 1_000_000_000:.3f} GB "
+        f"({physical['nonzero_unassigned_gap_or_structure_percent_of_image']:.4f}% of disc)",
+        "Expanded information-bearing logical payload Y: "
+        f"{logical['information_bearing_payload_bytes_Y'] / 1_000_000_000:.3f} GB "
+        f"({logical['expanded_payload_percent_of_physical_image']:.4f}% of physical image)",
+    ]
+    hierarchy = recovery["container_hierarchy_addressed"]
+    lines.append(
+        "Container hierarchy addressed (physical named members): "
+        f"{hierarchy['bytes']:,}/{hierarchy['denominator_bytes']:,} bytes "
+        f"({hierarchy['percent']:.4f}%; separate from Y)"
+    )
+
+    for name, bytes_key, percent_key, label in (
+        ("structurally_classified", "bytes_Z", "percent_Z_of_Y", "Structurally classified Z/Y"),
+        ("losslessly_rebuildable", "bytes_A", "percent_A_of_Y",
+         "Losslessly rebuildable from unchanged inputs A/Y"),
+        ("semantically_editable", "bytes_B", "percent_B_of_Y", "Semantically editable B/Y"),
+        ("runtime_validated_editable", "bytes_C", "percent_C_of_Y",
+         "Runtime-validated editable C/Y"),
+    ):
+        row = recovery[name]
+        lines.append(
+            f"{label}: {row[bytes_key]:,}/{row['denominator_bytes_Y']:,} bytes "
+            f"({row[percent_key]:.4f}%)"
+        )
+    lines.append(
+        "Z is parser-backed structure, not necessarily semantic understanding; "
+        "A is unchanged-input preservation; B is editable source plus an insertion path."
+    )
+
+    classified_only = logical["classified_but_not_semantically_editable"]
+    remaining = logical["remaining_after_semantic_editability"]
+    opaque = logical["opaque_after_structural_classification"]
+    lines.extend((
+        f"Classified but not editable Z-B: {classified_only['bytes']:,} bytes "
+        f"({classified_only['percent_of_Y']:.4f}% of Y)",
+        f"All non-editable payload Y-B: {remaining['bytes']:,} bytes "
+        f"({remaining['percent_of_Y']:.4f}% of Y)",
+        "Y-B byte breakdown (% of Y-B):",
+    ))
+    for item in remaining["exclusive_byte_weighted_categories"]:
+        label = item["name"].replace("_", " ")
+        lines.append(
+            f"  {label}: {item['source_bytes']:,} bytes "
+            f"({item['percent_of_remaining_payload']:.4f}%)"
+        )
+    lines.extend((
+        f"Strictly unclassified payload Y-Z: {opaque['bytes']:,} bytes "
+        f"({opaque['percent_of_Y']:.4f}% of Y)",
+        "Y-Z structurally unclassified inventory (% of Y-Z; not all semantic opacity):",
+    ))
+    for item in opaque["exclusive_byte_weighted_categories"]:
+        label = item["name"].replace("_", " ")
+        lines.append(
+            f"  {label}: {item['source_bytes']:,} bytes "
+            f"({item['percent_of_opaque_payload']:.4f}%)"
+        )
+    return "\n".join(lines)
 
 
 def main():
@@ -854,46 +986,7 @@ def main():
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n",
                            encoding="utf-8")
-    physical = report["physical_disc_accounting"]
-    logical = report["expanded_logical_payload"]
-    recovery = logical["recovery_levels"]
-    print(f"Disc image: {physical['image_bytes']:,} bytes "
-          f"({physical['image_bytes'] / 1_000_000_000:.3f} GB)")
-    print(f"Measured all-zero members/gaps: {physical['measured_all_zero_bytes']:,} bytes "
-          f"({physical['measured_all_zero_percent_of_image']:.4f}% of image)")
-    print(f"Information-bearing terminal members: "
-          f"{physical['information_bearing_terminal_member_bytes']:,} bytes "
-          f"({physical['information_bearing_terminal_member_percent_of_image']:.4f}% of image)")
-    print(f"Nonzero gap/structure spans: "
-          f"{physical['nonzero_unassigned_gap_or_structure_bytes']:,} bytes "
-          f"({physical['nonzero_unassigned_gap_or_structure_percent_of_image']:.4f}% of image)")
-    print(f"Expanded information-bearing payload Y: "
-          f"{logical['information_bearing_payload_bytes_Y']:,} bytes "
-          f"({logical['expanded_payload_percent_of_physical_image']:.4f}% of image)")
-    for name, bytes_key, percent_key, label in (
-        ("structurally_classified", "bytes_Z", "percent_Z_of_Y", "Structurally classified Z/Y"),
-        ("losslessly_rebuildable", "bytes_A", "percent_A_of_Y", "Losslessly rebuildable A/Y"),
-        ("semantically_editable", "bytes_B", "percent_B_of_Y", "Semantically editable B/Y"),
-        ("runtime_validated_editable", "bytes_C", "percent_C_of_Y", "Runtime-validated editable C/Y"),
-    ):
-        row = recovery[name]
-        print(f"{label}: {row[bytes_key]:,}/{row['denominator_bytes_Y']:,} bytes "
-              f"({row[percent_key]:.4f}%)")
-
-    classified_only = logical["classified_but_not_semantically_editable"]
-    opaque = logical["opaque_after_structural_classification"]
-    remaining = logical["remaining_after_semantic_editability"]
-    print(f"Structurally classified, not editable Z-B: {classified_only['bytes']:,} bytes "
-          f"({classified_only['percent_of_Y']:.4f}% of Y)")
-    print(f"All non-editable payload Y-B: {remaining['bytes']:,} bytes "
-          f"({remaining['percent_of_Y']:.4f}% of Y)")
-    print(f"Strictly unclassified payload Y-Z: {opaque['bytes']:,} bytes "
-          f"({opaque['percent_of_Y']:.4f}% of Y)")
-    print("Opaque Y-Z byte breakdown:")
-    for item in opaque["exclusive_byte_weighted_categories"]:
-        label = item["name"].replace("_", " ")
-        print(f"  {label}: {item['source_bytes']:,} bytes "
-              f"({item['percent_of_opaque_payload']:.4f}% of Y-Z)")
+    print(format_census_summary(report))
     print(f"report: {args.output}")
 
 

@@ -31,6 +31,23 @@ See `tools/asset_recovery_census.py`,
 `tests/test_asset_recovery_census.py`, and
 [`TASK_ASSET_WORKSPACE_METHODOLOGY.md`](TASK_ASSET_WORKSPACE_METHODOLOGY.md).
 
+## Generic MPEG muxers do not accept the game's ADX audio packets
+
+Hypothesis: an ordinary subtitle-burn and MPEG remux can replace a movie while
+preserving the game's audio stream. FFmpeg 7.0.2 decoded a frame and audio sample
+from each of the 13 movie files, but its generic MPEG, VCD and VOB muxers refused
+the input ADX audio as an unsupported codec. An inspected PSS mux helper also
+expects BD private-stream audio packets; the observed game streams carry audio
+under packet ID `0xc0`, so that helper does not establish a compatible path.
+
+Keep the source movie as opaque media payload behind the validated sector/PES
+envelope. Do not substitute an unrelated PSS muxer or claim subtitle editability
+until a writer preserves this game's ADX packets, timestamps and sector layout,
+then reparses and passes playback validation. This failure does not prove that
+the video cannot be re-encoded or that no compatible PS2 stream muxer exists.
+See [movie stream evidence](tasks/VIDEO_STREAM_RECOVERY.md),
+`tools/mpeg_ps.py`, and `tests/test_mpeg_ps.py`.
+
 ## An indexed RTX3 entry is not proof that its full extent parsed
 
 Hypothesis: every row in the graphics index is structurally validated, so its

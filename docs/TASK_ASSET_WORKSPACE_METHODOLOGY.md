@@ -218,34 +218,44 @@ unchanged-round-trip report. It fails if the reference or physical partition
 does not balance, a standalone TXC is missing, a nested member hash disagrees,
 or exclusive byte categories do not sum to their denominator.
 
-Keep the two byte bases separate. The **physical image** is 4,587,749,376
-bytes. It contains 3,324,768,000 bytes in all-zero named members and 2,527,881
-bytes in all-zero gaps, totaling 3,327,295,881 measured all-zero bytes (72.5257%).
-It also contains 1,237,522,725 bytes in nonzero terminal members (26.9745%) and
-22,930,770 bytes in nonzero gap/structure extents (0.4998%). Those four disjoint
-spans sum exactly to the image. The zero measurements prove byte values only;
-they do not prove intentional padding, placeholder use, or historical purpose.
+Keep physical-disc accounting separate from the normalized logical payload.
+The **physical image** is 4,587,749,376 bytes (4.588 decimal GB). It contains
+3,324,768,000 bytes in all-zero named members and 2,527,881 bytes in all-zero
+gaps, totaling 3,327,295,881 measured all-zero bytes (72.5257%). These are
+zero-byte measurements; call them padding candidates only when useful, and do
+not claim their intent. The other disjoint physical spans are 1,237,522,725
+bytes in nonzero terminal members (26.9745%) and 22,930,770 bytes in nonzero
+gap/structure extents (0.4998%). The four spans partition the image exactly.
 
-The **expanded logical information payload Y** is 1,303,947,016 bytes, or
-28.4224% of the physical image size. It
-starts with nonzero terminal member extents, replaces the 61,240,661 compressed
-BPE wrapper bytes with 127,660,056 decoded UI-bundle member bytes plus 4,896
-decoded raw bytes, and excludes UI-bundle control/gap bytes. This makes nested
-assets visible without counting them twice or treating compressed wrapper
-bytes as editable meaning.
+The **expanded logical information payload Y** is 1,303,947,016 bytes (1.304
+decimal GB; 28.4224% of the image). It starts with nonzero terminal member
+extents, replaces 61,240,661 compressed BPE wrapper bytes with 127,660,056
+decoded UI-bundle member bytes plus 4,896 decoded raw bytes, and excludes
+UI-bundle control/gap bytes. This makes nested assets visible without counting
+them twice or treating compressed wrapper bytes as editable meaning.
 
-Report each recovery level independently. Every nonzero physical member has a
-validated hierarchy path and extent. Strict parser-backed structural coverage
-is **Z/Y = 446,919,526 / 1,303,947,016 = 34.2744%**: complete RTX3 parses,
-non-texture members bounded by parsed UI bundle tables, reversible text/message
-sources, directly parsed AT3 reference tables and validated node envelopes, and
-direct YOBJ/YMP header-plus-POF0 envelopes.
-The 43 PSMCT32 RTX3 records fail the complete declared-length check and are
-excluded from Z even though their headers identify candidate dimensions and
-storage mode. The graphics index records strict parse success separately from
-image-export support. Full unchanged-source rebuild coverage is **A/Y = 100%**,
-backed by a byte-identical full-disc rebuild; it does not mean edited assets have
-been runtime validated.
+Report each recovery level independently. Every nonzero physical terminal
+member has a validated hierarchy path and extent (100% of nonzero named member
+bytes; this physical measure is separate from Y). Current parser-backed
+structural coverage is **Z/Y = 1,132,030,822 / 1,303,947,016 = 86.8157%**.
+This includes complete RTX3 parses, nontexture members bounded by parsed UI
+bundle tables, reversible text/message sources, directly parsed AT3 reference
+tables and node envelopes, direct YOBJ/YMP envelopes, and all 685,111,296 bytes
+of validated sectorized MPEG program-stream packet/sector extents. Structural
+coverage does not mean the bytes inside those records are semantically
+understood: video/audio samples, model geometry and animation properties still
+contain opaque fields. The 43 PSMCT32 RTX3 records fail the complete declared-
+length check and are excluded from Z even though their headers identify
+candidate dimensions and storage mode. The graphics index records strict parse
+success separately from image-export support.
+
+Unchanged-input no-op rebuild coverage is **A/Y = 100%**, backed by an
+authenticated byte-identical full-disc rebuild and exact parsed-bundle no-op
+reassembly. A does not establish that arbitrary edited data, growth, relocation,
+or runtime behavior is correct. Semantic editability is **B/Y =
+239,532,814 / 1,303,947,016 = 18.3698%**. Runtime-validated edited coverage is
+**C/Y = 0%**. These levels are separate measures, not a combined
+"decompiled" percentage.
 
 The AT3 envelope audit covers 723 direct archive leaves (1,840,708 bytes) and
 1,605 nested UI-bundle resources (6,979,660 bytes). All 2,328 resources parse and
@@ -273,18 +283,27 @@ UI-bundle extents. The parser does not name the numeric fields, decode geometry,
 prove runtime relocation behavior, or permit file growth. See
 [`YOBJ model evidence`](../tasks/YOBJ_MODEL_RECOVERY.md) and the
 `model_resource_corpus` census section.
-Semantic editability is **B/Y = 239,532,814 / 1,303,947,016 = 18.3698%**,
-comprising 239,444,320 editable texture bytes and 88,494 reversible text/message
-source bytes. This measures available editable representations, not the share
-already translated. Runtime-validated editable coverage is **C/Y = 0%**.
+
+The direct movie-stream corpus is 13 files / 685,111,296 bytes. All 13 streams
+pass the observed sectorized MPEG-1 pack/PES extent parser and exact no-op
+reassembly; this moves their packet and sector bytes into Z, but their video and
+ADX payloads remain semantically opaque and outside B. A temporary FFmpeg probe
+decoded a frame and an audio sample per file. Generic MPEG/VCD/VOB muxers
+rejected the ADX input, so there is not yet an edited/reinsertable movie path.
+See [movie stream evidence](../tasks/VIDEO_STREAM_RECOVERY.md).
+
+Semantic editability comprises 239,444,320 editable texture bytes and 88,494
+reversible text/message source bytes. It measures available editable
+representations, not the share already translated.
 
 Keep two disjoint work-queue views. The complete non-editable remainder **Y-B**
 is 1,064,414,202 bytes (81.6302% of Y); it includes structurally bounded members
-that do not yet have an editable representation. Of that, **Z-B = 207,386,712**
-bytes (15.9045% of Y) are structurally classified but not semantically editable.
-The strictly unclassified remainder **Y-Z = 857,027,490** bytes (65.7256% of
-Y) is the byte base for the opaque-payload breakdown below. These bases answer
-different questions and must not be substituted for one another.
+that do not yet have an editable representation. Of that, **Z-B = 892,498,008**
+bytes (68.4459% of Y) are structurally classified but not semantically editable.
+The strictly structurally unclassified remainder **Y-Z = 171,916,194** bytes
+(13.1843% of Y) is the byte base for the unclassified-inventory breakdown
+below. These bases answer different questions and must not be substituted for
+one another.
 
 The disjoint `Y - B` remainder is 1,064,414,202 bytes. Its byte-weighted
 inventory is:
@@ -305,21 +324,26 @@ These classes partition `Y - B`. Their names classify inventory by validated
 signature, bundle member type, filename or path; they do not claim the opaque
 bodies have been semantically decoded.
 
-For the stricter opaque queue, use `Y - Z`, not `Y - B`. Its disjoint byte shares
-are: video/cinematics 79.9404% (685,111,296 bytes), audio/sound candidates
-18.2554% (156,453,642), executables/modules 0.4786% (4,101,870),
-animation/motion candidates 0.4354% (3,731,880), model/geometry candidates
-0.4130% (3,539,860), other unclassified 0.2549% (2,184,740), font assets
-0.1047% (896,928), script/data candidates 0.1011% (866,626), and unresolved
-graphics 0.0164% (140,648). These are evidence-led inventory labels; video,
-audio, YPC model and animation bodies remain opaque. The AT3 and YOBJ envelopes
-narrow the opaque queue without increasing semantic editability.
+For the structurally unclassified queue, use `Y - Z`, not `Y - B`. Its disjoint
+byte shares are: audio/sound candidates 91.0058% (156,453,642 bytes),
+executables/modules 2.3860% (4,101,870), animation/motion candidates 2.1708%
+(3,731,880), model/geometry candidates 2.0591% (3,539,860), other unclassified
+1.2708% (2,184,740), font assets 0.5217% (896,928), script/data candidates
+0.5041% (866,626), and unresolved graphics 0.0818% (140,648). The video files
+leave this strict remainder after packet extents parse successfully; their
+payload codecs remain opaque and they still comprise 64.3651% of the complete
+`Y-B` queue. These are evidence-led inventory labels, not semantic asset
+decodes. `Y-Z` is not a measure of every semantically opaque byte: validated
+MPEG packet extents, YOBJ envelopes and AT3 records can contain uninterpreted
+payloads while still contributing to Z. Use `Y-B` to measure the bytes that
+lack an editable representation and `Y-Z` to measure bytes that lack the
+specific parser-backed structural evidence this census counts.
 
 Texture-specific coverage remains a distinct measure: 30,397 occurrences
 contain 239,584,968 TXC bytes, of which 239,444,320 (99.9413%) have editable
 TGA exports. The tool tests exact physical partitioning, expanded accounting,
-separate Z/A/B/C levels, and remainder balance in
-`tests/test_asset_recovery_census.py`. The test suite also rejects absent strict
+separate Z/A/B/C levels, human-readable denominator labels, and remainder
+balance in `tests/test_asset_recovery_census.py`. The test suite also rejects absent strict
 RTX3 parse evidence, checks malformed textures are excluded from Z, and verifies
 that both `Y - B` and `Y - Z` category totals balance.
 
