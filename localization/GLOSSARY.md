@@ -6,7 +6,10 @@ and layout in game before treating them as final.
 
 | Source / concept | Current English | Note |
 | --- | --- | --- |
-| `ÅＲＭ` | ARM | Source glyph sequence is preserved in originals. The accented franchise spelling is not representable by Python's CP932 codec, so translated strings use ASCII `ARM`; confirm glyph strategy in runtime. |
+| `ÅＲＭ` | ARM | VIZ's English manga uses `ÄRM`, but CP932 cannot encode `Ä`, so CP932-bound text uses ASCII `ARM`; confirm game font glyph strategy in runtime. |
+| MÄR / MÄR Heaven | MAR / MAR Heaven in CP932 text | VIZ uses the accented franchise spelling; CP932 cannot encode `Ä`. These ASCII forms are a codec-constrained draft convention for the game text. |
+| Chess Pieces | Chess Pieces | Use the English publisher's faction name consistently. |
+| Luberia / Nanashi / Babbo / Princess Snow | Luberia / Nanashi / Babbo / Snow | Follow VIZ spellings where its published English manga confirms them; the PS2 game's own localized phrasing remains a draft. |
 | メモリーカード | memory card | Use “PlayStation 2 memory card (8 MB)” in system prompts. |
 | ウォーゲーム | War Game | Capitalized named team competition. |
 | シンクロ率 | Synchronization Rate | Keep consistent in tutorial and item text. |
@@ -19,3 +22,5 @@ and layout in game before treating them as final.
 | Special-class ARM names | Burikin, Heavy Andata, Healing Angel, Swirling Skull, Fire Ball, Leaf Energy, Wind Cutter, Earth Body, Bubble Launcher | Working translations or romanizations; confirm titles and capitalization in runtime. |
 | `カマイタチ` | Kamaitachi | Kept as a named attack in the current draft; exact game terminology is unverified. |
 | `L1`, `L2`, `L3`, `R1` | unchanged | Controller labels remain as printed. D-pad and left-stick tutorials stay distinct. |
+
+English manga terminology references: [VIZ's MÄR series page](https://www.viz.com/mar), [volume 2](https://www.viz.com/manga-books/manga/mar-volume-2-0/product/411) and [volume 11](https://www.viz.com/manga-books/manga/mar-volume-11-0/product/623). These establish publisher spellings and franchise terminology, not the final wording or presentation of this PS2 game's localization.

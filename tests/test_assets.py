@@ -47,6 +47,32 @@ class AssetsTests(unittest.TestCase):
             with self.subTest(name=name):
                 self.assertEqual(graphics._category(name, asset_path), expected)
 
+    def test_graphics_index_marks_short_rtx3_as_not_fully_parsed(self):
+        width = height = 8
+        expected_pixels = width * height * 4
+        raw = bytearray(rtx3.HEADER_SIZE + expected_pixels - 8)
+        raw[:4] = b'RTX3'
+        struct.pack_into('<I', raw, 4, len(raw) - 8)
+        struct.pack_into('<Q', raw, 8,
+                         (rtx3.PSMCT32 << 20) | (3 << 26) | (3 << 30))
+        struct.pack_into('<HHI', raw, 0x20, width, height, expected_pixels)
+
+        with tempfile.TemporaryDirectory() as d:
+            workspace = Path(d) / 'source'
+            workspace.mkdir()
+            (workspace / 'short.txc').write_bytes(raw)
+            (workspace / 'catalog.json').write_text(json.dumps([
+                {"name": "disc!/short.txc", "source": "short.txc",
+                 "size": len(raw), "zero": False}
+            ]))
+            with redirect_stdout(io.StringIO()):
+                index = graphics.export(workspace, Path(d) / 'graphics')
+
+        row = index['entries'][0]
+        self.assertFalse(row['rtx3_parse_valid'])
+        self.assertIsNone(row['image'])
+        self.assertIn('length does not match', row['unsupported_reason'])
+
     def test_graphics_staging_refuses_user_owned_or_source_paths(self):
         with tempfile.TemporaryDirectory() as d:
             root = Path(d)
@@ -350,6 +376,7 @@ class AssetsTests(unittest.TestCase):
                 index = graphics.export(root, graphics_root)
             row = next(item for item in index['entries']
                        if item['name'] == 'title_marh_jp')
+            self.assertTrue(row['rtx3_parse_valid'])
             self.assertEqual(row['category'], 'title')
             self.assertEqual(Path(row['image']).parent, Path('title'))
             self.assertTrue(Path(row['image']).stem.endswith('_jp'))

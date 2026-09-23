@@ -18,16 +18,41 @@ Count only editable texture and text/catalog source representations in B. Keep
 parser-backed structure Z, unchanged-source rebuildability A, and runtime
 validation C separate. Preserve physical disc accounting as its own partition;
 do not call either ratio a generic decompilation percentage. The revised tool
-fails if physical spans or exclusive `Y - B` remainder categories do not
-balance.
+fails if physical spans or exclusive remainder categories do not balance.
 
-Evidence: v2 `reports/asset_recovery_census.json` reports Y=1,303,947,016,
-Z/Y=19.0347%, A/Y=100%, B/Y=18.3698%, and C/Y=0%, alongside the exact physical
-partition. The high-bit indexed TGA recovery raised B while retaining the same Y
+Evidence: v3 `reports/asset_recovery_census.json` reports Y=1,303,947,016,
+Z/Y=19.0239%, A/Y=100%, B/Y=18.3698%, and C/Y=0%, alongside the exact physical
+partition. It reports both `Y-B` and `Y-Z` work queues and the `Z-B` bridge.
+The high-bit indexed TGA recovery raised B while retaining the same Y
 denominator. The revision supersedes the former 13.5887% leaf-only headline.
 See `tools/asset_recovery_census.py`,
 `tests/test_asset_recovery_census.py`, and
 [`TASK_ASSET_WORKSPACE_METHODOLOGY.md`](TASK_ASSET_WORKSPACE_METHODOLOGY.md).
+
+## An indexed RTX3 entry is not proof that its full extent parsed
+
+Hypothesis: every row in the graphics index is structurally validated, so its
+entire source span belongs in Z. The index intentionally retains unresolved TXC
+records for inventory; 43 PSMCT32 records expose parseable-looking headers but
+fail the strict parser's complete file-length contract by eight bytes each.
+Counting all TXC index spans therefore overstated parser-backed coverage by
+140,648 bytes while leaving B/Y unchanged.
+
+The exporter now records `rtx3_parse_valid` independently from image-export
+support. The census requires that evidence and counts a TXC in Z only when the
+strict parser accepted its complete header, dimensions, declared pixel extent,
+palette extent, and actual file length. Preserve malformed/unsupported records
+in the unresolved graphics inventory and the opaque queue. This does not prove
+the 43 records are corrupt or unimportant; only their complete RTX3 structure is
+not established by the current parser.
+
+Verification: the regenerated v4 graphics index records 43 parse failures with
+`RTX3 length does not match header, palette and pixel extents`; v3 census Z is
+248,061,654 bytes. Tests reject missing parse-status evidence, exclude invalid
+TXC spans from Z, and check that opaque and non-editable category totals balance.
+See `tools/graphics.py`, `tools/asset_recovery_census.py`,
+`tests/test_asset_recovery_census.py`, and
+[`reports/asset_recovery_census.json`](../reports/asset_recovery_census.json).
 
 ## One nested `.pac` file does not meet the observed PAC table contract
 

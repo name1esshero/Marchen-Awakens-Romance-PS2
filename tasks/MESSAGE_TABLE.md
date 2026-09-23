@@ -107,15 +107,16 @@ mechanics, and line layout still need human and in-game review.
 
 The combined translated `_msg.dat` table is 20,700 bytes (+248) for the current
 229-entry draft. The current catalog-driven build also applies the two tracked
-menu text catalogues: 142 names, 51 character titles and 141 categories drafted
-in the 142-row `CardList.txt` (captions remain untranslated), and 87/126 fields
-in the 71-row `DataBase.txt`. 39 database condition/metadata strings remain
-unchanged because their runtime meaning is uncertain. Current `make build-mod-disc`
-output is 5,016,748,032 bytes, SHA-256
-`15fcacc2ebf2c2fe82fc6153348ca013f9c372202dff1b2c94b7e35eba33bee5`. The ISO
+menu text catalogues: 142 names, 51 character titles, 141 categories and 142
+captions have English drafts in the 142-row `CardList.txt`; 87/126 fields are
+translated in the 71-row `DataBase.txt`. The applied CardList output is 14,152
+bytes (+701). Thirty-nine database condition/metadata strings remain unchanged
+because their runtime meaning is uncertain. Current `make build-mod-disc`
+output is 5,016,750,080 bytes, SHA-256
+`1f62176480ce1bd57c2c8db28f84b629d0125d4511f5e85767400ccc9f5ebf6e`. The ISO
 inventory passed with 42 entries; nested ISO/YFS/PAC reparsing recovered exact
 catalog-applied bytes for all three resources. `compare_disc.py` authenticated the
-pinned reference and reported the expected mismatch of 751,304,175 bytes. The
+pinned reference and reported the expected mismatch of 751,306,225 bytes. The
 image has not been tested in a PS2 runtime.
 
 Both full catalog builds prove encoding, table offsets, container relocation and

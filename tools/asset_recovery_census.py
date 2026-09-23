@@ -226,6 +226,7 @@ def build_census(catalog, graphics_index, disc, roundtrip):
     txc_rows = []
     txc_sizes = {}
     txc_status = {}
+    txc_parse_status = {}
     psm_stats = defaultdict(lambda: {"count": 0, "bytes": 0, "editable_count": 0,
                                      "editable_bytes": 0, "unresolved_count": 0,
                                      "unresolved_bytes": 0})
@@ -270,8 +271,14 @@ def build_census(catalog, graphics_index, disc, roundtrip):
         if txc_key in txc_status:
             raise ValueError(f"duplicate TXC source occurrence: {txc_key!r}")
         editable = bool(entry.get("image"))
+        parsed = entry.get("rtx3_parse_valid")
+        if not isinstance(parsed, bool):
+            raise ValueError(f"TXC index lacks strict RTX3 parse status: {key!r}")
+        if editable and not parsed:
+            raise ValueError(f"TXC has an editable image without a valid RTX3 parse: {key!r}")
         txc_sizes[key] = size
         txc_status[txc_key] = editable
+        txc_parse_status[txc_key] = parsed
         txc_rows.append((entry, size, txc_key))
         txc_sources[source_kind] += 1
         psm = entry.get("psm_name") or f"unparsed:{entry.get('unsupported_reason') or 'unknown'}"
@@ -329,12 +336,16 @@ def build_census(catalog, graphics_index, disc, roundtrip):
                     row = {"name": name, "size": size, "extension": extension,
                            "origin": "parsed_ui_bundle_member", "leaf": leaf,
                            "member": member, "manifest_path": manifest_path,
-                           "editable_kind": None, "is_txc": extension == ".txc"}
+                           "editable_kind": None, "is_txc": extension == ".txc",
+                           "structural_bytes": size if extension != ".txc" else 0,
+                           "semantic_editable_bytes": 0}
                     if row["is_txc"]:
                         key = ("bundle", manifest_path, member["source"])
                         if key not in txc_status:
                             raise ValueError(f"bundle TXC is absent from graphics index: {manifest_path}/{member['source']}")
+                        row["structural_bytes"] = size if txc_parse_status[key] else 0
                         row["editable_kind"] = "editable_graphics" if txc_status[key] else None
+                        row["semantic_editable_bytes"] = size if txc_status[key] else 0
                         row["unresolved_txc"] = not txc_status[key]
                         nested_txc_bytes += size
                     parsed_bundle_member_bytes += size
@@ -349,23 +360,31 @@ def build_census(catalog, graphics_index, disc, roundtrip):
                     "extension": ".yma" if "_yma.b" in leaf["name"].lower() else "[unknown]",
                     "origin": "decoded_but_bundle_unparsed", "leaf": leaf,
                     "editable_kind": None, "is_txc": False,
+                    "structural_bytes": 0, "semantic_editable_bytes": 0,
                 })
             continue
 
         extension = _source_extension(leaf["name"])
         row = {"name": leaf["name"], "size": leaf["size"], "extension": extension,
                "origin": "terminal_leaf", "leaf": leaf,
-               "editable_kind": None, "is_txc": extension == ".txc"}
+               "editable_kind": None, "is_txc": extension == ".txc",
+               "structural_bytes": 0, "semantic_editable_bytes": 0}
         if row["is_txc"]:
             key = ("standalone", leaf["source"])
             if key not in txc_status:
                 raise ValueError(f"standalone TXC is absent from graphics index: {leaf['name']}")
+            row["structural_bytes"] = leaf["size"] if txc_parse_status[key] else 0
             if txc_status[key]:
                 row["editable_kind"] = "editable_graphics"
+                row["semantic_editable_bytes"] = leaf["size"]
             else:
                 row["unresolved_txc"] = True
         elif leaf.get("text_source") or leaf.get("message_source"):
             row["editable_kind"] = "editable_text_and_catalogs"
+            row["structural_bytes"] = leaf["size"]
+            row["semantic_editable_bytes"] = leaf["size"]
+        elif extension == ".at3":
+            row["structural_bytes"] = leaf.get("_at3_reference_table_bytes", 0)
         expanded_rows.append(row)
 
     expanded_payload_bytes = sum(row["size"] for row in expanded_rows)
@@ -378,32 +397,45 @@ def build_census(catalog, graphics_index, disc, roundtrip):
         raise ValueError("nested TXC member total disagrees with the graphics index")
 
     editable_graphics = txc_editable_bytes
-    semantically_editable_bytes = editable_graphics + text_bytes + message_bytes
+    semantically_editable_bytes = sum(row["semantic_editable_bytes"] for row in expanded_rows)
+    expected_editable_bytes = editable_graphics + text_bytes + message_bytes
+    if semantically_editable_bytes != expected_editable_bytes:
+        raise ValueError("editable source spans do not match indexed texture/text sources")
     remaining_bytes = expanded_payload_bytes - semantically_editable_bytes
     if remaining_bytes < 0:
         raise ValueError("semantic editable byte count exceeds the logical content denominator")
 
-    # Z is strict and explicitly composed: all indexed RTX3 extents, all
-    # non-TXC child extents in validated UI bundles, reversible text/catalog
-    # sources, and directly parsed AT3 header/reference tables. Payload bodies
-    # outside those extents remain opaque even if their filename is suggestive.
+    # Z counts only complete RTX3 parses, validated child-member extents,
+    # reversible text/catalog sources, and directly parsed AT3 references.
+    # The known-short RTX3 files have visible headers but failed their complete
+    # extent contract, so their bodies stay outside Z until the format is proven.
     bundle_nontexture_member_bytes = parsed_bundle_member_bytes - nested_txc_bytes
     direct_at3_table_bytes = sum(leaf.get("_at3_reference_table_bytes", 0) for leaf in leaves
                                  if _source_extension(leaf["name"]) == ".at3")
-    structurally_classified_bytes = (txc_source_bytes + bundle_nontexture_member_bytes +
+    txc_structural_bytes = sum(size for entry, size, key in txc_rows
+                               if txc_parse_status[key])
+    structurally_classified_bytes = (txc_structural_bytes + bundle_nontexture_member_bytes +
                                      text_bytes + message_bytes + direct_at3_table_bytes)
+    row_structural_bytes = sum(row["structural_bytes"] for row in expanded_rows)
+    if row_structural_bytes != structurally_classified_bytes:
+        raise ValueError("parser-backed structural spans overlap or disagree with their components")
     if structurally_classified_bytes > expanded_payload_bytes:
         raise ValueError("structural byte ranges overlap or exceed the logical payload")
+    if semantically_editable_bytes > structurally_classified_bytes:
+        raise ValueError("semantic editability exceeds structurally validated coverage")
+
+    structurally_classified_not_editable = structurally_classified_bytes - semantically_editable_bytes
+    opaque_bytes = expanded_payload_bytes - structurally_classified_bytes
 
     remainder_totals = Counter()
     remainder_counts = Counter()
     remainder_basis = {}
-    editable_groups = {"editable_graphics", "editable_text_and_catalogs"}
     for row in expanded_rows:
-        if row["editable_kind"] in editable_groups:
+        remaining_row_bytes = row["size"] - row["semantic_editable_bytes"]
+        if remaining_row_bytes == 0:
             continue
         category_name, basis = _residual_category(row)
-        remainder_totals[category_name] += row["size"]
+        remainder_totals[category_name] += remaining_row_bytes
         remainder_counts[category_name] += 1
         remainder_basis[category_name] = basis
     if sum(remainder_totals.values()) != remaining_bytes:
@@ -414,6 +446,27 @@ def build_census(catalog, graphics_index, disc, roundtrip):
          "percent_of_expanded_payload": _percent(size, expanded_payload_bytes),
          "classification_basis": remainder_basis[name]}
         for name, size in sorted(remainder_totals.items(), key=lambda item: (-item[1], item[0]))
+    ]
+
+    opaque_totals = Counter()
+    opaque_counts = Counter()
+    opaque_basis = {}
+    for row in expanded_rows:
+        row_opaque_bytes = row["size"] - row["structural_bytes"]
+        if row_opaque_bytes == 0:
+            continue
+        category_name, basis = _residual_category(row)
+        opaque_totals[category_name] += row_opaque_bytes
+        opaque_counts[category_name] += 1
+        opaque_basis[category_name] = basis
+    if sum(opaque_totals.values()) != opaque_bytes:
+        raise ValueError("exclusive opaque-byte categories do not sum to Y minus Z")
+    opaque_categories = [
+        {"name": name, "file_count": opaque_counts[name], "source_bytes": size,
+         "percent_of_opaque_payload": _percent(size, opaque_bytes),
+         "percent_of_expanded_payload": _percent(size, expanded_payload_bytes),
+         "classification_basis": opaque_basis[name]}
+        for name, size in sorted(opaque_totals.items(), key=lambda item: (-item[1], item[0]))
     ]
 
     psm_report = {
@@ -466,7 +519,7 @@ def build_census(catalog, graphics_index, disc, roundtrip):
 
     zero_span_bytes = layout["all_zero_named_member_bytes"] + layout["all_zero_gap_bytes"]
     return {
-        "schema_version": 2,
+        "schema_version": 3,
         "evidence_date": dt.date.today().isoformat(),
         "reference_sha256": reference_hash,
         "scope": "Pinned physical image partition plus a de-duplicated expanded logical content inventory; recovery levels have separate definitions and evidence.",
@@ -474,12 +527,12 @@ def build_census(catalog, graphics_index, disc, roundtrip):
             "image_bytes": image_bytes,
             "named_member_count": layout["named_member_count"],
             "all_zero_named_member_count": layout["all_zero_named_member_count"],
-            "all_zero_named_placeholder_bytes": layout["all_zero_named_member_bytes"],
-            "all_zero_named_placeholder_percent_of_image": _percent(layout["all_zero_named_member_bytes"], image_bytes),
-            "all_zero_gap_or_padding_bytes": layout["all_zero_gap_bytes"],
-            "all_zero_gap_or_padding_percent_of_image": _percent(layout["all_zero_gap_bytes"], image_bytes),
-            "known_all_zero_placeholder_or_gap_bytes": zero_span_bytes,
-            "known_all_zero_placeholder_or_gap_percent_of_image": _percent(zero_span_bytes, image_bytes),
+            "all_zero_named_member_bytes": layout["all_zero_named_member_bytes"],
+            "all_zero_named_member_percent_of_image": _percent(layout["all_zero_named_member_bytes"], image_bytes),
+            "all_zero_gap_bytes": layout["all_zero_gap_bytes"],
+            "all_zero_gap_percent_of_image": _percent(layout["all_zero_gap_bytes"], image_bytes),
+            "measured_all_zero_bytes": zero_span_bytes,
+            "measured_all_zero_percent_of_image": _percent(zero_span_bytes, image_bytes),
             "information_bearing_terminal_member_bytes": layout["information_bearing_named_member_bytes"],
             "information_bearing_terminal_member_count": layout["information_bearing_named_member_count"],
             "information_bearing_terminal_member_percent_of_image": _percent(nonzero_bytes, image_bytes),
@@ -491,7 +544,7 @@ def build_census(catalog, graphics_index, disc, roundtrip):
             "partition_matches_image": zero_span_bytes + nonzero_bytes + layout["nonzero_gap_bytes"] == image_bytes,
             "terminal_leaf_count": len(leaves),
             "zero_length_terminal_leaf_count": sum(leaf["size"] == 0 for leaf in leaves),
-            "terminal_leaf_source_bytes_including_zero_placeholders": leaf_bytes,
+            "terminal_leaf_source_bytes_including_all_zero_members": leaf_bytes,
             "layout_evidence": "Recursively validated ISO/AFS/YFS/PAC layout pieces; parent container extents are replaced by child pieces to avoid double counting.",
             "round_trip": {
                 "authenticated": roundtrip["authenticated"],
@@ -525,12 +578,12 @@ def build_census(catalog, graphics_index, disc, roundtrip):
                     "denominator_bytes_Y": expanded_payload_bytes,
                     "percent_Z_of_Y": _percent(structurally_classified_bytes, expanded_payload_bytes),
                     "components": {
-                        "indexed_RTX3_record_and_pixel_extents": txc_source_bytes,
+                        "complete_RTX3_parser_validated_extents": txc_structural_bytes,
                         "parsed_UI_bundle_nontexture_member_extents": bundle_nontexture_member_bytes,
                         "reversible_CP932_text_and_message_source_bytes": text_bytes + message_bytes,
                         "direct_AT3_header_and_reference_table_bytes": direct_at3_table_bytes,
                     },
-                    "meaning": "Validated internal extents or records, de-duplicated across nested TXCs. An AT3 body after its parsed reference table is not counted.",
+                    "meaning": "Bytes assigned to complete parser-validated records or bounded child extents, de-duplicated across nested TXCs. The 43 RTX3 records that fail the complete length contract are excluded; direct AT3 bytes after the parsed reference table are excluded.",
                 },
                 "losslessly_rebuildable": {
                     "bytes_A": expanded_payload_bytes,
@@ -562,13 +615,26 @@ def build_census(catalog, graphics_index, disc, roundtrip):
                 "denominator_bytes_Y": expanded_payload_bytes,
                 "percent_of_Y": _percent(remaining_bytes, expanded_payload_bytes),
                 "exclusive_byte_weighted_categories": remaining_categories,
-                "accounting_note": "Categories partition Y minus B. Names indicate evidence-backed inventory classes, not complete reverse engineering; filename/path-led candidates and opaque bodies are explicitly labeled.",
+                "accounting_note": "Categories partition Y minus B. This is the complete non-editable work queue, including spans whose container bounds or record structure are known; it is not synonymous with fully opaque bytes.",
+            },
+            "classified_but_not_semantically_editable": {
+                "bytes": structurally_classified_not_editable,
+                "denominator_bytes_Y": expanded_payload_bytes,
+                "percent_of_Y": _percent(structurally_classified_not_editable, expanded_payload_bytes),
+                "definition": "Z minus B: parser-classified spans without an evidence-backed semantic editing representation.",
+            },
+            "opaque_after_structural_classification": {
+                "bytes": opaque_bytes,
+                "denominator_bytes_Y": expanded_payload_bytes,
+                "percent_of_Y": _percent(opaque_bytes, expanded_payload_bytes),
+                "exclusive_byte_weighted_categories": opaque_categories,
+                "accounting_note": "Categories partition Y minus Z. These spans lack one of the explicit parser-backed structural classifications used by Z; filenames and paths provide only candidate inventory labels.",
             },
         },
         "texture_corpus": texture_corpus,
         "logical_leaf_extensions": extensions,
         "limits": [
-            "Zero placeholders and zero-filled gaps are reported as measured spans; the gap label does not prove historical intent.",
+            "All-zero members and gaps are measured by byte value only. Their zero contents do not prove intentional padding, placeholder use, or historical purpose.",
             "Information-bearing means a named terminal member extent that is not wholly zero. Zero-valued bytes inside a nonzero member are retained in its full extent.",
             "Expanded logical payload is a normalized content inventory, not a second physical disc size; it replaces compressed BPE wrappers with decoded child payloads and excludes bundle control/gap bytes.",
             "The structural numerator counts only the explicit parser-backed extents listed. Container hierarchy addressing is reported separately and must not be mistaken for semantic understanding.",
@@ -596,8 +662,8 @@ def main():
                            encoding="utf-8")
     physical = report["physical_disc_accounting"]
     recovery = report["expanded_logical_payload"]["recovery_levels"]
-    print(f"disc: {physical['image_bytes']:,} bytes; known all-zero spans: "
-          f"{physical['known_all_zero_placeholder_or_gap_bytes']:,}")
+    print(f"disc: {physical['image_bytes']:,} bytes; measured all-zero spans: "
+          f"{physical['measured_all_zero_bytes']:,}")
     print(f"logical payload Y: "
           f"{report['expanded_logical_payload']['information_bearing_payload_bytes_Y']:,} bytes")
     for name in ("structurally_classified", "losslessly_rebuildable",

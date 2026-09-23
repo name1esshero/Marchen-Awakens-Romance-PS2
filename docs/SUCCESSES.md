@@ -318,12 +318,14 @@ path and fails if any requested catalogue is unused.
 Verification: tests cover round trip, CRLF, blank fields, source mismatch, duplicate
 IDs, encoding errors and archive reinsertion. The mod ISO inventory and nested
 ISO/YFS/PAC reparse recovered exact catalog-applied `CardList.txt` and `DataBase.txt`
-bytes. The current drafts translate CardList names/titles/categories (captions still
-Japanese) and DataBase headings/display labels/password markers (condition metadata
-still unresolved).
+bytes. All 142 CardList caption cells now have CP932-encodable English drafts;
+with names/titles/categories, the applied file grows from 13,451 to 14,152 bytes
+and reparses exactly from the rebuilt ISO. The same full-image build reparses all
+three catalog-applied text resources. DataBase headings/display labels/password
+markers are drafted; 39 condition metadata cells remain unchanged.
 Scope: the two observed tab-separated resources in `MenuBinary.pac`.
-Limits: runtime use, display constraints, captions, condition-field semantics and
-runtime relocation remain unverified.
+Limits: caption quality, runtime use, display constraints, condition-field
+semantics and runtime relocation remain unverified.
 References: `tools/text_catalog.py`, `localization/card_list.json`,
 `localization/database.json`, `tests/test_text_catalog.py`,
 `tests/test_assets.py`, [asset methodology](TASK_ASSET_WORKSPACE_METHODOLOGY.md).
@@ -331,7 +333,7 @@ References: `tools/text_catalog.py`, `localization/card_list.json`,
 ## Separate physical and expanded byte bases in asset recovery censuses
 
 Symptom: a file-count percentage hides byte scale, while a single leaf-byte
-percentage either lets zero-filled placeholders dominate or misses editable
+percentage either lets measured all-zero spans dominate or misses editable
 members nested inside compressed `.b` bundles. Calling unchanged round-trip
 coverage “decompilation” would overstate semantic recovery.
 
@@ -342,27 +344,36 @@ denominators and explicit replacement accounting. Structure, unchanged-source
 rebuildability, semantic editability and runtime validation are independent
 evidence levels.
 
-Successful pathway: first partition physical zero placeholders/gaps,
+Successful pathway: first partition physical all-zero members/gaps,
 information-bearing leaf extents and nonzero structure/gaps. Then replace
 compressed wrappers with decoded member extents once, excluding bundle control
-bytes. Define parser-backed structural coverage and semantic-editable sources
-explicitly; keep unchanged round-trip and runtime evidence separate. Give every
-remaining byte exactly one evidence-labeled inventory class and assert both
-physical and logical totals balance.
+bytes. Carry strict parser-success evidence into the asset index: a recognized
+header alone does not qualify a truncated RTX3 member for structural coverage.
+Define parser-backed structural coverage and semantic-editable sources
+explicitly; keep unchanged round-trip and runtime evidence separate. Report both
+the full non-editable queue `Y-B` and the stricter opaque remainder `Y-Z`, with
+the `Z-B` bridge for structurally classified but non-editable bytes. Give every
+remaining byte exactly one evidence-labeled inventory class and assert all
+physical, logical, and category totals balance. Report all-zero spans as byte
+measurements only; do not infer intentional padding from zero contents.
 
 Verification: `make asset-census` partitions the 4,587,749,376-byte image
 exactly and reports expanded logical payload Y=1,303,947,016. The distinct
-levels are Z/Y=19.0347% parser-backed structure, A/Y=100% unchanged-source
+levels are Z/Y=19.0239% parser-backed structure, A/Y=100% unchanged-source
 rebuildability, B/Y=18.3698% semantic editability, and C/Y=0% runtime-validated
-editability. TXC-only editability is 239,444,320/239,584,968 bytes (99.9413%).
-The Y-B remainder is byte-partitioned into video, model/geometry, audio,
-unresolved graphics, animation/motion, modules, font, scripts/data and fallback
-unknown. Tests verify physical partitioning, nested-accounting balance, distinct
-level numerators, remainder balance, and reference binding.
+editability. The 43 short PSMCT32 records (140,648 bytes) are excluded from Z
+because strict RTX3 parsing rejects their complete lengths; they remain in the
+unresolved graphics queue. TXC-only editability is 239,444,320/239,584,968 bytes
+(99.9413%). `Y-B` is 1,064,414,202 bytes; the bridge `Z-B` is 8,528,840 bytes;
+the strictly unclassified `Y-Z` remainder is 1,055,885,362 bytes. Separate
+byte-weighted category reports balance each denominator. Tests verify physical
+partitioning, nested accounting, parser-validity gating, distinct level
+numerators, `Y-B` and `Y-Z` category totals, and reference binding.
 
 Scope: this pinned image, current prepared catalog, validated layout tree,
-indexed TXCs and parsed bundle manifests. Limits: broad remainder classes may
-be signature-, extension- or path-led; they are not complete semantic recovery.
+strictly indexed TXCs and parsed bundle manifests. Limits: broad remainder
+classes may be signature-, extension- or path-led; they are not complete
+semantic recovery. Structurally bounded resource bodies can still be opaque.
 No edited payload has passed runtime validation; one nested `tex.pac` remains
 raw.
 

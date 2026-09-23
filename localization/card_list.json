@@ -28,7 +28,7 @@
         "1": "Ginta",
         "2": "[Rage Against Chess]",
         "3": "Character",
-        "4": null
+        "4": "I'll knock you flat! Get ready!"
       },
       "line_ending": "\r\n"
     },
@@ -49,7 +49,7 @@
         "1": "Ginta",
         "2": "[Savior]",
         "3": "Character",
-        "4": null
+        "4": "Maybe I'll turn out to be a savior after all."
       },
       "line_ending": "\r\n"
     },
@@ -70,7 +70,7 @@
         "1": "Ginta",
         "2": "[The World of My Dreams]",
         "3": "Character",
-        "4": null
+        "4": "But this isn't a dream!!!"
       },
       "line_ending": "\r\n"
     },
@@ -91,7 +91,7 @@
         "1": "Ginta",
         "2": "[The Boy from Another World]",
         "3": "Character",
-        "4": null
+        "4": "I'm Ginta! I came from another world!"
       },
       "line_ending": "\r\n"
     },
@@ -112,7 +112,7 @@
         "1": "Snow",
         "2": "[Princess of Lestava]",
         "3": "Character",
-        "4": null
+        "4": "Princess Snow, rightful heir to the throne of Lestava."
       },
       "line_ending": "\r\n"
     },
@@ -133,7 +133,7 @@
         "1": "Snow",
         "2": "[A Radiant Smile]",
         "3": "Character",
-        "4": null
+        "4": "Nice to meet you! I'm Snow!"
       },
       "line_ending": "\r\n"
     },
@@ -154,7 +154,7 @@
         "1": "Snow",
         "2": "[Stubborn to the Core]",
         "3": "Character",
-        "4": null
+        "4": "Get in my way, and I'll freeze you! <3"
       },
       "line_ending": "\r\n"
     },
@@ -175,7 +175,7 @@
         "1": "Snow",
         "2": "[The Imprisoned Princess]",
         "3": "Character",
-        "4": null
+        "4": "The princess sealed herself away."
       },
       "line_ending": "\r\n"
     },
@@ -196,7 +196,7 @@
         "1": "Jack",
         "2": "[The Boy with a Shovel]",
         "3": "Character",
-        "4": null
+        "4": "My dream is to grow a vine that reaches the sky!!"
       },
       "line_ending": "\r\n"
     },
@@ -217,7 +217,7 @@
         "1": "Jack",
         "2": "[ARM Beginner]",
         "3": "Character",
-        "4": null
+        "4": "The magic I sense from you guys... is still zero!!!"
       },
       "line_ending": "\r\n"
     },
@@ -238,7 +238,7 @@
         "1": "Jack",
         "2": "[Setting Out]",
         "3": "Character",
-        "4": null
+        "4": "I want to stop being such a coward!!!"
       },
       "line_ending": "\r\n"
     },
@@ -259,7 +259,7 @@
         "1": "Jack",
         "2": "[A Son’s Resolve]",
         "3": "Character",
-        "4": null
+        "4": "I'll send you flying!!!"
       },
       "line_ending": "\r\n"
     },
@@ -280,7 +280,7 @@
         "1": "Dorothy",
         "2": "[The Beautiful Witch]",
         "3": "Character",
-        "4": null
+        "4": "That's Dorothy... the infamous witch..."
       },
       "line_ending": "\r\n"
     },
@@ -301,7 +301,7 @@
         "1": "Dorothy",
         "2": "[Ginta~n]",
         "3": "Character",
-        "4": null
+        "4": "I've missed you! <3"
       },
       "line_ending": "\r\n"
     },
@@ -322,7 +322,7 @@
         "1": "Alviss",
         "2": "[Guide to Another World]",
         "3": "Character",
-        "4": null
+        "4": "ARM, summon him... and answer, visitor from another world!!!!"
       },
       "line_ending": "\r\n"
     },
@@ -343,7 +343,7 @@
         "1": "Alviss",
         "2": "[Master of the Pillar]",
         "3": "Character",
-        "4": null
+        "4": "I'm the one who summoned you."
       },
       "line_ending": "\r\n"
     },
@@ -364,7 +364,7 @@
         "1": "Edward",
         "2": "[The Dog’s Servant]",
         "3": "Character",
-        "4": null
+        "4": "...A dog?"
       },
       "line_ending": "\r\n"
     },
@@ -385,7 +385,7 @@
         "1": "Alan",
         "2": "[The Man Who Never Lost Faith]",
         "3": "Character",
-        "4": null
+        "4": "I've been waiting for you."
       },
       "line_ending": "\r\n"
     },
@@ -406,7 +406,7 @@
         "1": "Nanashi",
         "2": "[Boss of Ruberia]",
         "3": "Character",
-        "4": null
+        "4": "I'm Nanashi, the boss of Luberia."
       },
       "line_ending": "\r\n"
     },
@@ -427,7 +427,7 @@
         "1": "Nanashi",
         "2": "[Thunder of Rage]",
         "3": "Character",
-        "4": null
+        "4": "Electric Eye!!"
       },
       "line_ending": "\r\n"
     },
@@ -448,7 +448,7 @@
         "1": "Ian",
         "2": "[Chess’s First Assassin]",
         "3": "Character",
-        "4": null
+        "4": "That ARM belongs to a man named Phantom."
       },
       "line_ending": "\r\n"
     },
@@ -468,7 +468,7 @@
       "translations": {
         "1": "Ian",
         "2": "[Rook and Pawn]",
-        "4": null
+        "4": "Found you!!"
       },
       "line_ending": "\r\n"
     },
@@ -489,7 +489,7 @@
         "1": "Tom",
         "2": "[The Mysterious Companion]",
         "3": "Character",
-        "4": null
+        "4": "I'm not suspicious. I'm just..."
       },
       "line_ending": "\r\n"
     },
@@ -510,7 +510,7 @@
         "1": "Phantom",
         "2": "[No. 1 Knight]",
         "3": "Character",
-        "4": null
+        "4": "Shall we cut loose again?"
       },
       "line_ending": "\r\n"
     },
@@ -531,7 +531,7 @@
         "1": "Ginta",
         "2": "[Wielder of Phantom’s ARM]",
         "3": "Character",
-        "4": null
+        "4": "I won't give it up... I promise."
       },
       "line_ending": "\r\n"
     },
@@ -552,7 +552,7 @@
         "1": "Ginta",
         "2": "[Fuuro Junior High, Class 2-3]",
         "3": "Character",
-        "4": null
+        "4": "I'm Ginta!!!"
       },
       "line_ending": "\r\n"
     },
@@ -573,7 +573,7 @@
         "1": "Ginta",
         "2": "[Hearts in Sync]",
         "3": "Character",
-        "4": null
+        "4": "Let's try syncing, Babbo! Hm...!!!"
       },
       "line_ending": "\r\n"
     },
@@ -594,7 +594,7 @@
         "1": "Snow",
         "2": "[The Kind Princess]",
         "3": "Character",
-        "4": null
+        "4": "Thanks for saving me!"
       },
       "line_ending": "\r\n"
     },
@@ -615,7 +615,7 @@
         "1": "Jack",
         "2": "[The Proud Coward]",
         "3": "Character",
-        "4": null
+        "4": "I want to stop being such a coward!!!"
       },
       "line_ending": "\r\n"
     },
@@ -636,7 +636,7 @@
         "1": "Dorothy",
         "2": "[The Infamous Witch]",
         "3": "Character",
-        "4": null
+        "4": "Not bad, kiddo! <3"
       },
       "line_ending": "\r\n"
     },
@@ -657,7 +657,7 @@
         "1": "Dorothy",
         "2": "[The Enigmatic Witch]",
         "3": "Character",
-        "4": null
+        "4": "It's a secret! <3 Hee hee..."
       },
       "line_ending": "\r\n"
     },
@@ -678,7 +678,7 @@
         "1": "Alviss",
         "2": "[The Man Who Bet on Another World]",
         "3": "Character",
-        "4": null
+        "4": "The stakes just went up. The bet's still on."
       },
       "line_ending": "\r\n"
     },
@@ -699,7 +699,7 @@
         "1": "Alviss",
         "2": "[The Cursed Tattoo]",
         "3": "Character",
-        "4": null
+        "4": "This shows that I've taken a liking to you."
       },
       "line_ending": "\r\n"
     },
@@ -720,7 +720,7 @@
         "1": "Nanashi",
         "2": "[Payback]",
         "3": "Character",
-        "4": null
+        "4": "We need to settle this. I can't let it go."
       },
       "line_ending": "\r\n"
     },
@@ -741,7 +741,7 @@
         "1": "Nanashi",
         "2": "[A Flash of Lightning]",
         "3": "Character",
-        "4": null
+        "4": "This is your last supper."
       },
       "line_ending": "\r\n"
     },
@@ -762,7 +762,7 @@
         "1": "Alan",
         "2": "[The Awakened Warrior]",
         "3": "Character",
-        "4": null
+        "4": "That'll wake me right up."
       },
       "line_ending": "\r\n"
     },
@@ -783,7 +783,7 @@
         "1": "Ian",
         "2": "[The Vengeful Demon]",
         "3": "Character",
-        "4": null
+        "4": "I'll never forgive you..."
       },
       "line_ending": "\r\n"
     },
@@ -804,7 +804,7 @@
         "1": "Orco",
         "2": "[The Demolisher]",
         "3": "Character",
-        "4": null
+        "4": "I'm... hungry."
       },
       "line_ending": "\r\n"
     },
@@ -825,7 +825,7 @@
         "1": "Girom",
         "2": "[The Killer]",
         "3": "Character",
-        "4": null
+        "4": "You're a hundred years too young to take me on, you brat!!!"
       },
       "line_ending": "\r\n"
     },
@@ -846,7 +846,7 @@
         "1": "Leno",
         "2": "[The Rodkin Family]",
         "3": "Character",
-        "4": null
+        "4": "It's no fun when it's nothing but guys."
       },
       "line_ending": "\r\n"
     },
@@ -867,7 +867,7 @@
         "1": "Pano",
         "2": "[The Rodkin Family]",
         "3": "Character",
-        "4": null
+        "4": "I'll avenge my big sis!"
       },
       "line_ending": "\r\n"
     },
@@ -888,7 +888,7 @@
         "1": "Garon",
         "2": "[The Rodkin Family]",
         "3": "Character",
-        "4": null
+        "4": "Honestly, I can't help feeling sorry for you."
       },
       "line_ending": "\r\n"
     },
@@ -909,7 +909,7 @@
         "1": "Roco",
         "2": "[The Young(?) Cursed-Tool User]",
         "3": "Character",
-        "4": null
+        "4": "Believe it or not, I'm 32."
       },
       "line_ending": "\r\n"
     },
@@ -930,7 +930,7 @@
         "1": "Phantom",
         "2": "[Chess’s Commander]",
         "3": "Character",
-        "4": null
+        "4": "Allow me to remind you... the Chess Pieces are still out there!!!"
       },
       "line_ending": "\r\n"
     },
@@ -950,7 +950,7 @@
       "translations": {
         "1": "Babbo",
         "3": "ARM",
-        "4": null
+        "4": "Babbo. That's the one thing I can remember!!"
       },
       "line_ending": "\r\n"
     },
@@ -970,7 +970,7 @@
       "translations": {
         "1": "Babbo",
         "3": "ARM",
-        "4": null
+        "4": "\"Babbo!\" \"Right!\""
       },
       "line_ending": "\r\n"
     },
@@ -990,7 +990,7 @@
       "translations": {
         "1": "Hammer Arm",
         "3": "ARM",
-        "4": null
+        "4": "Babbo, Version 1!!!"
       },
       "line_ending": "\r\n"
     },
@@ -1010,7 +1010,7 @@
       "translations": {
         "1": "Dagger Arm",
         "3": "ARM",
-        "4": null
+        "4": "Babbo, Version 1-B!!"
       },
       "line_ending": "\r\n"
     },
@@ -1030,7 +1030,7 @@
       "translations": {
         "1": "Gargoyle",
         "3": "ARM",
-        "4": null
+        "4": "Come out, Gargoyle!!!"
       },
       "line_ending": "\r\n"
     },
@@ -1050,7 +1050,7 @@
       "translations": {
         "1": "Come Out, Gargoyle!",
         "3": "ARM",
-        "4": null
+        "4": "I'll knock you flying! Maybe that'll teach you!!!"
       },
       "line_ending": "\r\n"
     },
@@ -1070,7 +1070,7 @@
       "translations": {
         "1": "Snowman",
         "3": "ARM",
-        "4": null
+        "4": "I call her Yuki-chan."
       },
       "line_ending": "\r\n"
     },
@@ -1090,7 +1090,7 @@
       "translations": {
         "1": "Snowman",
         "3": "ARM",
-        "4": null
+        "4": "Let's go, Yuki-chan!"
       },
       "line_ending": "\r\n"
     },
@@ -1110,7 +1110,7 @@
       "translations": {
         "1": "Yuki-chan",
         "3": "ARM",
-        "4": null
+        "4": "Yuki-chan, please!"
       },
       "line_ending": "\r\n"
     },
@@ -1130,7 +1130,7 @@
       "translations": {
         "1": "Lots of Yuki-chans!!",
         "3": "ARM",
-        "4": null
+        "4": "Looks so gentle... but packs quite a punch!!!"
       },
       "line_ending": "\r\n"
     },
@@ -1150,7 +1150,7 @@
       "translations": {
         "1": "Battle Shovel",
         "3": "ARM",
-        "4": null
+        "4": "Jack's father's keepsake."
       },
       "line_ending": "\r\n"
     },
@@ -1170,7 +1170,7 @@
       "translations": {
         "1": "Battle Shovel",
         "3": "ARM",
-        "4": null
+        "4": "I'll protect Mom with this shovel, I will!"
       },
       "line_ending": "\r\n"
     },
@@ -1190,7 +1190,7 @@
       "translations": {
         "1": "Earth Shovel",
         "3": "ARM",
-        "4": null
+        "4": "I'll fight with this one too!"
       },
       "line_ending": "\r\n"
     },
@@ -1210,7 +1210,7 @@
       "translations": {
         "1": "Earth Wave",
         "3": "ARM",
-        "4": null
+        "4": "Earth Wave!!!"
       },
       "line_ending": "\r\n"
     },
@@ -1230,7 +1230,7 @@
       "translations": {
         "1": "Ring Armor",
         "3": "ARM",
-        "4": null
+        "4": "Don't underestimate me, or you'll get hurt!"
       },
       "line_ending": "\r\n"
     },
@@ -1250,7 +1250,7 @@
       "translations": {
         "1": "Flying Leo",
         "3": "ARM",
-        "4": null
+        "4": "Fight a Guardian with a Guardian of your own!!"
       },
       "line_ending": "\r\n"
     },
@@ -1270,7 +1270,7 @@
       "translations": {
         "1": "Go, Flying Leo!",
         "3": "ARM",
-        "4": null
+        "4": "RAAAAAH!!"
       },
       "line_ending": "\r\n"
     },
@@ -1290,7 +1290,7 @@
       "translations": {
         "1": "13 Totem Poles",
         "3": "ARM",
-        "4": null
+        "4": "W-wow! What a view."
       },
       "line_ending": "\r\n"
     },
@@ -1310,7 +1310,7 @@
       "translations": {
         "1": "You Need a Harsher Punishment",
         "3": "ARM",
-        "4": null
+        "4": "Do you even know what that ARM is?!"
       },
       "line_ending": "\r\n"
     },
@@ -1330,7 +1330,7 @@
       "translations": {
         "1": "Bird in a Cage",
         "3": "ARM",
-        "4": null
+        "4": "Darkness ARM... Bird in a Cage."
       },
       "line_ending": "\r\n"
     },
@@ -1350,7 +1350,7 @@
       "translations": {
         "1": "Gatekeeper Clown",
         "3": "ARM",
-        "4": null
+        "4": "The tunnel's open!"
       },
       "line_ending": "\r\n"
     },
@@ -1370,7 +1370,7 @@
       "translations": {
         "1": "Air Hammer",
         "3": "ARM",
-        "4": null
+        "4": "Special ability: solidifying a fixed area!!"
       },
       "line_ending": "\r\n"
     },
@@ -1390,7 +1390,7 @@
       "translations": {
         "1": "Electric Eye",
         "3": "ARM",
-        "4": null
+        "4": "Every time I use this... I feel like I'm remembering someone."
       },
       "line_ending": "\r\n"
     },
@@ -1410,7 +1410,7 @@
       "translations": {
         "1": "This Is Your Grave",
         "3": "ARM",
-        "4": null
+        "4": "I can't... kill anyone anymore."
       },
       "line_ending": "\r\n"
     },
@@ -1430,7 +1430,7 @@
       "translations": {
         "1": "Python Whip",
         "3": "ARM",
-        "4": null
+        "4": "Gah! That attack was too fast to see!!"
       },
       "line_ending": "\r\n"
     },
@@ -1450,7 +1450,7 @@
       "translations": {
         "1": "Octopus",
         "3": "ARM",
-        "4": null
+        "4": "Eight in all, counting both sides. And they regenerate."
       },
       "line_ending": "\r\n"
     },
@@ -1470,7 +1470,7 @@
       "translations": {
         "1": "I’ll Make You Cry",
         "3": "ARM",
-        "4": null
+        "4": "Yeah, I really don't like you."
       },
       "line_ending": "\r\n"
     },
@@ -1490,7 +1490,7 @@
       "translations": {
         "1": "Healing Angel",
         "3": "ARM",
-        "4": null
+        "4": "I'm so sorry, Ian..."
       },
       "line_ending": "\r\n"
     },
@@ -1510,7 +1510,7 @@
       "translations": {
         "1": "Magic Carpet",
         "3": "ARM",
-        "4": null
+        "4": "It's flying! It's really flying!!!"
       },
       "line_ending": "\r\n"
     },
@@ -1530,7 +1530,7 @@
       "translations": {
         "1": "Andata",
         "3": "ARM",
-        "4": null
+        "4": "We can get to them in an instant!"
       },
       "line_ending": "\r\n"
     },
@@ -1550,7 +1550,7 @@
       "translations": {
         "1": "Necklace Blade",
         "3": "ARM",
-        "4": null
+        "4": "Unlocking the Blade's power..."
       },
       "line_ending": "\r\n"
     },
@@ -1570,7 +1570,7 @@
       "translations": {
         "1": "Babbo",
         "3": "ARM",
-        "4": null
+        "4": "Phantom's cursed ARM!"
       },
       "line_ending": "\r\n"
     },
@@ -1590,7 +1590,7 @@
       "translations": {
         "1": "Babbo",
         "3": "ARM",
-        "4": null
+        "4": "\"Let's go, Babbo.\" \"Indeed!\""
       },
       "line_ending": "\r\n"
     },
@@ -1610,7 +1610,7 @@
       "translations": {
         "1": "Gargoyle",
         "3": "ARM",
-        "4": null
+        "4": "Bring that one out!!"
       },
       "line_ending": "\r\n"
     },
@@ -1630,7 +1630,7 @@
       "translations": {
         "1": "Healing Angel",
         "3": "ARM",
-        "4": null
+        "4": "Your Highness, please get some rest!"
       },
       "line_ending": "\r\n"
     },
@@ -1650,7 +1650,7 @@
       "translations": {
         "1": "Earth Beans",
         "3": "ARM",
-        "4": null
+        "4": "Grow!!! Earth Beans!!!"
       },
       "line_ending": "\r\n"
     },
@@ -1670,7 +1670,7 @@
       "translations": {
         "1": "Burikin",
         "3": "ARM",
-        "4": null
+        "4": "I'm naming you right now!"
       },
       "line_ending": "\r\n"
     },
@@ -1690,7 +1690,7 @@
       "translations": {
         "1": "Air Hammer",
         "3": "ARM",
-        "4": null
+        "4": "I've been bored sitting here all alone..."
       },
       "line_ending": "\r\n"
     },
@@ -1710,7 +1710,7 @@
       "translations": {
         "1": "Payback",
         "3": "ARM",
-        "4": null
+        "4": "Come on, tell me its name."
       },
       "line_ending": "\r\n"
     },
@@ -1730,7 +1730,7 @@
       "translations": {
         "1": "Electric Eye",
         "3": "ARM",
-        "4": null
+        "4": "Take this!!"
       },
       "line_ending": "\r\n"
     },
@@ -1750,7 +1750,7 @@
       "translations": {
         "1": "13 Totem Pole: Rod Version",
         "3": "ARM",
-        "4": null
+        "4": "I'll show you what real combat looks like."
       },
       "line_ending": "\r\n"
     },
@@ -1770,7 +1770,7 @@
       "translations": {
         "1": "13 Totem Poles",
         "3": "ARM",
-        "4": null
+        "4": "You seem to prefer the painful way."
       },
       "line_ending": "\r\n"
     },
@@ -1790,7 +1790,7 @@
       "translations": {
         "1": "That’s My Prey",
         "3": "ARM",
-        "4": null
+        "4": "Don't move."
       },
       "line_ending": "\r\n"
     },
@@ -1810,7 +1810,7 @@
       "translations": {
         "1": "Python Whip",
         "3": "ARM",
-        "4": null
+        "4": "Want me to make you suffer?"
       },
       "line_ending": "\r\n"
     },
@@ -1830,7 +1830,7 @@
       "translations": {
         "1": "Body Hardening",
         "3": "ARM",
-        "4": null
+        "4": "What the heck are you?!"
       },
       "line_ending": "\r\n"
     },
@@ -1850,7 +1850,7 @@
       "translations": {
         "1": "Who Are You...? Enemies?",
         "3": "ARM",
-        "4": null
+        "4": "I... I'm not gross!!!"
       },
       "line_ending": "\r\n"
     },
@@ -1870,7 +1870,7 @@
       "translations": {
         "1": "Ice Dearth",
         "3": "ARM",
-        "4": null
+        "4": "I don't like your attitude!!"
       },
       "line_ending": "\r\n"
     },
@@ -1890,7 +1890,7 @@
       "translations": {
         "1": "Mega Ice Dearth",
         "3": "ARM",
-        "4": null
+        "4": "Take this!!"
       },
       "line_ending": "\r\n"
     },
@@ -1910,7 +1910,7 @@
       "translations": {
         "1": "Merillo",
         "3": "ARM",
-        "4": null
+        "4": "Your training is about becoming one with your ARM."
       },
       "line_ending": "\r\n"
     },
@@ -1930,7 +1930,7 @@
       "translations": {
         "1": "Bumoru",
         "3": "ARM",
-        "4": null
+        "4": "Synchronize with an ARM, they say?! Like a sixth sense?!"
       },
       "line_ending": "\r\n"
     },
@@ -1950,7 +1950,7 @@
       "translations": {
         "1": "Magic Mirroring",
         "3": "ARM",
-        "4": null
+        "4": "Take it and make it yours!!"
       },
       "line_ending": "\r\n"
     },
@@ -1970,7 +1970,7 @@
       "translations": {
         "1": "Flame Ball",
         "3": "ARM",
-        "4": null
+        "4": "Take this and burn to ashes!!!"
       },
       "line_ending": "\r\n"
     },
@@ -1990,7 +1990,7 @@
       "translations": {
         "1": "Flame, Clothe My Blade!!!",
         "3": "ARM",
-        "4": null
+        "4": "Stop saying stupid things, old man!!"
       },
       "line_ending": "\r\n"
     },
@@ -2010,7 +2010,7 @@
       "translations": {
         "1": "Ball Hammer",
         "3": "ARM",
-        "4": null
+        "4": "You look kinda weak."
       },
       "line_ending": "\r\n"
     },
@@ -2030,7 +2030,7 @@
       "translations": {
         "1": "Homing Ball Hammer",
         "3": "ARM",
-        "4": null
+        "4": "Boom!!"
       },
       "line_ending": "\r\n"
     },
@@ -2050,7 +2050,7 @@
       "translations": {
         "1": "Fivefold Body Hardening",
         "3": "ARM",
-        "4": null
+        "4": "But... it has no effect."
       },
       "line_ending": "\r\n"
     },
@@ -2070,7 +2070,7 @@
       "translations": {
         "1": "Fivefold Strength Boost",
         "3": "ARM",
-        "4": null
+        "4": "That's a pretty good punch for a kid."
       },
       "line_ending": "\r\n"
     },
@@ -2090,7 +2090,7 @@
       "translations": {
         "1": "Cursed Straw Doll",
         "3": "ARM",
-        "4": null
+        "4": "Ladies first."
       },
       "line_ending": "\r\n"
     },
@@ -2110,7 +2110,7 @@
       "translations": {
         "1": "Negzero",
         "3": "ARM",
-        "4": null
+        "4": "Movement... sealed!!!"
       },
       "line_ending": "\r\n"
     },
@@ -2130,7 +2130,7 @@
       "translations": {
         "1": "Ring Dagger",
         "3": "ARM",
-        "4": null
+        "4": "Want this?"
       },
       "line_ending": "\r\n"
     },
@@ -2150,7 +2150,7 @@
       "translations": {
         "1": "Try to Be More Like Ginta",
         "3": "ARM",
-        "4": null
+        "4": "See you in your next life."
       },
       "line_ending": "\r\n"
     },
@@ -2170,7 +2170,7 @@
       "translations": {
         "1": "Beyond the Door",
         "3": "Event",
-        "4": null
+        "4": "There's something exciting waiting beyond this door!"
       },
       "line_ending": "\r\n"
     },
@@ -2190,7 +2190,7 @@
       "translations": {
         "1": "Crushing My Son’s Dream",
         "3": "Event",
-        "4": null
+        "4": "There's no such thing, you idiot."
       },
       "line_ending": "\r\n"
     },
@@ -2210,7 +2210,7 @@
       "translations": {
         "1": "Hardheaded Mode",
         "3": "Event",
-        "4": null
+        "4": "There she goes... Princess Snow's stubborn mode again!!!"
       },
       "line_ending": "\r\n"
     },
@@ -2230,7 +2230,7 @@
       "translations": {
         "1": "Cave Exploration",
         "3": "Event",
-        "4": null
+        "4": "Heave-ho!!"
       },
       "line_ending": "\r\n"
     },
@@ -2250,7 +2250,7 @@
       "translations": {
         "1": "Cave Exploration",
         "3": "Event",
-        "4": null
+        "4": "All right! Let's explore this cave!"
       },
       "line_ending": "\r\n"
     },
@@ -2270,7 +2270,7 @@
       "translations": {
         "1": "Goodnight... and Then Good Morning",
         "3": "Event",
-        "4": null
+        "4": "The dog!? It turned into an old man!?"
       },
       "line_ending": "\r\n"
     },
@@ -2290,7 +2290,7 @@
       "translations": {
         "1": "The Princess Awakens",
         "3": "Event",
-        "4": null
+        "4": "Hang on... I'll get you out of there."
       },
       "line_ending": "\r\n"
     },
@@ -2310,7 +2310,7 @@
       "translations": {
         "1": "The Princess Awakens",
         "3": "Event",
-        "4": null
+        "4": "Oh, my... I've never done this before!"
       },
       "line_ending": "\r\n"
     },
@@ -2330,7 +2330,7 @@
       "translations": {
         "1": "Gate of Training",
         "3": "Event",
-        "4": null
+        "4": "A different dimension where time passes at 1/60 the normal rate."
       },
       "line_ending": "\r\n"
     },
@@ -2350,7 +2350,7 @@
       "translations": {
         "1": "Gate of Training",
         "3": "Event",
-        "4": null
+        "4": "What happens next is up to you!"
       },
       "line_ending": "\r\n"
     },
@@ -2370,7 +2370,7 @@
       "translations": {
         "1": "Enter Ability Data",
         "3": "Event",
-        "4": null
+        "4": "Please enter the new data."
       },
       "line_ending": "\r\n"
     },
@@ -2390,7 +2390,7 @@
       "translations": {
         "1": "Cursed Tattoo",
         "3": "Event",
-        "4": null
+        "4": "You'll become one of my kind."
       },
       "line_ending": "\r\n"
     },
@@ -2410,7 +2410,7 @@
       "translations": {
         "1": "Unbreakable Gate",
         "3": "Event",
-        "4": null
+        "4": "It isn't brute strength; syncing with your ARM is what matters!"
       },
       "line_ending": "\r\n"
     },
@@ -2430,7 +2430,7 @@
       "translations": {
         "1": "Snow’s Kick!!",
         "3": "Event",
-        "4": null
+        "4": "Ginta! It's no fun when you only talk to Dorothy!"
       },
       "line_ending": "\r\n"
     },
@@ -2450,7 +2450,7 @@
       "translations": {
         "1": "The Man from Another World",
         "3": "Event",
-        "4": null
+        "4": "We used to call him 'the Boss.'"
       },
       "line_ending": "\r\n"
     },
@@ -2470,7 +2470,7 @@
       "translations": {
         "1": "Mock and Chap’s Scheme",
         "3": "Event",
-        "4": null
+        "4": "\"You understand, Chap?\" \"Yes, Lord Mock!\""
       },
       "line_ending": "\r\n"
     },
@@ -2490,7 +2490,7 @@
       "translations": {
         "1": "The Wager",
         "3": "Event",
-        "4": null
+        "4": "Answer me, visitor from another world!!!!"
       },
       "line_ending": "\r\n"
     },
@@ -2510,7 +2510,7 @@
       "translations": {
         "1": "Gate of Training",
         "3": "Event",
-        "4": null
+        "4": "The Boss got stronger that way, too."
       },
       "line_ending": "\r\n"
     },
@@ -2530,7 +2530,7 @@
       "translations": {
         "1": "Someone Irreplaceable",
         "3": "Event",
-        "4": null
+        "4": "If you're going to do it, do it to me!!!"
       },
       "line_ending": "\r\n"
     },
@@ -2550,7 +2550,7 @@
       "translations": {
         "1": "Someone I Remember",
         "3": "Event",
-        "4": null
+        "4": "Every time I use this... I feel like I'm remembering someone."
       },
       "line_ending": "\r\n"
     },
@@ -2570,7 +2570,7 @@
       "translations": {
         "1": "A Strange Irritation",
         "3": "Event",
-        "4": null
+        "4": "For some reason, I feel sick to my stomach!!"
       },
       "line_ending": "\r\n"
     },
@@ -2590,7 +2590,7 @@
       "translations": {
         "1": "A Strange Annoyance",
         "3": "Event",
-        "4": null
+        "4": "Why am I so on edge?!"
       },
       "line_ending": "\r\n"
     },
@@ -2610,7 +2610,7 @@
       "translations": {
         "1": "Payback",
         "3": "Event",
-        "4": null
+        "4": "So what if they're Chess Pieces? It has nothing to do with me."
       },
       "line_ending": "\r\n"
     },
@@ -2630,7 +2630,7 @@
       "translations": {
         "1": "The Choice",
         "3": "Event",
-        "4": null
+        "4": "A defeat that hurts, or one that doesn't. Which will you choose?"
       },
       "line_ending": "\r\n"
     },
@@ -2650,7 +2650,7 @@
       "translations": {
         "1": "Our Dear Old Man",
         "3": "Event",
-        "4": null
+        "4": "He means a lot to all of us!!!"
       },
       "line_ending": "\r\n"
     },
@@ -2670,7 +2670,7 @@
       "translations": {
         "1": "Phantom Returns",
         "3": "Event",
-        "4": null
+        "4": "Phantom can't be killed. He'll always come back."
       },
       "line_ending": "\r\n"
     },
@@ -2690,7 +2690,7 @@
       "translations": {
         "1": "A Terrifying Order",
         "3": "Event",
-        "4": null
+        "4": "All Chess Pieces, assemble!!!"
       },
       "line_ending": "\r\n"
     },
@@ -2710,7 +2710,7 @@
       "translations": {
         "1": "The War Game Begins!!",
         "3": "Event",
-        "4": null
+        "4": "The Second War for MAR Heaven begins now!!!"
       },
       "line_ending": "\r\n"
     },
@@ -2731,7 +2731,7 @@
         "1": "Ginta",
         "2": "[The Boss’s Son]",
         "3": "Character",
-        "4": null
+        "4": "I'm going to surpass the Boss!"
       },
       "line_ending": "\r\n"
     },
@@ -2752,7 +2752,7 @@
         "1": "Dorothy",
         "2": "[The Witch of the West Wind]",
         "3": "Character",
-        "4": null
+        "4": "Hee hee... <3"
       },
       "line_ending": "\r\n"
     },
@@ -2773,7 +2773,7 @@
         "1": "Alviss",
         "2": "[A Brief Respite]",
         "3": "Character",
-        "4": null
+        "4": "I'll protect Bell."
       },
       "line_ending": "\r\n"
     },
@@ -2794,7 +2794,7 @@
         "1": "Phantom",
         "2": "[The One Who Watches]",
         "3": "Character",
-        "4": null
+        "4": "What will you show me next, Ginta?!"
       },
       "line_ending": "\r\n"
     },
@@ -2814,7 +2814,7 @@
       "translations": {
         "1": "Babbo",
         "3": "ARM",
-        "4": null
+        "4": "Phantom used that ARM to kill his comrades!"
       },
       "line_ending": "\r\n"
     },
@@ -2835,7 +2835,7 @@
         "1": "Ginta",
         "2": "[A Visitor from Another World]",
         "3": "Character",
-        "4": null
+        "4": "The excitement never stops!!"
       },
       "line_ending": "\r\n"
     },
@@ -2856,7 +2856,7 @@
         "1": "Ginta",
         "2": "[The Adventure Begins]",
         "3": "Character",
-        "4": null
+        "4": "Let's go, Babbo!!"
       },
       "line_ending": "\r\n"
     },
@@ -2877,7 +2877,7 @@
         "1": "Ginta",
         "2": "[The Young Leader]",
         "3": "Character",
-        "4": null
+        "4": "All right, one good shot. Time to get fired up!!"
       },
       "line_ending": "\r\n"
     },
@@ -2897,7 +2897,7 @@
       "translations": {
         "1": "Babbo",
         "3": "ARM",
-        "4": null
+        "4": "Indeed!!"
       },
       "line_ending": "\r\n"
     }

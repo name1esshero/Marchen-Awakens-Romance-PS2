@@ -24,14 +24,16 @@ class AssetRecoveryCensusTests(unittest.TestCase):
         index = {
             "entries": [
                 {"key": "direct-edit", "source_kind": "standalone", "source_path": "00001.bin",
-                 "image": "editable.tga", "psm_name": "psmt4"},
+                 "image": "editable.tga", "psm_name": "psmt4", "rtx3_parse_valid": True},
                 {"key": "direct-opaque", "source_kind": "standalone", "source_path": "00002.bin",
-                 "image": None, "psm_name": "psmct32"},
+                 "image": None, "psm_name": "psmct32", "rtx3_parse_valid": False},
                 {"key": "nested-edit", "source_kind": "bundle", "bundle_manifest": "00003.bundle.json",
                  "source": "a.txc.bin", "source_sha256": "a", "image": "nested-a.tga",
+                 "rtx3_parse_valid": True,
                  "psm_name": "psmt8"},
                 {"key": "nested-opaque", "source_kind": "bundle", "bundle_manifest": "00003.bundle.json",
                  "source": "b.txc.bin", "source_sha256": "b", "image": None,
+                 "rtx3_parse_valid": False,
                  "psm_name": "psmct32"},
             ],
             "_manifest_entries": {
@@ -72,17 +74,25 @@ class AssetRecoveryCensusTests(unittest.TestCase):
         self.assertEqual(physical["partition_bytes"], 1200)
         self.assertTrue(physical["partition_matches_image"])
         self.assertEqual(physical["information_bearing_terminal_member_bytes"], 71)
-        self.assertEqual(physical["known_all_zero_placeholder_or_gap_bytes"], 1029)
+        self.assertEqual(physical["measured_all_zero_bytes"], 1029)
 
         logical = census["expanded_logical_payload"]
         self.assertEqual(logical["information_bearing_payload_bytes_Y"], 68)
         levels = logical["recovery_levels"]
-        self.assertEqual(levels["structurally_classified"]["bytes_Z"], 43)
-        self.assertAlmostEqual(levels["structurally_classified"]["percent_Z_of_Y"], 63.2353)
+        self.assertEqual(levels["structurally_classified"]["bytes_Z"], 34)
+        self.assertAlmostEqual(levels["structurally_classified"]["percent_Z_of_Y"], 50.0)
         self.assertEqual(levels["losslessly_rebuildable"]["bytes_A"], 68)
         self.assertEqual(levels["semantically_editable"]["bytes_B"], 31)
         self.assertAlmostEqual(levels["semantically_editable"]["percent_B_of_Y"], 45.5882)
         self.assertEqual(levels["runtime_validated_editable"]["bytes_C"], 0)
+
+        logical = census["expanded_logical_payload"]
+        structured_only = logical["classified_but_not_semantically_editable"]
+        self.assertEqual(structured_only["bytes"], 3)
+        opaque = logical["opaque_after_structural_classification"]
+        self.assertEqual(opaque["bytes"], 34)
+        self.assertEqual(sum(item["source_bytes"] for item in
+                             opaque["exclusive_byte_weighted_categories"]), 34)
 
         texture = census["texture_corpus"]
         self.assertEqual(texture["expanded_txc_payload_bytes"], 25)
@@ -93,6 +103,13 @@ class AssetRecoveryCensusTests(unittest.TestCase):
             "exclusive_byte_weighted_categories"
         ]
         self.assertEqual(sum(item["source_bytes"] for item in categories), 37)
+
+    def test_requires_explicit_rtx3_parse_evidence(self):
+        leaves, index, disc, roundtrip = self.fixture()
+        del index["entries"][0]["rtx3_parse_valid"]
+
+        with self.assertRaisesRegex(ValueError, "lacks strict RTX3 parse status"):
+            build_census(leaves, index, disc, roundtrip)
 
     def test_rejects_roundtrip_evidence_for_another_reference(self):
         leaves, index, disc, roundtrip = self.fixture()

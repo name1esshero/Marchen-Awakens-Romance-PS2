@@ -26,9 +26,9 @@ The prepared-workspace comparison evidence is recorded in
 `reports/assets-roundtrip-prepared.json`.
 
 This is lossless container extraction/reinsertion, not semantic editing for every
-format. Evidence-supported PSMT4/PSMT8 TXCs now have indexed TGA companions;
-high-bit/short TXCs, YPC models, audio, script bytecode and other unknown leaves
-remain raw. `--relocate` appends a grown member and updates
+format. Evidence-supported PSMT4/PSMT8/PSMT8H/PSMT4HL/PSMT4HH TXCs have indexed
+TGA companions; the 43 short PSMCT32 TXCs, YPC models, audio, script bytecode and
+other unknown leaves remain raw. `--relocate` appends a grown member and updates
 its observed parent-table offset/size fields, recursively; for ISO files it also
 updates the directory record and volume length. Whether the game accepts these
 relocations, enlarged archives, changed model geometry, or changed text layout is
@@ -171,13 +171,14 @@ through the full ISO build.
 These checks do not prove retail text line wrapping, glyph coverage, or runtime
 relocation behavior.
 The verified mod run also exposes a placement cost: a 15-byte single-prompt
-growth appends a complete new PAC member at its parent, then appends the complete
-428,967,936-byte YFS at the ISO end. The current build uses all three tracked catalogues. It grows `_msg.dat` by 248
-bytes (20,452 to 20,700), `CardList.txt` to 13,567 bytes, and `DataBase.txt` to
-3,319 bytes. The ISO inventory reports 42 entries and nested reparsing matches each
-catalog-applied resource exactly. Current image SHA-256 is
-`15fcacc2ebf2c2fe82fc6153348ca013f9c372202dff1b2c94b7e35eba33bee5`; the
-authenticated comparator reports 751,304,175 differing bytes. This is an
+growth appends a complete new PAC member at its parent, then appends the rebuilt
+429,000,704-byte YFS at the ISO end. The current build uses all three tracked
+catalogues. It grows `_msg.dat` by 248 bytes (20,452 to 20,700), `CardList.txt`
+to 14,152 bytes (13,451 to 14,152), and `DataBase.txt` to 3,319 bytes. The ISO
+inventory reports 42 entries; nested reparsing matches each catalog-applied
+resource exactly. The 5,016,750,080-byte image SHA-256 is
+`1f62176480ce1bd57c2c8db28f84b629d0125d4511f5e85767400ccc9f5ebf6e`; the
+authenticated comparator reports 751,306,225 differing bytes. This is an
 expected mismatch for translation and append relocation. The current method is
 space-heavy and has no runtime acceptance evidence. Exact-baseline comparison
 is therefore an expected mismatch for a changed build; verify the authenticated
@@ -196,11 +197,11 @@ or exclusive byte categories do not sum to their denominator.
 
 Keep the two byte bases separate. The **physical image** is 4,587,749,376
 bytes. It contains 3,324,768,000 bytes in all-zero named members and 2,527,881
-bytes in all-zero gaps, totaling 3,327,295,881 measured zero bytes (72.5257%).
+bytes in all-zero gaps, totaling 3,327,295,881 measured all-zero bytes (72.5257%).
 It also contains 1,237,522,725 bytes in nonzero terminal members (26.9745%) and
 22,930,770 bytes in nonzero gap/structure extents (0.4998%). Those four disjoint
 spans sum exactly to the image. The zero measurements prove byte values only;
-they do not prove intentional padding or historical use.
+they do not prove intentional padding, placeholder use, or historical purpose.
 
 The **expanded logical information payload Y** is 1,303,947,016 bytes, or
 28.4224% of the physical image size. It
@@ -212,15 +213,26 @@ bytes as editable meaning.
 
 Report each recovery level independently. Every nonzero physical member has a
 validated hierarchy path and extent. Strict parser-backed structural coverage
-is **Z/Y = 248,202,302 / 1,303,947,016 = 19.0347%**: indexed RTX3 extents,
-non-texture members under parsed UI bundle tables, reversible text/message
-sources, and parsed direct AT3 headers/reference tables. Full unchanged-source
-rebuild coverage is **A/Y = 100%**, backed by a byte-identical full-disc
-rebuild; it does not mean edited assets have been runtime validated. Semantic
-editability is **B/Y = 239,532,814 / 1,303,947,016 = 18.3698%**, comprising
-239,444,320 editable texture bytes and 88,494 reversible text/message source
-bytes. This measures available editable representations, not the share already
-translated. Runtime-validated editable coverage is **C/Y = 0%**.
+is **Z/Y = 248,061,654 / 1,303,947,016 = 19.0239%**: only complete RTX3 parses,
+non-texture members bounded by parsed UI bundle tables, reversible text/message
+sources, and directly parsed AT3 headers/reference tables. The 43 PSMCT32 RTX3
+records fail the complete declared-length check and are excluded from Z even
+though their headers identify candidate dimensions and storage mode. The graphics
+index records strict parse success separately from image-export support. Full
+unchanged-source rebuild coverage is **A/Y = 100%**, backed by a byte-identical
+full-disc rebuild; it does not mean edited assets have been runtime validated.
+Semantic editability is **B/Y = 239,532,814 / 1,303,947,016 = 18.3698%**,
+comprising 239,444,320 editable texture bytes and 88,494 reversible text/message
+source bytes. This measures available editable representations, not the share
+already translated. Runtime-validated editable coverage is **C/Y = 0%**.
+
+Keep two disjoint work-queue views. The complete non-editable remainder **Y-B**
+is 1,064,414,202 bytes (81.6302% of Y); it includes structurally bounded members
+that do not yet have an editable representation. Of that, **Z-B = 8,528,840**
+bytes (0.6541% of Y) are structurally classified but not semantically editable.
+The strictly unclassified remainder **Y-Z = 1,055,885,362** bytes (80.9761% of
+Y) is the byte base for the opaque-payload breakdown below. These bases answer
+different questions and must not be substituted for one another.
 
 The disjoint `Y - B` remainder is 1,064,414,202 bytes. Its byte-weighted
 inventory is:
@@ -241,11 +253,22 @@ These classes partition `Y - B`. Their names classify inventory by validated
 signature, bundle member type, filename or path; they do not claim the opaque
 bodies have been semantically decoded.
 
+For the stricter opaque queue, use `Y - Z`, not `Y - B`. Its disjoint byte shares
+are: video/cinematics 64.8850% (685,111,296 bytes), model/geometry candidates
+19.0007% (200,625,168), audio/sound candidates 14.8173% (156,453,642),
+animation/motion candidates 0.5213% (5,504,444), executables/modules 0.3885%
+(4,101,870), other unclassified 0.2069% (2,184,740), font assets 0.0849%
+(896,928), script/data candidates 0.0821% (866,626), and unresolved graphics
+0.0133% (140,648). These are evidence-led inventory labels; candidate models,
+audio, animation and script bodies remain opaque.
+
 Texture-specific coverage remains a distinct measure: 30,397 occurrences
 contain 239,584,968 TXC bytes, of which 239,444,320 (99.9413%) have editable
 TGA exports. The tool tests exact physical partitioning, expanded accounting,
 separate Z/A/B/C levels, and remainder balance in
-`tests/test_asset_recovery_census.py`.
+`tests/test_asset_recovery_census.py`. The test suite also rejects absent strict
+RTX3 parse evidence, checks malformed textures are excluded from Z, and verifies
+that both `Y - B` and `Y - Z` category totals balance.
 
 ## Procedure
 

@@ -29,14 +29,14 @@
       "confidence": "OBSERVED: language-bearing catalogue content; runtime use not yet traced",
       "extraction_status": "reversible CP932/UTF-8 companion",
       "editability_status": "source-hash-anchored UTF-8 JSON; stable IDs; tab/blank-cell/CRLF-preserving CP932 apply",
-      "rebuild_status": "catalog translations inserted and reparsed exactly through ISO/YFS/PAC; captions remain untranslated",
+      "rebuild_status": "all 142 name/title/category/caption draft sets inserted and CardList.txt reparsed byte-exactly through ISO/YFS/PAC",
       "relocation_status": "full ISO/YFS/PAC rebuild exercised; runtime acceptance unverified",
       "tracked_translation_source": "localization/card_list.json",
       "translated_name_fields": 142,
       "translated_title_fields": 51,
       "translated_category_fields": 141,
-      "translated_caption_fields": 0,
-      "limits": "142/142 nonempty name fields, 51/51 character-title fields, and 141/141 categories translated; 0/142 captions translated. Names and titles are draft; runtime use, layout and rendering are unverified."
+      "translated_caption_fields": 142,
+      "limits": "142/142 nonempty name fields, 51/51 character-title fields, 141/141 categories, and 142/142 captions have English drafts. Draft quality, runtime use, layout and rendering are unverified."
     },
     {
       "path": "disc!/_DATA.YFS;1!/data/menu/MenuBinary.pac!/DataBase.txt",

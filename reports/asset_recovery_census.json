@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "evidence_date": "2026-09-23",
   "reference_sha256": "cc059a3acf818dfbd0a782a9d20ee67e020d167866cd1c4dca77e6eb9224e3ec",
   "scope": "Pinned physical image partition plus a de-duplicated expanded logical content inventory; recovery levels have separate definitions and evidence.",
@@ -7,12 +7,12 @@
     "image_bytes": 4587749376,
     "named_member_count": 34486,
     "all_zero_named_member_count": 26,
-    "all_zero_named_placeholder_bytes": 3324768000,
-    "all_zero_named_placeholder_percent_of_image": 72.4706,
-    "all_zero_gap_or_padding_bytes": 2527881,
-    "all_zero_gap_or_padding_percent_of_image": 0.0551,
-    "known_all_zero_placeholder_or_gap_bytes": 3327295881,
-    "known_all_zero_placeholder_or_gap_percent_of_image": 72.5257,
+    "all_zero_named_member_bytes": 3324768000,
+    "all_zero_named_member_percent_of_image": 72.4706,
+    "all_zero_gap_bytes": 2527881,
+    "all_zero_gap_percent_of_image": 0.0551,
+    "measured_all_zero_bytes": 3327295881,
+    "measured_all_zero_percent_of_image": 72.5257,
     "information_bearing_terminal_member_bytes": 1237522725,
     "information_bearing_terminal_member_count": 34460,
     "information_bearing_terminal_member_percent_of_image": 26.9745,
@@ -24,7 +24,7 @@
     "partition_matches_image": true,
     "terminal_leaf_count": 34486,
     "zero_length_terminal_leaf_count": 6,
-    "terminal_leaf_source_bytes_including_zero_placeholders": 4562290725,
+    "terminal_leaf_source_bytes_including_all_zero_members": 4562290725,
     "layout_evidence": "Recursively validated ISO/AFS/YFS/PAC layout pieces; parent container extents are replaced by child pieces to avoid double counting.",
     "round_trip": {
       "authenticated": true,
@@ -52,16 +52,16 @@
         "meaning": "Every nonzero physical terminal member has a named catalog path and a validated parent extent. This says nothing about the member's internal format or semantics."
       },
       "structurally_classified": {
-        "bytes_Z": 248202302,
+        "bytes_Z": 248061654,
         "denominator_bytes_Y": 1303947016,
-        "percent_Z_of_Y": 19.0347,
+        "percent_Z_of_Y": 19.0239,
         "components": {
-          "indexed_RTX3_record_and_pixel_extents": 239584968,
+          "complete_RTX3_parser_validated_extents": 239444320,
           "parsed_UI_bundle_nontexture_member_extents": 8460696,
           "reversible_CP932_text_and_message_source_bytes": 88494,
           "direct_AT3_header_and_reference_table_bytes": 68144
         },
-        "meaning": "Validated internal extents or records, de-duplicated across nested TXCs. An AT3 body after its parsed reference table is not counted."
+        "meaning": "Bytes assigned to complete parser-validated records or bounded child extents, de-duplicated across nested TXCs. The 43 RTX3 records that fail the complete length contract are excluded; direct AT3 bytes after the parsed reference table are excluded."
       },
       "losslessly_rebuildable": {
         "bytes_A": 1303947016,
@@ -166,7 +166,93 @@
           "classification_basis": "TXC indexed, current pixel decoder has no editable export"
         }
       ],
-      "accounting_note": "Categories partition Y minus B. Names indicate evidence-backed inventory classes, not complete reverse engineering; filename/path-led candidates and opaque bodies are explicitly labeled."
+      "accounting_note": "Categories partition Y minus B. This is the complete non-editable work queue, including spans whose container bounds or record structure are known; it is not synonymous with fully opaque bytes."
+    },
+    "classified_but_not_semantically_editable": {
+      "bytes": 8528840,
+      "denominator_bytes_Y": 1303947016,
+      "percent_of_Y": 0.6541,
+      "definition": "Z minus B: parser-classified spans without an evidence-backed semantic editing representation."
+    },
+    "opaque_after_structural_classification": {
+      "bytes": 1055885362,
+      "denominator_bytes_Y": 1303947016,
+      "percent_of_Y": 80.9761,
+      "exclusive_byte_weighted_categories": [
+        {
+          "name": "video_cinematics",
+          "file_count": 13,
+          "source_bytes": 685111296,
+          "percent_of_opaque_payload": 64.885,
+          "percent_of_expanded_payload": 52.5413,
+          "classification_basis": "MOVIE.AFS path and MPEG program-stream pack-start magic"
+        },
+        {
+          "name": "model_geometry_candidates",
+          "file_count": 1232,
+          "source_bytes": 200625168,
+          "percent_of_opaque_payload": 19.0007,
+          "percent_of_expanded_payload": 15.386,
+          "classification_basis": "YMP/YPC resource naming; model bodies are not decoded here"
+        },
+        {
+          "name": "audio_sound_candidates",
+          "file_count": 140,
+          "source_bytes": 156453642,
+          "percent_of_opaque_payload": 14.8173,
+          "percent_of_expanded_payload": 11.9985,
+          "classification_basis": "BGM archive or sound-directory path; payload audio is not decoded"
+        },
+        {
+          "name": "animation_motion_candidates",
+          "file_count": 825,
+          "source_bytes": 5504444,
+          "percent_of_opaque_payload": 0.5213,
+          "percent_of_expanded_payload": 0.4221,
+          "classification_basis": "AT3/YAP/MPC/YMA name or member type; bodies are not fully decoded"
+        },
+        {
+          "name": "executables_and_modules",
+          "file_count": 16,
+          "source_bytes": 4101870,
+          "percent_of_opaque_payload": 0.3885,
+          "percent_of_expanded_payload": 0.3146,
+          "classification_basis": "boot executable/module filename; full semantics are outside this census"
+        },
+        {
+          "name": "other_unclassified",
+          "file_count": 2246,
+          "source_bytes": 2184740,
+          "percent_of_opaque_payload": 0.2069,
+          "percent_of_expanded_payload": 0.1675,
+          "classification_basis": "fallback for payload without a stronger evidence-backed inventory class"
+        },
+        {
+          "name": "font_assets",
+          "file_count": 2,
+          "source_bytes": 896928,
+          "percent_of_opaque_payload": 0.0849,
+          "percent_of_expanded_payload": 0.0688,
+          "classification_basis": "font resource directory path; internal font records remain unparsed"
+        },
+        {
+          "name": "scripts_event_and_data_candidates",
+          "file_count": 318,
+          "source_bytes": 866626,
+          "percent_of_opaque_payload": 0.0821,
+          "percent_of_expanded_payload": 0.0665,
+          "classification_basis": "data/script/event extension or member type; semantics are partial"
+        },
+        {
+          "name": "unresolved_graphics",
+          "file_count": 43,
+          "source_bytes": 140648,
+          "percent_of_opaque_payload": 0.0133,
+          "percent_of_expanded_payload": 0.0108,
+          "classification_basis": "TXC indexed, current pixel decoder has no editable export"
+        }
+      ],
+      "accounting_note": "Categories partition Y minus Z. These spans lack one of the explicit parser-backed structural classifications used by Z; filenames and paths provide only candidate inventory labels."
     }
   },
   "texture_corpus": {
@@ -386,7 +472,7 @@
     }
   },
   "limits": [
-    "Zero placeholders and zero-filled gaps are reported as measured spans; the gap label does not prove historical intent.",
+    "All-zero members and gaps are measured by byte value only. Their zero contents do not prove intentional padding, placeholder use, or historical purpose.",
     "Information-bearing means a named terminal member extent that is not wholly zero. Zero-valued bytes inside a nonzero member are retained in its full extent.",
     "Expanded logical payload is a normalized content inventory, not a second physical disc size; it replaces compressed BPE wrappers with decoded child payloads and excludes bundle control/gap bytes.",
     "The structural numerator counts only the explicit parser-backed extents listed. Container hierarchy addressing is reported separately and must not be mistaken for semantic understanding.",

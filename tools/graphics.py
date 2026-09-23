@@ -21,7 +21,7 @@ SUPPORTED = {
     rtx3.PSMCT32: 'psmct32',
 }
 INDEX_NAME = 'index.json'
-INDEX_VERSION = 3
+INDEX_VERSION = 4
 OVERRIDES_MARKER = '.generated-by-marps2-graphics'
 OVERRIDES_MARKER_TEXT = 'Generated RTX3 overrides; safe to replace.\n'
 STANDALONE_MANIFEST = 'standalone-txc-overrides.json'
@@ -188,6 +188,7 @@ def _discover(workspace):
                 category=category,
                 psm=psm,
                 psm_name=psm_name,
+                rtx3_parse_valid=info is not None,
                 width=info['width'] if info else None,
                 height=info['height'] if info else None,
                 image=image_rel.as_posix() if image_rel else None,
@@ -236,6 +237,7 @@ def _discover(workspace):
                 category=category,
                 psm=psm,
                 psm_name=psm_name,
+                rtx3_parse_valid=info is not None,
                 width=info['width'] if info else None,
                 height=info['height'] if info else None,
                 image=image_rel,
@@ -253,7 +255,7 @@ def export(workspace, graphics_root):
     previous = None
     if index_path.exists():
         previous = json.loads(index_path.read_text(encoding='utf-8'))
-        if previous.get('version') not in (2, INDEX_VERSION):
+        if previous.get('version') not in (2, 3, INDEX_VERSION):
             raise ValueError('unsupported graphics index version')
     old_by_key = {row['key']: row for row in previous.get('entries', [])} if previous else {}
 

@@ -45,7 +45,7 @@ export-assets:
 prepare-assets:
 	python3 tools/assets.py prepare extracted/assets
 
-asset-census:
+asset-census: graphics-export
 	python3 tools/asset_recovery_census.py
 
 build-disc:

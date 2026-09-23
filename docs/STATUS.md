@@ -17,22 +17,26 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   `reports/translation_surfaces.json`.
 - The byte-weighted census in `reports/asset_recovery_census.json` reports
   disjoint physical-disc spans and a separate expanded logical payload. The
-  4,587,749,376-byte image has 3,327,295,881 measured all-zero placeholder/gap
-  bytes (72.5257%), 1,237,522,725 nonzero terminal-member bytes (26.9745%), and
+  4,587,749,376-byte image has 3,327,295,881 measured all-zero bytes (72.5257%),
+  1,237,522,725 nonzero terminal-member bytes (26.9745%), and
   22,930,770 nonzero gap/structure bytes (0.4998%); these disjoint spans sum
-  exactly to the image. Zero measurements do not establish historical intent.
+  exactly to the image. Zero measurements do not establish intentional padding,
+  placeholder use, or historical purpose.
   Expanded logical information payload Y is 1,303,947,016 bytes (28.4224% of
   physical image size) after BPE bundle expansion and de-duplication.
-  Parser-backed structural coverage is Z/Y = 248,202,302/1,303,947,016
-  (19.0347%); unchanged-source rebuildability is A/Y = 100%; semantic
+  Parser-backed structural coverage is Z/Y = 248,061,654/1,303,947,016
+  (19.0239%); unchanged-source rebuildability is A/Y = 100%; semantic
   editability is B/Y = 239,532,814/1,303,947,016 (18.3698%); runtime-validated
-  editability is C/Y = 0%. Of the 1,064,414,202 bytes remaining after B, video
-  accounts for 64.3651%, model/geometry candidates 18.9430%, audio/sound
-  candidates 14.6986%, animation/motion 1.1793%, and unresolved graphics 0.0132%;
-  the report gives the full disjoint breakdown and evidence basis. These are
-  separate preservation, structure, editability, and runtime measures, not a
-  single decompilation or translation percentage. Regenerate with
-  `make asset-census`.
+  editability is C/Y = 0%. The non-editable queue Y-B is 1,064,414,202 bytes
+  (81.6302% of Y), including 8,528,840 bytes that are structurally classified
+  but not yet editable (Z-B). Strictly unclassified payload Y-Z is 1,055,885,362
+  bytes (80.9761% of Y); of that, video is 64.8850%, model/geometry candidates
+  19.0007%, audio/sound candidates 14.8173%, animation/motion 0.5213%, and
+  unresolved graphics 0.0133%. The report gives the full disjoint breakdown
+  and evidence basis. These are separate preservation, structure, editability,
+  and runtime measures, not one decompilation or translation percentage. The 43
+  incomplete RTX3 records are excluded from Z because their complete length
+  contract fails. Regenerate with `make asset-census`.
 - Both the initial and fully prepared 4,587,749,376-byte disc rebuilds from
   workspace files compare byte-for-byte with the pinned ISO; the streaming
   comparator authenticates both source hashes and whole-image equality. This
@@ -50,15 +54,17 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   across save/load prompts, menus, tutorials, character profiles, battlefields,
   ARM descriptions, Magic Stones, and the none/unused labels. All message translations
   encode as CP932. An earlier build snapshot measured 20,702 bytes (+250); the
-  current combined catalog build measures 20,700 bytes (+248). The current 5,016,748,032-byte catalog-driven mod ISO inventories as 42 entries
-  and reparses all three catalog-applied resources through ISO/YFS/PAC.
-  Current source sizes are 20,700 bytes for `_msg.dat` (+248), 13,567 bytes for
-  `CardList.txt`, and 3,319 bytes for `DataBase.txt`. The 142-row card catalog
-  has draft translations for all 142 names, all 51 character titles and all 141
-  categories; all 142 captions remain Japanese. These are unreviewed English drafts. The 71-row database has 87/126 fields
+  current combined catalog build measures 20,700 bytes (+248). The current
+  5,016,750,080-byte catalog-driven mod ISO inventories as 42 entries and
+  reparses all three catalog-applied resources through ISO/YFS/PAC byte-exactly.
+  Current resource sizes are 20,700 bytes for `_msg.dat` (+248), 14,152 bytes
+  for `CardList.txt` (+701), and 3,319 bytes for `DataBase.txt`. The 142-row card
+  catalog has English drafts for all 142 names, 51 character titles, 141
+  categories, and 142 captions. These are unreviewed English drafts. The 71-row database has 87/126 fields
   translated; 39 unlock-condition fields remain original pending semantic evidence.
   Runtime line layout and acceptance remain untested. Current append placement adds the
-  full 428,967,936-byte YFS to the 5,016,748,032-byte ISO.
+  full rebuilt 429,000,704-byte YFS to the ISO; the full-image comparator reports
+  751,306,225 differing bytes, as expected for the translated/relocated image.
 - The complete 3,445,204-byte boot ELF now rebuilds identically from repository
   text artifacts plus assembled code. `cmp` verifies every output byte.
 - An isolated build containing no ISO, extracted files, reports, existing build
