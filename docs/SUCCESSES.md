@@ -470,6 +470,34 @@ Limits: does not establish that `or`-based moves never appear in the real
 binary elsewhere, only that this specific evidenced pattern uses `daddu`.
 References: [linkonce cluster task](tasks/LINKONCE_CLUSTER.md).
 
+## This compiler's `unsigned long` is 8 bytes, not 4
+
+Symptom: a candidate method reading/writing a field with `lw`/`sw` (32-bit)
+would not match a target section using `ld`/`sd` (64-bit) at the same offset.
+Mechanism: on this MIPS R5900/eabi64 target, EE GCC 2.96 sizes `long` and
+`unsigned long` as 64-bit integers, not the 32-bit width common on
+mainstream 32-bit MIPS/ARM/x86 targets. `CPrim::SetTex0__5CPrimUl`'s mangled
+`Ul` (`unsigned long`) parameter compiles to `sd $5, ...` (store doubleword),
+and the paired `GetTex0`/`GetPrim` accessors read the same offsets with `ld`
+(load doubleword) — all consistent with an 8-byte type, and consistent with
+the `noreorder, 5900, eabi64, mips3` ELF flags noted since the initial
+bootstrap.
+Pathway: when a mangled parameter or return shows `Ul`/`l`/`x`
+(unsigned long/long/long long) and the corresponding instruction is
+`ld`/`sd` rather than `lw`/`sw`, declare the C++ field/parameter as
+`unsigned long`/`long` (8 bytes here) rather than assuming a 32-bit `int`-like
+width from the primitive letter alone.
+Verification: `make verify-ee` — the unmodified EE GCC `2.96-ee-001003-1`
+`-O2` probe reproduces `CPrim`'s `sd`/`ld` byte patterns exactly using plain
+`unsigned long` fields, no codegen attributes or width-forcing tricks.
+Scope: EE GCC `2.96-ee-001003-1` on this R5900/eabi64 target. Likely
+generalizes to other MIPS n64/eabi64-style ABIs; does not establish the
+width of `long` under this project's still-unproven *original* game
+compiler, only this research compiler.
+Limits: `int` remains 32-bit in all evidence gathered so far; only
+`long`/`unsigned long` (and presumably `long long`) are affected.
+References: [linkonce cluster task](tasks/LINKONCE_CLUSTER.md).
+
 ## Exclude replaced bytes from bootstrap source intervals
 
 Symptom: a bootstrap can appear to match while silently retaining original bytes

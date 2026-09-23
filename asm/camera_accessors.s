@@ -897,3 +897,78 @@ lh $2, 0x11c($4)
 .section .gnu.linkonce.t.GetRoutine__16Labyrinth_ArmGet,"ax",@progbits
 jr $31
 lw $2, 0xdc($4)
+.section .gnu.linkonce.t.IsHokanDisable__8CMotion2,"ax",@progbits
+jr $31
+lw $2, 0x94($4)
+.section .gnu.linkonce.t.SetHokanFrame__8CMotion2f,"ax",@progbits
+jr $31
+swc1 $f12, 0x88($4)
+.section .gnu.linkonce.t.GetHokanFrameNext__8CMotion2,"ax",@progbits
+jr $31
+lwc1 $f0, 0x84($4)
+.section .gnu.linkonce.t.SetHokanFrameNext__8CMotion2f,"ax",@progbits
+jr $31
+swc1 $f12, 0x84($4)
+.section .gnu.linkonce.t.SetDefaultHokanFrame__8CMotion2f,"ax",@progbits
+jr $31
+swc1 $f12, 0x80($4)
+.section .gnu.linkonce.t.SetHitEff__10CEffObjecti,"ax",@progbits
+jr $31
+sw $5, 0xd0($4)
+.section .gnu.linkonce.t.ChkHitEff__10CEffObject,"ax",@progbits
+jr $31
+lw $2, 0xd0($4)
+.section .gnu.linkonce.t.GetEffSts__10CEffObject,"ax",@progbits
+jr $31
+addiu $2, $4, 0xb0
+.section .gnu.linkonce.t.GetEffOwner__10CEffObject,"ax",@progbits
+jr $31
+lw $2, 0xd4($4)
+.section .gnu.linkonce.t.GetArmTgt__10CEffObject,"ax",@progbits
+jr $31
+lw $2, 0xd8($4)
+.section .gnu.linkonce.t.CalcObjectWorldMatrix__12CPAppear_PS2P9objMatrix,"ax",@progbits
+jr $31
+addiu $2, $0, 0x1
+.section .gnu.linkonce.t.GetChildNodeNo__12CPAppear_PS2PCc,"ax",@progbits
+jr $31
+addiu $2, $0, -0x1
+.section .gnu.linkonce.t.Vib__12CPAppear_PS2i,"ax",@progbits
+jr $31
+daddu $2, $0, $0
+.section .gnu.linkonce.t.Hokan__12CPAppear_PS2i,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.Draw__12CPAppear_PS2,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.SetCamCheck__11CCharaCntrli,"ax",@progbits
+jr $31
+sw $5, 0x7c($4)
+.section .gnu.linkonce.t.SetActiveDraw__11CCharaCntrli,"ax",@progbits
+jr $31
+sw $5, 0x80($4)
+.section .gnu.linkonce.t.IsActiveDraw__C11CCharaCntrl,"ax",@progbits
+jr $31
+lw $2, 0x80($4)
+.section .gnu.linkonce.t.SetActiveActionCh__11CCharaCntrli,"ax",@progbits
+jr $31
+sw $5, 0x84($4)
+.section .gnu.linkonce.t.IsActiveActionCh__C11CCharaCntrl,"ax",@progbits
+jr $31
+lw $2, 0x84($4)
+.section .gnu.linkonce.t.GetNumVertex__5CPrim,"ax",@progbits
+jr $31
+lw $2, 0x4($4)
+.section .gnu.linkonce.t.GetPrim__5CPrim,"ax",@progbits
+jr $31
+ld $2, 0x8($4)
+.section .gnu.linkonce.t.SetTex0__5CPrimUl,"ax",@progbits
+jr $31
+sd $5, 0x10($4)
+.section .gnu.linkonce.t.GetTex0__5CPrim,"ax",@progbits
+jr $31
+ld $2, 0x10($4)
+.section .gnu.linkonce.t.GetTex0Addr__5CPrim,"ax",@progbits
+jr $31
+addiu $2, $4, 0x10

@@ -539,3 +539,33 @@ passes (full boot ELF and full EE-probe ELF both byte-identical).
 
 Not recovered this batch: the remaining 435 still-untouched trivial 8-byte
 sections, still excluding UI/menu/texture/model/movie-adjacent classes.
+
+## CMotion2/CEffObject/CPAppear_PS2/CCharaCntrl/CPrim batch — 2026-09-23
+
+Agent: Claude Sonnet 5; role: Contributor. Same deliberate scoping; five
+classes batched together this pass.
+
+All 25 remaining trivial 8-byte sections across `CMotion2` (5), `CEffObject`
+(5), `CPAppear_PS2` (5), `CCharaCntrl` (5) and `CPrim` (5) were disassembled.
+Two new instruction/type findings:
+
+- **`CPrim` uses `ld`/`sd`** (64-bit load/store) for its `prim` and `tex0`
+  fields. `SetTex0__5CPrimUl`'s mangled `Ul` (`unsigned long`) parameter
+  compiling to `sd` confirms this compiler's `unsigned long` is **8 bytes**
+  on this target, not 4 — consistent with the R5900/eabi64 ELF flags noted
+  since the initial bootstrap. `GetTex0Addr` (address-of) and `GetTex0`
+  (value) alias the same offset `0x10`, the same shape seen repeatedly in
+  this cluster.
+- **`CPAppear_PS2::GetChildNodeNo`'s parameter mangles as `PCc`** — pointer
+  to const char, i.e. `const char *` — a builtin type needing no forward
+  declaration, unlike every prior class/enum parameter case in this task.
+
+The unmodified EE GCC `2.96-ee-001003-1` `-O2` invocation matched all 25
+sections, including the 64-bit `unsigned long` fields, on the first attempt.
+Reconstruction now covers **323 sections / 2,584 bytes across twenty-eight
+partial classes**; 3,442,620 bytes remain explicit raw debt. `make test
+verify-boot verify-source-only verify-ee` passes (full boot ELF and full
+EE-probe ELF both byte-identical).
+
+Not recovered this batch: the remaining 410 still-untouched trivial 8-byte
+sections, still excluding UI/menu/texture/model/movie-adjacent classes.

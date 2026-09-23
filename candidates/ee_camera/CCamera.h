@@ -803,4 +803,80 @@ public:
     int GetRoutine() { return routine; }
 };
 
+class CMotion2 {
+public:
+    unsigned char unknown000[0x80];
+    float defaultHokanFrame;
+    float hokanFrameNext;
+    float hokanFrame;
+    unsigned char unknown08c[0x8];
+    int hokanDisable;
+
+    int IsHokanDisable() { return hokanDisable; }
+    void SetHokanFrame(float value) { hokanFrame = value; }
+    float GetHokanFrameNext() { return hokanFrameNext; }
+    void SetHokanFrameNext(float value) { hokanFrameNext = value; }
+    void SetDefaultHokanFrame(float value) { defaultHokanFrame = value; }
+};
+
+class CEffObject {
+public:
+    unsigned char unknown000[0xb0];
+    unsigned int effSts;
+    unsigned char unknown0b4[0x1c];
+    int hitEff;
+    int effOwner;
+    int armTgt;
+
+    void SetHitEff(int value) { hitEff = value; }
+    int ChkHitEff() { return hitEff; }
+    void *GetEffSts() { return &effSts; }
+    int GetEffOwner() { return effOwner; }
+    int GetArmTgt() { return armTgt; }
+};
+
+class CPAppear_PS2 {
+public:
+    // Evidenced bodies ignore all arguments and either return a fixed
+    // value or do nothing (see the same note on CCharaBase's stub methods).
+    int CalcObjectWorldMatrix(objMatrix *) { return 1; }
+    int GetChildNodeNo(const char *) { return -1; }
+    int Vib(int) { return 0; }
+    void Hokan(int) {}
+    void Draw() {}
+};
+
+class CCharaCntrl {
+public:
+    unsigned char unknown000[0x7c];
+    int camCheck;
+    int activeDraw;
+    int activeActionCh;
+
+    void SetCamCheck(int value) { camCheck = value; }
+    void SetActiveDraw(int value) { activeDraw = value; }
+    int IsActiveDraw() const { return activeDraw; }
+    void SetActiveActionCh(int value) { activeActionCh = value; }
+    int IsActiveActionCh() const { return activeActionCh; }
+};
+
+class CPrim {
+public:
+    unsigned char unknown000[0x4];
+    int numVertex;
+    // 64-bit fields: this compiler's `unsigned long` is 8 bytes, confirmed
+    // by SetTex0's mangled `Ul` parameter compiling to `sd` (store
+    // doubleword) at this offset.
+    unsigned long prim;
+    unsigned long tex0;
+
+    int GetNumVertex() { return numVertex; }
+    unsigned long GetPrim() { return prim; }
+    void SetTex0(unsigned long value) { tex0 = value; }
+    unsigned long GetTex0() { return tex0; }
+    // GetTex0Addr (address-of) and GetTex0 (value) read the identical
+    // offset (0x10); the same aliasing shape already seen elsewhere.
+    void *GetTex0Addr() { return &tex0; }
+};
+
 #endif

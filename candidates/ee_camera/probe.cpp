@@ -323,3 +323,33 @@ int (Labyrinth_ArmGet::*gLAGGetMoneyAddress)() = &Labyrinth_ArmGet::GetMoney;
 int (Labyrinth_ArmGet::*gLAGIsFullBagAddress)() = &Labyrinth_ArmGet::IsFullBag;
 short (Labyrinth_ArmGet::*gLAGGetCheckCharAddress)() = &Labyrinth_ArmGet::GetCheckChar;
 int (Labyrinth_ArmGet::*gLAGGetRoutineAddress)() = &Labyrinth_ArmGet::GetRoutine;
+
+int (CMotion2::*gMotion2IsHokanDisableAddress)() = &CMotion2::IsHokanDisable;
+void (CMotion2::*gMotion2SetHokanFrameAddress)(float) = &CMotion2::SetHokanFrame;
+float (CMotion2::*gMotion2GetHokanFrameNextAddress)() = &CMotion2::GetHokanFrameNext;
+void (CMotion2::*gMotion2SetHokanFrameNextAddress)(float) = &CMotion2::SetHokanFrameNext;
+void (CMotion2::*gMotion2SetDefaultHokanFrameAddress)(float) = &CMotion2::SetDefaultHokanFrame;
+
+void (CEffObject::*gEffObjSetHitEffAddress)(int) = &CEffObject::SetHitEff;
+int (CEffObject::*gEffObjChkHitEffAddress)() = &CEffObject::ChkHitEff;
+void *(CEffObject::*gEffObjGetEffStsAddress)() = &CEffObject::GetEffSts;
+int (CEffObject::*gEffObjGetEffOwnerAddress)() = &CEffObject::GetEffOwner;
+int (CEffObject::*gEffObjGetArmTgtAddress)() = &CEffObject::GetArmTgt;
+
+int (CPAppear_PS2::*gPAppearPS2CalcObjectWorldMatrixAddress)(objMatrix *) = &CPAppear_PS2::CalcObjectWorldMatrix;
+int (CPAppear_PS2::*gPAppearPS2GetChildNodeNoAddress)(const char *) = &CPAppear_PS2::GetChildNodeNo;
+int (CPAppear_PS2::*gPAppearPS2VibAddress)(int) = &CPAppear_PS2::Vib;
+void (CPAppear_PS2::*gPAppearPS2HokanAddress)(int) = &CPAppear_PS2::Hokan;
+void (CPAppear_PS2::*gPAppearPS2DrawAddress)() = &CPAppear_PS2::Draw;
+
+void (CCharaCntrl::*gCharaCntrlSetCamCheckAddress)(int) = &CCharaCntrl::SetCamCheck;
+void (CCharaCntrl::*gCharaCntrlSetActiveDrawAddress)(int) = &CCharaCntrl::SetActiveDraw;
+int (CCharaCntrl::*gCharaCntrlIsActiveDrawAddress)() const = &CCharaCntrl::IsActiveDraw;
+void (CCharaCntrl::*gCharaCntrlSetActiveActionChAddress)(int) = &CCharaCntrl::SetActiveActionCh;
+int (CCharaCntrl::*gCharaCntrlIsActiveActionChAddress)() const = &CCharaCntrl::IsActiveActionCh;
+
+int (CPrim::*gPrimGetNumVertexAddress)() = &CPrim::GetNumVertex;
+unsigned long (CPrim::*gPrimGetPrimAddress)() = &CPrim::GetPrim;
+void (CPrim::*gPrimSetTex0Address)(unsigned long) = &CPrim::SetTex0;
+unsigned long (CPrim::*gPrimGetTex0Address)() = &CPrim::GetTex0;
+void *(CPrim::*gPrimGetTex0AddrAddress)() = &CPrim::GetTex0Addr;
