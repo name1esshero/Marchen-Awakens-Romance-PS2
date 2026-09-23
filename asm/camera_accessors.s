@@ -972,3 +972,63 @@ ld $2, 0x10($4)
 .section .gnu.linkonce.t.GetTex0Addr__5CPrim,"ax",@progbits
 jr $31
 addiu $2, $4, 0x10
+.section .gnu.linkonce.t.GetBgPos__8CStageSk,"ax",@progbits
+jr $31
+lw $2, 0x1a0($4)
+.section .gnu.linkonce.t.GetBgPosAlf0__8CStageSk,"ax",@progbits
+jr $31
+lw $2, 0x1a8($4)
+.section .gnu.linkonce.t.GetBgPosAlf1__8CStageSk,"ax",@progbits
+jr $31
+lw $2, 0x1ac($4)
+.section .gnu.linkonce.t.GetBgPosTop__8CStageSk,"ax",@progbits
+jr $31
+lw $2, 0x1a4($4)
+.section .gnu.linkonce.t.GetModel__10CWeaponPmv,"ax",@progbits
+jr $31
+lw $2, 0x28($4)
+.section .gnu.linkonce.t.SetChild__10CWeaponPmvP10CWeaponPmv,"ax",@progbits
+jr $31
+sw $5, 0x2c($4)
+.section .gnu.linkonce.t.SetParent__10CWeaponPmvP10CWeaponPmv,"ax",@progbits
+jr $31
+sw $5, 0x30($4)
+.section .gnu.linkonce.t.CheckParentOffsetPmv__10CWeaponPmvi,"ax",@progbits
+jr $31
+sw $5, 0x9c($4)
+.section .gnu.linkonce.t.GetFadeFrame__6CAlpha,"ax",@progbits
+jr $31
+lw $2, 0x14($4)
+.section .gnu.linkonce.t.GetAlpha__6CAlpha,"ax",@progbits
+jr $31
+lwc1 $f0, 0x4($4)
+.section .gnu.linkonce.t.GetMaxAlpha__6CAlpha,"ax",@progbits
+jr $31
+lwc1 $f0, 0x8($4)
+.section .gnu.linkonce.t.GetMinAlpha__6CAlpha,"ax",@progbits
+jr $31
+lwc1 $f0, 0xc($4)
+.section .gnu.linkonce.t.IsActiveAction__C16CGameEffect_Base,"ax",@progbits
+jr $31
+lw $2, 0x0($4)
+.section .gnu.linkonce.t.IsActiveDraw__C16CGameEffect_Base,"ax",@progbits
+jr $31
+lw $2, 0x4($4)
+.section .gnu.linkonce.t.SetActiveAction__16CGameEffect_Basei,"ax",@progbits
+jr $31
+sw $5, 0x0($4)
+.section .gnu.linkonce.t.SetActiveDraw__16CGameEffect_Basei,"ax",@progbits
+jr $31
+sw $5, 0x4($4)
+.section .gnu.linkonce.t.GetActNo__7CMCard2,"ax",@progbits
+jr $31
+lw $2, 0x5c4($4)
+.section .gnu.linkonce.t.GetActionParam__7CMCard2,"ax",@progbits
+jr $31
+addiu $2, $4, 0x5c8
+.section .gnu.linkonce.t.GetDataCapa__7CMCard2,"ax",@progbits
+jr $31
+lw $2, 0x5fc($4)
+.section .gnu.linkonce.t.GetTotalDataCapa__7CMCard2,"ax",@progbits
+jr $31
+lw $2, 0x5f8($4)

@@ -569,3 +569,25 @@ EE-probe ELF both byte-identical).
 
 Not recovered this batch: the remaining 410 still-untouched trivial 8-byte
 sections, still excluding UI/menu/texture/model/movie-adjacent classes.
+
+## CStageSk/CWeaponPmv/CAlpha/CGameEffect_Base/CMCard2 batch — 2026-09-23
+
+Agent: Claude Sonnet 5; role: Contributor. Same deliberate scoping; five
+more classes batched together (stage background state, weapon
+projectile-motion linkage, generic alpha-fade, generic active-effect base,
+memory-card save-data metadata).
+
+All 20 remaining trivial 8-byte sections were disassembled and confirmed
+trivial: plain int/float field reads, two self-referencing pointer setters
+on `CWeaponPmv` (the same pattern as `CMotionC`/`CMotion3`, no forward
+declaration needed), and one address-return field. No new instruction or
+mangling shapes this batch.
+
+The unmodified EE GCC `2.96-ee-001003-1` `-O2` invocation matched all 20
+sections on the first attempt. Reconstruction now covers **343 sections /
+2,744 bytes across thirty-three partial classes**; 3,442,460 bytes remain
+explicit raw debt. `make test verify-boot verify-source-only verify-ee`
+passes (full boot ELF and full EE-probe ELF both byte-identical).
+
+Not recovered this batch: the remaining 390 still-untouched trivial 8-byte
+sections, still excluding UI/menu/texture/model/movie-adjacent classes.

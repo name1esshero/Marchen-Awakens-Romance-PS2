@@ -879,4 +879,74 @@ public:
     void *GetTex0Addr() { return &tex0; }
 };
 
+class CStageSk {
+public:
+    unsigned char unknown000[0x1a0];
+    int bgPos;
+    int bgPosTop;
+    int bgPosAlf0;
+    int bgPosAlf1;
+
+    int GetBgPos() { return bgPos; }
+    int GetBgPosAlf0() { return bgPosAlf0; }
+    int GetBgPosAlf1() { return bgPosAlf1; }
+    int GetBgPosTop() { return bgPosTop; }
+};
+
+class CWeaponPmv {
+public:
+    unsigned char unknown000[0x28];
+    void *model;
+    CWeaponPmv *child;
+    CWeaponPmv *parent;
+    unsigned char unknown034[0x68];
+    int parentOffsetPmv;
+
+    void *GetModel() { return model; }
+    void SetChild(CWeaponPmv *value) { child = value; }
+    void SetParent(CWeaponPmv *value) { parent = value; }
+    void CheckParentOffsetPmv(int value) { parentOffsetPmv = value; }
+};
+
+class CAlpha {
+public:
+    unsigned char unknown000[0x4];
+    float alpha;
+    float maxAlpha;
+    float minAlpha;
+    unsigned char unknown010[0x4];
+    int fadeFrame;
+
+    int GetFadeFrame() { return fadeFrame; }
+    float GetAlpha() { return alpha; }
+    float GetMaxAlpha() { return maxAlpha; }
+    float GetMinAlpha() { return minAlpha; }
+};
+
+class CGameEffect_Base {
+public:
+    int activeAction;
+    int activeDraw;
+
+    int IsActiveAction() const { return activeAction; }
+    int IsActiveDraw() const { return activeDraw; }
+    void SetActiveAction(int value) { activeAction = value; }
+    void SetActiveDraw(int value) { activeDraw = value; }
+};
+
+class CMCard2 {
+public:
+    unsigned char unknown000[0x5c4];
+    int actNo;
+    unsigned int actionParam;
+    unsigned char unknown5cc[0x2c];
+    int totalDataCapa;
+    int dataCapa;
+
+    int GetActNo() { return actNo; }
+    void *GetActionParam() { return &actionParam; }
+    int GetDataCapa() { return dataCapa; }
+    int GetTotalDataCapa() { return totalDataCapa; }
+};
+
 #endif

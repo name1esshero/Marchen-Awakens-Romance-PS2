@@ -353,3 +353,28 @@ unsigned long (CPrim::*gPrimGetPrimAddress)() = &CPrim::GetPrim;
 void (CPrim::*gPrimSetTex0Address)(unsigned long) = &CPrim::SetTex0;
 unsigned long (CPrim::*gPrimGetTex0Address)() = &CPrim::GetTex0;
 void *(CPrim::*gPrimGetTex0AddrAddress)() = &CPrim::GetTex0Addr;
+
+int (CStageSk::*gStageSkGetBgPosAddress)() = &CStageSk::GetBgPos;
+int (CStageSk::*gStageSkGetBgPosAlf0Address)() = &CStageSk::GetBgPosAlf0;
+int (CStageSk::*gStageSkGetBgPosAlf1Address)() = &CStageSk::GetBgPosAlf1;
+int (CStageSk::*gStageSkGetBgPosTopAddress)() = &CStageSk::GetBgPosTop;
+
+void *(CWeaponPmv::*gWeaponPmvGetModelAddress)() = &CWeaponPmv::GetModel;
+void (CWeaponPmv::*gWeaponPmvSetChildAddress)(CWeaponPmv *) = &CWeaponPmv::SetChild;
+void (CWeaponPmv::*gWeaponPmvSetParentAddress)(CWeaponPmv *) = &CWeaponPmv::SetParent;
+void (CWeaponPmv::*gWeaponPmvCheckParentOffsetPmvAddress)(int) = &CWeaponPmv::CheckParentOffsetPmv;
+
+int (CAlpha::*gAlphaGetFadeFrameAddress)() = &CAlpha::GetFadeFrame;
+float (CAlpha::*gAlphaGetAlphaAddress)() = &CAlpha::GetAlpha;
+float (CAlpha::*gAlphaGetMaxAlphaAddress)() = &CAlpha::GetMaxAlpha;
+float (CAlpha::*gAlphaGetMinAlphaAddress)() = &CAlpha::GetMinAlpha;
+
+int (CGameEffect_Base::*gGEBIsActiveActionAddress)() const = &CGameEffect_Base::IsActiveAction;
+int (CGameEffect_Base::*gGEBIsActiveDrawAddress)() const = &CGameEffect_Base::IsActiveDraw;
+void (CGameEffect_Base::*gGEBSetActiveActionAddress)(int) = &CGameEffect_Base::SetActiveAction;
+void (CGameEffect_Base::*gGEBSetActiveDrawAddress)(int) = &CGameEffect_Base::SetActiveDraw;
+
+int (CMCard2::*gMCard2GetActNoAddress)() = &CMCard2::GetActNo;
+void *(CMCard2::*gMCard2GetActionParamAddress)() = &CMCard2::GetActionParam;
+int (CMCard2::*gMCard2GetDataCapaAddress)() = &CMCard2::GetDataCapa;
+int (CMCard2::*gMCard2GetTotalDataCapaAddress)() = &CMCard2::GetTotalDataCapa;
