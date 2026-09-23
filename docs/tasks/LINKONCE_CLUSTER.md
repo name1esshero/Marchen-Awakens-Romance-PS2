@@ -388,3 +388,23 @@ boot ELF and full EE-probe ELF both byte-identical).
 
 Not recovered this batch: the remaining 533 still-untouched trivial 8-byte
 sections, still excluding UI/menu/texture-adjacent classes.
+
+## CGameCntrl accessor batch — 2026-09-23
+
+Agent: Claude Sonnet 5; role: Contributor. Same deliberate scoping.
+
+All 14 remaining trivial 8-byte `CGameCntrl` sections (`0x33d770`–`0x33d7dc`)
+were disassembled: thirteen are stub-shaped (ignore all arguments; most do
+nothing, a few return a fixed value, one — `GetStartCntrlMode` — returns the
+constant `10`), and one (`GetActBoyake`, offset `0x40`) reads a real `int`
+field. `CGameCntrl` is, like `CCharaBase` and `CWeapon`, almost entirely a
+base-class-shaped stub surface.
+
+The unmodified EE GCC `2.96-ee-001003-1` `-O2` invocation matched all 14 new
+sections on the first attempt. Reconstruction now covers **214 sections /
+1,712 bytes across thirteen partial classes**; 3,443,492 bytes remain
+explicit raw debt. `make test verify-boot verify-source-only verify-ee`
+passes (full boot ELF and full EE-probe ELF both byte-identical).
+
+Not recovered this batch: the remaining 519 still-untouched trivial 8-byte
+sections, still excluding UI/menu/texture-adjacent classes.

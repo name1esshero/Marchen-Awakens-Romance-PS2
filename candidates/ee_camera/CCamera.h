@@ -523,4 +523,28 @@ public:
     int GetLinkBone() { return linkBone; }
 };
 
+class CGameCntrl {
+public:
+    unsigned char unknown000[0x40];
+    int actBoyake;
+
+    // Evidenced bodies ignore all arguments; most either do nothing or
+    // return a fixed value. This is a stub shape only, not a claim about
+    // why (see the same note on CCharaBase's stub methods).
+    int GetStartCntrlMode() { return 10; }
+    void StartDataInitialize() {}
+    void StartDataInitializeAfter() {}
+    void DataInitalizeEx() {}
+    void CheckActCntrl() {}
+    void PreActionCntrlFr() {}
+    void AfterActionCntrlFr() {}
+    int CheckThrowPause() { return 0; }
+    void SetReturnStatus() {}
+    int GetActBoyake() { return actBoyake; }
+    int IsGameOver() { return 0; }
+    void ActionCntrl() {}
+    int GetPauseMenu() { return 0; }
+    void PauseMenuAction() {}
+};
+
 #endif

@@ -198,3 +198,17 @@
 .gnu.linkonce.t.GetNowAttributeClass__7CMotion
 .gnu.linkonce.t.IsEndMotion__7CMotion
 .gnu.linkonce.t.GetLinkBone__7CMotion
+.gnu.linkonce.t.GetStartCntrlMode__10CGameCntrl
+.gnu.linkonce.t.StartDataInitialize__10CGameCntrl
+.gnu.linkonce.t.StartDataInitializeAfter__10CGameCntrl
+.gnu.linkonce.t.DataInitalizeEx__10CGameCntrl
+.gnu.linkonce.t.CheckActCntrl__10CGameCntrl
+.gnu.linkonce.t.PreActionCntrlFr__10CGameCntrl
+.gnu.linkonce.t.AfterActionCntrlFr__10CGameCntrl
+.gnu.linkonce.t.CheckThrowPause__10CGameCntrl
+.gnu.linkonce.t.SetReturnStatus__10CGameCntrl
+.gnu.linkonce.t.GetActBoyake__10CGameCntrl
+.gnu.linkonce.t.IsGameOver__10CGameCntrl
+.gnu.linkonce.t.ActionCntrl__10CGameCntrl
+.gnu.linkonce.t.GetPauseMenu__10CGameCntrl
+.gnu.linkonce.t.PauseMenuAction__10CGameCntrl

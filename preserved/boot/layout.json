@@ -725,9 +725,99 @@
     },
     {
       "offset": 2349532,
-      "size": 9280,
+      "size": 3476,
       "kind": "unrecovered_hex",
       "source": "unrecovered_0023d9dc.hex"
+    },
+    {
+      "offset": 2353008,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetStartCntrlMode__10CGameCntrl"
+    },
+    {
+      "offset": 2353016,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.StartDataInitialize__10CGameCntrl"
+    },
+    {
+      "offset": 2353024,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.StartDataInitializeAfter__10CGameCntrl"
+    },
+    {
+      "offset": 2353032,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.DataInitalizeEx__10CGameCntrl"
+    },
+    {
+      "offset": 2353040,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.CheckActCntrl__10CGameCntrl"
+    },
+    {
+      "offset": 2353048,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.PreActionCntrlFr__10CGameCntrl"
+    },
+    {
+      "offset": 2353056,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.AfterActionCntrlFr__10CGameCntrl"
+    },
+    {
+      "offset": 2353064,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.CheckThrowPause__10CGameCntrl"
+    },
+    {
+      "offset": 2353072,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetReturnStatus__10CGameCntrl"
+    },
+    {
+      "offset": 2353080,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetActBoyake__10CGameCntrl"
+    },
+    {
+      "offset": 2353088,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.IsGameOver__10CGameCntrl"
+    },
+    {
+      "offset": 2353096,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.ActionCntrl__10CGameCntrl"
+    },
+    {
+      "offset": 2353104,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetPauseMenu__10CGameCntrl"
+    },
+    {
+      "offset": 2353112,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.PauseMenuAction__10CGameCntrl"
+    },
+    {
+      "offset": 2353120,
+      "size": 5692,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023e7e0.hex"
     },
     {
       "offset": 2358812,

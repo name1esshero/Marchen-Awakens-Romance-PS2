@@ -603,3 +603,45 @@ lw $2, 0x50($4)
 .section .gnu.linkonce.t.GetLinkBone__7CMotion,"ax",@progbits
 jr $31
 lw $2, 0x48($4)
+.section .gnu.linkonce.t.GetStartCntrlMode__10CGameCntrl,"ax",@progbits
+jr $31
+addiu $2, $0, 0xa
+.section .gnu.linkonce.t.StartDataInitialize__10CGameCntrl,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.StartDataInitializeAfter__10CGameCntrl,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.DataInitalizeEx__10CGameCntrl,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.CheckActCntrl__10CGameCntrl,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.PreActionCntrlFr__10CGameCntrl,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.AfterActionCntrlFr__10CGameCntrl,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.CheckThrowPause__10CGameCntrl,"ax",@progbits
+jr $31
+daddu $2, $0, $0
+.section .gnu.linkonce.t.SetReturnStatus__10CGameCntrl,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.GetActBoyake__10CGameCntrl,"ax",@progbits
+jr $31
+lw $2, 0x40($4)
+.section .gnu.linkonce.t.IsGameOver__10CGameCntrl,"ax",@progbits
+jr $31
+daddu $2, $0, $0
+.section .gnu.linkonce.t.ActionCntrl__10CGameCntrl,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.GetPauseMenu__10CGameCntrl,"ax",@progbits
+jr $31
+daddu $2, $0, $0
+.section .gnu.linkonce.t.PauseMenuAction__10CGameCntrl,"ax",@progbits
+jr $31
+nop
