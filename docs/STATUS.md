@@ -1,9 +1,9 @@
 # Current project status
 
 Updated: 2026-09-22. Authority: [STANDARDS.md](STANDARDS.md).
-Current contributor: GPT-6, R&D contributor. Initial Manager: GPT-6 Astra
-Light (operator-provided session label). Role/model attribution is per session
-and commit, not a permanent assignment.
+Current contributor identity is session-specific; consult the relevant commit
+trailers. Role/model attribution is per session and commit, not a permanent
+assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
 
 ## Verified scope
 
