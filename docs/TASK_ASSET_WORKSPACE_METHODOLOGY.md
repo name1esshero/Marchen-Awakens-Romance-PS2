@@ -178,6 +178,50 @@ space-heavy and has no runtime acceptance evidence. Exact-baseline comparison
 is therefore an expected mismatch for a changed build; verify the authenticated
 reference hash and inspect changed ranges rather than requiring equality.
 
+## Byte-weighted recovery census
+
+Use `make asset-census` to regenerate
+[`reports/asset_recovery_census.json`](../reports/asset_recovery_census.json).
+The generator uses the prepared logical-leaf catalog, TXC index and bundle
+manifests, pinned disc inventory, and authenticated unchanged-round-trip report.
+It fails if the reference differs, a standalone TXC is missing from the index,
+an embedded member disagrees with its manifest, or category byte totals do not
+balance.
+
+The main denominator is **4,562,290,725 bytes of terminal leaf payloads** across
+34,486 catalog rows. Each logical leaf is counted once. Twenty zero-filled DMY
+files account for 3,324,768,000 bytes (72.8750% of leaf bytes); they are shown
+separately from the **1,237,522,725 nonzero leaf bytes** so placeholders do not
+inflate the content-recovery percentage. Six additional zero-length records
+contribute no bytes. The remaining 25,458,651 disc bytes are outside terminal
+leaf payloads, such as filesystem/container structure and alignment gaps.
+
+On that nonzero-leaf denominator, 168,163,382 bytes (13.5887%) currently have
+one of the census's explicit editable/structured paths: supported standalone
+TXC images, parsed/rebuildable menu BPE bundles, reversible UTF-8 text
+companions, or the structured message catalog. This is a byte-weighted measure
+of represented source leaves, not a claim that 13.5887% of game meaning is
+translated or semantically understood. A further 13,551,381 bytes (1.0950%)
+are indexed or decoded but remain unresolved (1,427 TXCs and three unparsed
+bundle payloads). The remaining 1,055,807,962 nonzero bytes (85.3162%) are
+other leaves retained raw/opaque by this census.
+
+Texture coverage uses a second, expanded-member denominator: **239,584,968 TXC
+payload bytes** across 30,397 occurrences, including TXCs nested in menu
+bundles. Editable TGA exports represent 226,035,104 bytes (94.3444%); 13,549,864
+bytes (5.6556%) remain unresolved. This denominator intentionally does not add
+nested TXC bytes to the terminal-leaf total: each nested texture is already
+inside a counted compressed `.b` leaf. By count, 28,970/30,397 (95.3055%) have
+editable exports. The unweighted and byte-weighted percentages differ because
+the unresolved formats have different typical sizes.
+
+The report also records 100% byte-identical prepared-disc round-trip evidence
+for the pinned 4,587,749,376-byte image. That is preservation coverage, distinct
+from the 13.5887% explicit editable/structured leaf share and 94.3444% TXC
+imageability. Regenerate the report after refreshing the prepared catalog or
+graphics index. The tool's nested-accounting invariant is covered by
+`tests/test_asset_recovery_census.py`.
+
 ## Procedure
 
 1. Preserve `baserom.iso` and verify `config/reference.sha256`.

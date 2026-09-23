@@ -15,6 +15,16 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   tracked `reports/assets_census.json` and ignored
   `extracted/assets/catalog.json`. Translation-bearing evidence is tracked in
   `reports/translation_surfaces.json`.
+- The byte-weighted census in `reports/asset_recovery_census.json` separates
+  terminal leaves from embedded TXC members. An unchanged 4,587,749,376-byte
+  disc rebuild remains byte-identical (100% preservation). Of 239,584,968
+  expanded TXC payload bytes, 226,035,104 (94.3444%) have editable TGA exports;
+  13,549,864 (5.6556%) remain unresolved. Supported editable/structured
+  companions cover 168,163,382 bytes (13.5887%) of 1,237,522,725 nonzero leaf
+  bytes. Twenty zero-filled DMY files contribute 3,324,768,000 bytes, kept
+  separate from content percentages. These are format-coverage measures, not
+  translation completion or semantic-recovery claims. Regenerate with
+  `make asset-census`.
 - Both the initial and fully prepared 4,587,749,376-byte disc rebuilds from
   workspace files compare byte-for-byte with the pinned ISO; the streaming
   comparator authenticates both source hashes and whole-image equality. This

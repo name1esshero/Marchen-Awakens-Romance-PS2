@@ -3,7 +3,7 @@ EE_GCC := .tools/ee-gcc2.96/bin/ee-gcc
 BOOT_SOURCES := $(wildcard preserved/boot/*.hex) preserved/boot/layout.json
 ENGLISH_DISC := mar_eng.iso
 
-.PHONY: test inventory verify-camera verify-reference build-boot verify-boot setup-ee verify-ee verify-source-only export-assets prepare-assets build-disc build-mod-disc compare-disc verify-disc
+.PHONY: test inventory verify-camera verify-reference build-boot verify-boot setup-ee verify-ee verify-source-only export-assets prepare-assets asset-census build-disc build-mod-disc compare-disc verify-disc
 
 test:
 	python3 -m unittest discover -s tests -v
@@ -44,6 +44,9 @@ export-assets:
 
 prepare-assets:
 	python3 tools/assets.py prepare extracted/assets
+
+asset-census:
+	python3 tools/asset_recovery_census.py
 
 build-disc:
 	python3 tools/assets.py build extracted/assets build/assets-rebuilt.iso

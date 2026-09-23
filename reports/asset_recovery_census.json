@@ -1,0 +1,301 @@
+{
+  "schema_version": 1,
+  "evidence_date": "2026-09-23",
+  "reference_sha256": "cc059a3acf818dfbd0a782a9d20ee67e020d167866cd1c4dca77e6eb9224e3ec",
+  "scope": "Prepared logical leaf payloads plus the indexed TXC corpus. A leaf byte is counted once; embedded TXC member bytes are reported separately because they reside inside counted .b leaf payloads.",
+  "disc": {
+    "image_bytes": 4587749376,
+    "logical_leaf_count": 34486,
+    "logical_leaf_bytes": 4562290725,
+    "logical_leaf_percent_of_image": 99.4451,
+    "zero_or_empty_leaf_count": 26,
+    "zero_filled_leaf_bytes": 3324768000,
+    "zero_filled_percent_of_leaf_bytes": 72.875,
+    "nonzero_leaf_payload_bytes": 1237522725,
+    "nonzero_leaf_percent_of_image": 26.9745,
+    "image_bytes_outside_terminal_leaf_payloads": 25458651,
+    "prepared_round_trip": {
+      "authenticated": true,
+      "byte_identical": true,
+      "differing_bytes": 0,
+      "rebuilt_bytes": 4587749376,
+      "rebuilt_sha256": "cc059a3acf818dfbd0a782a9d20ee67e020d167866cd1c4dca77e6eb9224e3ec",
+      "evidence_file": "reports/assets-roundtrip-prepared.json"
+    }
+  },
+  "exclusive_nonzero_leaf_categories": [
+    {
+      "name": "standalone_txc_with_editable_image",
+      "file_count": 27513,
+      "source_bytes": 106835744,
+      "percent_of_nonzero_leaf_bytes": 8.633,
+      "description": "Standalone TXC leaf bytes with indexed PSMT4/PSMT8 TGA exports."
+    },
+    {
+      "name": "parsed_menu_bpe_bundle",
+      "file_count": 721,
+      "source_bytes": 61239144,
+      "percent_of_nonzero_leaf_bytes": 4.9485,
+      "description": "Original compressed .b leaf bytes whose decoded UI resource tables and members are extractable/rebuildable."
+    },
+    {
+      "name": "reversible_utf8_text_companion",
+      "file_count": 6,
+      "source_bytes": 68042,
+      "percent_of_nonzero_leaf_bytes": 0.0055,
+      "description": "Original text leaf bytes with reversible UTF-8 companions; includes system/source text as well as game tables."
+    },
+    {
+      "name": "structured_message_catalog",
+      "file_count": 1,
+      "source_bytes": 20452,
+      "percent_of_nonzero_leaf_bytes": 0.0017,
+      "description": "Original _msg.dat leaf bytes with an editable structured JSON catalog."
+    },
+    {
+      "name": "standalone_txc_unresolved",
+      "file_count": 1427,
+      "source_bytes": 13549864,
+      "percent_of_nonzero_leaf_bytes": 1.0949,
+      "description": "Standalone TXC leaf bytes indexed but without an editable image for the current decoder."
+    },
+    {
+      "name": "bpe_decoded_but_bundle_unparsed",
+      "file_count": 3,
+      "source_bytes": 1517,
+      "percent_of_nonzero_leaf_bytes": 0.0001,
+      "description": "BPE leaf bytes decode losslessly, but the decoded .yma payloads have no parsed resource table."
+    },
+    {
+      "name": "other_nonzero_leaves_not_in_editable_groups",
+      "file_count": 4789,
+      "source_bytes": 1055807962,
+      "percent_of_nonzero_leaf_bytes": 85.3162,
+      "description": "Losslessly extracted terminal payload bytes not included in the listed editable/structured groups; retained raw or still opaque to this census."
+    }
+  ],
+  "editable_group_source_bytes": 168163382,
+  "editable_group_percent_of_nonzero_leaf_bytes": 13.5887,
+  "texture_corpus": {
+    "entry_count": 30397,
+    "expanded_txc_payload_bytes": 239584968,
+    "editable_entry_count": 28970,
+    "editable_entry_percent": 95.3055,
+    "editable_txc_payload_bytes": 226035104,
+    "editable_txc_byte_percent": 94.3444,
+    "unresolved_entry_count": 1427,
+    "unresolved_txc_payload_bytes": 13549864,
+    "unresolved_txc_byte_percent": 5.6556,
+    "source_kinds": {
+      "standalone": {
+        "entry_count": 28940,
+        "source_bytes": 120385608
+      },
+      "embedded_in_menu_bpe_bundles": {
+        "entry_count": 1457,
+        "expanded_txc_payload_bytes": 119199360,
+        "editable_txc_payload_bytes": 119199360,
+        "parsed_menu_bpe_leaf_count": 721,
+        "bundle_manifest_count_with_indexed_txc": 594,
+        "bundle_member_count": 3084
+      }
+    },
+    "psm_byte_breakdown": {
+      "psm0": {
+        "count": 43,
+        "bytes": 140648,
+        "editable_count": 0,
+        "editable_bytes": 0,
+        "unresolved_count": 43,
+        "unresolved_bytes": 140648,
+        "editable_percent_of_psm_bytes": 0.0
+      },
+      "psm27": {
+        "count": 677,
+        "bytes": 11780416,
+        "editable_count": 0,
+        "editable_bytes": 0,
+        "unresolved_count": 677,
+        "unresolved_bytes": 11780416,
+        "editable_percent_of_psm_bytes": 0.0
+      },
+      "psm36": {
+        "count": 690,
+        "bytes": 1545984,
+        "editable_count": 0,
+        "editable_bytes": 0,
+        "unresolved_count": 690,
+        "unresolved_bytes": 1545984,
+        "editable_percent_of_psm_bytes": 0.0
+      },
+      "psm44": {
+        "count": 17,
+        "bytes": 82816,
+        "editable_count": 0,
+        "editable_bytes": 0,
+        "unresolved_count": 17,
+        "unresolved_bytes": 82816,
+        "editable_percent_of_psm_bytes": 0.0
+      },
+      "psmt4": {
+        "count": 27316,
+        "bytes": 96831776,
+        "editable_count": 27316,
+        "editable_bytes": 96831776,
+        "unresolved_count": 0,
+        "unresolved_bytes": 0,
+        "editable_percent_of_psm_bytes": 100.0
+      },
+      "psmt8": {
+        "count": 1654,
+        "bytes": 129203328,
+        "editable_count": 1654,
+        "editable_bytes": 129203328,
+        "unresolved_count": 0,
+        "unresolved_bytes": 0,
+        "editable_percent_of_psm_bytes": 100.0
+      }
+    },
+    "accounting_note": "Expanded TXC payload bytes include TXCs extracted from the 721 parsed .b bundles. These nested bytes are a separate texture-corpus denominator and are not added to the logical leaf-byte denominator."
+  },
+  "logical_leaf_extensions": {
+    ".;1": {
+      "file_count": 20,
+      "source_bytes": 3324768000
+    },
+    ".bin": {
+      "file_count": 40,
+      "source_bytes": 808583822
+    },
+    ".ymp": {
+      "file_count": 899,
+      "source_bytes": 197085308
+    },
+    ".txc": {
+      "file_count": 28940,
+      "source_bytes": 120385608
+    },
+    ".b": {
+      "file_count": 724,
+      "source_bytes": 61240661
+    },
+    ".acx": {
+      "file_count": 58,
+      "source_bytes": 23957924
+    },
+    ".snd": {
+      "file_count": 56,
+      "source_bytes": 9089072
+    },
+    ".ypc": {
+      "file_count": 333,
+      "source_bytes": 3539860
+    },
+    ".56;1": {
+      "file_count": 1,
+      "source_bytes": 3445204
+    },
+    ".mpc": {
+      "file_count": 7,
+      "source_bytes": 3328128
+    },
+    ".at3": {
+      "file_count": 723,
+      "source_bytes": 1840708
+    },
+    ".ycg": {
+      "file_count": 1983,
+      "source_bytes": 1556528
+    },
+    ".fdb": {
+      "file_count": 2,
+      "source_bytes": 896928
+    },
+    ".dat": {
+      "file_count": 121,
+      "source_bytes": 800202
+    },
+    ".yap": {
+      "file_count": 92,
+      "source_bytes": 398856
+    },
+    ".irx;1": {
+      "file_count": 14,
+      "source_bytes": 381321
+    },
+    ".img;1": {
+      "file_count": 1,
+      "source_bytes": 275345
+    },
+    ".pac": {
+      "file_count": 6,
+      "source_bytes": 210432
+    },
+    ".ico": {
+      "file_count": 1,
+      "source_bytes": 128112
+    },
+    ".p2i": {
+      "file_count": 2,
+      "source_bytes": 85376
+    },
+    ".pms": {
+      "file_count": 196,
+      "source_bytes": 46784
+    },
+    ".bpe": {
+      "file_count": 2,
+      "source_bytes": 46181
+    },
+    ".scd": {
+      "file_count": 8,
+      "source_bytes": 40092
+    },
+    ".gef": {
+      "file_count": 82,
+      "source_bytes": 32372
+    },
+    ".cpp": {
+      "file_count": 1,
+      "source_bytes": 29509
+    },
+    ".atr": {
+      "file_count": 162,
+      "source_bytes": 27864
+    },
+    ".at": {
+      "file_count": 5,
+      "source_bytes": 26923
+    },
+    ".h": {
+      "file_count": 1,
+      "source_bytes": 21581
+    },
+    ".txt": {
+      "file_count": 2,
+      "source_bytes": 16864
+    },
+    ".sci": {
+      "file_count": 1,
+      "source_bytes": 3472
+    },
+    ".da_": {
+      "file_count": 1,
+      "source_bytes": 1600
+    },
+    ".cnf;1": {
+      "file_count": 1,
+      "source_bytes": 57
+    },
+    ".dir;1": {
+      "file_count": 1,
+      "source_bytes": 31
+    }
+  },
+  "limits": [
+    "Percentages describe this pinned image and the prepared/catalogued surfaces, not every possible hidden or runtime-generated asset.",
+    "A reversible extraction or supported rebuild path does not prove semantic understanding or in-game visual/runtime correctness.",
+    "One nested tex.pac candidate remains unparsed and is included among other nonzero leaf payloads.",
+    "Generated TGAs are editable representations; their uncompressed output sizes are not counted as original source bytes."
+  ]
+}

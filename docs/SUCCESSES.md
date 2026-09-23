@@ -319,3 +319,42 @@ runtime relocation remain unverified.
 References: `tools/text_catalog.py`, `localization/card_list.json`,
 `localization/database.json`, `tests/test_text_catalog.py`,
 `tests/test_assets.py`, [asset methodology](TASK_ASSET_WORKSPACE_METHODOLOGY.md).
+
+## Weight asset recovery by original bytes and keep nested members out of the leaf denominator
+
+Symptom: file counts give every small texture the same weight as a large one,
+and adding extracted TXCs to their enclosing `.b` files counts the nested
+payload twice. Here, 3,324,768,000 bytes of zero-filled DMY placeholders would
+also dominate a naive all-leaf percentage.
+
+Mechanism: `catalog.json` identifies terminal logical leaves, while a bundle
+manifest describes TXCs after decoding the enclosing BPE/UI resource. Those are
+different accounting levels. Duplicate logical filenames also occur in the
+catalog, so source byte categories must be keyed by stable extracted source path,
+not display name.
+
+Successful pathway: count every terminal leaf's original declared size once;
+report zero-filled placeholder bytes separately from nonzero payload bytes;
+measure nested TXC member sizes in a separate expanded-texture denominator.
+Partition nonzero leaves into exclusive byte groups and assert that they sum to
+the denominator. Use manifests for nested source sizes rather than statting or
+adding generated TGA output sizes.
+
+Verification: `make asset-census` reports 30,397 indexed TXCs / 239,584,968
+expanded member bytes, with 226,035,104 bytes editable (94.3444%). The 34,486
+terminal leaves sum to 4,562,290,725 bytes; the separate nonzero-leaf denominator
+is 1,237,522,725 bytes, of which 168,163,382 (13.5887%) have the census's
+supported editable/structured companion paths. The prepared full-disc rebuild
+is byte-identical to the pinned 4,587,749,376-byte image; this is preservation
+evidence, not semantic coverage. Synthetic tests verify that nested TXC bytes
+are excluded from leaf totals and that incompatible round-trip evidence fails.
+
+Scope: this pinned image, current extracted catalog, and indexed TXCs.
+Limits: percentages describe supported representations, not translated content,
+semantic understanding, runtime appearance, or unindexed data; one nested
+`tex.pac` remains raw.
+
+References: `tools/asset_recovery_census.py`,
+`tests/test_asset_recovery_census.py`,
+[`reports/asset_recovery_census.json`](../reports/asset_recovery_census.json),
+[asset methodology](TASK_ASSET_WORKSPACE_METHODOLOGY.md).
