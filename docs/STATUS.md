@@ -46,25 +46,34 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
 - A synthetic ISO test carries an edited UTF-8 text companion through CP932
   encoding, member growth, ISO directory relocation, and volume-length update.
   `make build-mod-disc` provides the corresponding experimental workspace build
-  command; it now writes `mar_eng.iso` in the workspace root for emulator testing.
-  No retail menu/dialogue table has yet been edited and tested in-game.
+  command and writes `mar_eng.iso` in the workspace root. Repeated builds use an
+  opt-in atomic replacement: the previous ISO remains until the replacement
+  finishes successfully. A unit test verifies failed builds preserve the prior
+  output. No edited asset has been runtime-tested in-game.
 - One 20,452-byte `_msg.dat` message table has a strict editable JSON
   representation with 229 entries and a tracked source at
   `localization/messages.json`. Initial English drafts now cover all 229 entries
   across save/load prompts, menus, tutorials, character profiles, battlefields,
   ARM descriptions, Magic Stones, and the none/unused labels. All message translations
   encode as CP932. An earlier build snapshot measured 20,702 bytes (+250); the
-  current combined catalog build measures 20,700 bytes (+248). The current
-  5,016,750,080-byte catalog-driven mod ISO inventories as 42 entries and
-  reparses all three catalog-applied resources through ISO/YFS/PAC byte-exactly.
+  current combined catalog build measures 20,700 bytes (+248). The latest
+  5,017,673,728-byte `mar_eng.iso` inventories as 42 entries and reparses all
+  three catalog-applied resources byte-exactly through ISO/YFS/PAC. It also
+  includes an English title-parts texture override that reparses byte-exactly
+  through ISO/YFS/BPE/UI-table layers. The image SHA-256 is
+  `4853c7a12799f52074a698ae5483a2def15178df741d81081d171e0d59be7c63`; the
+  authenticated pinned-reference comparison reports 752,229,873 differing
+  bytes in `reports/title_graphics_mod_compare.json`.
   Current resource sizes are 20,700 bytes for `_msg.dat` (+248), 14,152 bytes
   for `CardList.txt` (+701), and 3,319 bytes for `DataBase.txt`. The 142-row card
   catalog has English drafts for all 142 names, 51 character titles, 141
   categories, and 142 captions. These are unreviewed English drafts. The 71-row database has 87/126 fields
   translated; 39 unlock-condition fields remain original pending semantic evidence.
-  Runtime line layout and acceptance remain untested. Current append placement adds the
-  full rebuilt 429,000,704-byte YFS to the ISO; the full-image comparator reports
-  751,306,225 differing bytes, as expected for the translated/relocated image.
+  Runtime line layout and acceptance remain untested. The latest append placement
+  adds the rebuilt 429,924,352-byte YFS to the ISO. Updating `title_tex.b` through
+  the current literal-identity BPE writer expands that wrapper from 301,071 to
+  922,091 bytes; relocation remains valid but the build is space-heavy. No
+  runtime display has been validated.
 - The complete 3,445,204-byte boot ELF now rebuilds identically from repository
   text artifacts plus assembled code. `cmp` verifies every output byte.
 - An isolated build containing no ISO, extracted files, reports, existing build
@@ -117,7 +126,9 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   cards, backgrounds, maps, weapons, environments and text. Japanese baselines end
   in `_jp.tga`, stay unchanged, and are ignored as generated workspace files;
   authored `_eng.tga` siblings are Git-trackable and take precedence in
-  `mar_eng.iso` builds. Indexed exports use linear pixel order, mapped PSMT8 CLUT
+  `mar_eng.iso` builds. The first title-parts English draft is present, but the
+  prominent `title_marh_jp` wordmark remains Japanese. Indexed exports use
+  linear pixel order, mapped PSMT8 CLUT
   indices and expanded 0..128 GS alpha. This candidate was visually compared on
   20 PSMT4/PSMT8 resources plus three separate high-bit samples; this is not
   proof of whole-corpus screen composition. Synthetic

@@ -6,8 +6,8 @@ and layout in game before treating them as final.
 
 | Source / concept | Current English | Note |
 | --- | --- | --- |
-| `ÅＲＭ` | ARM | VIZ's English manga uses `ÄRM`, but CP932 cannot encode `Ä`, so CP932-bound text uses ASCII `ARM`; confirm game font glyph strategy in runtime. |
-| MÄR / MÄR Heaven | MAR / MAR Heaven in CP932 text | VIZ uses the accented franchise spelling; CP932 cannot encode `Ä`. These ASCII forms are a codec-constrained draft convention for the game text. |
+| `ÅＲＭ` | ARM in CP932 text; ÄRM in graphics | VIZ's English manga uses `ÄRM`, but CP932 cannot encode `Ä`, so CP932-bound text uses ASCII `ARM`. Raster graphics can preserve the accented spelling; runtime display remains to be checked. |
+| MÄR / MÄR Heaven | MAR / MAR Heaven in CP932 text; MÄR / MÄR Heaven in graphics | VIZ uses the accented franchise spelling; CP932 cannot encode `Ä`. The ASCII forms are a codec-constrained draft convention for game text, not raster lettering. |
 | Chess Pieces | Chess Pieces | Use the English publisher's faction name consistently. |
 | Luberia / Nanashi / Babbo / Princess Snow | Luberia / Nanashi / Babbo / Snow | Follow VIZ spellings where its published English manga confirms them; the PS2 game's own localized phrasing remains a draft. |
 | メモリーカード | memory card | Use “PlayStation 2 memory card (8 MB)” in system prompts. |

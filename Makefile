@@ -52,7 +52,7 @@ build-disc:
 	python3 tools/assets.py build extracted/assets build/assets-rebuilt.iso
 
 build-mod-disc:
-	python3 tools/assets.py build extracted/assets $(ENGLISH_DISC) --relocate --translations localization/messages.json --text-translations localization/card_list.json --text-translations localization/database.json --graphics-overrides $(GRAPHICS_OVERRIDES_DIR)
+	python3 tools/assets.py build extracted/assets $(ENGLISH_DISC) --relocate --translations localization/messages.json --text-translations localization/card_list.json --text-translations localization/database.json --graphics-overrides $(GRAPHICS_OVERRIDES_DIR) --replace-existing
 
 compare-disc:
 	python3 tools/compare_disc.py build/assets-rebuilt.iso

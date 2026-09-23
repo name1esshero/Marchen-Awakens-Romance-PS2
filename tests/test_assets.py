@@ -105,6 +105,26 @@ class AssetsTests(unittest.TestCase):
             assets.build(root, out)
             self.assertEqual(out.read_bytes(), data)
 
+    def test_existing_build_output_replacement_is_opt_in_and_atomic(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d) / 'source'
+            self.export(pac([b'old']), root)
+            out = Path(d) / 'mod-image'
+            assets.build(root, out)
+            original_output = out.read_bytes()
+
+            with self.assertRaisesRegex(ValueError, 'replace-existing'):
+                assets.build(root, out)
+            self.assertEqual(out.read_bytes(), original_output)
+
+            (root / '00000.bin').write_bytes(b'longer translation')
+            with self.assertRaisesRegex(ValueError, 'size changed'):
+                assets.build(root, out, replace_existing=True)
+            self.assertEqual(out.read_bytes(), original_output)
+
+            assets.build(root, out, relocate=True, replace_existing=True)
+            self.assertNotEqual(out.read_bytes(), original_output)
+
     def test_growth_propagates_and_updates_table(self):
         data = pac([pac([b'hello']), b'other'])
         with tempfile.TemporaryDirectory() as d:

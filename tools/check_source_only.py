@@ -19,7 +19,8 @@ def main():
         for directory in ('preserved/boot', 'asm'):
             shutil.copytree(root / directory, target / directory)
         (target / 'tools').mkdir()
-        for path in ('Makefile', 'tools/bootstrap.py', 'tools/reconstruct_elf.py'):
+        for path in ('Makefile', 'graphics_rules.mk',
+                     'tools/bootstrap.py', 'tools/reconstruct_elf.py'):
             shutil.copy2(root / path, target / path)
         subprocess.run(['make', '--no-print-directory', 'build-boot'], cwd=target, check=True)
         actual = hashlib.sha256((target / 'build/SLPM_661.56').read_bytes()).hexdigest()

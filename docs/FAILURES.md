@@ -197,6 +197,24 @@ temporary path and running `tools/compare_disc.py` against the pinned reference
 passed with zero differing bytes. Preserve or inspect stale build outputs before
 choosing another path.
 
+This applies to the unchanged `build-disc`/`verify-disc` output path. The separate
+`make build-mod-disc` target now opts into `--replace-existing`, which builds to
+a temp file and atomically installs only after success.
+
+## The isolated source-only target omitted an included Makefile fragment
+
+Hypothesis: copying the top-level `Makefile` and boot inputs is sufficient for
+`verify-source-only`. After the Makefile began including `graphics_rules.mk`,
+the temporary tree failed before compilation with `No rule to make target
+'graphics_rules.mk'`. This was an isolation-harness input omission, not a source
+or compiler mismatch.
+
+The harness now copies the included fragment along with the Makefile. Verification:
+`make verify-source-only` passes and the isolated boot output retains the pinned
+SHA-256. When a source-only target includes additional Make fragments, add each
+required fragment to the declared minimal input set; do not copy the whole
+repository, which would weaken the isolation check.
+
 ## Forty-three PSMCT32 TXCs are eight bytes short of their declared pixel extent
 
 Hypothesis: every catalogued PSMCT32 RTX3 payload has the standard 0x40-byte

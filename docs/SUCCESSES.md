@@ -117,8 +117,8 @@ pixels, 54,738 alpha-128 source pixels mapped to fully opaque TGA alpha, and
 standalone leaves and 1,457 menu members) and exports 30,354 images: 27,316
 PSMT4, 1,654 PSMT8, 677 PSMT8H, 690 PSMT4HL, and 17 PSMT4HH. This direct
 full-index count corrected the swapped PSM labels in the earlier format report.
-The complete source-hash/dimension audit passed with no Japanese-baseline edits
-and no English variants at audit time. Synthetic end-to-end tests confirm
+The complete source-hash/dimension audit passes with Japanese baselines unchanged.
+Synthetic end-to-end tests confirm
 English siblings reach both nested UI-table/BPE/PAC and standalone TXC/PAC while source
 sidecars stay intact. The full audit uses `rtx3.tga_dimensions` to validate TGA
 headers and extents without decoding every pixel. Separate PNG previews of five
@@ -134,11 +134,39 @@ could contain undiscovered members. The 43 PSMCT32 payloads remain raw because
 each is eight bytes short of its declared pixel extent. The controlled 20-image
 layout matrix covers PSMT4/PSMT8; the three high-bit previews are separate
 candidate evidence, not a corpus-wide decoder or runtime proof. AT/UV composition
-and runtime rendering remain unresolved; no English graphic has yet been
-runtime-validated.
+and runtime rendering remain unresolved. The first English title-parts sibling
+now passes audit and exact ISO/YFS/BPE/UI-table reparse, but no English graphic
+has yet been runtime-validated. The literal-identity BPE writer expands edited
+`title_tex.b` from 301,071 to 922,091 bytes, so reinsertion works with a material
+space cost until a verified compressing encoder exists.
 References: `tools/rtx3.py`, `tools/graphics.py`, `graphics_rules.mk`,
 `tests/test_rtx3.py`, `tests/test_assets.py`, `reports/rtx3_format_survey.json`,
 `reports/rtx3_layout_diagnostics.json`, `reports/translation_surfaces.json`,
+[asset methodology](TASK_ASSET_WORKSPACE_METHODOLOGY.md),
+[`TITLE_TEXTURE_RENDERING.md`](../tasks/TITLE_TEXTURE_RENDERING.md).
+
+## Mod-disc rebuilds can replace an existing ISO atomically
+
+Symptom: a second `make build-mod-disc` previously stopped because its root
+`mar_eng.iso` output already existed, leaving the user to move or delete an ISO
+manually before iterating on localization.
+Mechanism: `assets.build` already writes a complete candidate to a sibling temp
+file and installs it with `os.replace` only after all requested translations and
+overrides were applied. The output guard now has an explicit
+`--replace-existing` option for replacing an existing regular file; the default
+remains fail-closed, and symlinks or outputs inside the source workspace remain
+rejected.
+Pathway: use the project `make build-mod-disc` target, which opts into atomic
+replacement of the root `mar_eng.iso`. Other build callers retain the new-output
+requirement unless they explicitly pass the flag.
+Verification: `test_existing_build_output_replacement_is_opt_in_and_atomic`
+proves default refusal, preservation of the previous output after a failed
+relocation, and successful replacement after a valid build. The real mod target
+also replaced a prior ISO only after the new full image completed; its nested
+resources and pinned-reference comparison were then checked.
+Limits: atomic installation says nothing about game/runtime correctness; the
+previous output is replaced after success and is not retained as a backup.
+References: `tools/assets.py`, `tests/test_assets.py`, `Makefile`,
 [asset methodology](TASK_ASSET_WORKSPACE_METHODOLOGY.md),
 [`TITLE_TEXTURE_RENDERING.md`](../tasks/TITLE_TEXTURE_RENDERING.md).
 

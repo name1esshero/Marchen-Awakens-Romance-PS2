@@ -389,9 +389,13 @@ def build_node(root, output, relocate=False, translations=None, text_translation
 
 
 def build(root, output, relocate=False, translations_path=None,
-          text_translations_paths=None, graphics_overrides=None):
-    if output.exists() or output.resolve().is_relative_to(root.resolve()):
-        raise ValueError('output must be new and outside the source workspace')
+          text_translations_paths=None, graphics_overrides=None,
+          replace_existing=False):
+    output = Path(output)
+    if output.is_symlink() or output.resolve().is_relative_to(root.resolve()):
+        raise ValueError('output must be outside the source workspace and not a symlink')
+    if output.exists() and (not replace_existing or not output.is_file()):
+        raise ValueError('output must be new unless --replace-existing targets a regular file')
     output.parent.mkdir(parents=True, exist_ok=True)
     fd, tmp = tempfile.mkstemp(dir=output.parent, prefix='.assets-')
     os.close(fd)
@@ -551,6 +555,8 @@ def main():
                    help='apply a validated CP932 TSV catalogue; may be repeated')
     b.add_argument('--graphics-overrides', type=Path,
                    help='apply generated RTX3 replacements without editing extracted sidecars')
+    b.add_argument('--replace-existing', action='store_true',
+                   help='atomically replace an existing regular output after a successful build')
     args = p.parse_args()
     if args.command == 'export':
         export(args.image, args.workspace, args.hash_file)
@@ -558,7 +564,7 @@ def main():
         prepare(args.workspace, args.report)
     else:
         build(args.workspace, args.output, args.relocate, args.translations,
-              args.text_translations, args.graphics_overrides)
+              args.text_translations, args.graphics_overrides, args.replace_existing)
 
 
 if __name__ == '__main__':

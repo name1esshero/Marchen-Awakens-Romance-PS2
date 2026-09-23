@@ -124,11 +124,13 @@ The full prepared asset catalog plus parsed menu resource bundles contains
 30,397 TXC records: 28,940 standalone archive leaves and 1,457 nested menu
 bundle members. `make graphics-export` indexes every record and writes editable
 images for 30,354 textures: 27,316 PSMT4, 1,654 PSMT8, 677 PSMT8H, 690 PSMT4HL
-and 17 PSMT4HH. The full source-hash and TGA-dimension audit passed with no
-Japanese baseline edits and no English variants present at audit time. The 43
-PSMCT32 records remain raw because their declared pixel extents exceed their
-file bodies by eight bytes. See `reports/rtx3_format_survey.json` for the sample
-preview/source-hash evidence.
+and 17 PSMT4HH. The full source-hash and TGA-dimension audit passes with
+Japanese baselines unchanged; the latest pass found one English sibling for
+`title_parts`. The 43 PSMCT32 records remain raw because their declared pixel
+extents exceed their file bodies by eight bytes. See
+`reports/rtx3_format_survey.json` for the sample preview/source-hash evidence
+and [title rendering evidence](../tasks/TITLE_TEXTURE_RENDERING.md) for the first
+English graphic reparse.
 
 Images live directly inside flat, human-readable category folders such as
 `graphics/title/`,
@@ -170,15 +172,18 @@ rebuilt byte-identically, and grown using the tracked translation catalogue
 through the full ISO build.
 These checks do not prove retail text line wrapping, glyph coverage, or runtime
 relocation behavior.
-The verified mod run also exposes a placement cost: a 15-byte single-prompt
-growth appends a complete new PAC member at its parent, then appends the rebuilt
-429,000,704-byte YFS at the ISO end. The current build uses all three tracked
-catalogues. It grows `_msg.dat` by 248 bytes (20,452 to 20,700), `CardList.txt`
-to 14,152 bytes (13,451 to 14,152), and `DataBase.txt` to 3,319 bytes. The ISO
-inventory reports 42 entries; nested reparsing matches each catalog-applied
-resource exactly. The 5,016,750,080-byte image SHA-256 is
-`1f62176480ce1bd57c2c8db28f84b629d0125d4511f5e85767400ccc9f5ebf6e`; the
-authenticated comparator reports 751,306,225 differing bytes. This is an
+The verified mod run exposes two placement costs: a 15-byte single-prompt
+growth appends a complete new PAC member at its parent, and the edited title
+atlas must be rewrapped by the literal-identity BPE encoder. The build uses all
+three tracked catalogues plus the title-parts English sibling. It grows
+`_msg.dat` by 248 bytes (20,452 to 20,700), `CardList.txt` to 14,152 bytes
+(13,451 to 14,152), and `DataBase.txt` to 3,319 bytes. The title bundle's decoded
+size remains 922,000 bytes, while its `.b` wrapper grows from 301,071 to 922,091
+bytes. The rebuilt 429,924,352-byte YFS is appended at the ISO end. The final
+5,017,673,728-byte image inventories as 42 entries; nested reparsing matches all
+four changed resources exactly. Its SHA-256 is
+`4853c7a12799f52074a698ae5483a2def15178df741d81081d171e0d59be7c63`; the
+authenticated comparator reports 752,229,873 differing bytes. This is an
 expected mismatch for translation and append relocation. The current method is
 space-heavy and has no runtime acceptance evidence. Exact-baseline comparison
 is therefore an expected mismatch for a changed build; verify the authenticated
@@ -288,8 +293,11 @@ that both `Y - B` and `Y - Z` category totals balance.
    location. Changed sizes require `python3 tools/assets.py build extracted/assets
    build/mod.iso --relocate`; relocation is an experimental packaging pathway.
 5. Build consumes only workspace files and manifests, never `baserom.iso`.
-   Without `--relocate`, any member size change fails. Builds go to a new output
-   path and are atomically installed after successful reconstruction.
+   Without `--relocate`, any member size change fails. By default, the output
+   path must be new. `--replace-existing` is an explicit mod-build option for an
+   existing regular output file; reconstruction still goes to a sibling
+   temporary file, and `os.replace` installs it only after every requested
+   catalogue and override was applied. A failed rebuild preserves the prior ISO.
 6. Run `python3 tools/compare_disc.py build/assets-rebuilt.iso`. The comparator
    reads both complete files in chunks, authenticates the reference hash, counts
    every unequal/missing byte, and reports initial mismatch offsets. Exit 0 means
@@ -309,11 +317,15 @@ PAC containers, generates catalog/plain-text source files, and parses a leaf nam
 contract. By default
 it also updates the compact census at `reports/assets_census.json`; use `--report`
 to choose another evidence path or `/dev/null` to suppress that copy.
-`build WORKSPACE OUTPUT [--relocate] [--translations CATALOG.json]` reads only
-workspace files, verifies complete non-overlapping byte coverage and updates only
-table fields already located during export. When given a catalogue, it verifies
-the original table SHA-256 and requires exactly one matching message table.
-Unknown bytes are preserved. `make build-mod-disc` supplies the tracked catalogue.
+`build WORKSPACE OUTPUT [--relocate] [--replace-existing]
+[--translations CATALOG.json]` reads only workspace files, verifies complete
+non-overlapping byte coverage and updates only table fields already located
+during export. Existing-output replacement is opt-in, regular-file-only, and
+atomic after successful reconstruction; symlinks and outputs inside the source
+workspace are rejected. When given a catalogue, it verifies the original table
+SHA-256 and requires exactly one matching message table. Unknown bytes are
+preserved. `make build-mod-disc` supplies the tracked catalogues/graphics
+overrides and opts into atomic replacement of the root `mar_eng.iso`.
 `messages.py extract INPUT OUTPUT.json` and `messages.py build INPUT.json OUTPUT`
 operate on the observed 8-byte-header/12-byte-record message-table shape. They
 reject invalid ranges, embedded NULs, invalid CP932 and unencodable translations;
