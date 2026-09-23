@@ -21,6 +21,31 @@ and use a controlled text/glyph replacement anchored to evidenced regions.
 This does not rule out image generation for freestanding art. See
 [graphic localization evidence](../tasks/GRAPHIC_TEXT_LOCALIZATION.md).
 
+## Image-generation layout drift on the shop-action text texture
+
+Hypothesis: an image-generation edit can replace three small Japanese shop
+labels while preserving the exact 128x128 PSMT4 layout. A reference-based edit
+instead produced oversized text on a 1280x1280 canvas and did not preserve the
+original three-row composition. A separate English draft had the correct words
+but compressed the source's 30-pixel row spacing to 16-17 pixels. Both unadjusted
+images were rejected.
+
+The rejected reference-based output is preserved outside the workspace at
+`~/.codex/generated_images/01a0cbce-e093-7d81-89ab-50dbae657afd/exec-ae45e765-9f60-4a7d-ac2c-1524e769982f.png`.
+
+The exact phrases `BUY ARM` / `SELL ARM` were also rejected twice by the image
+tool's `illicit` safety classifier despite the prompt describing the fictional
+ARM-shop context. Rewording the first two actions as `BUY ITEM` / `SELL ITEM`,
+with `ARM REPAIR` on the third line, produced a usable text draft. The final TGA
+was reflowed to center its rows at y=8, 38, and 67, matching the source's three
+label baselines, then imported through the original PSMT4 palette. The Japanese
+baseline still hashes to `079d6a18f15dde6a4e732e60c1353d26b1a750149e37f85db477894eec40d547`.
+
+The reflowed override reparses from the rebuilt ISO as an 8,320-byte TXC with
+SHA-256 `ca376525ca57c5612b291c5d2e64b95766dc89c408bffe4f0e416d6a2a667ea6`.
+This confirms reinsertion, not on-screen UV placement or runtime acceptance.
+See [graphic localization evidence](../tasks/GRAPHIC_TEXT_LOCALIZATION.md).
+
 ## A leaf-only editable percentage does not measure the expanded game payload
 
 Hypothesis: editable/structured terminal-leaf bytes divided by nonzero terminal

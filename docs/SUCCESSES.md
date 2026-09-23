@@ -577,6 +577,32 @@ References: `graphics/title/00039_01566_0002_title_marh_eng.tga`,
 [`TITLE_TEXTURE_RENDERING.md`](../tasks/TITLE_TEXTURE_RENDERING.md),
 `tools/graphics.py`, `tools/verify_graphics_in_iso.py`, `tools/rtx3.py`.
 
+## Preserve source line positions when replacing small UI text
+
+Symptom: generated English labels fit the words onto the texture but collapse
+the wider vertical spacing used by the Japanese source.
+Mechanism: inspect the decoded source texture's alpha bounds and center each
+English row within its original label band before importing through the source
+PSMT4 palette. Keep the transparent 128x128 canvas and `_jp.tga` baseline
+unchanged.
+Successful pathway: localize the three `shop_tex.b` actions as `BUY ITEM`,
+`SELL ITEM`, and `ARM REPAIR`; align their text rows with the source label
+centers; encode the sibling TGA through the existing RTX3 importer; stage it as
+an `_eng.tga` override.
+Verification: the Japanese TGA retains its indexed SHA-256. The rebuilt ISO
+reparses the resulting 8,320-byte TXC exactly (SHA-256
+`ca376525ca57c5612b291c5d2e64b95766dc89c408bffe4f0e416d6a2a667ea6`). All seven
+English graphics overrides pass `make verify-graphics-image`; `make test`
+passes 107 tests.
+Scope: this 128x128 PSMT4 shop-action texture and the current UI graphics build.
+Limits: “BUY ITEM” and “SELL ITEM” are contextual English action labels rather
+than literal repetitions of ARM; runtime readability and UV placement remain
+unvalidated. Image-generation layout and safety-filter failures are recorded in
+[`FAILURES.md`](FAILURES.md).
+References: `graphics/text/00039_01556_0014_subtitle_eng.tga`,
+[`GRAPHIC_TEXT_LOCALIZATION.md`](../tasks/GRAPHIC_TEXT_LOCALIZATION.md),
+`tools/rtx3.py`, `tools/verify_graphics_in_iso.py`.
+
 ## Byte-weight recovery levels after editable YOBJ coordinate surfaces
 
 Symptom: one "decompiled percentage" conflates file preservation, parser
