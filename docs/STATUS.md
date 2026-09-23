@@ -105,12 +105,12 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   text artifacts plus assembled code. `cmp` verifies every output byte.
 - An isolated build containing no ISO, extracted files, reports, existing build
   outputs or downloaded compiler reproduces the pinned boot hash.
-- 186 accessors (1,488 bytes) across eleven distinct classes (`CCamera`,
+- 200 accessors (1,600 bytes) across twelve distinct classes (`CCamera`,
   `CCamera2`, `CCameraMv`, `CRender`, `CRender2`, `CGameCamera`, `C3dObject`,
-  `CChara`, `CCharaBase`, `CWeapon`, `CMotion3`) have verified assembly
-  implementations.
+  `CChara`, `CCharaBase`, `CWeapon`, `CMotion3`, `CMotion`) have verified
+  assembly implementations.
 - EE GCC `2.96-ee-001003-1` with the same single `-O2` flag compiles natural
-  C++ candidates for all 186 into the same sections. Substituting them
+  C++ candidates for all 200 into the same sections. Substituting them
   in the full ELF also passes byte comparison. The partial classes remain candidates.
 - Research compiler distribution, hash and flags are pinned; the setup step is
   explicit and downloaded executables are ignored by Git.
@@ -123,17 +123,16 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
 
 ## Remaining debt and limits
 
-- **3,443,716 bytes** of the boot ELF remain explicitly preserved as unrecovered
+- **3,443,604 bytes** of the boot ELF remain explicitly preserved as unrecovered
   hex, including most code, data and ELF metadata. No authentic-source completion
   percentage is claimed; a source-artifact rebuild is not complete decompilation.
 - Original game compiler version/flags are not proved. Eight middleware banners
   advertise `GCC2096 SCE3020`; those labels are not provenance for every object.
-- Complete class inheritance, virtual layout and size are unknown for all eleven
+- Complete class inheritance, virtual layout and size are unknown for all twelve
   partial classes above. Matching these small accessors is insufficient to
-  promote the classes to recovered source. 547 more census-identified trivial
+  promote the classes to recovered source. 533 more census-identified trivial
   8-byte linkonce sections remain unrecovered, across classes including
-  `MenuFrameUI`/`MenuFrame`/`MenuFrameSimpleUI`/`MenuEsy`, `CTexData` and
-  `CMotion`.
+  `MenuFrameUI`/`MenuFrame`/`MenuFrameSimpleUI`/`MenuEsy` and `CTexData`.
 - `GetViewRect` now has a reproducible non-matching four-float aggregate probe:
   40 candidate bytes versus 24 original bytes, with unaligned versus aligned
   transfers. Member types/alignment require independent evidence; all original
