@@ -322,7 +322,7 @@
         "1": "Alviss",
         "2": "[Guide to Another World]",
         "3": "Character",
-        "4": "ARM, summon him... and answer, visitor from another world!!!!"
+        "4": "O ARM, summon him! And you, visitor from another world, answer!"
       },
       "line_ending": "\r\n"
     },
@@ -489,7 +489,7 @@
         "1": "Tom",
         "2": "[The Mysterious Companion]",
         "3": "Character",
-        "4": "I'm not suspicious. I'm just..."
+        "4": "I'm not a bad guy. I'm..."
       },
       "line_ending": "\r\n"
     },
@@ -720,7 +720,7 @@
         "1": "Nanashi",
         "2": "[Payback]",
         "3": "Character",
-        "4": "We need to settle this. I can't let it go."
+        "4": "I've got to settle the score."
       },
       "line_ending": "\r\n"
     },
@@ -1988,7 +1988,7 @@
         ""
       ],
       "translations": {
-        "1": "Flame, Clothe My Blade!!!",
+        "1": "Flame, Cloak My Blade!",
         "3": "ARM",
         "4": "Stop saying stupid things, old man!!"
       },
@@ -2170,7 +2170,7 @@
       "translations": {
         "1": "Beyond the Door",
         "3": "Event",
-        "4": "There's something exciting waiting beyond this door!"
+        "4": "Excitement awaits beyond this door!"
       },
       "line_ending": "\r\n"
     },
@@ -2568,7 +2568,7 @@
         ""
       ],
       "translations": {
-        "1": "A Strange Irritation",
+        "1": "A Strange Queasy Feeling",
         "3": "Event",
         "4": "For some reason, I feel sick to my stomach!!"
       },
@@ -2588,7 +2588,7 @@
         ""
       ],
       "translations": {
-        "1": "A Strange Annoyance",
+        "1": "A Strange Irritation",
         "3": "Event",
         "4": "Why am I so on edge?!"
       },
@@ -2708,7 +2708,7 @@
         ""
       ],
       "translations": {
-        "1": "The War Game Begins!!",
+        "1": "The War Games Begin!!",
         "3": "Event",
         "4": "The Second War for MAR Heaven begins now!!!"
       },

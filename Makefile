@@ -3,7 +3,7 @@ EE_GCC := .tools/ee-gcc2.96/bin/ee-gcc
 BOOT_SOURCES := $(wildcard preserved/boot/*.hex) preserved/boot/layout.json
 ENGLISH_DISC := mar_eng.iso
 
-.PHONY: test inventory verify-camera verify-reference build-boot verify-boot setup-ee verify-ee verify-source-only export-assets prepare-assets asset-census build-disc build-mod-disc compare-disc verify-disc movies-export movies-audit
+.PHONY: test inventory verify-camera verify-reference build-boot verify-boot setup-ee verify-ee verify-source-only export-assets prepare-assets asset-census build-disc build-mod-disc verify-graphics-image compare-disc verify-disc movies-export movies-audit
 
 test:
 	python3 -m unittest discover -s tests -v
@@ -53,6 +53,9 @@ build-disc:
 
 build-mod-disc:
 	python3 tools/assets.py build extracted/assets $(ENGLISH_DISC) --relocate --translations localization/messages.json --text-translations localization/card_list.json --text-translations localization/database.json --graphics-overrides $(GRAPHICS_OVERRIDES_DIR) --movie-overrides $(MOVIES_DIR) --replace-existing
+
+verify-graphics-image:
+	python3 tools/verify_graphics_in_iso.py $(ENGLISH_DISC)
 
 compare-disc:
 	python3 tools/compare_disc.py build/assets-rebuilt.iso

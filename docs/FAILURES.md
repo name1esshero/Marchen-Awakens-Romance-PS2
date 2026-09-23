@@ -2,6 +2,22 @@
 
 Authority: [STANDARDS.md](STANDARDS.md).
 
+## Image-generation editing did not preserve the title subtitle atlas
+
+Hypothesis: an image-generation edit could replace the Japanese subtitle in
+`00039_01565_0003_sbttl` while preserving its original `ARM FIGHT DREAM`
+wordmark, 512x128 layout and transparent canvas. The editor did not accept the
+TGA source directly, so a PNG view was supplied. Its result instead enlarged
+and replaced the main wordmark and added a second MÄR HEAVEN mark. It was
+visually rejected and no `_eng.tga` was created from it. The source TGA and
+current `mar_eng.iso` were unchanged. The rejected output remains at
+`~/.codex/generated_images/01a0cbce-e093-7d81-89ab-50dbae657afd/exec-42213345-2cd3-4485-b56f-21b55591d51b.png`.
+
+Do not use that output as a title override. Establish the exact subtitle text
+and rendered atlas region first; use existing in-game English lettering where
+it fits. This result does not rule out image generation for other graphics.
+See [graphic localization evidence](../tasks/GRAPHIC_TEXT_LOCALIZATION.md).
+
 ## A leaf-only editable percentage does not measure the expanded game payload
 
 Hypothesis: editable/structured terminal-leaf bytes divided by nonzero terminal

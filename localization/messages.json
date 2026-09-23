@@ -480,7 +480,7 @@
       "key": 10,
       "occurrence": 1,
       "original": "団体戦のウォーゲーム(対戦)だ！ \nオレを信用させる戦いを見せてみろ。",
-      "translation": "It's a team-versus-team War Game!\nShow me a battle that'll earn my trust.",
+      "translation": "The War Games are a team-versus-team tournament!\nShow me a battle that'll earn my trust.",
       "context": "Menu/world guidance message; speaker identity not traced.",
       "notes": "Initial English draft; runtime line wrapping and terminology review pending.",
       "status": "translated"
@@ -2148,7 +2148,7 @@
       "key": 2,
       "occurrence": 0,
       "original": "【ジャック】\nＣＶ：阪口　大助\n属性：地\n\n作物を育てて母親と\n暮らしていたが、\nギンタとともに\nウォーゲームに参戦。",
-      "translation": "[Jack]\nVoice: Daisuke Sakaguchi\nElement: Earth\n\nHe lived with his mother and grew crops. He joins the War Game alongside Ginta.",
+      "translation": "[Jack]\nVoice: Daisuke Sakaguchi\nElement: Earth\n\nHe lived with his mother and grew crops, then joined the War Games with Ginta.",
       "context": "Character profile, battle location description, or menu label.",
       "notes": "Initial English draft; verify proper-name spellings and text layout in runtime.",
       "status": "translated"
