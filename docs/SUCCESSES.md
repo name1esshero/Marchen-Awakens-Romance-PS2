@@ -91,9 +91,12 @@ References: `tools/ui_bundle.py`, `tools/assets.py`, `tests/test_ui_bundle.py`,
 Symptom: menu texture payloads begin with `RTX3` and are not directly editable
 as ordinary raster files. An early TGA pass also copied the PS2's 0..128 alpha
 range unchanged, making opaque colors display at half opacity.
-Mechanism: indexed PSMT4/PSMT8 export currently keeps pixel bytes in linear
-order, applies the PSMT8 CLUT index permutation (identity for the sampled PSMT4
-layout), and expands alpha from the GS 0..128 range to TGA's 0..255 range.
+Mechanism: indexed PSMT4/PSMT8/PSMT8H/PSMT4HL/PSMT4HH export currently reads
+the compact declared pixel extent in linear order, applies the PSMT8 CLUT index
+permutation (identity for the PSMT4-family layout), and expands alpha from the
+GS 0..128 range to TGA's 0..255 range. Sony's GS manual describes the high-bit
+lanes in PSMCT32 GS memory; the RTX3 compact-pixel interpretation is separately
+supported by source extents and coherent previews, not proven runtime sampling.
 Import preserves original indexed pixels when unchanged and maps edited colors
 to the existing palette; canvas and palette growth are unsupported. The root
 `graphics/` workspace exports directly into flat, human-readable category
@@ -111,23 +114,28 @@ resources; the owner selected the mapped-linear `title_marh_jp` preview matching
 the supplied reference. The corrected title image has 141,269 fully transparent
 pixels, 54,738 alpha-128 source pixels mapped to fully opaque TGA alpha, and
 66,137 intermediate-alpha pixels. The workspace indexes 30,397 TXCs (28,940
-standalone leaves and 1,457 menu members) and exports 28,970 supported PSMT4 and
-PSMT8 images (27,316 PSMT4 and 1,654 PSMT8). This direct full-index count
-corrected the swapped PSM labels in the earlier format report. The complete
-source-hash/dimension audit passed with no Japanese-baseline edits and no English
-variants at audit time. Synthetic end-to-end tests confirm English siblings
-reach both nested UI-table/BPE/PAC and standalone TXC/PAC rebuilding while source
+standalone leaves and 1,457 menu members) and exports 30,354 images: 27,316
+PSMT4, 1,654 PSMT8, 677 PSMT8H, 690 PSMT4HL, and 17 PSMT4HH. This direct
+full-index count corrected the swapped PSM labels in the earlier format report.
+The complete source-hash/dimension audit passed with no Japanese-baseline edits
+and no English variants at audit time. Synthetic end-to-end tests confirm
+English siblings reach both nested UI-table/BPE/PAC and standalone TXC/PAC while source
 sidecars stay intact. The full audit uses `rtx3.tga_dimensions` to validate TGA
 headers and extents without decoding every pixel. Separate PNG previews of five
 standalone character, environment, sky, effect, and font textures looked coherent
 without visible tile artifacts; their source hashes and raster paths are recorded
-in `reports/rtx3_layout_diagnostics.json`.
+in `reports/rtx3_layout_diagnostics.json`. The follow-up high-bit extension's
+source-hash/dimension audit also passed.
+Previews for `hp_face_00` (PSMT8H), `hp_mar` (PSMT4HL), and `txts` (PSMT4HH)
+show coherent character, icon and text-atlas content; paths and source/TGA hashes
+are in the format survey.
 Scope: all catalogued TXCs plus nested menu-bundle TXCs; an unparsed PAC leaf
-could contain undiscovered members. The 1,384 PSMT8H/PSMT4HL/PSMT4HH and 43
-PSMCT32 payloads remain raw (the latter are short by eight bytes against their
-declared pixel extent). The 20-resource visual comparison does not prove layout
-or final composition for the complete corpus. AT/UV composition and runtime
-rendering remain unresolved; no English graphic has yet been runtime-validated.
+could contain undiscovered members. The 43 PSMCT32 payloads remain raw because
+each is eight bytes short of its declared pixel extent. The controlled 20-image
+layout matrix covers PSMT4/PSMT8; the three high-bit previews are separate
+candidate evidence, not a corpus-wide decoder or runtime proof. AT/UV composition
+and runtime rendering remain unresolved; no English graphic has yet been
+runtime-validated.
 References: `tools/rtx3.py`, `tools/graphics.py`, `graphics_rules.mk`,
 `tests/test_rtx3.py`, `tests/test_assets.py`, `reports/rtx3_format_survey.json`,
 `reports/rtx3_layout_diagnostics.json`, `reports/translation_surfaces.json`,
@@ -345,12 +353,12 @@ physical and logical totals balance.
 Verification: `make asset-census` partitions the 4,587,749,376-byte image
 exactly and reports expanded logical payload Y=1,303,947,016. The distinct
 levels are Z/Y=19.0347% parser-backed structure, A/Y=100% unchanged-source
-rebuildability, B/Y=17.3415% semantic editability, and C/Y=0% runtime-validated
-editability. TXC-only editability remains 226,035,104/239,584,968 bytes
-(94.3444%). The Y-B remainder is byte-partitioned into video, model/geometry,
-audio, unresolved graphics, animation/motion, modules, font, scripts/data and
-fallback unknown. Tests verify physical partitioning, nested-accounting
-balance, distinct level numerators, remainder balance, and reference binding.
+rebuildability, B/Y=18.3698% semantic editability, and C/Y=0% runtime-validated
+editability. TXC-only editability is 239,444,320/239,584,968 bytes (99.9413%).
+The Y-B remainder is byte-partitioned into video, model/geometry, audio,
+unresolved graphics, animation/motion, modules, font, scripts/data and fallback
+unknown. Tests verify physical partitioning, nested-accounting balance, distinct
+level numerators, remainder balance, and reference binding.
 
 Scope: this pinned image, current prepared catalog, validated layout tree,
 indexed TXCs and parsed bundle manifests. Limits: broad remainder classes may

@@ -15,6 +15,9 @@ import rtx3
 SUPPORTED = {
     rtx3.PSMT4: 'psmt4',
     rtx3.PSMT8: 'psmt8',
+    rtx3.PSMT8H: 'psmt8h',
+    rtx3.PSMT4HL: 'psmt4hl',
+    rtx3.PSMT4HH: 'psmt4hh',
     rtx3.PSMCT32: 'psmct32',
 }
 INDEX_NAME = 'index.json'
@@ -75,7 +78,7 @@ def _raw_psm(raw):
 
 
 def _image_support(info):
-    if info['psm'] in (rtx3.PSMT4, rtx3.PSMT8):
+    if info['psm'] in rtx3.INDEXED_PSMS:
         return None
     if info['psm'] == rtx3.PSMCT32:
         if info['width'] % 64 or info['height'] % 32:

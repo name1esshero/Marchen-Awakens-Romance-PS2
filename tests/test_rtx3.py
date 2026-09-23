@@ -116,13 +116,34 @@ class RTX3Tests(unittest.TestCase):
         self.assertEqual(rtx3.decode_rgba(rebuilt),
                          (width, height, bytes(changed)))
 
-    def test_high_bit_modes_are_parsed_but_not_guessed(self):
+    def test_high_bit_modes_decode_and_reinsert_as_compact_linear_indices(self):
         for psm in (27, 36, 44):
             with self.subTest(psm=psm):
                 raw = fixture(psm, 128, 64)
-                self.assertEqual(rtx3.parse(raw)['psm'], psm)
-                with self.assertRaisesRegex(ValueError, 'storage order is unresolved'):
-                    rtx3.decode_rgba(raw)
+                info = rtx3.parse(raw)
+                self.assertEqual(info['psm'], psm)
+                width, height, rgba = rtx3.decode_rgba(raw)
+                tga = rtx3.write_tga(width, height, rgba)
+                self.assertEqual(rtx3.read_tga(tga), (width, height, rgba))
+                self.assertEqual(rtx3.encode_tga(raw, tga), raw)
+
+                changed = bytearray(rgba)
+                changed[:4] = bytes((7, 7, 7, 255))
+                rebuilt = rtx3.encode_tga(
+                    raw, rtx3.write_tga(width, height, changed))
+                self.assertEqual(len(rebuilt), len(raw))
+                self.assertEqual(rtx3.parse(rebuilt)['psm'], psm)
+                expected = bytearray(raw)
+                if psm == rtx3.PSMT8H:
+                    expected[info['pixels_offset']] = 7
+                else:
+                    expected[info['pixels_offset']] = (
+                        expected[info['pixels_offset']] & 0xF0) | 7
+                self.assertEqual(rebuilt, bytes(expected))
+                self.assertEqual(rtx3.decode_rgba(rebuilt),
+                                 (width, height, bytes(changed)))
+                with self.assertRaisesRegex(ValueError, 'high-bit storage order'):
+                    rtx3.decode_legacy_rgba(raw)
 
     def test_psmct32_swizzle_and_noop_import_exactly(self):
         raw = fixture(0, 64, 32)

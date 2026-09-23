@@ -71,11 +71,11 @@
         "meaning": "Unchanged source preservation/rebuild only; not evidence that edited output is correct or runtime-safe."
       },
       "semantically_editable": {
-        "bytes_B": 226123598,
+        "bytes_B": 239532814,
         "denominator_bytes_Y": 1303947016,
-        "percent_B_of_Y": 17.3415,
+        "percent_B_of_Y": 18.3698,
         "components": {
-          "supported_editable_TGA_texture_source_bytes": 226035104,
+          "supported_editable_TGA_texture_source_bytes": 239444320,
           "reversible_text_companion_source_bytes": 68042,
           "structured_message_catalog_source_bytes": 20452
         },
@@ -89,15 +89,15 @@
       }
     },
     "remaining_after_semantic_editability": {
-      "bytes": 1077823418,
+      "bytes": 1064414202,
       "denominator_bytes_Y": 1303947016,
-      "percent_of_Y": 82.6585,
+      "percent_of_Y": 81.6302,
       "exclusive_byte_weighted_categories": [
         {
           "name": "video_cinematics",
           "file_count": 13,
           "source_bytes": 685111296,
-          "percent_of_remaining_payload": 63.5643,
+          "percent_of_remaining_payload": 64.3651,
           "percent_of_expanded_payload": 52.5413,
           "classification_basis": "MOVIE.AFS path and MPEG program-stream pack-start magic"
         },
@@ -105,7 +105,7 @@
           "name": "model_geometry_candidates",
           "file_count": 1246,
           "source_bytes": 201632448,
-          "percent_of_remaining_payload": 18.7074,
+          "percent_of_remaining_payload": 18.943,
           "percent_of_expanded_payload": 15.4632,
           "classification_basis": "YMP/YPC resource naming; model bodies are not decoded here"
         },
@@ -113,23 +113,15 @@
           "name": "audio_sound_candidates",
           "file_count": 140,
           "source_bytes": 156453642,
-          "percent_of_remaining_payload": 14.5157,
+          "percent_of_remaining_payload": 14.6986,
           "percent_of_expanded_payload": 11.9985,
           "classification_basis": "BGM archive or sound-directory path; payload audio is not decoded"
-        },
-        {
-          "name": "unresolved_graphics",
-          "file_count": 1427,
-          "source_bytes": 13549864,
-          "percent_of_remaining_payload": 1.2572,
-          "percent_of_expanded_payload": 1.0391,
-          "classification_basis": "TXC indexed, current pixel decoder has no editable export"
         },
         {
           "name": "animation_motion_candidates",
           "file_count": 2430,
           "source_bytes": 12552248,
-          "percent_of_remaining_payload": 1.1646,
+          "percent_of_remaining_payload": 1.1793,
           "percent_of_expanded_payload": 0.9626,
           "classification_basis": "AT3/YAP/MPC/YMA name or member type; bodies are not fully decoded"
         },
@@ -137,7 +129,7 @@
           "name": "executables_and_modules",
           "file_count": 16,
           "source_bytes": 4101870,
-          "percent_of_remaining_payload": 0.3806,
+          "percent_of_remaining_payload": 0.3854,
           "percent_of_expanded_payload": 0.3146,
           "classification_basis": "boot executable/module filename; full semantics are outside this census"
         },
@@ -145,7 +137,7 @@
           "name": "other_unclassified",
           "file_count": 2253,
           "source_bytes": 2644996,
-          "percent_of_remaining_payload": 0.2454,
+          "percent_of_remaining_payload": 0.2485,
           "percent_of_expanded_payload": 0.2028,
           "classification_basis": "fallback for payload without a stronger evidence-backed inventory class"
         },
@@ -153,7 +145,7 @@
           "name": "font_assets",
           "file_count": 2,
           "source_bytes": 896928,
-          "percent_of_remaining_payload": 0.0832,
+          "percent_of_remaining_payload": 0.0843,
           "percent_of_expanded_payload": 0.0688,
           "classification_basis": "font resource directory path; internal font records remain unparsed"
         },
@@ -161,9 +153,17 @@
           "name": "scripts_event_and_data_candidates",
           "file_count": 319,
           "source_bytes": 880126,
-          "percent_of_remaining_payload": 0.0817,
+          "percent_of_remaining_payload": 0.0827,
           "percent_of_expanded_payload": 0.0675,
           "classification_basis": "data/script/event extension or member type; semantics are partial"
+        },
+        {
+          "name": "unresolved_graphics",
+          "file_count": 43,
+          "source_bytes": 140648,
+          "percent_of_remaining_payload": 0.0132,
+          "percent_of_expanded_payload": 0.0108,
+          "classification_basis": "TXC indexed, current pixel decoder has no editable export"
         }
       ],
       "accounting_note": "Categories partition Y minus B. Names indicate evidence-backed inventory classes, not complete reverse engineering; filename/path-led candidates and opaque bodies are explicitly labeled."
@@ -172,13 +172,13 @@
   "texture_corpus": {
     "entry_count": 30397,
     "expanded_txc_payload_bytes": 239584968,
-    "editable_entry_count": 28970,
-    "editable_entry_percent": 95.3055,
-    "editable_txc_payload_bytes": 226035104,
-    "editable_txc_byte_percent": 94.3444,
-    "unresolved_entry_count": 1427,
-    "unresolved_txc_payload_bytes": 13549864,
-    "unresolved_txc_byte_percent": 5.6556,
+    "editable_entry_count": 30354,
+    "editable_entry_percent": 99.8585,
+    "editable_txc_payload_bytes": 239444320,
+    "editable_txc_byte_percent": 99.9413,
+    "unresolved_entry_count": 43,
+    "unresolved_txc_payload_bytes": 140648,
+    "unresolved_txc_byte_percent": 0.0587,
     "source_kinds": {
       "standalone": {
         "entry_count": 28940,
@@ -203,33 +203,6 @@
         "unresolved_bytes": 140648,
         "editable_percent_of_psm_bytes": 0.0
       },
-      "psm27": {
-        "count": 677,
-        "bytes": 11780416,
-        "editable_count": 0,
-        "editable_bytes": 0,
-        "unresolved_count": 677,
-        "unresolved_bytes": 11780416,
-        "editable_percent_of_psm_bytes": 0.0
-      },
-      "psm36": {
-        "count": 690,
-        "bytes": 1545984,
-        "editable_count": 0,
-        "editable_bytes": 0,
-        "unresolved_count": 690,
-        "unresolved_bytes": 1545984,
-        "editable_percent_of_psm_bytes": 0.0
-      },
-      "psm44": {
-        "count": 17,
-        "bytes": 82816,
-        "editable_count": 0,
-        "editable_bytes": 0,
-        "unresolved_count": 17,
-        "unresolved_bytes": 82816,
-        "editable_percent_of_psm_bytes": 0.0
-      },
       "psmt4": {
         "count": 27316,
         "bytes": 96831776,
@@ -239,11 +212,38 @@
         "unresolved_bytes": 0,
         "editable_percent_of_psm_bytes": 100.0
       },
+      "psmt4hh": {
+        "count": 17,
+        "bytes": 82816,
+        "editable_count": 17,
+        "editable_bytes": 82816,
+        "unresolved_count": 0,
+        "unresolved_bytes": 0,
+        "editable_percent_of_psm_bytes": 100.0
+      },
+      "psmt4hl": {
+        "count": 690,
+        "bytes": 1545984,
+        "editable_count": 690,
+        "editable_bytes": 1545984,
+        "unresolved_count": 0,
+        "unresolved_bytes": 0,
+        "editable_percent_of_psm_bytes": 100.0
+      },
       "psmt8": {
         "count": 1654,
         "bytes": 129203328,
         "editable_count": 1654,
         "editable_bytes": 129203328,
+        "unresolved_count": 0,
+        "unresolved_bytes": 0,
+        "editable_percent_of_psm_bytes": 100.0
+      },
+      "psmt8h": {
+        "count": 677,
+        "bytes": 11780416,
+        "editable_count": 677,
+        "editable_bytes": 11780416,
         "unresolved_count": 0,
         "unresolved_bytes": 0,
         "editable_percent_of_psm_bytes": 100.0

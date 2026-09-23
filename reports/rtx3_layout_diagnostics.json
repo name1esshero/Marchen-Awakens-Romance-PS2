@@ -64,7 +64,7 @@
   },
   "limitations": [
     "Owner visual selection identifies the preferred candidate for the sampled menu textures but does not prove runtime sampling or final AT/UV composition.",
-    "The visual comparison covers 20 menu TXCs only. The graphics workspace now exports 28,970 TGA images across the catalogued corpus, but this comparison does not validate their full-corpus layout or runtime composition.",
+    "The controlled comparison covers 20 menu PSMT4/PSMT8 TXCs. The workspace now exports 30,354 TGA images; three additional high-bit previews are recorded in reports/rtx3_format_survey.json. Neither sample set validates full-corpus layout or runtime composition.",
     "No emulator/runtime capture has been used to validate this texture decode."
   ],
   "samples": [

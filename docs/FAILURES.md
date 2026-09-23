@@ -22,8 +22,9 @@ fails if physical spans or exclusive `Y - B` remainder categories do not
 balance.
 
 Evidence: v2 `reports/asset_recovery_census.json` reports Y=1,303,947,016,
-Z/Y=19.0347%, A/Y=100%, B/Y=17.3415%, and C/Y=0%, alongside the exact physical
-partition. The revision supersedes the former 13.5887% leaf-only headline.
+Z/Y=19.0347%, A/Y=100%, B/Y=18.3698%, and C/Y=0%, alongside the exact physical
+partition. The high-bit indexed TGA recovery raised B while retaining the same Y
+denominator. The revision supersedes the former 13.5887% leaf-only headline.
 See `tools/asset_recovery_census.py`,
 `tests/test_asset_recovery_census.py`, and
 [`TASK_ASSET_WORKSPACE_METHODOLOGY.md`](TASK_ASSET_WORKSPACE_METHODOLOGY.md).
@@ -63,11 +64,14 @@ include transparent texture surfaces and large PSMT8 images with repeated-lookin
 regions; the paired `AT  ` members contain animation/authoring references, and
 the texture may be addressed through atlas regions or repeat-wrapped UVs. Preview
 appearance alone therefore does not distinguish bad swizzling from intended
-texture layout or missing composition metadata. Keep the verified PSMT4/PSMT8
-pixel import/export separate from claims about final UI appearance. Decode the
+texture layout or missing composition metadata. Keep verified indexed pixel
+import/export separate from claims about final UI appearance. Decode the
 associated AT/UV metadata and compare rendered output before changing the
-swizzler. PSMT8H/PSMT4HL/PSMT4HH stay parse-only pending their own storage-order
-evidence. Evidence: RTX3 census and sample previews in
+swizzler. Follow-up work added PSMT8H/PSMT4HL/PSMT4HH candidate exports after
+coherent previews of three representative samples; this evidence supports
+editable raster candidates but does not resolve hardware sampling, composition,
+or runtime behavior. The 43 PSMCT32 payloads remain raw because their pixel
+extents are short by eight bytes. Evidence: RTX3 census and sample previews in
 `reports/rtx3_format_survey.json`; final in-game rendering has not been tested.
 
 Follow-up hypothesis: the title-logo view was only meaningful with pixels and
@@ -84,12 +88,13 @@ current indexed decoder expands alpha by two while retaining transparency and
 antialiased edges. Evidence: `reports/rtx3_layout_diagnostics.json`,
 `tasks/TITLE_TEXTURE_RENDERING.md`, and `tests/test_rtx3.py`.
 
-Limits: this selection is a human visual reference and a 20-resource sample, not
-proof of the complete RTX3 corpus or in-game rendering. The graphics workspace
-now exports 28,970 supported TXCs, but only the 20 sampled images have this
-visual layout comparison. The remaining 1,427 TXCs have unresolved storage
-formats; AT/UV composition remains unknown. Keep the old pixel-unswizzle path as
-a diagnostic until a runtime capture validates sampling and alpha behavior.
+Limits: this selection is a human visual reference and a 20-resource PSMT4/PSMT8
+sample, not proof of the complete RTX3 corpus or in-game rendering. The graphics
+workspace exports 30,354 supported TXCs; three additional high-bit previews are
+coherent but do not establish the same controlled layout comparison. The 43
+short PSMCT32 TXCs remain unresolved; AT/UV composition remains unknown. Keep the
+old pixel-unswizzle path as a diagnostic until a runtime capture validates
+sampling and alpha behavior.
 
 ## AT texture-reference rows are not a flat array of 64-byte names
 

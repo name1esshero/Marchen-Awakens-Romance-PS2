@@ -77,13 +77,18 @@ boundary, not malformed input. `at3` payloads begin `AT  ` and contain
 animation/resource metadata with references such as `window.tga` and `icon.tga`;
 sampled `txc` payloads begin `RTX3`. The `.tga` names identify raster-image
 authoring references; the `.b` and `.txc` members contain animation and RTX3
-texture data. `tools/rtx3.py` exports supported PSMT4, PSMT8 and PSMCT32 modes
-to uncompressed 32-bit TGA, and imports uncompressed 24/32-bit TGA back into the
-original RTX3 dimensions and palette. For indexed PSMT4/PSMT8, current evidence
-supports keeping pixel indices in linear byte order and applying the PSMT8 CLUT
-index map; the PSMT4 CLUT map is identity. The renderer expands GS alpha values
-from 0..128 to TGA's 0..255 range. PSMCT32 still uses the legacy decoder and is
-not covered by this indexed-layout conclusion. For example:
+texture data. `tools/rtx3.py` exports indexed PSMT4, PSMT8, PSMT8H, PSMT4HL and
+PSMT4HH records to uncompressed 32-bit TGA, and imports uncompressed 24/32-bit
+TGA back into the original RTX3 dimensions and palette. The current candidate
+reads the compact declared pixel extent in linear order, applies the PSMT8 CLUT
+index map (the PSMT4-family map is identity), and expands GS alpha values from
+0..128 to TGA's 0..255 range. The Sony GS manual describes high-bit mode lanes in
+the GS PSMCT32 memory representation; it does not prove how RTX3 stores or
+samples these compact payloads. Three exported high-bit samples render coherent
+previews, while actual GS sampling, UV composition and runtime remain unverified.
+PSMCT32 still uses the legacy decoder and 43 short corpus records remain raw.
+See [the GS manual, §8.3](https://github.com/ninjadynamics/PS2Docs/blob/main/GS_Users_Manual.pdf).
+For example:
 
 ```sh
 python3 tools/rtx3.py export SOURCE.txc /tmp/texture.tga
@@ -118,12 +123,12 @@ appearance. Sample paths and source hashes are in
 The full prepared asset catalog plus parsed menu resource bundles contains
 30,397 TXC records: 28,940 standalone archive leaves and 1,457 nested menu
 bundle members. `make graphics-export` indexes every record and writes editable
-images for 28,970 PSMT4/PSMT8 textures (27,316 PSMT4 and 1,654 PSMT8). A full
-source-hash and TGA-dimension audit passed with no Japanese baseline edits and
-no English variants present at audit time. The remaining 1,427 records stay in
-the index without guessed images: 1,384 high-bit PSMs (677 PSMT8H, 690
-PSMT4HL, 17 PSMT4HH) and 43 PSMCT32 files whose declared pixel extents exceed
-their file bodies by eight bytes. See `reports/rtx3_format_survey.json`.
+images for 30,354 textures: 27,316 PSMT4, 1,654 PSMT8, 677 PSMT8H, 690 PSMT4HL
+and 17 PSMT4HH. The full source-hash and TGA-dimension audit passed with no
+Japanese baseline edits and no English variants present at audit time. The 43
+PSMCT32 records remain raw because their declared pixel extents exceed their
+file bodies by eight bytes. See `reports/rtx3_format_survey.json` for the sample
+preview/source-hash evidence.
 
 Images live directly inside flat, human-readable category folders such as
 `graphics/title/`,
@@ -190,13 +195,15 @@ does not balance, a standalone TXC is missing, a nested member hash disagrees,
 or exclusive byte categories do not sum to their denominator.
 
 Keep the two byte bases separate. The **physical image** is 4,587,749,376
-bytes. It contains 3,324,768,000 bytes in all-zero named members, 2,527,881
-bytes in all-zero gaps, 1,237,522,725 bytes in nonzero terminal members, and
-22,930,770 bytes in nonzero gap/structure extents. Those four disjoint spans
-sum exactly to the image. The gap measurement proves the bytes are zero, not
-that every gap was intentionally reserved as padding.
+bytes. It contains 3,324,768,000 bytes in all-zero named members and 2,527,881
+bytes in all-zero gaps, totaling 3,327,295,881 measured zero bytes (72.5257%).
+It also contains 1,237,522,725 bytes in nonzero terminal members (26.9745%) and
+22,930,770 bytes in nonzero gap/structure extents (0.4998%). Those four disjoint
+spans sum exactly to the image. The zero measurements prove byte values only;
+they do not prove intentional padding or historical use.
 
-The **expanded logical information payload Y** is 1,303,947,016 bytes. It
+The **expanded logical information payload Y** is 1,303,947,016 bytes, or
+28.4224% of the physical image size. It
 starts with nonzero terminal member extents, replaces the 61,240,661 compressed
 BPE wrapper bytes with 127,660,056 decoded UI-bundle member bytes plus 4,896
 decoded raw bytes, and excludes UI-bundle control/gap bytes. This makes nested
@@ -210,23 +217,32 @@ non-texture members under parsed UI bundle tables, reversible text/message
 sources, and parsed direct AT3 headers/reference tables. Full unchanged-source
 rebuild coverage is **A/Y = 100%**, backed by a byte-identical full-disc
 rebuild; it does not mean edited assets have been runtime validated. Semantic
-editability is **B/Y = 226,123,598 / 1,303,947,016 = 17.3415%**, comprising
-226,035,104 editable texture bytes and 88,494 reversible text/message source
+editability is **B/Y = 239,532,814 / 1,303,947,016 = 18.3698%**, comprising
+239,444,320 editable texture bytes and 88,494 reversible text/message source
 bytes. This measures available editable representations, not the share already
 translated. Runtime-validated editable coverage is **C/Y = 0%**.
 
-The disjoint `Y - B` remainder is 1,077,823,418 bytes. Its largest evidence-led
-inventory groups are video/cinematics 685,111,296 bytes (63.5643% of the
-remainder), model/geometry candidates 201,632,448 (18.7074%), audio/sound
-candidates 156,453,642 (14.5157%), unresolved graphics 13,549,864 (1.2572%),
-and animation/motion candidates 12,552,248 (1.1646%). Modules, font assets,
-script/data candidates and the 2,644,996-byte unclassified fallback are also
-listed in the JSON report. These group names classify inventory by validated
+The disjoint `Y - B` remainder is 1,064,414,202 bytes. Its byte-weighted
+inventory is:
+
+| Remaining class | Bytes | Share of `Y - B` |
+| --- | ---: | ---: |
+| Video/cinematics | 685,111,296 | 64.3651% |
+| Model/geometry candidates | 201,632,448 | 18.9430% |
+| Audio/sound candidates | 156,453,642 | 14.6986% |
+| Animation/motion candidates | 12,552,248 | 1.1793% |
+| Executables/modules | 4,101,870 | 0.3854% |
+| Other unclassified | 2,644,996 | 0.2485% |
+| Font assets | 896,928 | 0.0843% |
+| Script/data candidates | 880,126 | 0.0827% |
+| Unresolved graphics (43 short PSMCT32 records) | 140,648 | 0.0132% |
+
+These classes partition `Y - B`. Their names classify inventory by validated
 signature, bundle member type, filename or path; they do not claim the opaque
 bodies have been semantically decoded.
 
 Texture-specific coverage remains a distinct measure: 30,397 occurrences
-contain 239,584,968 TXC bytes, of which 226,035,104 (94.3444%) have editable
+contain 239,584,968 TXC bytes, of which 239,444,320 (99.9413%) have editable
 TGA exports. The tool tests exact physical partitioning, expanded accounting,
 separate Z/A/B/C levels, and remainder balance in
 `tests/test_asset_recovery_census.py`.

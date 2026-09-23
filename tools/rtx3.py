@@ -15,6 +15,9 @@ PSMT8H = 27
 PSMT4HL = 36
 PSMT4HH = 44
 PSMCT32 = 0
+INDEXED_8_PSMS = (PSMT8, PSMT8H)
+INDEXED_4_PSMS = (PSMT4, PSMT4HL, PSMT4HH)
+INDEXED_PSMS = INDEXED_8_PSMS + INDEXED_4_PSMS
 
 
 def parse(raw):
@@ -249,13 +252,13 @@ def decode_stored_order_rgba(raw):
     pixels = raw[info['pixels_offset']:info['pixels_offset'] + info['pixel_size']]
     if psm == PSMCT32:
         return width, height, pixels
-    if psm not in (PSMT4, PSMT8):
+    if psm not in INDEXED_PSMS:
         raise ValueError(f'RTX3 PSM {psm} has no supported stored-order preview')
     palette_raw = raw[info['palette_offset']:info['palette_offset'] + info['palette_size']]
     palette = [tuple(palette_raw[i:i + 4]) for i in range(0, len(palette_raw), 4)]
     out = bytearray(width * height * 4)
     for i in range(width * height):
-        if psm == PSMT8:
+        if psm in INDEXED_8_PSMS:
             index = pixels[i]
         else:
             index = (pixels[i >> 1] >> (4 if i & 1 else 0)) & 0xF
@@ -268,7 +271,7 @@ def decode_linear_mapped_rgba(raw):
     """Decode indexed pixels linearly and apply the observed CLUT permutation."""
     info = parse(raw)
     width, height, psm = info['width'], info['height'], info['psm']
-    if psm not in (PSMT4, PSMT8):
+    if psm not in INDEXED_PSMS:
         raise ValueError(f'RTX3 PSM {psm} has no supported linear indexed decode')
     pixels = raw[info['pixels_offset']:info['pixels_offset'] + info['pixel_size']]
     palette_raw = raw[info['palette_offset']:info['palette_offset'] + info['palette_size']]
@@ -278,7 +281,7 @@ def decode_linear_mapped_rgba(raw):
         palette[_clut_index(i, psm)] = _expand_gs_alpha(color)
     out = bytearray(width * height * 4)
     for i in range(width * height):
-        index = (pixels[i] if psm == PSMT8 else
+        index = (pixels[i] if psm in INDEXED_8_PSMS else
                  (pixels[i >> 1] >> (4 if i & 1 else 0)) & 0xF)
         out[i * 4:i * 4 + 4] = bytes(palette[index])
     return width, height, bytes(out)
@@ -287,7 +290,7 @@ def decode_linear_mapped_rgba(raw):
 def decode_rgba(raw):
     """Decode supported modes using the current best-supported layout."""
     info = parse(raw)
-    if info['psm'] in (PSMT4, PSMT8):
+    if info['psm'] in INDEXED_PSMS:
         return decode_linear_mapped_rgba(raw)
     return decode_legacy_rgba(raw)
 
@@ -297,8 +300,8 @@ def _encode_indexed_tga(original, tga, map_clut):
     width, height, rgba = read_tga(tga)
     if (width, height) != (info['width'], info['height']):
         raise ValueError('replacement TGA dimensions must match RTX3')
-    if info['psm'] not in (PSMT4, PSMT8):
-        raise ValueError('stored-order import supports indexed PSMT4/PSMT8 only')
+    if info['psm'] not in INDEXED_PSMS:
+        raise ValueError('indexed TGA import supports PSMT4/PSMT8 and high-bit indexed modes only')
     decoder = decode_linear_mapped_rgba if map_clut else decode_stored_order_rgba
     old_width, old_height, old_rgba = decoder(original)
     if (width, height, rgba) == (old_width, old_height, old_rgba):
@@ -314,7 +317,7 @@ def _encode_indexed_tga(original, tga, map_clut):
     else:
         palette = stored_palette
     pixels_raw = original[info['pixels_offset']:info['pixels_offset'] + info['pixel_size']]
-    if info['psm'] == PSMT8:
+    if info['psm'] in INDEXED_8_PSMS:
         original_indices = pixels_raw
     else:
         original_indices = bytes(
@@ -334,7 +337,7 @@ def _encode_indexed_tga(original, tga, map_clut):
             cache[color] = index
         indices[i] = index
 
-    if info['psm'] == PSMT8:
+    if info['psm'] in INDEXED_8_PSMS:
         packed = indices
     else:
         packed = bytearray(info['pixel_size'])
@@ -443,7 +446,7 @@ def encode_legacy_tga(original, tga):
 def encode_tga(original, tga):
     """Use the current best-supported encoding for the texture's PSM."""
     info = parse(original)
-    if info['psm'] in (PSMT4, PSMT8):
+    if info['psm'] in INDEXED_PSMS:
         return encode_linear_mapped_tga(original, tga)
     return encode_legacy_tga(original, tga)
 

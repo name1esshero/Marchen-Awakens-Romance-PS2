@@ -25,32 +25,76 @@
     "export_import": [
       "PSMCT32",
       "PSMT8",
-      "PSMT4"
+      "PSMT4",
+      "PSMT8H",
+      "PSMT4HL",
+      "PSMT4HH"
     ],
     "tga_output": "Uncompressed true-color 32-bit TGA",
     "tga_input": "Uncompressed true-color 24- or 32-bit TGA",
     "indexed_palette": "Preserved; imported pixels map to nearest existing palette color",
     "canvas_growth": "Unsupported; replacement dimensions must match the source",
-    "high_bit_psm": "Header and extents parse; pixel decoding is deliberately refused pending swizzle/layout evidence",
-    "indexed_pixel_layout": "Current candidate for sampled menu TXCs: pixel indices remain in linear byte order; PSMT8 CLUT indices are permuted with the observed map; PSMT4 CLUT order is unchanged.",
+    "high_bit_psm": "PSMT8H, PSMT4HL, and PSMT4HH are exported/imported as compact indexed RTX3 pixels in linear order using the existing CLUT/alpha path. The GS manual describes their bit lanes in PSMCT32 GS memory; three game samples render coherent previews, but RTX3 storage and runtime sampling are not proved by that hardware description.",
+    "indexed_pixel_layout": "Current editable candidate: indexed pixel values remain in compact RTX3 linear byte order; PSMT8 CLUT indices use the observed map, and PSMT4-family CLUT order is unchanged. Controlled 10+10 PSMT4/PSMT8 image matrix plus three coherent high-bit sample previews; not a full runtime/rendering proof.",
     "indexed_alpha": "Expand the PS2 GS 0..128 alpha range to 8-bit TGA with min(255, alpha*2); zero remains transparent and 128 becomes opaque.",
     "psmct32": "Uses the older GS swizzle/alpha path; not covered by the indexed layout comparison. The 43 corpus records have a file body eight bytes shorter than their declared pixel extent and remain raw.",
-    "graphics_workspace": "The workspace indexes all 30,397 catalogued TXCs: 28,940 standalone archive leaves and 1,457 menu-bundle members. It exports 28,970 PSMT4/PSMT8 rasters as files directly inside flat semantic category directories; stable source IDs prevent collisions and index.json preserves original paths and hashes. Japanese baselines are not overwritten.",
+    "graphics_workspace": "The workspace indexes all 30,397 catalogued TXCs: 28,940 standalone archive leaves and 1,457 menu-bundle members. It exports 30,354 rasters directly inside flat semantic category directories: 27,316 PSMT4, 1,654 PSMT8, 677 PSMT8H, 690 PSMT4HL, and 17 PSMT4HH. Stable source IDs prevent collisions and index.json preserves original paths and hashes. Japanese baselines are not overwritten; 43 short PSMCT32 records remain raw.",
     "english_overrides": "Every untouched exported baseline is named *_jp.tga and is preserved; an adjacent *_eng.tga is the editable localized variant selected for the English mod ISO. Same dimensions and source palette are required."
   },
   "verification": {
-    "synthetic": "PSMT4/PSMT8/PSMCT32 TGA export/import tests; unchanged files remain byte-identical; same-size indexed pixel edit reparses and decodes as expected",
+    "synthetic": "PSMT4/PSMT8/PSMT8H/PSMT4HL/PSMT4HH/PSMCT32 TGA export/import tests; unchanged files remain byte-identical; same-size indexed pixel edits retain the original mode and decode as expected",
     "real_samples": "One PSMT8 512x512 and one PSMT4 128x128 game TXC export/import to TGA without edits and remain byte-identical",
     "container": "Synthetic English TXC overrides reinsert through both nested UI-table/BPE/PAC and standalone-TXC/PAC paths; extracted source sidecars remain unchanged.",
     "runtime": "Not performed",
     "visual_layout_samples": "Controlled four-way image matrix for 10 PSMT8 and 10 PSMT4 TXCs favored linear pixel order; owner selected the mapped-linear title image. See reports/rtx3_layout_diagnostics.json.",
-    "graphics_workspace": "All 30,397 catalogued TXCs are indexed (28,940 standalone archive leaves plus 1,457 nested menu members). 28,970 images exported: 27,316 PSMT4 and 1,654 PSMT8. The full source-hash/TGA-dimension audit passed with zero edited Japanese baselines and zero English variants at audit time; 1,427 unresolved payloads remain indexed with reasons.",
-    "english_override": "Synthetic *_eng.tga selected during staging and reinserted through both nested UI-table/BPE/PAC and standalone TXC/PAC paths; original Japanese TGA and extracted TXC sidecars remain unchanged."
+    "graphics_workspace": "All 30,397 catalogued TXCs are indexed (28,940 standalone archive leaves plus 1,457 nested menu members). 30,354 images exported: 27,316 PSMT4, 1,654 PSMT8, 677 PSMT8H, 690 PSMT4HL, and 17 PSMT4HH. The full source-hash/TGA-dimension audit passed with zero edited Japanese baselines and zero English variants at audit time; 43 short PSMCT32 payloads remain indexed with explicit reasons.",
+    "english_override": "Synthetic *_eng.tga selected during staging and reinserted through both nested UI-table/BPE/PAC and standalone TXC/PAC paths; original Japanese TGA and extracted TXC sidecars remain unchanged.",
+    "high_bit_samples": [
+      {
+        "name": "hp_face_00",
+        "psm": "PSMT8H",
+        "dimensions": [
+          128,
+          128
+        ],
+        "logical_path": "disc!/_DATA.YFS;1!/data/chara/alv_1g_de_1.pac!/ch_tex.pac!/hp_face_00.txc",
+        "source_sha256": "dfeb39b217318d8a13688a6e3d13f361578e7de0e94506c3829711375420ec4c",
+        "image": "graphics/characters/00039_00129_00004_00000_hp_face_00_jp.tga",
+        "image_sha256": "1fe4fe9c53058b136cd8ac0641ab4e275a078e2759132f3d0dea9c255b9337f5",
+        "observation": "Coherent character portrait preview; candidate visual evidence only."
+      },
+      {
+        "name": "hp_mar",
+        "psm": "PSMT4HL",
+        "dimensions": [
+          64,
+          64
+        ],
+        "logical_path": "disc!/_DATA.YFS;1!/data/chara/alv_1g_de_1.pac!/ch_tex.pac!/hp_mar.txc",
+        "source_sha256": "caec6ea416e16426b3f9992e0afe674768f3b0bde69c513a93b19c953eea290d",
+        "image": "graphics/user_interface/00039_00129_00004_00001_hp_mar_jp.tga",
+        "image_sha256": "fe8ccc6952ffd469fa9f1380ee1f305569eabda566ec493899527434e01a87a6",
+        "observation": "Coherent icon preview; candidate visual evidence only."
+      },
+      {
+        "name": "txts",
+        "psm": "PSMT4HH",
+        "dimensions": [
+          512,
+          128
+        ],
+        "logical_path": "disc!/_DATA.YFS;1!/data/cockpit/gm2d_tex.pac!/txts.txc",
+        "source_sha256": "4258536c12f6af565f80d085eaa253258d531cbe5f14ae5eb6e9d8ae9700cb98",
+        "image": "graphics/user_interface/00039_00806_00031_txts_jp.tga",
+        "image_sha256": "c5a760b9a1bcc583bb0c2ec9400417d0c2b3f856d5ac3b8d47086d27a0d1b465",
+        "observation": "Readable digits and Japanese text atlas; candidate visual evidence only."
+      }
+    ]
   },
   "limits": [
-    "The 20-resource visual comparison does not establish indexed layout or final appearance for the complete TXC corpus or game runtime.",
+    "The controlled 20-resource PSMT4/PSMT8 visual comparison and three high-bit sample previews do not establish full-corpus layout or game runtime behavior.",
     "AT animation, atlas regions, UV coordinates and final screen composition remain uninterpreted.",
     "No English graphic has been runtime-validated yet.",
-    "No indexed palette creation or canvas resizing is supported. PSMT8H/PSMT4HL/PSMT4HH decode remains unresolved. The 43 PSMCT32 files are short by eight pixel bytes relative to the declared extent and remain raw."
+    "No indexed palette creation or canvas resizing is supported. The 43 PSMCT32 files are short by eight pixel bytes relative to the declared extent and remain raw."
   ]
 }

@@ -15,22 +15,24 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   tracked `reports/assets_census.json` and ignored
   `extracted/assets/catalog.json`. Translation-bearing evidence is tracked in
   `reports/translation_surfaces.json`.
-- The byte-weighted census in `reports/asset_recovery_census.json` now reports
+- The byte-weighted census in `reports/asset_recovery_census.json` reports
   disjoint physical-disc spans and a separate expanded logical payload. The
-  4,587,749,376-byte image has 3,327,295,881 known all-zero placeholder/gap
-  bytes, 1,237,522,725 nonzero terminal-member bytes, and 22,930,770 nonzero
-  gap/structure bytes; these sum exactly to the image. Expanded logical payload
-  Y is 1,303,947,016 bytes after BPE bundle expansion and de-duplication.
+  4,587,749,376-byte image has 3,327,295,881 measured all-zero placeholder/gap
+  bytes (72.5257%), 1,237,522,725 nonzero terminal-member bytes (26.9745%), and
+  22,930,770 nonzero gap/structure bytes (0.4998%); these disjoint spans sum
+  exactly to the image. Zero measurements do not establish historical intent.
+  Expanded logical information payload Y is 1,303,947,016 bytes (28.4224% of
+  physical image size) after BPE bundle expansion and de-duplication.
   Parser-backed structural coverage is Z/Y = 248,202,302/1,303,947,016
   (19.0347%); unchanged-source rebuildability is A/Y = 100%; semantic
-  editability is B/Y = 226,123,598/1,303,947,016 (17.3415%); runtime-validated
-  editability is C/Y = 0%. Of the 1,077,823,418 bytes remaining after B, video
-  accounts for 63.5643%, model/geometry candidates 18.7074%, audio/sound
-  candidates 14.5157%, unresolved graphics 1.2572%, and animation/motion
-  candidates 1.1646%; the report gives the full disjoint breakdown and evidence
-  basis. These are separate preservation, structure, editability, and runtime
-  measures, not a single decompilation or translation percentage. Regenerate
-  with `make asset-census`.
+  editability is B/Y = 239,532,814/1,303,947,016 (18.3698%); runtime-validated
+  editability is C/Y = 0%. Of the 1,064,414,202 bytes remaining after B, video
+  accounts for 64.3651%, model/geometry candidates 18.9430%, audio/sound
+  candidates 14.6986%, animation/motion 1.1793%, and unresolved graphics 0.0132%;
+  the report gives the full disjoint breakdown and evidence basis. These are
+  separate preservation, structure, editability, and runtime measures, not a
+  single decompilation or translation percentage. Regenerate with
+  `make asset-census`.
 - Both the initial and fully prepared 4,587,749,376-byte disc rebuilds from
   workspace files compare byte-for-byte with the pinned ISO; the streaming
   comparator authenticates both source hashes and whole-image equality. This
@@ -99,16 +101,20 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   nested resources that rebuild byte-exactly when untouched. Three `.yma` payloads
   use a different unresolved layout. The graphics index covers all 30,397
   catalogued TXCs: 28,940 standalone archive leaves and 1,457 nested menu members.
-  A full audit passed source hashes and TGA dimensions for 28,970 editable exports
-  (27,316 PSMT4 and 1,654 PSMT8); 1,427 remain indexed but unresolved (1,384
-  high-bit PSMs and 43 PSMCT32 files short by eight bytes). Images sit directly
+  A full audit passed source hashes and TGA dimensions for 30,354 editable exports
+  (99.8585% of records and 99.9413% of TXC bytes: 27,316 PSMT4, 1,654 PSMT8,
+  677 PSMT8H, 690 PSMT4HL and 17 PSMT4HH); 43 PSMCT32 records remain unresolved
+  because their bodies are eight bytes short of the declared extent. High-bit
+  sample previews are coherent, but do not
+  validate GS sampling, UV composition or runtime. Images sit directly
   in flat semantic folders: title, icon, user_interface, effects, characters,
   cards, backgrounds, maps, weapons, environments and text. Japanese baselines end
   in `_jp.tga`, stay unchanged, and are ignored as generated workspace files;
   authored `_eng.tga` siblings are Git-trackable and take precedence in
   `mar_eng.iso` builds. Indexed exports use linear pixel order, mapped PSMT8 CLUT
   indices and expanded 0..128 GS alpha. This candidate was visually compared on
-  20 resources; it is not proof of whole-corpus screen composition. Synthetic
+  20 PSMT4/PSMT8 resources plus three separate high-bit samples; this is not
+  proof of whole-corpus screen composition. Synthetic
   English-image tests now cover nested UI-table/BPE/PAC and standalone TXC/PAC
   reinsertion while preserving source files. AT/UV composition and runtime display
   remain unresolved. The AT inspector confirms all four title animation texture
