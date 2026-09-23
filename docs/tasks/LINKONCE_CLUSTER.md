@@ -148,3 +148,36 @@ every new field, verified with `clang++ -std=c++17 -fsyntax-only`.
 - No claim is made about `CCamera`, `CCamera2`, or `CCameraMv`'s complete
   size, inheritance, or virtual layout. Only the specific evidenced fields
   above are established.
+
+## CRender accessor batch — 2026-09-22
+
+Ten additional 8-byte sections in the same linkonce cluster were recovered for
+`CRender` (`0x33b1c4`–`0x33b254`, interleaved with unrecovered sections). Direct
+disassembly establishes one `jr $ra` delay-slot operation per method:
+
+| Method | Observed operation |
+| --- | --- |
+| `GetPRMODE` | address of `$4 + 0x4a0` |
+| `GetFrame` | `lw` from `$4 + 0x4c8` |
+| `GetCamera` | `lw` from `$4 + 0x4e0` |
+| `GetFrameBufferMode`, `GetZBufferMode` | `lw` from `0x4e4`, `0x4e8` |
+| `GetFrameField`, `GetScreenWidth`, `GetScreenHeight` | `lw` from `0x4f4`, `0x4f8`, `0x4fc` |
+| `GetFreeList`, `GetOldOddEven` | `lw` from `0x554`, `0x55c` |
+
+The partial `CRender` candidate uses natural inline getters and unknown byte
+ranges between the evidenced offsets. Names support candidate integer/pointer
+interpretations, but only the load width, offset, const qualification encoded in
+the section name, and `GetPRMODE` address calculation are established. In
+particular, the pointed-to types and full class layout are not recovered.
+
+An initial candidate placed `oldOddEven` at `0x558`; the EE object instead
+emitted `lw $2, 0x558($4)`, differing from the reference's `0x55c`. The direct
+disassembly established the omitted four-byte gap, after which the unchanged
+common EE GCC `2.96-ee-001003-1` `-O2` probe matched all ten sections. This is
+ordinary layout correction from evidence, not compiler steering.
+
+`asm/camera_accessors.s` and the reconstruction selection now contain 29
+sections / 232 bytes across four partial classes. The explicit bootstrap export
+splits the affected raw interval around every selected section; 3,444,972 bytes
+remain raw. `make test verify-boot verify-source-only verify-ee` passes, with
+full byte comparison for both assembled and EE-probe boot ELFs.

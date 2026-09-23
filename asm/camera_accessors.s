@@ -60,3 +60,33 @@ lw $2, 0x294($4)
 .section .gnu.linkonce.t.GetCamType__9CCameraMv,"ax",@progbits
 jr $31
 lw $2, 0x234($4)
+.section .gnu.linkonce.t.GetFrameBufferMode__C7CRender,"ax",@progbits
+jr $31
+lw $2, 0x4e4($4)
+.section .gnu.linkonce.t.GetZBufferMode__C7CRender,"ax",@progbits
+jr $31
+lw $2, 0x4e8($4)
+.section .gnu.linkonce.t.GetFrameField__C7CRender,"ax",@progbits
+jr $31
+lw $2, 0x4f4($4)
+.section .gnu.linkonce.t.GetScreenWidth__C7CRender,"ax",@progbits
+jr $31
+lw $2, 0x4f8($4)
+.section .gnu.linkonce.t.GetScreenHeight__C7CRender,"ax",@progbits
+jr $31
+lw $2, 0x4fc($4)
+.section .gnu.linkonce.t.GetOldOddEven__C7CRender,"ax",@progbits
+jr $31
+lw $2, 0x55c($4)
+.section .gnu.linkonce.t.GetFrame__C7CRender,"ax",@progbits
+jr $31
+lw $2, 0x4c8($4)
+.section .gnu.linkonce.t.GetCamera__7CRender,"ax",@progbits
+jr $31
+lw $2, 0x4e0($4)
+.section .gnu.linkonce.t.GetPRMODE__7CRender,"ax",@progbits
+jr $31
+addiu $2, $4, 0x4a0
+.section .gnu.linkonce.t.GetFreeList__7CRender,"ax",@progbits
+jr $31
+lw $2, 0x554($4)

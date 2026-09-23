@@ -23,10 +23,12 @@ member-function address makes that requirement explicit without changing the
 method body or adding code-generation attributes.
 Pathway: keep address-taking in a separate harness and compare only the evidenced
 method sections; never present harness objects as recovered game data.
-Verification: EE GCC `2.96-ee-001003-1` with the same `-O2` for eight CCamera
-accessors reproduces all 64 bytes; the full probe ELF also compares identically.
+Verification: EE GCC `2.96-ee-001003-1` with the same `-O2` for 29 accessors
+across four partial classes reproduces all 232 bytes; the full probe ELF also
+compares identically.
 Limits: trivial methods do not identify the original compiler or complete class.
-Reference: [compiler experiment](tasks/COMPILER_PROBE.md), `make verify-ee`.
+References: [compiler experiment](tasks/COMPILER_PROBE.md),
+[linkonce cluster](tasks/LINKONCE_CLUSTER.md), `make verify-ee`.
 
 ## Linkonce sections cluster contiguously outside main .text, and their address range predicts a census
 

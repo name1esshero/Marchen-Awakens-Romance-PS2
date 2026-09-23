@@ -17,3 +17,13 @@
 .gnu.linkonce.t.DebugCamera__8CCamera2ii
 .gnu.linkonce.t.GetTgtChr__9CCameraMv
 .gnu.linkonce.t.GetCamType__9CCameraMv
+.gnu.linkonce.t.GetFrameBufferMode__C7CRender
+.gnu.linkonce.t.GetZBufferMode__C7CRender
+.gnu.linkonce.t.GetFrameField__C7CRender
+.gnu.linkonce.t.GetScreenWidth__C7CRender
+.gnu.linkonce.t.GetScreenHeight__C7CRender
+.gnu.linkonce.t.GetOldOddEven__C7CRender
+.gnu.linkonce.t.GetFrame__C7CRender
+.gnu.linkonce.t.GetCamera__7CRender
+.gnu.linkonce.t.GetPRMODE__7CRender
+.gnu.linkonce.t.GetFreeList__7CRender

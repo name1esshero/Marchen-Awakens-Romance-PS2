@@ -33,6 +33,25 @@ struct CameraMvLayoutCandidate {
     std::int32_t tgtChr;
 };
 
+struct RenderLayoutCandidate {
+    std::uint8_t unknown000[0x4a0];
+    std::uint32_t prmode;
+    std::uint8_t unknown4a4[0x4c8 - 0x4a4];
+    std::int32_t frame;
+    std::uint8_t unknown4cc[0x4e0 - 0x4cc];
+    std::uint32_t camera;
+    std::int32_t frameBufferMode;
+    std::int32_t zBufferMode;
+    std::uint8_t unknown4ec[0x4f4 - 0x4ec];
+    std::int32_t frameField;
+    std::int32_t screenWidth;
+    std::int32_t screenHeight;
+    std::uint8_t unknown500[0x554 - 0x500];
+    std::uint32_t freeList;
+    std::uint8_t unknown558[0x55c - 0x558];
+    std::int32_t oldOddEven;
+};
+
 static_assert(sizeof(float) == 4, "requires 32-bit float storage");
 static_assert(offsetof(CameraLayoutCandidate, nearClipPlane) == 0x16c);
 static_assert(offsetof(CameraLayoutCandidate, farClipPlane) == 0x170);
@@ -46,6 +65,16 @@ static_assert(offsetof(Camera2LayoutCandidate, angleY) == 0x15c);
 static_assert(offsetof(Camera2LayoutCandidate, angleX) == 0x160);
 static_assert(offsetof(CameraMvLayoutCandidate, camType) == 0x234);
 static_assert(offsetof(CameraMvLayoutCandidate, tgtChr) == 0x294);
+static_assert(offsetof(RenderLayoutCandidate, prmode) == 0x4a0);
+static_assert(offsetof(RenderLayoutCandidate, frame) == 0x4c8);
+static_assert(offsetof(RenderLayoutCandidate, camera) == 0x4e0);
+static_assert(offsetof(RenderLayoutCandidate, frameBufferMode) == 0x4e4);
+static_assert(offsetof(RenderLayoutCandidate, zBufferMode) == 0x4e8);
+static_assert(offsetof(RenderLayoutCandidate, frameField) == 0x4f4);
+static_assert(offsetof(RenderLayoutCandidate, screenWidth) == 0x4f8);
+static_assert(offsetof(RenderLayoutCandidate, screenHeight) == 0x4fc);
+static_assert(offsetof(RenderLayoutCandidate, freeList) == 0x554);
+static_assert(offsetof(RenderLayoutCandidate, oldOddEven) == 0x55c);
 
 // Free functions express the observed operations, not the original C++ ABI.
 float GetNearClipPlane(const CameraLayoutCandidate *camera)
@@ -150,4 +179,49 @@ std::int32_t GetCamType(const CameraMvLayoutCandidate *camera)
 std::int32_t GetTgtChr(const CameraMvLayoutCandidate *camera)
 {
     return camera->tgtChr;
+}
+
+std::int32_t GetFrame(const RenderLayoutCandidate *render)
+{
+    return render->frame;
+}
+
+std::uint32_t GetCamera(RenderLayoutCandidate *render)
+{
+    return render->camera;
+}
+
+std::int32_t GetFrameBufferMode(const RenderLayoutCandidate *render)
+{
+    return render->frameBufferMode;
+}
+
+std::int32_t GetZBufferMode(const RenderLayoutCandidate *render)
+{
+    return render->zBufferMode;
+}
+
+std::int32_t GetFrameField(const RenderLayoutCandidate *render)
+{
+    return render->frameField;
+}
+
+std::int32_t GetScreenWidth(const RenderLayoutCandidate *render)
+{
+    return render->screenWidth;
+}
+
+std::int32_t GetScreenHeight(const RenderLayoutCandidate *render)
+{
+    return render->screenHeight;
+}
+
+std::uint32_t GetFreeList(RenderLayoutCandidate *render)
+{
+    return render->freeList;
+}
+
+std::int32_t GetOldOddEven(const RenderLayoutCandidate *render)
+{
+    return render->oldOddEven;
 }

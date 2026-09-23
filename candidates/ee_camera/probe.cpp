@@ -24,3 +24,14 @@ void (CCamera2::*gDebugCameraAddress)(int, int) = &CCamera2::DebugCamera;
 
 int (CCameraMv::*gGetTgtChrAddress)() = &CCameraMv::GetTgtChr;
 int (CCameraMv::*gGetCamTypeAddress)() = &CCameraMv::GetCamType;
+
+void *(CRender::*gGetPRMODEAddress)() = &CRender::GetPRMODE;
+int (CRender::*gGetFrameAddress)() const = &CRender::GetFrame;
+CCamera *(CRender::*gGetCameraAddress)() = &CRender::GetCamera;
+int (CRender::*gGetFrameBufferModeAddress)() const = &CRender::GetFrameBufferMode;
+int (CRender::*gGetZBufferModeAddress)() const = &CRender::GetZBufferMode;
+int (CRender::*gGetFrameFieldAddress)() const = &CRender::GetFrameField;
+int (CRender::*gGetScreenWidthAddress)() const = &CRender::GetScreenWidth;
+int (CRender::*gGetScreenHeightAddress)() const = &CRender::GetScreenHeight;
+void *(CRender::*gGetFreeListAddress)() = &CRender::GetFreeList;
+int (CRender::*gGetOldOddEvenAddress)() const = &CRender::GetOldOddEven;

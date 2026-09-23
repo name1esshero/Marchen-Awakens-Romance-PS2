@@ -12,10 +12,10 @@ and commit, not a permanent assignment.
   text artifacts plus assembled code. `cmp` verifies every output byte.
 - An isolated build containing no ISO, extracted files, reports, existing build
   outputs or downloaded compiler reproduces the pinned boot hash.
-- Nineteen accessors (152 bytes) across three distinct classes (`CCamera`,
-  `CCamera2`, `CCameraMv`) have verified assembly implementations.
+- Twenty-nine accessors (232 bytes) across four distinct classes (`CCamera`,
+  `CCamera2`, `CCameraMv`, `CRender`) have verified assembly implementations.
 - EE GCC `2.96-ee-001003-1` with the same single `-O2` flag compiles natural
-  C++ candidates for all nineteen into the same sections. Substituting them
+  C++ candidates for all twenty-nine into the same sections. Substituting them
   in the full ELF also passes byte comparison. The partial classes remain candidates.
 - Research compiler distribution, hash and flags are pinned; the setup step is
   explicit and downloaded executables are ignored by Git.
@@ -28,7 +28,7 @@ and commit, not a permanent assignment.
 
 ## Remaining debt and limits
 
-- **3,445,052 bytes** of the boot ELF remain explicitly preserved as unrecovered
+- **3,444,972 bytes** of the boot ELF remain explicitly preserved as unrecovered
   hex, including most code, data and ELF metadata. No authentic-source completion
   percentage is claimed; a source-artifact rebuild is not complete decompilation.
 - Original game compiler version/flags are not proved. Eight middleware banners

@@ -10,9 +10,38 @@
 #ifndef CANDIDATES_EE_CAMERA_CCAMERA_H
 #define CANDIDATES_EE_CAMERA_CCAMERA_H
 
-// Only forward-declared: Draw()'s evidenced body never dereferences its
-// argument, so no members of CRender are required by this probe.
-class CRender;
+class CCamera;
+
+class CRender {
+public:
+    unsigned char unknown000[0x4a0];
+    unsigned int prmode;
+    unsigned char unknown4a4[0x4c8 - 0x4a4];
+    int frame;
+    unsigned char unknown4cc[0x4e0 - 0x4cc];
+    CCamera *camera;
+    int frameBufferMode;
+    int zBufferMode;
+    unsigned char unknown4ec[0x4f4 - 0x4ec];
+    int frameField;
+    int screenWidth;
+    int screenHeight;
+    unsigned char unknown500[0x554 - 0x500];
+    void *freeList;
+    unsigned char unknown558[0x55c - 0x558];
+    int oldOddEven;
+
+    void *GetPRMODE() { return &prmode; }
+    int GetFrame() const { return frame; }
+    CCamera *GetCamera() { return camera; }
+    int GetFrameBufferMode() const { return frameBufferMode; }
+    int GetZBufferMode() const { return zBufferMode; }
+    int GetFrameField() const { return frameField; }
+    int GetScreenWidth() const { return screenWidth; }
+    int GetScreenHeight() const { return screenHeight; }
+    void *GetFreeList() { return freeList; }
+    int GetOldOddEven() const { return oldOddEven; }
+};
 
 class CCamera {
 public:

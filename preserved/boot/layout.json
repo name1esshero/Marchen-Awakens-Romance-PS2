@@ -101,9 +101,87 @@
     },
     {
       "offset": 2343312,
-      "size": 840,
+      "size": 52,
       "kind": "unrecovered_hex",
       "source": "unrecovered_0023c190.hex"
+    },
+    {
+      "offset": 2343364,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetFrameBufferMode__C7CRender"
+    },
+    {
+      "offset": 2343372,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetZBufferMode__C7CRender"
+    },
+    {
+      "offset": 2343380,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetFrameField__C7CRender"
+    },
+    {
+      "offset": 2343388,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetScreenWidth__C7CRender"
+    },
+    {
+      "offset": 2343396,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetScreenHeight__C7CRender"
+    },
+    {
+      "offset": 2343404,
+      "size": 36,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023c1ec.hex"
+    },
+    {
+      "offset": 2343440,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetOldOddEven__C7CRender"
+    },
+    {
+      "offset": 2343448,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetFrame__C7CRender"
+    },
+    {
+      "offset": 2343456,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetCamera__7CRender"
+    },
+    {
+      "offset": 2343464,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetPRMODE__7CRender"
+    },
+    {
+      "offset": 2343472,
+      "size": 32,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023c230.hex"
+    },
+    {
+      "offset": 2343504,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetFreeList__7CRender"
+    },
+    {
+      "offset": 2343512,
+      "size": 640,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023c258.hex"
     },
     {
       "offset": 2344152,
