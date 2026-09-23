@@ -1,6 +1,6 @@
 # Current project status
 
-Updated: 2026-09-22. Authority: [STANDARDS.md](STANDARDS.md).
+Updated: 2026-09-23. Authority: [STANDARDS.md](STANDARDS.md).
 Current contributor identity is session-specific; consult the relevant commit
 trailers. Role/model attribution is per session and commit, not a permanent
 assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
@@ -24,7 +24,8 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
 - A synthetic ISO test carries an edited UTF-8 text companion through CP932
   encoding, member growth, ISO directory relocation, and volume-length update.
   `make build-mod-disc` provides the corresponding experimental workspace build
-  command. No retail menu/dialogue table has yet been edited and tested in-game.
+  command; it now writes `mar_eng.iso` in the workspace root for emulator testing.
+  No retail menu/dialogue table has yet been edited and tested in-game.
 - One 20,452-byte `_msg.dat` message table has a strict editable JSON
   representation with 229 entries and a tracked source at
   `localization/messages.json`. Initial English drafts now cover all 229 entries
@@ -84,7 +85,10 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   editable-TGA conversion path; PSMT8H/PSMT4HL/PSMT4HH are parsed but deliberately
   not rendered while their storage ordering is unresolved. Initial previews include
   atlas/tiled-looking textures, and animation/UV references are not yet decoded, so
-  they are not evidence of correct whole-screen composition. All 229 messages have draft translations; names,
+  they are not evidence of correct whole-screen composition. The title-marh-jp
+  TXC member matches its bundle hash, and a stored-order diagnostic shows a
+  coherent stacked logo atlas; renderer/AT-to-UV composition remains unresolved.
+  See [title rendering evidence](../tasks/TITLE_TEXTURE_RENDERING.md). All 229 messages have draft translations; names,
   mechanics, and display constraints need review. DMY files, module internals and DVP
   overlay semantics remain open.
 - Independent retail-dump authentication remains unestablished.

@@ -82,9 +82,20 @@ dimensions and palette. For example:
 
 ```sh
 python3 tools/rtx3.py export SOURCE.txc /tmp/texture.tga
+# For an indexed-color diagnostic, leave pixel bytes and CLUT entries in stored order:
+python3 tools/rtx3.py export SOURCE.txc /tmp/texture-stored-order.tga --stored-order
 # Edit /tmp/texture.tga in an image editor, preserving dimensions.
 python3 tools/rtx3.py import SOURCE.txc /tmp/texture-edited.txc /tmp/texture.tga
 ```
+
+`--stored-order` reads indexed pixels linearly and uses palette entries as
+stored, without PSM swizzling, the GS CLUT index permutation, or alpha
+expansion. It is a raw layout diagnostic, not an editable spatial representation; the normal export
+remains the starting point for edits. For `title_marh_jp.txc`, the stored-order
+preview draws recognizable Japanese logo shapes in two vertically stacked
+variants. Its extracted TXC bytes match the enclosing bundle member's recorded
+SHA-256 exactly. This separates a bad outer BPE/member extraction from the still
+unresolved game texture layout, but does not establish UVs or runtime appearance.
 
 Copy the rebuilt TXC over its corresponding `.resources/` member sidecar, then
 use the normal relocated asset build. A no-op import returns the exact source
@@ -115,10 +126,10 @@ resource path. `CardList.txt` currently has draft English for all 142 nonempty n
 character titles and all 141 categories, while all 142 captions remain untranslated.
 `DataBase.txt` has 87 translated fields of 126; its 39 unresolved condition
 metadata values remain source text. For a growing edit, run `make build-mod-disc`; it enables the observed relocation
-path and writes `build/assets-modded.iso`. Then run
-`python3 tools/bootstrap.py build/assets-modded.iso --reports /tmp/marps2-mod-check`
+path and writes `mar_eng.iso` in the workspace root for emulator testing. Then run
+`python3 tools/bootstrap.py mar_eng.iso --reports /tmp/marps2-mod-check`
 to re-parse and inventory the ISO, and
-`python3 tools/compare_disc.py build/assets-modded.iso` to authenticate the
+`python3 tools/compare_disc.py mar_eng.iso` to authenticate the
 pinned baseline, count all differing bytes, and sample the first differing
 offsets. Comparator result 1 is expected for a modified image; result 2 is an
 authentication or I/O error. Inspect the reported offsets and ISO inventory, and

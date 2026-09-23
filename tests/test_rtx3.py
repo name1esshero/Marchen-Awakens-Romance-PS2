@@ -30,6 +30,18 @@ class RTX3Tests(unittest.TestCase):
                 self.assertEqual(rtx3.read_tga(tga), decoded)
                 self.assertEqual(rtx3.encode_tga(raw, tga), raw)
 
+    def test_stored_order_preview_skips_pixel_and_palette_mapping(self):
+        raw = bytearray(fixture(19, 128, 64))
+        info = rtx3.parse(raw)
+        raw[info['pixels_offset']:info['pixels_offset'] + info['pixel_size']] = bytes([8]) * info['pixel_size']
+        palette = info['palette_offset']
+        raw[palette + 8 * 4:palette + 9 * 4] = bytes((11, 22, 33, 64))
+        raw[palette + 16 * 4:palette + 17 * 4] = bytes((44, 55, 66, 64))
+        stored = rtx3.decode_stored_order_rgba(raw)
+        decoded = rtx3.decode_rgba(raw)
+        self.assertEqual(stored[2][:4], bytes((11, 22, 33, 64)))
+        self.assertEqual(decoded[2][:4], bytes((44, 55, 66, 128)))
+
     def test_high_bit_modes_are_parsed_but_not_guessed(self):
         for psm in (27, 36, 44):
             with self.subTest(psm=psm):

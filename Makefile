@@ -1,6 +1,7 @@
 .DEFAULT_GOAL := build-boot
 EE_GCC := .tools/ee-gcc2.96/bin/ee-gcc
 BOOT_SOURCES := $(wildcard preserved/boot/*.hex) preserved/boot/layout.json
+ENGLISH_DISC := mar_eng.iso
 
 .PHONY: test inventory verify-camera verify-reference build-boot verify-boot setup-ee verify-ee verify-source-only export-assets prepare-assets build-disc build-mod-disc compare-disc verify-disc
 
@@ -48,7 +49,7 @@ build-disc:
 	python3 tools/assets.py build extracted/assets build/assets-rebuilt.iso
 
 build-mod-disc:
-	python3 tools/assets.py build extracted/assets build/assets-modded.iso --relocate --translations localization/messages.json --text-translations localization/card_list.json --text-translations localization/database.json
+	python3 tools/assets.py build extracted/assets $(ENGLISH_DISC) --relocate --translations localization/messages.json --text-translations localization/card_list.json --text-translations localization/database.json
 
 compare-disc:
 	python3 tools/compare_disc.py build/assets-rebuilt.iso

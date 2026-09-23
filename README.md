@@ -41,7 +41,7 @@ make prepare-assets  # indexes 34,486 leaves; adds reversible UTF-8 copies of te
 make build-disc      # rebuilds from extracted/assets only
 make compare-disc    # streams the complete rebuilt ISO against the pinned image
 make verify-disc     # rebuilds and compares in one gate
-make build-mod-disc  # builds build/assets-modded.iso with observed growth relocation
+make build-mod-disc  # builds mar_eng.iso in the workspace root for emulator testing
 ```
 
 `extracted/assets/catalog.json` maps readable archive paths to workspace files.
@@ -56,9 +56,9 @@ translation fields, then `make build-mod-disc` applies them. The builder checks
 source hashes and stable record/row identities and encodes changes as CP932.
 For a mod build, run the
 streaming comparator against the mod ISO (an intentional edit returns mismatch
-status 1) using `python3 tools/compare_disc.py build/assets-modded.iso`, then
+status 1) using `python3 tools/compare_disc.py mar_eng.iso`, then
 parse its filesystem with
-`python3 tools/bootstrap.py build/assets-modded.iso --reports /tmp/marps2-mod-check`.
+`python3 tools/bootstrap.py mar_eng.iso --reports /tmp/marps2-mod-check`.
 Formats inside PAC leaves such as YPC models, fonts, audio and script bytecode
 remain binary until their internal structures and conversion round trips are
 recovered. See [asset workflow](docs/TASK_ASSET_WORKSPACE_METHODOLOGY.md).

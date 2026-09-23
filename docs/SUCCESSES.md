@@ -105,7 +105,12 @@ Verification: synthetic PSMT4/PSMT8/PSMCT32 export/import tests pass, including 
 indexed pixel edit and malformed input checks. Actual 512x512 PSMT8 and 128x128
 PSMT4 textures export/import unchanged byte-identically; one-pixel edits in both
 real samples decode back to the expected RGBA. `python3 -m unittest
-tests.test_rtx3 tests.test_ui_bundle tests.test_assets -v` passed 18 tests.
+tests.test_rtx3 tests.test_ui_bundle tests.test_assets -v` passed 19 tests.
+The `--stored-order` export option provides a diagnostic RGBA/TGA view by reading
+pixel indices linearly and using CLUT entries as stored, without PSM or CLUT
+permutation or alpha expansion. A synthetic palette-order test distinguishes it from the normal
+decoder. On `title_marh_jp`, the resulting view contains recognizable Japanese
+logo shapes, and its source member span matches the recorded SHA-256 exactly.
 Scope: the observed RTX3 corpus; census has 30,397 resources (PSMCT32 43, PSMT8
 27,316, PSMT4 1,654, PSMT8H 677, PSMT4HL 690, PSMT4HH 17).
 Limits: PSMT8H/PSMT4HL/PSMT4HH are parsed but not rendered because their storage
@@ -116,6 +121,8 @@ graphic has yet been translated and validated in game.
 References: `tools/rtx3.py`, `tests/test_rtx3.py`,
 `reports/rtx3_format_survey.json`, `reports/translation_surfaces.json`,
 [asset methodology](TASK_ASSET_WORKSPACE_METHODOLOGY.md).
+Title-specific renderer and composition evidence is tracked in
+[`TITLE_TEXTURE_RENDERING.md`](../tasks/TITLE_TEXTURE_RENDERING.md).
 
 ## UTF-8 translation edits can grow through CP932 and ISO relocation
 

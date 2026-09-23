@@ -44,6 +44,18 @@ swizzler. PSMT8H/PSMT4HL/PSMT4HH stay parse-only pending their own storage-order
 evidence. Evidence: RTX3 census and sample previews in
 `reports/rtx3_format_survey.json`; final in-game rendering has not been tested.
 
+Follow-up hypothesis: the repeated title-logo preview came from a bad outer
+BPE decode or corrupted bundle member. The exact `title_marh_jp` span in the
+decoded bundle matches its manifest SHA-256, and a new stored-order preview
+shows coherent Japanese logo shapes in two stacked variants. This rules out
+corruption in the recorded outer decode/member extraction for this texture,
+but does not prove its game-side pixel layout. Applying a generic GS page/block
+address map directly to RTX3 bytes made the title image more striped and
+garbled. That map is not established for this file format and was discarded;
+the legacy image swizzler remains unchanged. Reconsider the GS map only if TXC
+serialization evidence or runtime comparison demonstrates that the file stores
+raw GS VRAM order. See `tasks/TITLE_TEXTURE_RENDERING.md`.
+
 ## A 16-byte copy does not establish a four-float aggregate
 
 Hypothesis: `CCamera::GetViewRect` returns a four-float rectangle by value.

@@ -231,6 +231,32 @@ def decode_rgba(raw):
     return width, height, bytes(out)
 
 
+def decode_stored_order_rgba(raw):
+    """Preview RTX3 payload bytes in linear order with the stored palette order.
+
+    This is a diagnostic view, not a claim about the game's spatial layout.
+    It deliberately skips PSM swizzling and the GS CLUT index permutation.
+    """
+    info = parse(raw)
+    width, height, psm = info['width'], info['height'], info['psm']
+    pixels = raw[info['pixels_offset']:info['pixels_offset'] + info['pixel_size']]
+    if psm == PSMCT32:
+        return width, height, pixels
+    if psm not in (PSMT4, PSMT8):
+        raise ValueError(f'RTX3 PSM {psm} has no supported stored-order preview')
+    palette_raw = raw[info['palette_offset']:info['palette_offset'] + info['palette_size']]
+    palette = [tuple(palette_raw[i:i + 4]) for i in range(0, len(palette_raw), 4)]
+    out = bytearray(width * height * 4)
+    for i in range(width * height):
+        if psm == PSMT8:
+            index = pixels[i]
+        else:
+            index = (pixels[i >> 1] >> (4 if i & 1 else 0)) & 0xF
+        color = palette[index]
+        out[i * 4:i * 4 + 4] = color
+    return width, height, bytes(out)
+
+
 def read_tga(raw):
     if len(raw) < 18:
         raise ValueError('truncated TGA header')
@@ -339,6 +365,8 @@ def main():
             command.add_argument('output', type=Path)
         if name == 'export':
             command.add_argument('--format', choices=('tga', 'png'), default='tga')
+            command.add_argument('--stored-order', action='store_true',
+                                 help='skip pixel swizzling and CLUT index mapping (diagnostic view)')
         if name == 'import':
             command.add_argument('replacement', type=Path)
     args = parser.parse_args()
@@ -348,7 +376,8 @@ def main():
         if args.command == 'info':
             print(json.dumps(info, indent=2))
         elif args.command == 'export':
-            width, height, rgba = decode_rgba(raw)
+            decoder = decode_stored_order_rgba if args.stored_order else decode_rgba
+            width, height, rgba = decoder(raw)
             data = write_tga(width, height, rgba) if args.format == 'tga' else write_png(width, height, rgba)
             if args.output.exists():
                 raise ValueError('output already exists')
