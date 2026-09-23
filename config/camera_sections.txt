@@ -212,3 +212,16 @@
 .gnu.linkonce.t.ActionCntrl__10CGameCntrl
 .gnu.linkonce.t.GetPauseMenu__10CGameCntrl
 .gnu.linkonce.t.PauseMenuAction__10CGameCntrl
+.gnu.linkonce.t.GetPMovie__8CPAppear
+.gnu.linkonce.t.GetParent__8CPAppear
+.gnu.linkonce.t.GetYpcHead__8CPAppear
+.gnu.linkonce.t.GetNodeData__8CPAppear
+.gnu.linkonce.t.GetLocalMatrix__8CPAppear
+.gnu.linkonce.t.GetWorldMatrix__8CPAppear
+.gnu.linkonce.t.GetSceneTargetLink__8CPAppear
+.gnu.linkonce.t.GetActionLink__8CPAppear
+.gnu.linkonce.t.GetFrame__8CPAppear
+.gnu.linkonce.t.IsDisplay__8CPAppear
+.gnu.linkonce.t.IsMotionEnd__8CPAppear
+.gnu.linkonce.t.OnMotionJumpPre__8CPAppearP9AprMotionT1
+.gnu.linkonce.t.OnMotionJumpAfter__8CPAppearP9AprMotionT1

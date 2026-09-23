@@ -547,4 +547,45 @@ public:
     void PauseMenuAction() {}
 };
 
+// Named only to reproduce the mangled parameter type shared by both
+// OnMotionJumpPre/After parameters (the second uses this compiler's "T1"
+// back-reference to the first parameter's type rather than repeating the
+// spelling); no members are evidenced.
+class AprMotion;
+
+class CPAppear {
+public:
+    unsigned char unknown000[0x10];
+    unsigned int localMat;
+    unsigned char unknown014[0x3c];
+    unsigned int worldMat;
+    unsigned char unknown054[0x3c];
+    void *pMovie;
+    void *ypcHead;
+    void *nodeData;
+    void *parent;
+    unsigned char unknown0a0[0x1b4];
+    int isMotionEnd;
+    int isDisplay;
+    float frame;
+    unsigned int actionLink;
+    unsigned char unknown264[0x8];
+    unsigned int sceneTargetLink;
+
+    void *GetPMovie() { return pMovie; }
+    void *GetParent() { return parent; }
+    void *GetYpcHead() { return ypcHead; }
+    void *GetNodeData() { return nodeData; }
+    void *GetLocalMatrix() { return &localMat; }
+    void *GetWorldMatrix() { return &worldMat; }
+    void *GetSceneTargetLink() { return &sceneTargetLink; }
+    void *GetActionLink() { return &actionLink; }
+    float GetFrame() { return frame; }
+    int IsDisplay() { return isDisplay; }
+    int IsMotionEnd() { return isMotionEnd; }
+    // Evidenced bodies ignore both arguments and return void.
+    void OnMotionJumpPre(AprMotion *, AprMotion *) {}
+    void OnMotionJumpAfter(AprMotion *, AprMotion *) {}
+};
+
 #endif

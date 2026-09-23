@@ -815,9 +815,99 @@
     },
     {
       "offset": 2353120,
-      "size": 5692,
+      "size": 992,
       "kind": "unrecovered_hex",
       "source": "unrecovered_0023e7e0.hex"
+    },
+    {
+      "offset": 2354112,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetPMovie__8CPAppear"
+    },
+    {
+      "offset": 2354120,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetParent__8CPAppear"
+    },
+    {
+      "offset": 2354128,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetYpcHead__8CPAppear"
+    },
+    {
+      "offset": 2354136,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetNodeData__8CPAppear"
+    },
+    {
+      "offset": 2354144,
+      "size": 12,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023ebe0.hex"
+    },
+    {
+      "offset": 2354156,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetLocalMatrix__8CPAppear"
+    },
+    {
+      "offset": 2354164,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetWorldMatrix__8CPAppear"
+    },
+    {
+      "offset": 2354172,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetSceneTargetLink__8CPAppear"
+    },
+    {
+      "offset": 2354180,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetActionLink__8CPAppear"
+    },
+    {
+      "offset": 2354188,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetFrame__8CPAppear"
+    },
+    {
+      "offset": 2354196,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.IsDisplay__8CPAppear"
+    },
+    {
+      "offset": 2354204,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.IsMotionEnd__8CPAppear"
+    },
+    {
+      "offset": 2354212,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.OnMotionJumpPre__8CPAppearP9AprMotionT1"
+    },
+    {
+      "offset": 2354220,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.OnMotionJumpAfter__8CPAppearP9AprMotionT1"
+    },
+    {
+      "offset": 2354228,
+      "size": 4584,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023ec34.hex"
     },
     {
       "offset": 2358812,

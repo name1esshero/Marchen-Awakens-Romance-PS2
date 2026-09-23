@@ -397,7 +397,14 @@ non-trivial constructor/destructor forces this ABI's hidden-reference-style
 argument passing — different from a real `&` reference in the source).
 Declaring the parameter as `void *` instead of the named class mangles to
 `Pv`; guessing `R` for a `G` case (or vice versa) also produces a different
-name. The comparison tool correctly reports the target section as absent
+name. A related shape is a bare `T<n>` suffix (e.g.
+`OnMotionJumpPre__8CPAppearP9AprMotionT1`): this is a back-reference
+compressing a parameter whose type exactly repeats an earlier parameter's
+type in the same list, so `(AprMotion *, AprMotion *)` mangles with the
+second occurrence as `T1` rather than repeating `P9AprMotion` — simply
+declaring the repeated parameter with the identical type reproduces it,
+confirmed on a standalone probe before use in the real candidate.
+The comparison tool correctly reports the target section as absent
 rather than mismatched, which can look like "the method wasn't emitted" when
 the real cause is a wrong parameter type or passing convention.
 Pathway: when a raw parameter-encoding suffix from

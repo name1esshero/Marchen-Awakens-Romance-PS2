@@ -229,3 +229,17 @@ int (CGameCntrl::*gGameCntrlIsGameOverAddress)() = &CGameCntrl::IsGameOver;
 void (CGameCntrl::*gGameCntrlActionCntrlAddress)() = &CGameCntrl::ActionCntrl;
 int (CGameCntrl::*gGameCntrlGetPauseMenuAddress)() = &CGameCntrl::GetPauseMenu;
 void (CGameCntrl::*gGameCntrlPauseMenuActionAddress)() = &CGameCntrl::PauseMenuAction;
+
+void *(CPAppear::*gPAppearGetPMovieAddress)() = &CPAppear::GetPMovie;
+void *(CPAppear::*gPAppearGetParentAddress)() = &CPAppear::GetParent;
+void *(CPAppear::*gPAppearGetYpcHeadAddress)() = &CPAppear::GetYpcHead;
+void *(CPAppear::*gPAppearGetNodeDataAddress)() = &CPAppear::GetNodeData;
+void *(CPAppear::*gPAppearGetLocalMatrixAddress)() = &CPAppear::GetLocalMatrix;
+void *(CPAppear::*gPAppearGetWorldMatrixAddress)() = &CPAppear::GetWorldMatrix;
+void *(CPAppear::*gPAppearGetSceneTargetLinkAddress)() = &CPAppear::GetSceneTargetLink;
+void *(CPAppear::*gPAppearGetActionLinkAddress)() = &CPAppear::GetActionLink;
+float (CPAppear::*gPAppearGetFrameAddress)() = &CPAppear::GetFrame;
+int (CPAppear::*gPAppearIsDisplayAddress)() = &CPAppear::IsDisplay;
+int (CPAppear::*gPAppearIsMotionEndAddress)() = &CPAppear::IsMotionEnd;
+void (CPAppear::*gPAppearOnMotionJumpPreAddress)(AprMotion *, AprMotion *) = &CPAppear::OnMotionJumpPre;
+void (CPAppear::*gPAppearOnMotionJumpAfterAddress)(AprMotion *, AprMotion *) = &CPAppear::OnMotionJumpAfter;

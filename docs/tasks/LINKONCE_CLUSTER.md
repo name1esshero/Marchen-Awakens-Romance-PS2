@@ -408,3 +408,29 @@ passes (full boot ELF and full EE-probe ELF both byte-identical).
 
 Not recovered this batch: the remaining 519 still-untouched trivial 8-byte
 sections, still excluding UI/menu/texture-adjacent classes.
+
+## CPAppear accessor batch — 2026-09-23
+
+Agent: Claude Sonnet 5; role: Contributor. Same deliberate scoping.
+
+All 13 remaining trivial 8-byte `CPAppear` sections (`0x33dbc0`–`0x33dc30`)
+were disassembled: nine field reads (four pointers, one boolean-shaped int,
+one float, plus two address-return "matrix/link" fields already seen
+elsewhere in this cluster), and two no-argument-effect stub bodies
+(`OnMotionJumpPre`/`OnMotionJumpAfter`).
+
+Those two stubs' mangled names
+(`OnMotionJumpPre__8CPAppearP9AprMotionT1`) use a compression shape not seen
+before in this cluster: `T1` is a back-reference to an *already-mangled*
+parameter type in the same list, used here because both parameters are the
+same type (`AprMotion *, AprMotion *`) — confirmed on a standalone probe
+before writing the real candidate; see the updated `SUCCESSES.md` entry.
+
+The unmodified EE GCC `2.96-ee-001003-1` `-O2` invocation matched all 13 new
+sections on the first attempt. Reconstruction now covers **227 sections /
+1,816 bytes across fourteen partial classes**; 3,443,388 bytes remain
+explicit raw debt. `make test verify-boot verify-source-only verify-ee`
+passes (full boot ELF and full EE-probe ELF both byte-identical).
+
+Not recovered this batch: the remaining 506 still-untouched trivial 8-byte
+sections, still excluding UI/menu/texture-adjacent classes.

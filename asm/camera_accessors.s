@@ -645,3 +645,42 @@ daddu $2, $0, $0
 .section .gnu.linkonce.t.PauseMenuAction__10CGameCntrl,"ax",@progbits
 jr $31
 nop
+.section .gnu.linkonce.t.GetPMovie__8CPAppear,"ax",@progbits
+jr $31
+lw $2, 0x90($4)
+.section .gnu.linkonce.t.GetParent__8CPAppear,"ax",@progbits
+jr $31
+lw $2, 0x9c($4)
+.section .gnu.linkonce.t.GetYpcHead__8CPAppear,"ax",@progbits
+jr $31
+lw $2, 0x94($4)
+.section .gnu.linkonce.t.GetNodeData__8CPAppear,"ax",@progbits
+jr $31
+lw $2, 0x98($4)
+.section .gnu.linkonce.t.GetLocalMatrix__8CPAppear,"ax",@progbits
+jr $31
+addiu $2, $4, 0x10
+.section .gnu.linkonce.t.GetWorldMatrix__8CPAppear,"ax",@progbits
+jr $31
+addiu $2, $4, 0x50
+.section .gnu.linkonce.t.GetSceneTargetLink__8CPAppear,"ax",@progbits
+jr $31
+addiu $2, $4, 0x26c
+.section .gnu.linkonce.t.GetActionLink__8CPAppear,"ax",@progbits
+jr $31
+addiu $2, $4, 0x260
+.section .gnu.linkonce.t.GetFrame__8CPAppear,"ax",@progbits
+jr $31
+lwc1 $f0, 0x25c($4)
+.section .gnu.linkonce.t.IsDisplay__8CPAppear,"ax",@progbits
+jr $31
+lw $2, 0x258($4)
+.section .gnu.linkonce.t.IsMotionEnd__8CPAppear,"ax",@progbits
+jr $31
+lw $2, 0x254($4)
+.section .gnu.linkonce.t.OnMotionJumpPre__8CPAppearP9AprMotionT1,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.OnMotionJumpAfter__8CPAppearP9AprMotionT1,"ax",@progbits
+jr $31
+nop
