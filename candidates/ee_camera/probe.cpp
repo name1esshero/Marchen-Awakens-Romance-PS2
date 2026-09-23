@@ -57,3 +57,17 @@ int (CGameCamera::*gGameCameraGetCamDistFuncNoAddress)() = &CGameCamera::GetCamD
 void *(CGameCamera::*gGameCameraGetSelectedCharaAddress)() = &CGameCamera::GetSelectedChara;
 float (CGameCamera::*gGameCameraGetViewAngleDirAddress)() const = &CGameCamera::GetViewAngleDir;
 void (CGameCamera::*gGameCameraSetCharaOfsYAddress)(float) = &CGameCamera::SetCharaOfsY;
+
+C3dObject *(C3dObject::*g3dGetParentAddress)() = &C3dObject::GetParent;
+C3dObject *(C3dObject::*g3dGetFirstChildAddress)() = &C3dObject::GetFirstChild;
+C3dObject *(C3dObject::*g3dGetNextChildAddress)(C3dObject *) = &C3dObject::GetNextChild;
+void (C3dObject::*g3dSetLinkBoneMatAddress)(objMatrix *) = &C3dObject::SetLinkBoneMat;
+objMatrix *(C3dObject::*g3dGetLinkBoneMatAddress)() = &C3dObject::GetLinkBoneMat;
+const void *(C3dObject::*g3dGetLocalMatAddress)(int) const = &C3dObject::_GetLocalMat;
+const void *(C3dObject::*g3dGetWorldMatAddress)(int) const = &C3dObject::_GetWorldMat;
+void *(C3dObject::*g3dDirectWorldMatrixAddress)() = &C3dObject::DirectWorldMatrix;
+const void *(C3dObject::*g3dDirectWorldMatrixConstAddress)() const = &C3dObject::DirectWorldMatrix;
+void *(C3dObject::*g3dGetRootMatrixAddress)() = &C3dObject::GetRootMatrix;
+const void *(C3dObject::*g3dGetRootMatrixConstAddress)() const = &C3dObject::GetRootMatrix;
+void *(C3dObject::*g3dGetLocalMatrixAddress)(int) = &C3dObject::GetLocalMatrix;
+int (C3dObject::*g3dDrawAddress)(CRender *) = &C3dObject::Draw;

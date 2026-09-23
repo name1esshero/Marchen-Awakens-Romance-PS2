@@ -47,3 +47,16 @@
 .gnu.linkonce.t.SetCharaOfsY__11CGameCameraf
 .gnu.linkonce.t.GetCamDistFuncNo__11CGameCamera
 .gnu.linkonce.t.GetViewAngleDir__C11CGameCamera
+.gnu.linkonce.t.GetParent__9C3dObject
+.gnu.linkonce.t.GetFirstChild__9C3dObject
+.gnu.linkonce.t.GetNextChild__9C3dObjectP9C3dObject
+.gnu.linkonce.t.SetLinkBoneMat__9C3dObjectP9objMatrix
+.gnu.linkonce.t.GetLinkBoneMat__9C3dObject
+.gnu.linkonce.t._GetLocalMat__C9C3dObjecti
+.gnu.linkonce.t._GetWorldMat__C9C3dObjecti
+.gnu.linkonce.t.DirectWorldMatrix__9C3dObject
+.gnu.linkonce.t.DirectWorldMatrix__C9C3dObject
+.gnu.linkonce.t.GetRootMatrix__9C3dObject
+.gnu.linkonce.t.GetRootMatrix__C9C3dObject
+.gnu.linkonce.t.GetLocalMatrix__9C3dObjecti
+.gnu.linkonce.t.Draw__9C3dObjectP7CRender

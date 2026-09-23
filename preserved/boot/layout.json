@@ -395,9 +395,111 @@
     },
     {
       "offset": 2344772,
-      "size": 1100432,
+      "size": 52,
       "kind": "unrecovered_hex",
       "source": "unrecovered_0023c744.hex"
+    },
+    {
+      "offset": 2344824,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetParent__9C3dObject"
+    },
+    {
+      "offset": 2344832,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetFirstChild__9C3dObject"
+    },
+    {
+      "offset": 2344840,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetNextChild__9C3dObjectP9C3dObject"
+    },
+    {
+      "offset": 2344848,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetLinkBoneMat__9C3dObjectP9objMatrix"
+    },
+    {
+      "offset": 2344856,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetLinkBoneMat__9C3dObject"
+    },
+    {
+      "offset": 2344864,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t._GetLocalMat__C9C3dObjecti"
+    },
+    {
+      "offset": 2344872,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t._GetWorldMat__C9C3dObjecti"
+    },
+    {
+      "offset": 2344880,
+      "size": 196,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023c7b0.hex"
+    },
+    {
+      "offset": 2345076,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.DirectWorldMatrix__9C3dObject"
+    },
+    {
+      "offset": 2345084,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.DirectWorldMatrix__C9C3dObject"
+    },
+    {
+      "offset": 2345092,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetRootMatrix__9C3dObject"
+    },
+    {
+      "offset": 2345100,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetRootMatrix__C9C3dObject"
+    },
+    {
+      "offset": 2345108,
+      "size": 80,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023c894.hex"
+    },
+    {
+      "offset": 2345188,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetLocalMatrix__9C3dObjecti"
+    },
+    {
+      "offset": 2345196,
+      "size": 412,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023c8ec.hex"
+    },
+    {
+      "offset": 2345608,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.Draw__9C3dObjectP7CRender"
+    },
+    {
+      "offset": 2345616,
+      "size": 1099588,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023ca90.hex"
     }
   ]
 }

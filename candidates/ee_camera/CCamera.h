@@ -163,4 +163,33 @@ public:
     void SetCharaOfsY(float value) { charaOfsY = value; }
 };
 
+class objMatrix;
+
+class C3dObject {
+public:
+    C3dObject *parent;
+    C3dObject *firstChild;
+    C3dObject *nextChild;
+    unsigned char unknown00c[0x10 - 0xc];
+    objMatrix *linkBoneMat;
+    unsigned char unknown014[0x20 - 0x14];
+    unsigned int localMat;
+    unsigned char unknown024[0x60 - 0x24];
+    unsigned int worldMat;
+
+    C3dObject *GetParent() { return parent; }
+    C3dObject *GetFirstChild() { return firstChild; }
+    C3dObject *GetNextChild(C3dObject *object) { return object->nextChild; }
+    void SetLinkBoneMat(objMatrix *value) { linkBoneMat = value; }
+    objMatrix *GetLinkBoneMat() { return linkBoneMat; }
+    const void *_GetLocalMat(int) const { return &localMat; }
+    const void *_GetWorldMat(int) const { return &worldMat; }
+    void *DirectWorldMatrix() { return &worldMat; }
+    const void *DirectWorldMatrix() const { return &worldMat; }
+    void *GetRootMatrix() { return &localMat; }
+    const void *GetRootMatrix() const { return &localMat; }
+    void *GetLocalMatrix(int) { return &localMat; }
+    int Draw(CRender *) { return 1; }
+};
+
 #endif

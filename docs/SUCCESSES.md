@@ -23,8 +23,8 @@ member-function address makes that requirement explicit without changing the
 method body or adding code-generation attributes.
 Pathway: keep address-taking in a separate harness and compare only the evidenced
 method sections; never present harness objects as recovered game data.
-Verification: EE GCC `2.96-ee-001003-1` with the same `-O2` for 49 accessors
-across six partial classes reproduces all 392 bytes; the full probe ELF also
+Verification: EE GCC `2.96-ee-001003-1` with the same `-O2` for 62 accessors
+across seven partial classes reproduces all 496 bytes; the full probe ELF also
 compares identically.
 Limits: trivial methods do not identify the original compiler or complete class.
 References: [compiler experiment](tasks/COMPILER_PROBE.md),

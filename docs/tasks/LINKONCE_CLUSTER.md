@@ -211,3 +211,18 @@ at `0x400` made all six sections match under unchanged `-O2`.
 The reconstruction now contains 49 sections / 392 bytes across six partial
 classes and 3,444,812 explicit raw bytes. `make test verify-boot
 verify-source-only verify-ee` passes.
+
+## C3dObject accessor batch — 2026-09-22
+
+Thirteen direct methods establish a partial scene-object layout: parent and
+first-child words at `0x0` and `0x4`, a next-child word read through the explicit
+`C3dObject*` argument at `0x8`, a `objMatrix*` field at `0x10`, and address
+returns at `0x20` and `0x60`. The exact mangled parameter spelling on
+`SetLinkBoneMat` independently requires `objMatrix*`; an initial untyped-pointer
+candidate emitted the wrong section name and was corrected before promotion.
+
+The address-return targets' full matrix sizes, tree ownership semantics, and
+meaning of the ignored integer parameters are not established. The unchanged EE
+GCC probe matches all thirteen sections. Reconstruction now covers 62 sections
+/ 496 bytes across seven partial classes; 3,444,708 bytes remain explicit raw
+debt. `make test verify-boot verify-source-only verify-ee` passes.

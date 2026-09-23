@@ -150,3 +150,42 @@ lw $2, 0x1a0($4)
 .section .gnu.linkonce.t.GetViewAngleDir__C11CGameCamera,"ax",@progbits
 jr $31
 lwc1 $f0, 0x404($4)
+.section .gnu.linkonce.t.GetParent__9C3dObject,"ax",@progbits
+jr $31
+lw $2, 0($4)
+.section .gnu.linkonce.t.GetFirstChild__9C3dObject,"ax",@progbits
+jr $31
+lw $2, 4($4)
+.section .gnu.linkonce.t.GetNextChild__9C3dObjectP9C3dObject,"ax",@progbits
+jr $31
+lw $2, 8($5)
+.section .gnu.linkonce.t.SetLinkBoneMat__9C3dObjectP9objMatrix,"ax",@progbits
+jr $31
+sw $5, 0x10($4)
+.section .gnu.linkonce.t.GetLinkBoneMat__9C3dObject,"ax",@progbits
+jr $31
+lw $2, 0x10($4)
+.section .gnu.linkonce.t._GetLocalMat__C9C3dObjecti,"ax",@progbits
+jr $31
+addiu $2, $4, 0x20
+.section .gnu.linkonce.t._GetWorldMat__C9C3dObjecti,"ax",@progbits
+jr $31
+addiu $2, $4, 0x60
+.section .gnu.linkonce.t.DirectWorldMatrix__9C3dObject,"ax",@progbits
+jr $31
+addiu $2, $4, 0x60
+.section .gnu.linkonce.t.DirectWorldMatrix__C9C3dObject,"ax",@progbits
+jr $31
+addiu $2, $4, 0x60
+.section .gnu.linkonce.t.GetRootMatrix__9C3dObject,"ax",@progbits
+jr $31
+addiu $2, $4, 0x20
+.section .gnu.linkonce.t.GetRootMatrix__C9C3dObject,"ax",@progbits
+jr $31
+addiu $2, $4, 0x20
+.section .gnu.linkonce.t.GetLocalMatrix__9C3dObjecti,"ax",@progbits
+jr $31
+addiu $2, $4, 0x20
+.section .gnu.linkonce.t.Draw__9C3dObjectP7CRender,"ax",@progbits
+jr $31
+addiu $2, $0, 1
