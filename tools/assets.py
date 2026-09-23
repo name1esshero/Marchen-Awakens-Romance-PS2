@@ -12,6 +12,7 @@ import struct
 import tempfile
 
 from bootstrap import inventory, read_at, record, SECTOR
+import messages
 
 CHUNK = 1024 * 1024
 
@@ -246,6 +247,10 @@ def build_node(root, output, relocate=False):
                 text_path = safe(root, p['text_source'])
                 source = Path(temp) / f'text-{i}'
                 source.write_bytes(text_path.read_bytes().decode('utf-8').encode('cp932'))
+            elif p.get('message_source'):
+                source = Path(temp) / f'messages-{i}'
+                document = json.loads(safe(root, p['message_source']).read_text(encoding='utf-8'))
+                source.write_bytes(messages.build(document))
             length = source.stat().st_size
             location = p['offset']
             moved = relocate and p.get('name') is not None
@@ -335,6 +340,8 @@ def prepare(root, report=Path('reports/assets_census.json')):
             if e.get('container'):
                 walk(source, name)
                 continue
+            if e.get('text_source') and e.get('message_source'):
+                raise ValueError('leaf cannot have both plain-text and message-table sources')
             extension = e['name'].rsplit('.', 1)[-1].lower()
             is_text = (extension in ('txt', 'cpp', 'h', 'cnf;1')
                        or e['name'].lower().endswith('.dir;1'))
@@ -347,9 +354,17 @@ def prepare(root, report=Path('reports/assets_census.json')):
                 if not editable.exists():
                     editable.write_bytes(text.encode('utf-8'))
                 e['text_source'] = editable.name
+            if source and e['name'].lower().endswith('_msg.dat') and not e.get('message_source'):
+                document = messages.parse(source.read_bytes())
+                editable = source.with_suffix('.messages.json')
+                if not editable.exists():
+                    editable.write_text(json.dumps(document, ensure_ascii=False, indent=2) + '\n',
+                                        encoding='utf-8')
+                e['message_source'] = editable.name
             rows.append(dict(name=name, size=e['size'],
                              source=str(source.relative_to(root)) if source else None,
                              text_source=str((folder / e['text_source']).relative_to(root)) if e.get('text_source') else None,
+                             message_source=str((folder / e['message_source']).relative_to(root)) if e.get('message_source') else None,
                              zero=e.get('zero', False)))
             census['leaves'] += 1
             census['extensions'][extension] = census['extensions'].get(extension, 0) + 1

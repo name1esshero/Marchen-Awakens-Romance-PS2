@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "evidence_date": "2026-09-22",
+  "reference_sha256": "cc059a3acf818dfbd0a782a9d20ee67e020d167866cd1c4dca77e6eb9224e3ec",
+  "scope": "Prepared asset workspace for the supplied image; this is a prioritized surface census, not an exhaustive claim that all text is found.",
+  "surfaces": [
+    {
+      "path": "disc!/_DATA.YFS;1!/data/common.pac!/_msg.dat",
+      "size": 20452,
+      "sha256": "0a9f5da3da31ce313523ab3f0591583669a9cb48146a3e4a91b04e3a5edd85cb",
+      "translation_relevance": "confirmed_ui_messages",
+      "evidence": "229 CP932 NUL-terminated entries include Japanese memory-card/save/load prompts.",
+      "confidence": "VERIFIED: text and table structure recovered for this member",
+      "extraction_status": "structured UTF-8 JSON emitted during prepare",
+      "editability_status": "record text fields editable; kind/key retained",
+      "rebuild_status": "untouched member byte-identical; changed member rebuilt and reparsed",
+      "relocation_status": "full ISO/YFS/PAC append relocation exercised",
+      "limits": "Line layout, runtime rendering, and all other .dat variants remain unverified."
+    },
+    {
+      "path": "disc!/_DATA.YFS;1!/data/menu/MenuBinary.pac!/CardList.txt",
+      "size": 13451,
+      "sha256": "c14b447175e55dd4929dc96ef7916acfc68d5ed152bee3c2849481f6c7add562",
+      "translation_relevance": "likely_player_facing_catalogue_and_voice_text",
+      "evidence": "CP932 tab-separated rows include Japanese character names, card titles, categories, and dialogue captions.",
+      "confidence": "OBSERVED: language-bearing catalogue content; runtime use not yet traced",
+      "extraction_status": "reversible CP932/UTF-8 companion",
+      "editability_status": "plain UTF-8 table; field constraints not yet specified",
+      "rebuild_status": "workspace text encoding path available; changed file not yet tested",
+      "relocation_status": "not yet tested for this member"
+    },
+    {
+      "path": "disc!/_DATA.YFS;1!/data/menu/MenuBinary.pac!/DataBase.txt",
+      "size": 3413,
+      "sha256": "b775dfa84567336cce820b5923f424ccea1f52e69e13e1075b45cb7f74f19f1f",
+      "translation_relevance": "likely_player_facing_menu_catalogue",
+      "evidence": "CP932 tab-separated rows include character, costume, voice, movie, sound, and map labels.",
+      "confidence": "OBSERVED: language-bearing menu/catalogue content; runtime use not yet traced",
+      "extraction_status": "reversible CP932/UTF-8 companion",
+      "editability_status": "plain UTF-8 table; field constraints not yet specified",
+      "rebuild_status": "workspace text encoding path available; changed file not yet tested",
+      "relocation_status": "not yet tested for this member"
+    },
+    {
+      "path": "disc!/_DATA.YFS;1!/data/menu/*.b",
+      "count": 724,
+      "translation_relevance": "likely_graphical_or_structured_menu_content",
+      "evidence": "Menu path/name identifies UI resources; a sampled 000_top_at.b begins with bytes BPE\\0.",
+      "confidence": "CANDIDATE: compression and text-bearing status of the full set are unresolved",
+      "extraction_status": "raw binary leaves",
+      "editability_status": "opaque",
+      "rebuild_status": "container reinsertion only",
+      "relocation_status": "individual resource references not audited"
+    },
+    {
+      "path": "disc!/_DATA.YFS;1!/data/script/*.SCD and MAR_SCP.SCI",
+      "count": 9,
+      "translation_relevance": "candidate_event_or_script_text",
+      "evidence": "Eight .SCD files and one .SCI are grouped under data/script; internal strings and opcodes have not been decoded.",
+      "confidence": "HYPOTHESIS: filenames and directory only",
+      "extraction_status": "raw binary leaves",
+      "editability_status": "opaque",
+      "rebuild_status": "container reinsertion only",
+      "relocation_status": "internal references not audited"
+    },
+    {
+      "path": "disc!/_DATA.YFS;1!/**/*.txc",
+      "count": 28940,
+      "translation_relevance": "candidate_graphical_text_and_ui_art",
+      "evidence": "The extension occurs in UI and character archives; sampled files begin RTX3. Images have not yet been decoded or visually classified, and the full set's signature has not been checked.",
+      "confidence": "HYPOTHESIS: translation relevance inferred from path and asset role",
+      "extraction_status": "raw binary leaves",
+      "editability_status": "opaque",
+      "rebuild_status": "container reinsertion only",
+      "relocation_status": "texture references/runtime behavior not audited"
+    }
+  ]
+}

@@ -42,10 +42,31 @@ Verification: `test_utf8_translation_grows_cp932_leaf_and_relocates_iso` confirm
 encoded payload bytes, updated file size/LBA and ISO volume length on a synthetic
 ISO. `python3 -m unittest tests.test_assets -v` passed all seven focused tests.
 Limits: this proves packaging mechanics only; it does not validate game-specific
-text layout, glyph coverage, or runtime acceptance. The current player-facing text
-candidate set is limited to extracted catalog tables.
+text layout, glyph coverage, or runtime acceptance. See the separate
+[`_msg.dat` task evidence](../tasks/MESSAGE_TABLE.md) for the structured Japanese
+dialogue-table pathway.
 References: [asset methodology](TASK_ASSET_WORKSPACE_METHODOLOGY.md),
 `tests/test_assets.py`, `Makefile`.
+
+## Strict structured export keeps a message table editable while recalculating offsets
+
+Symptom: a binary message table contains readable text but fixed byte offsets make
+direct replacement unsafe when translations change length.
+Mechanism: one observed `_msg.dat` has an 8-byte header, 229 fixed-size records,
+and an ordered CP932 NUL-terminated string area. Record offsets are relative to
+byte 8; string extents end at the next record's offset.
+Pathway: validate the complete table before producing JSON with stable record
+`kind`/`key` fields, then encode CP932 and recalculate the offset table on build.
+The workspace builder can then relocate the grown archive member.
+Verification: the original 20,452-byte table rebuilds exactly; all 30 recorded
+member/gap hashes in the containing PAC match on untouched rebuild; a temporary
+translation grew and relocated the real member and survived reparsing. Unit tests
+cover exact roundtrip, invalid records, encoding failure, growth, and PAC relocation.
+Scope: only `disc!/_DATA.YFS;1!/data/common.pac!/_msg.dat` in the pinned image.
+Limits: record field semantics, other `.dat` variants, game line layout and runtime
+acceptance are unresolved.
+References: [task evidence](../tasks/MESSAGE_TABLE.md), `tools/messages.py`,
+`tools/assets.py`, `tests/test_messages.py`, `tests/test_assets.py`.
 
 ## Section names survive removal of the symbol table
 

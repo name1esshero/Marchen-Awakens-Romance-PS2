@@ -4,6 +4,8 @@ Read [docs/STANDARDS.md](docs/STANDARDS.md) and
 [docs/AGENT_ENVIRONMENT.md](docs/AGENT_ENVIRONMENT.md) first.
 Then read [current status](docs/STATUS.md), [the work queue](docs/WORK_QUEUE.md),
 the relevant methodology, and successes/failures before editing.
+For broad asset extraction, modding, or localization work, also apply
+[the localization methodology](docs/LOCALIZATION_METHODOLOGY.md).
 
 Keep status, work queue, task evidence and reusable knowledge current as part of
 each meaningful task. Distinguish matching bytes, candidate semantics, authentic

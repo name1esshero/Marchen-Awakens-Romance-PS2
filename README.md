@@ -4,6 +4,9 @@ Read [the standards](docs/STANDARDS.md) and
 [agent environment](docs/AGENT_ENVIRONMENT.md) before working here.
 Read [current status](docs/STATUS.md), [the work queue](docs/WORK_QUEUE.md), and
 [the reconstruction methodology](docs/TASK_BOOT_RECONSTRUCTION_METHODOLOGY.md).
+For translation and modding work, follow
+[the localization methodology](docs/LOCALIZATION_METHODOLOGY.md) and see the
+[translation-surface census](reports/translation_surfaces.json).
 Initial evidence remains in [bootstrap notes](docs/tasks/BOOTSTRAP.md).
 
 The disc boots `SLPM_661.56`, an ELF32 little-endian MIPS executable
@@ -38,6 +41,7 @@ make prepare-assets  # indexes 34,486 leaves; adds reversible UTF-8 copies of te
 make build-disc      # rebuilds from extracted/assets only
 make compare-disc    # streams the complete rebuilt ISO against the pinned image
 make verify-disc     # rebuilds and compares in one gate
+make build-mod-disc  # builds build/assets-modded.iso with observed growth relocation
 ```
 
 `extracted/assets/catalog.json` maps readable archive paths to workspace files.
@@ -45,6 +49,11 @@ Raw leaves remain editable as bytes; recognized text leaves have `.utf8.txt`
 companions that are encoded back to the game's observed CP932 encoding. `--relocate`
 allows larger members to be appended and their observed container table offsets
 updated, but game runtime support for moved resources is not yet verified.
+`prepare-assets` also exports the observed 229-entry `_msg.dat` table as editable
+JSON. For a mod build, run the streaming comparator against the mod ISO (an
+intentional edit returns mismatch status 1) using
+`python3 tools/compare_disc.py build/assets-modded.iso`, then parse its filesystem with
+`python3 tools/bootstrap.py build/assets-modded.iso --reports /tmp/marps2-mod-check`.
 Formats inside PAC leaves such as YPC models, fonts, audio and script bytecode
 remain binary until their internal structures and conversion round trips are
 recovered. See [asset workflow](docs/TASK_ASSET_WORKSPACE_METHODOLOGY.md).

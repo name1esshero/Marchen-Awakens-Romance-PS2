@@ -13,7 +13,8 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   with 34,486 leaves. Six text/source leaves have reversible CP932 text companions; one
   nested `tex.pac` candidate with an unknown table field remains raw. See the
   tracked `reports/assets_census.json` and ignored
-  `extracted/assets/catalog.json`.
+  `extracted/assets/catalog.json`. Translation-bearing evidence is tracked in
+  `reports/translation_surfaces.json`.
 - Both the initial and fully prepared 4,587,749,376-byte disc rebuilds from
   workspace files compare byte-for-byte with the pinned ISO; the streaming
   comparator authenticates both source hashes and whole-image equality. This
@@ -24,6 +25,12 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   encoding, member growth, ISO directory relocation, and volume-length update.
   `make build-mod-disc` provides the corresponding experimental workspace build
   command. No retail menu/dialogue table has yet been edited and tested in-game.
+- One 20,452-byte `_msg.dat` message table now has a strict editable JSON
+  representation with 229 entries. Its untouched parse/build is byte-identical;
+  a longer test entry has been grown and relocated through a full mod ISO build.
+  The output inventories and reparses through YFS/PAC to recover the edited text.
+  Runtime acceptance remains untested. The append strategy grows the ISO by the
+  full 428,967,936-byte YFS for this 24-byte message increase.
 - The complete 3,445,204-byte boot ELF now rebuilds identically from repository
   text artifacts plus assembled code. `cmp` verifies every output byte.
 - An isolated build containing no ISO, extracted files, reports, existing build
@@ -60,9 +67,10 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   bytes remain preserved. See [the probe](tasks/VIEW_RECT_PROBE.md).
 - No runtime/emulator test or gameplay validation has been performed. Asset leaves
   such as YPC geometry, texture payloads, audio, fonts and scripts remain binary;
-  moved/grown assets have no runtime validation. The two catalog tables are
-  translation-bearing candidates; broader UI `.b` resources and `_msg.dat` remain
-  opaque. DMY files, module internals and DVP
+  moved/grown assets have no runtime validation. The two catalog tables and the
+  recovered `_msg.dat` table are translation-bearing surfaces; broader UI `.b`
+  resources remain opaque. The extracted message JSON is ignored workspace data;
+  a tracked original/translation catalog has not been created. DMY files, module internals and DVP
   overlay semantics remain open.
 - Independent retail-dump authentication remains unestablished.
 
@@ -72,7 +80,10 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
 Exact executed outcomes and investigation failures are recorded in
 [the compiler task](tasks/COMPILER_PROBE.md) and the commit footer.
 Asset gates are `make export-assets prepare-assets verify-disc`; the fully
-prepared unchanged full-disc comparison passed. See
+prepared unchanged full-disc comparison passed again after structured message
+source integration. The edited full-mod-image comparison and nested structural
+verification are recorded in [message-table evidence](tasks/MESSAGE_TABLE.md).
+See
 [asset methodology](TASK_ASSET_WORKSPACE_METHODOLOGY.md).
 Full-disc SHA-256 is checked by the streaming comparison gate.
 

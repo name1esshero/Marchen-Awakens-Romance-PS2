@@ -36,17 +36,26 @@ audit.
 
 ## Translation-bearing surfaces and mod rebuild loop
 
-The prepared workspace currently exposes six CP932/UTF-8 text companions. The
-two `MenuBinary.pac` tables, `CardList.txt` and `DataBase.txt`, contain Japanese
+The prepared workspace exposes six CP932/UTF-8 text companions. The two
+`MenuBinary.pac` tables, `CardList.txt` and `DataBase.txt`, contain Japanese
 catalog/menu text. `script_func.cpp` and `.h` are source/interface files, and
 `SYSTEM.CNF` plus `0FLIST.DIR;1` are system metadata; those four are not established
-as player-facing dialogue. This inventory is a starting point, not a claim that
-all game text has been found. UI `.b` resources, `_msg.dat`, and other binary
-formats remain candidates for separate format work.
+as player-facing dialogue. One `_msg.dat` file contains 229 CP932 UI/message
+strings and is exposed as an editable JSON document by `prepare`. Its observed
+layout is an 8-byte header followed by a count of 12-byte little-endian records
+(`kind`, `key`, offset relative to byte 8), then CP932 NUL-terminated strings.
+The strict parser and builder are `tools/messages.py`. The untouched
+20,452-byte source rebuilds exactly, and its real containing PAC rebuilds with
+all 30 original member/gap hashes intact. See [the message-table evidence](tasks/MESSAGE_TABLE.md).
 
-For a discovered text leaf, edit its `.utf8.txt` companion and retain control
-codes, delimiters, columns, and line structure until the format is understood.
-The builder encodes the edited text as CP932. Same-size edits can use
+This inventory is a starting point, not a claim that all game text has been
+found. UI `.b` resources and other binary formats remain candidates for separate
+format work.
+
+For a discovered plain-text leaf, edit its `.utf8.txt` companion. For the observed
+`_msg.dat` surface, edit each JSON entry's `text` while preserving its `kind` and
+`key`. Retain control codes, delimiters, columns, and line structure until the
+format is understood. The builder encodes edited text as CP932. Same-size edits can use
 `make verify-disc` and should compare exactly only if the workspace has no edits.
 For a growing edit, run `make build-mod-disc`; it enables the observed relocation
 path and writes `build/assets-modded.iso`. Then run
@@ -60,10 +69,19 @@ test the image in a PS2 runtime before claiming the translation works in game.
 The comparator's byte count is evidence of a change, not a semantic or gameplay
 validator.
 
-The synthetic regression `test_utf8_translation_grows_cp932_leaf_and_relocates_iso`
-exercises UTF-8 editing, CP932 encoding, ISO directory extent growth, and volume
-length update as one closed-loop packaging case. It does not prove any retail
-text format's line wrapping, glyph coverage, or runtime relocation behavior.
+The synthetic regressions exercise UTF-8 editing, CP932 encoding, ISO directory
+extent growth, and volume-length update, plus structured message editing with
+offset updates through a PAC. The real `_msg.dat` table has also been extracted,
+rebuilt byte-identically, and grown in a temporary copy of its containing PAC.
+These checks do not prove retail text line wrapping, glyph coverage, or runtime
+relocation behavior.
+The verified mod run also exposes a placement cost: a 24-byte string growth
+appends a complete new PAC member at its parent, then appends the complete
+428,967,936-byte YFS at the ISO end. The resulting 5.016 GB ISO inventories and
+reparses correctly, but the current method is space-heavy and has no runtime
+acceptance evidence. Exact-baseline comparison is therefore an expected mismatch
+for a changed build; verify the authenticated reference hash and inspect changed
+ranges rather than requiring equality.
 
 ## Procedure
 
@@ -72,11 +90,14 @@ text format's line wrapping, glyph coverage, or runtime relocation behavior.
    existing destination. The parser fails on unsupported directory features,
    malformed archive tables, overlapping/out-of-range extents, duplicate YFS
    ownership, or unsupported member flags.
-3. Run `make prepare-assets` to discover nested PAC tables and write the catalog
-   and text companions. Text conversion is accepted only when CP932 encode/decode
-   reproduces the exact input bytes.
-4. Edit a raw leaf or its UTF-8 companion. Preserve the table-defined names and
-   member order in the generated layout. Same-size edits can retain the original
+3. Run `make prepare-assets` to discover nested PAC tables, write the catalog and
+   text companions, and expose the observed `_msg.dat` as UTF-8 JSON. Existing
+   editable companions are retained on repeated prepare runs. Plain-text
+   conversion is accepted only when CP932 encode/decode reproduces the exact
+   input bytes.
+4. Edit a raw leaf, UTF-8 companion, or `text` field in a message JSON document.
+   Preserve table-defined names, record keys and member order. Same-size edits
+   can retain the original
    location. Changed sizes require `python3 tools/assets.py build extracted/assets
    build/mod.iso --relocate`; relocation is an experimental packaging pathway.
 5. Build consumes only workspace files and manifests, never `baserom.iso`.
@@ -96,13 +117,21 @@ text format's line wrapping, glyph coverage, or runtime relocation behavior.
 `assets.py export IMAGE WORKSPACE --hash-file HASH` is read-only on the image and
 creates extracted files plus per-container JSON layouts. The image is SHA-256
 checked before output. `prepare WORKSPACE [--report PATH]` expands observed nested
-PAC containers and generates catalog/text source files in the workspace. By default
+PAC containers, generates catalog/plain-text source files, and parses a leaf named
+`_msg.dat` into an adjacent `.messages.json` document when it meets the evidenced
+contract. By default
 it also updates the compact census at `reports/assets_census.json`; use `--report`
 to choose another evidence path or `/dev/null` to suppress that copy.
 `build WORKSPACE OUTPUT [--relocate]` reads only workspace files, verifies complete
 non-overlapping byte coverage and updates only table fields already located during
-export. Unknown bytes are preserved. The parser currently assumes little-endian
-YFS/PAC/AFS fields, 16-byte PAC and 2048-byte YFS/AFS allocation alignment, and
+export. Unknown bytes are preserved.
+`messages.py extract INPUT OUTPUT.json` and `messages.py build INPUT.json OUTPUT`
+operate on the observed 8-byte-header/12-byte-record message-table shape. They
+reject invalid ranges, embedded NULs, invalid CP932 and unencodable translations;
+they do not claim support for other `.dat` variants.
+The asset workspace calls this parser only for `_msg.dat` leaves.
+The container parser assumes little-endian YFS/PAC/AFS fields, 16-byte PAC and
+2048-byte YFS/AFS allocation alignment, and
 the observed single-volume ISO directory form. These assumptions need further
 cross-entry/runtime evidence before treating arbitrary images as supported.
 
@@ -114,10 +143,11 @@ provenance. It reports differing byte count, not a semantic diff.
 ## Verification and remaining work
 
 Focused tests cover nested round trips, malformed tables, unsafe source paths,
-UTF-8-to-CP932 translation growth through ISO relocation, nested offset updates,
-comparator chunk boundaries, truncation, and pinned-reference rejection. Final
-verification for this workflow is
-`make test`, unchanged full-disc rebuild plus `compare_disc.py`, and changed-member
-round trips through each affected table. Runtime testing on the target/emulator,
-format-specific editable conversions, and full understanding of DMY extents are
-open tasks.
+plain UTF-8-to-CP932 translation growth through ISO relocation, structured message
+growth and PAC relocation, comparator chunk boundaries, truncation, and
+pinned-reference rejection. Final verification for the workspace is `make test`
+and unchanged full-disc `make verify-disc`. The changed real `_msg.dat` member has
+also been built through the full ISO, authenticated against the pinned baseline,
+and reparsed through ISO/YFS/PAC; see [message-table evidence](../tasks/MESSAGE_TABLE.md).
+Runtime testing on target/emulator, the remaining format-specific conversions,
+and full understanding of DMY extents are open.

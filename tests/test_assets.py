@@ -1,4 +1,5 @@
 import io
+from contextlib import redirect_stdout
 import json
 from pathlib import Path
 import struct
@@ -9,6 +10,7 @@ import unittest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import assets
+import messages
 from test_bootstrap import iso as make_iso
 
 
@@ -142,6 +144,42 @@ class AssetsTests(unittest.TestCase):
                 rebuilt.seek(item['lba'] * 2048)
                 self.assertEqual(rebuilt.read(item['size']), translated.decode('utf-8').encode('cp932'))
                 self.assertEqual(inventory['volume_bytes'], out.stat().st_size)
+
+    def test_message_translation_workspace_roundtrip_and_pac_relocation(self):
+        document = dict(format='observed-msg-v1', header_hex='0100000078563412',
+                        entries=[dict(kind=2, key=7, text='保存しますか？'),
+                                 dict(kind=4, key=9, text='いいえ')])
+        original = pac([messages.build(document)])
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d) / 'source'
+            self.export(original, root)
+            layout_path = root / 'layout.json'
+            layout = json.loads(layout_path.read_text())
+            member = next(p for p in layout['pieces'] if p.get('name') == 'test.bin')
+            member['name'] = 'menu_msg.dat'
+            assets.save_json(layout_path, layout)
+
+            with redirect_stdout(io.StringIO()):
+                assets.prepare(root, report=None)
+            editable = root / '00000.messages.json'
+            self.assertTrue(editable.exists())
+            untouched = Path(d) / 'untouched.pac'
+            assets.build(root, untouched)
+            self.assertEqual(untouched.read_bytes(), original)
+
+            translated = json.loads(editable.read_text(encoding='utf-8'))
+            translated['entries'][0]['text'] = 'Would you like to save? 保存しますか？'
+            editable.write_text(json.dumps(translated, ensure_ascii=False), encoding='utf-8')
+            modded = Path(d) / 'translated.pac'
+            assets.build(root, modded, relocate=True)
+
+            with modded.open('rb') as rebuilt:
+                entry = assets.archive(rebuilt, 0, modded.stat().st_size)[2][0]
+                self.assertGreater(entry['offset'], 0)
+                rebuilt.seek(entry['offset'])
+                result = messages.parse(rebuilt.read(entry['size']))
+            self.assertEqual(result['entries'][0]['text'], translated['entries'][0]['text'])
+            self.assertEqual(result['entries'][1]['key'], 9)
 
 
 if __name__ == '__main__':
