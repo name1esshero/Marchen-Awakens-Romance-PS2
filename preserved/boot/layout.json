@@ -317,9 +317,69 @@
     },
     {
       "offset": 2344184,
-      "size": 572,
+      "size": 88,
       "kind": "unrecovered_hex",
       "source": "unrecovered_0023c4f8.hex"
+    },
+    {
+      "offset": 2344272,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetViewScaleX__11CGameCamera"
+    },
+    {
+      "offset": 2344280,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetViewScaleY__11CGameCamera"
+    },
+    {
+      "offset": 2344288,
+      "size": 172,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023c560.hex"
+    },
+    {
+      "offset": 2344460,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetSelectedChara__11CGameCamera"
+    },
+    {
+      "offset": 2344468,
+      "size": 48,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023c614.hex"
+    },
+    {
+      "offset": 2344516,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetCharaOfsY__11CGameCameraf"
+    },
+    {
+      "offset": 2344524,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetCamDistFuncNo__11CGameCamera"
+    },
+    {
+      "offset": 2344532,
+      "size": 40,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023c654.hex"
+    },
+    {
+      "offset": 2344572,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetViewAngleDir__C11CGameCamera"
+    },
+    {
+      "offset": 2344580,
+      "size": 176,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023c684.hex"
     },
     {
       "offset": 2344756,

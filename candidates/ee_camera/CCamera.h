@@ -142,4 +142,25 @@ public:
     int GetRegState() { return regState; }
 };
 
+class CGameCamera {
+public:
+    unsigned char unknown000[0x17c];
+    float viewScaleX;
+    float viewScaleY;
+    unsigned char unknown184[0x1a0 - 0x184];
+    int camDistFuncNo;
+    unsigned char unknown1a4[0x3fc - 0x1a4];
+    void *selectedChara;
+    unsigned char unknown400[0x4];
+    float viewAngleDir;
+    float charaOfsY;
+
+    float GetViewScaleX() { return viewScaleX; }
+    float GetViewScaleY() { return viewScaleY; }
+    int GetCamDistFuncNo() { return camDistFuncNo; }
+    void *GetSelectedChara() { return selectedChara; }
+    float GetViewAngleDir() const { return viewAngleDir; }
+    void SetCharaOfsY(float value) { charaOfsY = value; }
+};
+
 #endif

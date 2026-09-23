@@ -198,3 +198,16 @@ GCC `2.96-ee-001003-1` `-O2` invocation matches all fourteen sections. The
 assembly and probe reconstruction now cover 43 sections / 344 bytes across five
 partial classes, leaving 3,444,860 explicitly raw bytes. `make test
 verify-boot verify-source-only verify-ee` passes.
+
+## CGameCamera accessor batch — 2026-09-22
+
+Six direct methods add a separate partial `CGameCamera` layout: float loads at
+`0x17c`, `0x180`, and `0x404`; integer/pointer-word loads at `0x1a0` and
+`0x3fc`; and a float store at `0x408`. Although two offsets match `CCamera`
+accessors, no inheritance relationship is claimed. The EE probe first exposed
+an incorrect contiguous-field hypothesis; preserving the observed four-byte gap
+at `0x400` made all six sections match under unchanged `-O2`.
+
+The reconstruction now contains 49 sections / 392 bytes across six partial
+classes and 3,444,812 explicit raw bytes. `make test verify-boot
+verify-source-only verify-ee` passes.

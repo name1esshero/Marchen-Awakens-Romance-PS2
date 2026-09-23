@@ -132,3 +132,21 @@ lw $2, 0x740($4)
 .section .gnu.linkonce.t.IsNearClipMode__8CRender2,"ax",@progbits
 jr $31
 lw $2, 0x534($4)
+.section .gnu.linkonce.t.GetViewScaleX__11CGameCamera,"ax",@progbits
+jr $31
+lwc1 $f0, 0x17c($4)
+.section .gnu.linkonce.t.GetViewScaleY__11CGameCamera,"ax",@progbits
+jr $31
+lwc1 $f0, 0x180($4)
+.section .gnu.linkonce.t.GetSelectedChara__11CGameCamera,"ax",@progbits
+jr $31
+lw $2, 0x3fc($4)
+.section .gnu.linkonce.t.SetCharaOfsY__11CGameCameraf,"ax",@progbits
+jr $31
+swc1 $f12, 0x408($4)
+.section .gnu.linkonce.t.GetCamDistFuncNo__11CGameCamera,"ax",@progbits
+jr $31
+lw $2, 0x1a0($4)
+.section .gnu.linkonce.t.GetViewAngleDir__C11CGameCamera,"ax",@progbits
+jr $31
+lwc1 $f0, 0x404($4)

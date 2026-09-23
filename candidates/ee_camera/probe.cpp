@@ -50,3 +50,10 @@ void (CRender2::*gClearFrameBufferAddress)(int) = &CRender2::ClearFrameBuffer;
 int (CRender2::*gGetWipeCntAddress)() = &CRender2::GetWipeCnt;
 void (CRender2::*gSetWipeCntAddress)(int) = &CRender2::SetWipeCnt;
 int (CRender2::*gGetRegStateAddress)() = &CRender2::GetRegState;
+
+float (CGameCamera::*gGameCameraGetViewScaleXAddress)() = &CGameCamera::GetViewScaleX;
+float (CGameCamera::*gGameCameraGetViewScaleYAddress)() = &CGameCamera::GetViewScaleY;
+int (CGameCamera::*gGameCameraGetCamDistFuncNoAddress)() = &CGameCamera::GetCamDistFuncNo;
+void *(CGameCamera::*gGameCameraGetSelectedCharaAddress)() = &CGameCamera::GetSelectedChara;
+float (CGameCamera::*gGameCameraGetViewAngleDirAddress)() const = &CGameCamera::GetViewAngleDir;
+void (CGameCamera::*gGameCameraSetCharaOfsYAddress)(float) = &CGameCamera::SetCharaOfsY;

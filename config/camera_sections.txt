@@ -41,3 +41,9 @@
 .gnu.linkonce.t.GetNearClipMode__8CRender2
 .gnu.linkonce.t.GetRegState__8CRender2
 .gnu.linkonce.t.IsNearClipMode__8CRender2
+.gnu.linkonce.t.GetViewScaleX__11CGameCamera
+.gnu.linkonce.t.GetViewScaleY__11CGameCamera
+.gnu.linkonce.t.GetSelectedChara__11CGameCamera
+.gnu.linkonce.t.SetCharaOfsY__11CGameCameraf
+.gnu.linkonce.t.GetCamDistFuncNo__11CGameCamera
+.gnu.linkonce.t.GetViewAngleDir__C11CGameCamera
