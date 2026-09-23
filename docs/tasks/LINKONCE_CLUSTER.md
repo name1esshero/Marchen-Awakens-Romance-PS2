@@ -472,3 +472,47 @@ passes (full boot ELF and full EE-probe ELF both byte-identical).
 
 Not recovered this batch: the remaining 494 still-untouched trivial 8-byte
 sections, still excluding UI/menu/texture-adjacent classes.
+
+## ActionObject/CCol/CMotionC/ArmEffectBase batch — 2026-09-23
+
+Agent: Claude Sonnet 5; role: Contributor. Same deliberate scoping: gameplay
+logic only (collision, motion linkage, generic action/effect base classes).
+Batched four classes together in one pass to cover more ground per
+verification cycle, since the remaining candidate list spans many small
+classes rather than a few large ones.
+
+All 35 remaining trivial 8-byte sections across `ActionObject` (10), `CCol`
+(9), `CMotionC` (8) and `ArmEffectBase` (8) were disassembled and confirmed
+trivial. Two notable shapes:
+
+- **`CCol::GetPos`-style "return this" accessor**: `ArmEffectBase::GetPos`
+  is `jr $ra` / `move $2, $4` — it returns the object's own address
+  unchanged (`return this;`), not a field.
+- **The `T<n>` back-reference index is the 1-based position of the repeated
+  parameter**, confirmed precisely this batch (refining the looser
+  "repeats an earlier parameter" note from the `CPAppear` batch).
+  `CCol::CallBack__4CColP4CColiiP14ColCheckResultT4` has five parameters;
+  two standalone probes distinguished the hypotheses: `(CCol*, int, int,
+  ColCheckResult*, CCol*)` (repeating parameter 1) mangled as `...T1`, while
+  `(CCol*, int, int, ColCheckResult*, ColCheckResult*)` (repeating parameter
+  4) mangled as `...T4` — an exact match. So `T<n>` always means "same type
+  as parameter n," 1-based, counting every parameter (primitives included)
+  in declaration order.
+
+A hand-written (not generator-script-produced) first draft of the `CCol`
+struct had fields out of ascending-offset order, which would have silently
+produced wrong `lw`/`addiu` offsets in the compiled candidate. Caught before
+the EE GCC compile step by re-deriving the struct with the same small
+offset-sorting generator used for every other class in this task, rather
+than trusting a manual field list — worth remembering as a process note:
+prefer the generator for any struct beyond two or three fields, even under
+time pressure.
+
+The unmodified EE GCC `2.96-ee-001003-1` `-O2` invocation matched all 35
+sections after the corrected `CCol` layout. Reconstruction now covers **274
+sections / 2,192 bytes across nineteen partial classes**; 3,443,012 bytes
+remain explicit raw debt. `make test verify-boot verify-source-only
+verify-ee` passes (full boot ELF and full EE-probe ELF both byte-identical).
+
+Not recovered this batch: the remaining 459 still-untouched trivial 8-byte
+sections, still excluding UI/menu/texture/model/movie-adjacent classes.

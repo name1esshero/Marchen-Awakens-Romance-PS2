@@ -725,9 +725,129 @@
     },
     {
       "offset": 2349532,
-      "size": 3476,
+      "size": 88,
       "kind": "unrecovered_hex",
       "source": "unrecovered_0023d9dc.hex"
+    },
+    {
+      "offset": 2349620,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetMotSts__8CMotionCP10CMotionSts"
+    },
+    {
+      "offset": 2349628,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetActTbl__8CMotionCP7CActTbl"
+    },
+    {
+      "offset": 2349636,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetParent__8CMotionCP8CMotionC"
+    },
+    {
+      "offset": 2349644,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetChild__8CMotionCP8CMotionC"
+    },
+    {
+      "offset": 2349652,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetSubChild__8CMotionCP8CMotionC"
+    },
+    {
+      "offset": 2349660,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetParentAddFr__8CMotionCP8CMotionC"
+    },
+    {
+      "offset": 2349668,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetChildAddFr__8CMotionCP8CMotionC"
+    },
+    {
+      "offset": 2349676,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetSubChildAddFr__8CMotionCP8CMotionC"
+    },
+    {
+      "offset": 2349684,
+      "size": 792,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023da74.hex"
+    },
+    {
+      "offset": 2350476,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.PreAction__12ActionObject"
+    },
+    {
+      "offset": 2350484,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.Action__12ActionObject"
+    },
+    {
+      "offset": 2350492,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.ActionM__12ActionObject"
+    },
+    {
+      "offset": 2350500,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.ReAction__12ActionObject"
+    },
+    {
+      "offset": 2350508,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetDispPosE__12ActionObject"
+    },
+    {
+      "offset": 2350516,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetDispPosZ__12ActionObject"
+    },
+    {
+      "offset": 2350524,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.Display__12ActionObject"
+    },
+    {
+      "offset": 2350532,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.Reset__12ActionObject"
+    },
+    {
+      "offset": 2350540,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetMaterialCol__12ActionObjectf"
+    },
+    {
+      "offset": 2350548,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetHitSE__12ActionObject"
+    },
+    {
+      "offset": 2350556,
+      "size": 2452,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023dddc.hex"
     },
     {
       "offset": 2353008,
@@ -1739,9 +1859,135 @@
     },
     {
       "offset": 2363496,
-      "size": 1081708,
+      "size": 3844,
       "kind": "unrecovered_hex",
       "source": "unrecovered_00241068.hex"
+    },
+    {
+      "offset": 2367340,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetOwner__4CCol"
+    },
+    {
+      "offset": 2367348,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetKind__4CCol"
+    },
+    {
+      "offset": 2367356,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetColNum__4CCol"
+    },
+    {
+      "offset": 2367364,
+      "size": 20,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_00241f84.hex"
+    },
+    {
+      "offset": 2367384,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetBoundingSphere__4CCol"
+    },
+    {
+      "offset": 2367392,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetUpper__4CCol"
+    },
+    {
+      "offset": 2367400,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetLower__4CCol"
+    },
+    {
+      "offset": 2367408,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetMin__4CCol"
+    },
+    {
+      "offset": 2367416,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetMax__4CCol"
+    },
+    {
+      "offset": 2367424,
+      "size": 164,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_00241fc0.hex"
+    },
+    {
+      "offset": 2367588,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.CallBack__4CColP4CColiiP14ColCheckResultT4"
+    },
+    {
+      "offset": 2367596,
+      "size": 8360,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0024206c.hex"
+    },
+    {
+      "offset": 2375956,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.Draw2D__13ArmEffectBase"
+    },
+    {
+      "offset": 2375964,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.HitAfter__13ArmEffectBase"
+    },
+    {
+      "offset": 2375972,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetChara__13ArmEffectBase"
+    },
+    {
+      "offset": 2375980,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetType__13ArmEffectBase"
+    },
+    {
+      "offset": 2375988,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.ActionSameType__13ArmEffectBase"
+    },
+    {
+      "offset": 2375996,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetType__13ArmEffectBase13ArmEffectType"
+    },
+    {
+      "offset": 2376004,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetPos__13ArmEffectBase"
+    },
+    {
+      "offset": 2376012,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetArmParam__13ArmEffectBase"
+    },
+    {
+      "offset": 2376020,
+      "size": 1069184,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_00244154.hex"
     }
   ]
 }

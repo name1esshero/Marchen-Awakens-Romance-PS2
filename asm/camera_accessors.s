@@ -720,3 +720,108 @@ nop
 .section .gnu.linkonce.t.ReturnArmObj__13CCharaDataSts,"ax",@progbits
 jr $31
 nop
+.section .gnu.linkonce.t.SetMotSts__8CMotionCP10CMotionSts,"ax",@progbits
+jr $31
+sw $5, 0xf4($4)
+.section .gnu.linkonce.t.SetActTbl__8CMotionCP7CActTbl,"ax",@progbits
+jr $31
+sw $5, 0xf8($4)
+.section .gnu.linkonce.t.SetParent__8CMotionCP8CMotionC,"ax",@progbits
+jr $31
+sw $5, 0x100($4)
+.section .gnu.linkonce.t.SetChild__8CMotionCP8CMotionC,"ax",@progbits
+jr $31
+sw $5, 0x104($4)
+.section .gnu.linkonce.t.SetSubChild__8CMotionCP8CMotionC,"ax",@progbits
+jr $31
+sw $5, 0x108($4)
+.section .gnu.linkonce.t.SetParentAddFr__8CMotionCP8CMotionC,"ax",@progbits
+jr $31
+sw $5, 0x10c($4)
+.section .gnu.linkonce.t.SetChildAddFr__8CMotionCP8CMotionC,"ax",@progbits
+jr $31
+sw $5, 0x110($4)
+.section .gnu.linkonce.t.SetSubChildAddFr__8CMotionCP8CMotionC,"ax",@progbits
+jr $31
+sw $5, 0x114($4)
+.section .gnu.linkonce.t.PreAction__12ActionObject,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.Action__12ActionObject,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.ActionM__12ActionObject,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.ReAction__12ActionObject,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.GetDispPosE__12ActionObject,"ax",@progbits
+jr $31
+lw $2, 0x10($4)
+.section .gnu.linkonce.t.GetDispPosZ__12ActionObject,"ax",@progbits
+jr $31
+lwc1 $f0, 0x14($4)
+.section .gnu.linkonce.t.Display__12ActionObject,"ax",@progbits
+jr $31
+daddu $2, $0, $0
+.section .gnu.linkonce.t.Reset__12ActionObject,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.SetMaterialCol__12ActionObjectf,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.GetHitSE__12ActionObject,"ax",@progbits
+jr $31
+addiu $2, $0, -0x1
+.section .gnu.linkonce.t.GetOwner__4CCol,"ax",@progbits
+jr $31
+lw $2, 0x24($4)
+.section .gnu.linkonce.t.GetKind__4CCol,"ax",@progbits
+jr $31
+lw $2, 0x50($4)
+.section .gnu.linkonce.t.GetColNum__4CCol,"ax",@progbits
+jr $31
+lw $2, 0xc($4)
+.section .gnu.linkonce.t.GetBoundingSphere__4CCol,"ax",@progbits
+jr $31
+addiu $2, $4, 0x14
+.section .gnu.linkonce.t.GetUpper__4CCol,"ax",@progbits
+jr $31
+lwc1 $f0, 0x44($4)
+.section .gnu.linkonce.t.GetLower__4CCol,"ax",@progbits
+jr $31
+lwc1 $f0, 0x34($4)
+.section .gnu.linkonce.t.GetMin__4CCol,"ax",@progbits
+jr $31
+addiu $2, $4, 0x30
+.section .gnu.linkonce.t.GetMax__4CCol,"ax",@progbits
+jr $31
+addiu $2, $4, 0x40
+.section .gnu.linkonce.t.CallBack__4CColP4CColiiP14ColCheckResultT4,"ax",@progbits
+jr $31
+daddu $2, $0, $0
+.section .gnu.linkonce.t.Draw2D__13ArmEffectBase,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.HitAfter__13ArmEffectBase,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.GetChara__13ArmEffectBase,"ax",@progbits
+jr $31
+lw $2, 0x7c($4)
+.section .gnu.linkonce.t.GetType__13ArmEffectBase,"ax",@progbits
+jr $31
+lw $2, 0x88($4)
+.section .gnu.linkonce.t.ActionSameType__13ArmEffectBase,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.SetType__13ArmEffectBase13ArmEffectType,"ax",@progbits
+jr $31
+sw $5, 0x88($4)
+.section .gnu.linkonce.t.GetPos__13ArmEffectBase,"ax",@progbits
+jr $31
+daddu $2, $4, $0
+.section .gnu.linkonce.t.GetArmParam__13ArmEffectBase,"ax",@progbits
+jr $31
+lw $2, 0x84($4)

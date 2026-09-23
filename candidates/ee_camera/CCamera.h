@@ -616,4 +616,110 @@ public:
     void ReturnArmObj() {}
 };
 
+// Named only to reproduce mangled parameter types for CMotionC's setters;
+// no members are evidenced for either.
+class CMotionSts;
+class CActTbl;
+
+class CMotionC {
+public:
+    unsigned char unknown000[0xf4];
+    CMotionSts *motSts;
+    CActTbl *actTbl;
+    unsigned char unknown0fc[0x4];
+    CMotionC *parent;
+    CMotionC *child;
+    CMotionC *subChild;
+    CMotionC *parentAddFr;
+    CMotionC *childAddFr;
+    CMotionC *subChildAddFr;
+
+    void SetMotSts(CMotionSts *value) { motSts = value; }
+    void SetActTbl(CActTbl *value) { actTbl = value; }
+    void SetParent(CMotionC *value) { parent = value; }
+    void SetChild(CMotionC *value) { child = value; }
+    void SetSubChild(CMotionC *value) { subChild = value; }
+    void SetParentAddFr(CMotionC *value) { parentAddFr = value; }
+    void SetChildAddFr(CMotionC *value) { childAddFr = value; }
+    void SetSubChildAddFr(CMotionC *value) { subChildAddFr = value; }
+};
+
+class ActionObject {
+public:
+    unsigned char unknown000[0x10];
+    int dispPosE;
+    float dispPosZ;
+
+    // Evidenced bodies ignore all arguments; most either do nothing or
+    // return a fixed value (see the same note on CCharaBase's stub methods).
+    void PreAction() {}
+    void Action() {}
+    void ActionM() {}
+    void ReAction() {}
+    int GetDispPosE() { return dispPosE; }
+    float GetDispPosZ() { return dispPosZ; }
+    int Display() { return 0; }
+    void Reset() {}
+    void SetMaterialCol(float) {}
+    int GetHitSE() { return -1; }
+};
+
+// Named only to reproduce CCol::CallBack's mangled parameter; no members
+// are evidenced.
+class ColCheckResult;
+
+class CCol {
+public:
+    unsigned char unknown000[0xc];
+    int colNum;
+    unsigned char unknown010[0x4];
+    unsigned int boundingSphere;
+    unsigned char unknown018[0xc];
+    void *owner;
+    unsigned char unknown028[0x8];
+    unsigned int min;
+    float lower;
+    unsigned char unknown038[0x8];
+    unsigned int max;
+    float upper;
+    unsigned char unknown048[0x8];
+    int kind;
+
+    void *GetOwner() { return owner; }
+    int GetKind() { return kind; }
+    int GetColNum() { return colNum; }
+    void *GetBoundingSphere() { return &boundingSphere; }
+    float GetUpper() { return upper; }
+    float GetLower() { return lower; }
+    void *GetMin() { return &min; }
+    void *GetMax() { return &max; }
+    // Evidenced body ignores all five arguments and returns a fixed zero.
+    int CallBack(CCol *, int, int, ColCheckResult *, ColCheckResult *) { return 0; }
+};
+
+// Named only to reproduce ArmEffectBase::SetType's mangled enum parameter;
+// no enumerators beyond the placeholder are evidenced.
+enum ArmEffectType { ARM_EFFECT_TYPE_UNKNOWN };
+
+class ArmEffectBase {
+public:
+    unsigned char unknown000[0x7c];
+    void *chara;
+    unsigned char unknown080[0x4];
+    void *armParam;
+    ArmEffectType type;
+
+    // Evidenced bodies ignore all arguments and return void (see the same
+    // note on CCharaBase's stub methods).
+    void Draw2D() {}
+    void HitAfter() {}
+    void *GetChara() { return chara; }
+    ArmEffectType GetType() { return type; }
+    void ActionSameType() {}
+    void SetType(ArmEffectType value) { type = value; }
+    // Evidenced body returns the object's own address unchanged.
+    void *GetPos() { return this; }
+    void *GetArmParam() { return armParam; }
+};
+
 #endif

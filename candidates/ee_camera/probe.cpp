@@ -256,3 +256,42 @@ void *(CCharaDataSts::*gCDSGetPrgStsAddress)() = &CCharaDataSts::GetPrgSts;
 void (CCharaDataSts::*gCDSSetNowMotNoAddress)(int) = &CCharaDataSts::SetNowMotNo;
 void (CCharaDataSts::*gCDSPreNutralJumpAddress)() = &CCharaDataSts::PreNutralJump;
 void (CCharaDataSts::*gCDSReturnArmObjAddress)() = &CCharaDataSts::ReturnArmObj;
+
+void (CMotionC::*gMotionCSetMotStsAddress)(CMotionSts *) = &CMotionC::SetMotSts;
+void (CMotionC::*gMotionCSetActTblAddress)(CActTbl *) = &CMotionC::SetActTbl;
+void (CMotionC::*gMotionCSetParentAddress)(CMotionC *) = &CMotionC::SetParent;
+void (CMotionC::*gMotionCSetChildAddress)(CMotionC *) = &CMotionC::SetChild;
+void (CMotionC::*gMotionCSetSubChildAddress)(CMotionC *) = &CMotionC::SetSubChild;
+void (CMotionC::*gMotionCSetParentAddFrAddress)(CMotionC *) = &CMotionC::SetParentAddFr;
+void (CMotionC::*gMotionCSetChildAddFrAddress)(CMotionC *) = &CMotionC::SetChildAddFr;
+void (CMotionC::*gMotionCSetSubChildAddFrAddress)(CMotionC *) = &CMotionC::SetSubChildAddFr;
+
+void (ActionObject::*gAOPreActionAddress)() = &ActionObject::PreAction;
+void (ActionObject::*gAOActionAddress)() = &ActionObject::Action;
+void (ActionObject::*gAOActionMAddress)() = &ActionObject::ActionM;
+void (ActionObject::*gAOReActionAddress)() = &ActionObject::ReAction;
+int (ActionObject::*gAOGetDispPosEAddress)() = &ActionObject::GetDispPosE;
+float (ActionObject::*gAOGetDispPosZAddress)() = &ActionObject::GetDispPosZ;
+int (ActionObject::*gAODisplayAddress)() = &ActionObject::Display;
+void (ActionObject::*gAOResetAddress)() = &ActionObject::Reset;
+void (ActionObject::*gAOSetMaterialColAddress)(float) = &ActionObject::SetMaterialCol;
+int (ActionObject::*gAOGetHitSEAddress)() = &ActionObject::GetHitSE;
+
+void *(CCol::*gCColGetOwnerAddress)() = &CCol::GetOwner;
+int (CCol::*gCColGetKindAddress)() = &CCol::GetKind;
+int (CCol::*gCColGetColNumAddress)() = &CCol::GetColNum;
+void *(CCol::*gCColGetBoundingSphereAddress)() = &CCol::GetBoundingSphere;
+float (CCol::*gCColGetUpperAddress)() = &CCol::GetUpper;
+float (CCol::*gCColGetLowerAddress)() = &CCol::GetLower;
+void *(CCol::*gCColGetMinAddress)() = &CCol::GetMin;
+void *(CCol::*gCColGetMaxAddress)() = &CCol::GetMax;
+int (CCol::*gCColCallBackAddress)(CCol *, int, int, ColCheckResult *, ColCheckResult *) = &CCol::CallBack;
+
+void (ArmEffectBase::*gAEBDraw2DAddress)() = &ArmEffectBase::Draw2D;
+void (ArmEffectBase::*gAEBHitAfterAddress)() = &ArmEffectBase::HitAfter;
+void *(ArmEffectBase::*gAEBGetCharaAddress)() = &ArmEffectBase::GetChara;
+ArmEffectType (ArmEffectBase::*gAEBGetTypeAddress)() = &ArmEffectBase::GetType;
+void (ArmEffectBase::*gAEBActionSameTypeAddress)() = &ArmEffectBase::ActionSameType;
+void (ArmEffectBase::*gAEBSetTypeAddress)(ArmEffectType) = &ArmEffectBase::SetType;
+void *(ArmEffectBase::*gAEBGetPosAddress)() = &ArmEffectBase::GetPos;
+void *(ArmEffectBase::*gAEBGetArmParamAddress)() = &ArmEffectBase::GetArmParam;
