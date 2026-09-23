@@ -295,3 +295,31 @@ void (ArmEffectBase::*gAEBActionSameTypeAddress)() = &ArmEffectBase::ActionSameT
 void (ArmEffectBase::*gAEBSetTypeAddress)(ArmEffectType) = &ArmEffectBase::SetType;
 void *(ArmEffectBase::*gAEBGetPosAddress)() = &ArmEffectBase::GetPos;
 void *(ArmEffectBase::*gAEBGetArmParamAddress)() = &ArmEffectBase::GetArmParam;
+
+void *(CSubObject::*gSubObjGetBodyAddress)() = &CSubObject::GetBody;
+int (CSubObject::*gSubObjGetOriginalAddress)() = &CSubObject::GetOriginal;
+int (CSubObject::*gSubObjGetFlagsAddress)() = &CSubObject::GetFlags;
+int (CSubObject::*gSubObjGetVertexListNumAddress)() = &CSubObject::GetVertexListNum;
+int (CSubObject::*gSubObjGetPrimListNumAddress)() = &CSubObject::GetPrimListNum;
+
+int (CPDataArmObj::*gPDAOGetObjTypeAddress)() = &CPDataArmObj::GetObjType;
+int (CPDataArmObj::*gPDAOGetObjIdxAddress)() = &CPDataArmObj::GetObjIdx;
+int (CPDataArmObj::*gPDAOGetArmNoAddress)() = &CPDataArmObj::GetArmNo;
+int (CPDataArmObj::*gPDAOGetArmMdlNoAddress)() = &CPDataArmObj::GetArmMdlNo;
+int (CPDataArmObj::*gPDAOGetCharNoAddress)() = &CPDataArmObj::GetCharNo;
+int (CPDataArmObj::*gPDAOGetSclBoneNoAddress)() = &CPDataArmObj::GetSclBoneNo;
+
+int (CActTgt::*gActTgtGetHitTgtAddress)() = &CActTgt::GetHitTgt;
+int (CActTgt::*gActTgtGetTgtArmNoAddress)() = &CActTgt::GetTgtArmNo;
+int (CActTgt::*gActTgtCheckEndTypeAddress)() = &CActTgt::CheckEndType;
+void *(CActTgt::*gActTgtGetActTgtParamAddress)() = &CActTgt::GetActTgtParam;
+int (CActTgt::*gActTgtIsExtraDmgAddress)() = &CActTgt::IsExtraDmg;
+int (CActTgt::*gActTgtGetTgtNoAddress)() = &CActTgt::GetTgtNo;
+
+void *(Labyrinth_ArmGet::*gLAGGetGetArmAddress)() = &Labyrinth_ArmGet::GetGetArm;
+int (Labyrinth_ArmGet::*gLAGGetDelArmAddress)() = &Labyrinth_ArmGet::GetDelArm;
+void (Labyrinth_ArmGet::*gLAGSetDelArmAddress)(int) = &Labyrinth_ArmGet::SetDelArm;
+int (Labyrinth_ArmGet::*gLAGGetMoneyAddress)() = &Labyrinth_ArmGet::GetMoney;
+int (Labyrinth_ArmGet::*gLAGIsFullBagAddress)() = &Labyrinth_ArmGet::IsFullBag;
+short (Labyrinth_ArmGet::*gLAGGetCheckCharAddress)() = &Labyrinth_ArmGet::GetCheckChar;
+int (Labyrinth_ArmGet::*gLAGGetRoutineAddress)() = &Labyrinth_ArmGet::GetRoutine;

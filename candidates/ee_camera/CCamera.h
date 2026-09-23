@@ -722,4 +722,85 @@ public:
     void *GetArmParam() { return armParam; }
 };
 
+class CSubObject {
+public:
+    unsigned char unknown000[0xc];
+    int original;
+    int vertexListNum;
+    int primListNum;
+    unsigned char unknown018[0x78];
+    int flags;
+
+    // GetBody (address-of) and GetVertexListNum (value) read the identical
+    // offset (0x10); modeled as one field with two accessor bodies, the
+    // same pattern already seen elsewhere in this cluster.
+    void *GetBody() { return &vertexListNum; }
+    int GetOriginal() { return original; }
+    int GetFlags() { return flags; }
+    int GetVertexListNum() { return vertexListNum; }
+    int GetPrimListNum() { return primListNum; }
+};
+
+class CPDataArmObj {
+public:
+    unsigned char unknown000[0x10c];
+    int objType;
+    int objIdx;
+    int charNo;
+    int armNo;
+    int armMdlNo;
+    unsigned char unknown120[0x4];
+    int sclBoneNo;
+
+    int GetObjType() { return objType; }
+    int GetObjIdx() { return objIdx; }
+    int GetArmNo() { return armNo; }
+    int GetArmMdlNo() { return armMdlNo; }
+    int GetCharNo() { return charNo; }
+    int GetSclBoneNo() { return sclBoneNo; }
+};
+
+class CActTgt {
+public:
+    unsigned char unknown000[0x2d0];
+    unsigned int actTgtParam;
+    int tgtNo;
+    int tgtArmNo;
+    unsigned char unknown2dc[0x30];
+    int checkEndType;
+    unsigned char unknown310[0x8];
+    int hitTgt;
+    unsigned char unknown31c[0x18];
+    int isExtraDmg;
+
+    int GetHitTgt() { return hitTgt; }
+    int GetTgtArmNo() { return tgtArmNo; }
+    int CheckEndType() { return checkEndType; }
+    void *GetActTgtParam() { return &actTgtParam; }
+    int IsExtraDmg() { return isExtraDmg; }
+    int GetTgtNo() { return tgtNo; }
+};
+
+class Labyrinth_ArmGet {
+public:
+    unsigned char unknown000[0xdc];
+    int routine;
+    unsigned char unknown0e0[0x8];
+    unsigned int getArm;
+    unsigned char unknown0ec[0xc];
+    int fullBag;
+    int delArm;
+    int money;
+    unsigned char unknown104[0x18];
+    short checkChar;
+
+    void *GetGetArm() { return &getArm; }
+    int GetDelArm() { return delArm; }
+    void SetDelArm(int value) { delArm = value; }
+    int GetMoney() { return money; }
+    int IsFullBag() { return fullBag; }
+    short GetCheckChar() { return checkChar; }
+    int GetRoutine() { return routine; }
+};
+
 #endif

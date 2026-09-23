@@ -516,3 +516,26 @@ verify-ee` passes (full boot ELF and full EE-probe ELF both byte-identical).
 
 Not recovered this batch: the remaining 459 still-untouched trivial 8-byte
 sections, still excluding UI/menu/texture/model/movie-adjacent classes.
+
+## Labyrinth_ArmGet/CPDataArmObj/CActTgt/CSubObject batch — 2026-09-23
+
+Agent: Claude Sonnet 5; role: Contributor. Same deliberate scoping and
+four-class batching strategy as the previous entry.
+
+All 24 remaining trivial 8-byte sections across `Labyrinth_ArmGet` (7),
+`CPDataArmObj` (6), `CActTgt` (6) and `CSubObject` (5) were disassembled and
+confirmed trivial. `Labyrinth_ArmGet::GetCheckChar` uses `lh` (load
+halfword), the first 16-bit load seen in this cluster; modeled as `short`.
+`CSubObject::GetBody` (address-of) and `GetVertexListNum` (value) read the
+identical offset `0x10`, the same aliasing shape already established
+elsewhere. All other sections are single plain `int`/address-return field
+accessors.
+
+The unmodified EE GCC `2.96-ee-001003-1` `-O2` invocation matched all 24
+sections on the first attempt. Reconstruction now covers **298 sections /
+2,384 bytes across twenty-three partial classes**; 3,442,820 bytes remain
+explicit raw debt. `make test verify-boot verify-source-only verify-ee`
+passes (full boot ELF and full EE-probe ELF both byte-identical).
+
+Not recovered this batch: the remaining 435 still-untouched trivial 8-byte
+sections, still excluding UI/menu/texture/model/movie-adjacent classes.

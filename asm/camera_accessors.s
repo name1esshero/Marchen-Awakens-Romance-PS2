@@ -825,3 +825,75 @@ daddu $2, $4, $0
 .section .gnu.linkonce.t.GetArmParam__13ArmEffectBase,"ax",@progbits
 jr $31
 lw $2, 0x84($4)
+.section .gnu.linkonce.t.GetBody__10CSubObject,"ax",@progbits
+jr $31
+addiu $2, $4, 0x10
+.section .gnu.linkonce.t.GetOriginal__10CSubObject,"ax",@progbits
+jr $31
+lw $2, 0xc($4)
+.section .gnu.linkonce.t.GetFlags__10CSubObject,"ax",@progbits
+jr $31
+lw $2, 0x90($4)
+.section .gnu.linkonce.t.GetVertexListNum__10CSubObject,"ax",@progbits
+jr $31
+lw $2, 0x10($4)
+.section .gnu.linkonce.t.GetPrimListNum__10CSubObject,"ax",@progbits
+jr $31
+lw $2, 0x14($4)
+.section .gnu.linkonce.t.GetObjType__12CPDataArmObj,"ax",@progbits
+jr $31
+lw $2, 0x10c($4)
+.section .gnu.linkonce.t.GetObjIdx__12CPDataArmObj,"ax",@progbits
+jr $31
+lw $2, 0x110($4)
+.section .gnu.linkonce.t.GetArmNo__12CPDataArmObj,"ax",@progbits
+jr $31
+lw $2, 0x118($4)
+.section .gnu.linkonce.t.GetArmMdlNo__12CPDataArmObj,"ax",@progbits
+jr $31
+lw $2, 0x11c($4)
+.section .gnu.linkonce.t.GetCharNo__12CPDataArmObj,"ax",@progbits
+jr $31
+lw $2, 0x114($4)
+.section .gnu.linkonce.t.GetSclBoneNo__12CPDataArmObj,"ax",@progbits
+jr $31
+lw $2, 0x124($4)
+.section .gnu.linkonce.t.GetHitTgt__7CActTgt,"ax",@progbits
+jr $31
+lw $2, 0x318($4)
+.section .gnu.linkonce.t.GetTgtArmNo__7CActTgt,"ax",@progbits
+jr $31
+lw $2, 0x2d8($4)
+.section .gnu.linkonce.t.CheckEndType__7CActTgt,"ax",@progbits
+jr $31
+lw $2, 0x30c($4)
+.section .gnu.linkonce.t.GetActTgtParam__7CActTgt,"ax",@progbits
+jr $31
+addiu $2, $4, 0x2d0
+.section .gnu.linkonce.t.IsExtraDmg__7CActTgt,"ax",@progbits
+jr $31
+lw $2, 0x334($4)
+.section .gnu.linkonce.t.GetTgtNo__7CActTgt,"ax",@progbits
+jr $31
+lw $2, 0x2d4($4)
+.section .gnu.linkonce.t.GetGetArm__16Labyrinth_ArmGet,"ax",@progbits
+jr $31
+addiu $2, $4, 0xe8
+.section .gnu.linkonce.t.GetDelArm__16Labyrinth_ArmGet,"ax",@progbits
+jr $31
+lw $2, 0xfc($4)
+.section .gnu.linkonce.t.SetDelArm__16Labyrinth_ArmGeti,"ax",@progbits
+jr $31
+sw $5, 0xfc($4)
+.section .gnu.linkonce.t.GetMoney__16Labyrinth_ArmGet,"ax",@progbits
+jr $31
+lw $2, 0x100($4)
+.section .gnu.linkonce.t.IsFullBag__16Labyrinth_ArmGet,"ax",@progbits
+jr $31
+lw $2, 0xf8($4)
+.section .gnu.linkonce.t.GetCheckChar__16Labyrinth_ArmGet,"ax",@progbits
+jr $31
+lh $2, 0x11c($4)
+.section .gnu.linkonce.t.GetRoutine__16Labyrinth_ArmGet,"ax",@progbits
+jr $31
+lw $2, 0xdc($4)
