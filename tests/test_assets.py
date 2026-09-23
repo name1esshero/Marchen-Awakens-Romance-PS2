@@ -114,6 +114,35 @@ class AssetsTests(unittest.TestCase):
                 self.assertEqual(rebuilt.read(item['size']), b'translated' * 400)
                 self.assertEqual(inventory['volume_bytes'], out.stat().st_size)
 
+    def test_utf8_translation_grows_cp932_leaf_and_relocates_iso(self):
+        data = bytes(make_iso())
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d) / 'source'
+            stream = io.BytesIO(data)
+            _, entries = assets.disc_entries(stream, len(data))
+            assets.export_node(stream, 0, len(data), root, 'ISO', 2048, entries,
+                               dict(containers={}, leaves=0, extensions={}, unparsed=[]))
+
+            layout_path = root / 'layout.json'
+            layout = json.loads(layout_path.read_text())
+            leaf = next(p for p in layout['pieces'] if p.get('name') == 'A;1')
+            leaf['text_source'] = 'translation.utf8.txt'
+            (root / leaf['text_source']).write_text('日本', encoding='utf-8')
+            assets.save_json(layout_path, layout)
+
+            translated = 'A much longer translation: 日本語'.encode('utf-8')
+            (root / leaf['text_source']).write_bytes(translated)
+            out = Path(d) / 'translated.iso'
+            assets.build(root, out, True)
+
+            with out.open('rb') as rebuilt:
+                inventory = assets.inventory(rebuilt, out.stat().st_size)
+                item = next(e for e in inventory['entries'] if e['path'] == 'A;1')
+                self.assertEqual(item['size'], len(translated.decode('utf-8').encode('cp932')))
+                rebuilt.seek(item['lba'] * 2048)
+                self.assertEqual(rebuilt.read(item['size']), translated.decode('utf-8').encode('cp932'))
+                self.assertEqual(inventory['volume_bytes'], out.stat().st_size)
+
 
 if __name__ == '__main__':
     unittest.main()

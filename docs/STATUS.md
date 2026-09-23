@@ -20,6 +20,10 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   proves lossless container round-trip for this image, not semantic recovery,
   relocation safety or game runtime behavior. See
   `reports/assets-roundtrip-prepared.json`.
+- A synthetic ISO test carries an edited UTF-8 text companion through CP932
+  encoding, member growth, ISO directory relocation, and volume-length update.
+  `make build-mod-disc` provides the corresponding experimental workspace build
+  command. No retail menu/dialogue table has yet been edited and tested in-game.
 - The complete 3,445,204-byte boot ELF now rebuilds identically from repository
   text artifacts plus assembled code. `cmp` verifies every output byte.
 - An isolated build containing no ISO, extracted files, reports, existing build
@@ -56,7 +60,9 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   bytes remain preserved. See [the probe](tasks/VIEW_RECT_PROBE.md).
 - No runtime/emulator test or gameplay validation has been performed. Asset leaves
   such as YPC geometry, texture payloads, audio, fonts and scripts remain binary;
-  moved/grown assets have no runtime validation. DMY files, module internals and DVP
+  moved/grown assets have no runtime validation. The two catalog tables are
+  translation-bearing candidates; broader UI `.b` resources and `_msg.dat` remain
+  opaque. DMY files, module internals and DVP
   overlay semantics remain open.
 - Independent retail-dump authentication remains unestablished.
 

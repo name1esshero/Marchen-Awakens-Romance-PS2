@@ -34,6 +34,37 @@ relocations, enlarged archives, changed model geometry, or changed text layout i
 not established. Relocation is not a recovered runtime pointer/cross-reference
 audit.
 
+## Translation-bearing surfaces and mod rebuild loop
+
+The prepared workspace currently exposes six CP932/UTF-8 text companions. The
+two `MenuBinary.pac` tables, `CardList.txt` and `DataBase.txt`, contain Japanese
+catalog/menu text. `script_func.cpp` and `.h` are source/interface files, and
+`SYSTEM.CNF` plus `0FLIST.DIR;1` are system metadata; those four are not established
+as player-facing dialogue. This inventory is a starting point, not a claim that
+all game text has been found. UI `.b` resources, `_msg.dat`, and other binary
+formats remain candidates for separate format work.
+
+For a discovered text leaf, edit its `.utf8.txt` companion and retain control
+codes, delimiters, columns, and line structure until the format is understood.
+The builder encodes the edited text as CP932. Same-size edits can use
+`make verify-disc` and should compare exactly only if the workspace has no edits.
+For a growing edit, run `make build-mod-disc`; it enables the observed relocation
+path and writes `build/assets-modded.iso`. Then run
+`python3 tools/bootstrap.py build/assets-modded.iso --reports /tmp/marps2-mod-check`
+to re-parse and inventory the ISO, and
+`python3 tools/compare_disc.py build/assets-modded.iso` to authenticate the
+pinned baseline, count all differing bytes, and sample the first differing
+offsets. Comparator result 1 is expected for a modified image; result 2 is an
+authentication or I/O error. Inspect the reported offsets and ISO inventory, and
+test the image in a PS2 runtime before claiming the translation works in game.
+The comparator's byte count is evidence of a change, not a semantic or gameplay
+validator.
+
+The synthetic regression `test_utf8_translation_grows_cp932_leaf_and_relocates_iso`
+exercises UTF-8 editing, CP932 encoding, ISO directory extent growth, and volume
+length update as one closed-loop packaging case. It does not prove any retail
+text format's line wrapping, glyph coverage, or runtime relocation behavior.
+
 ## Procedure
 
 1. Preserve `baserom.iso` and verify `config/reference.sha256`.
@@ -83,8 +114,9 @@ provenance. It reports differing byte count, not a semantic diff.
 ## Verification and remaining work
 
 Focused tests cover nested round trips, malformed tables, unsafe source paths,
-size growth with nested offset updates, comparator chunk boundaries, truncation,
-and pinned-reference rejection. Final verification for this workflow is
+UTF-8-to-CP932 translation growth through ISO relocation, nested offset updates,
+comparator chunk boundaries, truncation, and pinned-reference rejection. Final
+verification for this workflow is
 `make test`, unchanged full-disc rebuild plus `compare_disc.py`, and changed-member
 round trips through each affected table. Runtime testing on the target/emulator,
 format-specific editable conversions, and full understanding of DMY extents are

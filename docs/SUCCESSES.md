@@ -27,6 +27,26 @@ References: [asset methodology](TASK_ASSET_WORKSPACE_METHODOLOGY.md),
 `tools/assets.py`, `tools/compare_disc.py`, `tests/test_assets.py`,
 `tests/test_compare_disc.py`.
 
+## UTF-8 translation edits can grow through CP932 and ISO relocation
+
+Symptom: translated text may encode to more bytes than the original Japanese
+member and invalidate fixed-size container assumptions.
+Mechanism: the workspace stores a UTF-8 companion while retaining the raw leaf
+and layout size. During build, the edited UTF-8 is encoded back to CP932; the
+explicit relocation mode appends the grown member, patches its evidenced parent
+extent, and updates the ISO directory record and volume length.
+Pathway: edit UTF-8, use `make build-mod-disc` for the growth-enabled output,
+inventory the resulting ISO, and compare it against the pinned image to inspect
+the expected changed ranges.
+Verification: `test_utf8_translation_grows_cp932_leaf_and_relocates_iso` confirms
+encoded payload bytes, updated file size/LBA and ISO volume length on a synthetic
+ISO. `python3 -m unittest tests.test_assets -v` passed all seven focused tests.
+Limits: this proves packaging mechanics only; it does not validate game-specific
+text layout, glyph coverage, or runtime acceptance. The current player-facing text
+candidate set is limited to extracted catalog tables.
+References: [asset methodology](TASK_ASSET_WORKSPACE_METHODOLOGY.md),
+`tests/test_assets.py`, `Makefile`.
+
 ## Section names survive removal of the symbol table
 
 Symptom: ELF has no SHT_SYMTAB but thousands of named sections.
