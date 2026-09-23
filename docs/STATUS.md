@@ -57,11 +57,10 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   ARM descriptions, Magic Stones, and the none/unused labels. All message translations
   encode as CP932. An earlier build snapshot measured 20,702 bytes (+250); the
   current combined catalog build measures 20,700 bytes (+248). The latest
-  5,017,673,728-byte `mar_eng.iso` inventories as 42 entries and reparses all
-  three catalog-applied resources byte-exactly through ISO/YFS/PAC. It also
-  includes an English title-parts texture override that reparses byte-exactly
-  through ISO/YFS/BPE/UI-table layers. The image SHA-256 is
-  `4853c7a12799f52074a698ae5483a2def15178df741d81081d171e0d59be7c63`; the
+  5,017,673,728-byte `mar_eng.iso` reparses all three catalog-applied resources
+  byte-exactly through ISO/YFS/PAC and both English title TXCs through
+  ISO/YFS/BPE/UI-table. The image SHA-256 is
+  `baa8c68a3b4e27d359d0692947239e1a6b4261a8a69f83801f9259db56d2a89e`; a fresh
   authenticated pinned-reference comparison reports 752,229,873 differing
   bytes in `reports/title_graphics_mod_compare.json`.
   Current resource sizes are 20,700 bytes for `_msg.dat` (+248), 14,152 bytes
@@ -126,8 +125,10 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   cards, backgrounds, maps, weapons, environments and text. Japanese baselines end
   in `_jp.tga`, stay unchanged, and are ignored as generated workspace files;
   authored `_eng.tga` siblings are Git-trackable and take precedence in
-  `mar_eng.iso` builds. The first title-parts English draft is present, but the
-  prominent `title_marh_jp` wordmark remains Japanese. Indexed exports use
+  `mar_eng.iso` builds. English drafts now cover the title-parts and main
+  `title_marh` wordmark atlases; both reinsert byte-exactly from the rebuilt
+  ISO. The main draft reuses native English lettering, but possible repeated
+  branding and AT/UV screen composition remain unresolved. Indexed exports use
   linear pixel order, mapped PSMT8 CLUT
   indices and expanded 0..128 GS alpha. This candidate was visually compared on
   20 PSMT4/PSMT8 resources plus three separate high-bit samples; this is not

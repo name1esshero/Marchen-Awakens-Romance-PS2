@@ -94,23 +94,55 @@ same-size imported TXC hash is
 `dacbf57c36ab281eb1ebc2fd1a205421fdeee2dea77bb703aa11343d3a8e42a0` (132,160
 bytes). The graphics audit passed across all 30,397 indexed resources: 30,354
 editable exports, 43 unresolved records, zero changed Japanese baselines, and
-one English override. The title bundle was rebuilt through BPE and the four-entry
-UI resource table. The final `mar_eng.iso` reparses through ISO/YFS/BPE/UI-table
-layers and contains the exact staged English TXC bytes.
+two English overrides. The title bundle was rebuilt through BPE and the four-entry
+UI resource table. The mod ISO reparse contains the exact staged English
+title-parts TXC bytes.
 
 The unchanged bundle decoded size is 922,000 bytes, but the observed BPE writer
 uses a literal identity table: the rebuilt `title_tex.b` grows from 301,071 to
 922,091 bytes. Relocation succeeds, but this is a substantial compression loss.
-The final mod ISO is 5,017,673,728 bytes (SHA-256
-`4853c7a12799f52074a698ae5483a2def15178df741d81081d171e0d59be7c63`), inventories
-as 42 files, and all four edited resources (`_msg.dat`, `CardList.txt`,
-`DataBase.txt`, and `title_parts`) reparse exactly. The pinned-reference
+The current combined mod ISO is 5,017,673,728 bytes (SHA-256
+`baa8c68a3b4e27d359d0692947239e1a6b4261a8a69f83801f9259db56d2a89e`). The three
+catalog-applied text resources and both English title TXCs reparse byte-exactly
+from a fresh ISO export. Their text sizes are 20,700 bytes (`_msg.dat`), 14,152
+bytes (`CardList.txt`) and 3,319 bytes (`DataBase.txt`). The pinned-reference
 comparison authenticates the baserom and records 752,229,873 differing bytes in
 [`reports/title_graphics_mod_compare.json`](../reports/title_graphics_mod_compare.json).
-These are static packaging checks; the title has not been rendered in an
-emulator, and the typography remains a draft pending visual review. This only
-localizes the title-parts atlas; the prominent `title_marh_jp` Japanese wordmark
-is still untranslated, so the title screen is not yet fully localized.
+These are static packaging checks. Neither title atlas has passed emulator
+review; the main wordmark may repeat the existing “MÄR HEAVEN” mark elsewhere
+on-screen, and the AT/UV draw composition has not been reconstructed.
+
+## English main-wordmark draft and insertion evidence
+
+`graphics/title/00039_01566_0002_title_marh_jp.tga` remains the unchanged
+Japanese baseline (SHA-256
+`e72a760fccf45ba7ab71d18e2b5f3c865a74cf9e827e6a93d37a619d2625052c`). Its
+same-size English sibling
+`graphics/title/00039_01566_0002_title_marh_eng.tga` (SHA-256
+`528d758732c3bffa9f5aad5c97d1a0bc556039afdf499b263cd90e155ed55f85`) is a draft.
+It reuses the native “MÄR HEAVEN” lettering from
+`00039_01565_0003_sbttl_jp.tga` (SHA-256
+`0f0f115297c76f02407e1ae0f2b299b6190e775ea021c633e58ee07de74bcc89`), removes
+the Japanese subtitle embedded beneath that lettering, places a grayscale copy
+in the upper logo region and a color copy in the lower region, and preserves
+the separate registered-mark artwork. The 512x512 canvas and original palette
+remain unchanged.
+
+The original main-logo TXC remains SHA-256
+`b67db2f3a834c05de583c3dbd360da3208384c4234072f0ed66b58711dcfc375`; the
+palette-mapped English TXC is 263,232 bytes with SHA-256
+`e974f1ee39f60732fc500ad8ee663f837b98866e0e141127f06332784aa81e66`. A fresh
+export of `mar_eng.iso` reparsed this exact TXC through ISO/YFS/BPE/UI-table
+layers and matched the staged override byte-for-byte. The full graphics audit
+reported 30,397 indexed resources, 30,354 editable images, 43 unresolved
+records, zero changed Japanese baselines and two English overrides. The full
+mod image comparison authenticated the pinned Japanese reference and recorded
+the current output hash above.
+
+This is a reusable-art draft, not runtime evidence of placement or scale. The
+existing title screen already draws English “MÄR HEAVEN” artwork from a sibling
+texture, so repeated branding is possible. The title animation body and UV
+rectangles still need decoding, and no emulator capture has been reviewed.
 
 ## Evidence limits
 
