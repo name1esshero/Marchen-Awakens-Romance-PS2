@@ -1,0 +1,1202 @@
+{
+  "schema": "dvp-overlay-inventory-v1",
+  "source": {
+    "workspace_path": "extracted/SLPM_661.56;1",
+    "sha256": "9f562361510b2d82bc99bbc02306f63efc3c61d2ae3d1c484401eb60a46af672",
+    "size_bytes": 3445204,
+    "elf_section_report": "reports/SLPM_661.56;1.elf.json",
+    "elf_section_report_sha256": "729e0f0655c930e30f92783f88166b83b18e5789e033b395d897b744d17a8683",
+    "elf_header": {
+      "class": "ELF32",
+      "endianness": "little",
+      "type": "ET_EXEC",
+      "machine_number": 8,
+      "entry": 1048584,
+      "flags": 546455553,
+      "section_count": 2251
+    }
+  },
+  "scope": "All sections whose ELF names begin .DVP.; overlay members are inventoried as raw section extents.",
+  "totals": {
+    "dvp_sections": 42,
+    "dvp_section_body_bytes": 34219,
+    "overlay_sections": 40,
+    "overlay_body_bytes": 32232,
+    "overlay_name_table_records": 40,
+    "overlay_record_size_bytes": 12,
+    "overlay_name_table_bytes": 480,
+    "overlay_string_table_bytes": 1507,
+    "dvp_sections_contiguous_file_range": {
+      "start": 3231844,
+      "end_exclusive": 3266063
+    }
+  },
+  "metadata_sections": [
+    {
+      "name": ".DVP.ovlytab",
+      "index": 2208,
+      "type": 2147480608,
+      "flags": 1,
+      "file_offset": 3231844,
+      "size_bytes": 480,
+      "alignment": 4,
+      "sha256": "9327a8fca4f32c7235712fc2abdbfdee376a2fb7ad4f052e5bb56dd0ca9e4138"
+    },
+    {
+      "name": ".DVP.ovlystrtab",
+      "index": 2209,
+      "type": 3,
+      "flags": 1,
+      "file_offset": 3232324,
+      "size_bytes": 1507,
+      "alignment": 1,
+      "sha256": "97a935a8c1e22352d51ae4932838a397af39ad71a8fd17cd5e2cf32baf2769ba"
+    }
+  ],
+  "observed_table_relation": {
+    "field_0": "Every little-endian u32 value resolves to the start of one NUL-terminated ASCII name in .DVP.ovlystrtab; all 40 names match one .DVP.overlay.* section exactly.",
+    "field_1": "Retained as an uninterpreted little-endian u32.",
+    "field_2": "Retained as an uninterpreted little-endian u32. It equals the numeric first suffix token in 38 of 40 section names; two names use the literal token unknvma.",
+    "all_40_records_map_one_to_one": true
+  },
+  "groups_by_opaque_second_name_token": [
+    {
+      "token": "1973459570",
+      "sections": 2,
+      "bytes": 1664
+    },
+    {
+      "token": "2253100359",
+      "sections": 4,
+      "bytes": 3448
+    },
+    {
+      "token": "2471659816",
+      "sections": 17,
+      "bytes": 19224
+    },
+    {
+      "token": "2678974773",
+      "sections": 4,
+      "bytes": 2944
+    },
+    {
+      "token": "3133276856",
+      "sections": 9,
+      "bytes": 2640
+    },
+    {
+      "token": "3241658244",
+      "sections": 4,
+      "bytes": 2312
+    }
+  ],
+  "records": [
+    {
+      "record_index": 0,
+      "table_record_offset": 0,
+      "name_string_offset": 1,
+      "field_1_u32le": 3437824,
+      "field_1_hex": "0x00347500",
+      "field_2_u32le": 0,
+      "field_2_hex": "0x00000000",
+      "name_tokens_after_prefix": [
+        "0x0",
+        "3133276856",
+        "13",
+        "0"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2210,
+        "name": ".DVP.overlay..0x0.3133276856.13.0",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3233831,
+        "size_bytes": 120,
+        "alignment": 1,
+        "sha256": "6edd9f6f9cc92cded36e6c4a580933f9c9f1b90562b46903b806f21902a1a54f"
+      }
+    },
+    {
+      "record_index": 1,
+      "table_record_offset": 12,
+      "name_string_offset": 35,
+      "field_1_u32le": 3437952,
+      "field_1_hex": "0x00347580",
+      "field_2_u32le": 120,
+      "field_2_hex": "0x00000078",
+      "name_tokens_after_prefix": [
+        "0x78",
+        "3133276856",
+        "35",
+        "1"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2211,
+        "name": ".DVP.overlay..0x78.3133276856.35.1",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3233951,
+        "size_bytes": 128,
+        "alignment": 1,
+        "sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca"
+      }
+    },
+    {
+      "record_index": 2,
+      "table_record_offset": 24,
+      "name_string_offset": 70,
+      "field_1_u32le": 3438088,
+      "field_1_hex": "0x00347608",
+      "field_2_u32le": 248,
+      "field_2_hex": "0x000000f8",
+      "name_tokens_after_prefix": [
+        "0xf8",
+        "3133276856",
+        "57",
+        "2"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2212,
+        "name": ".DVP.overlay..0xf8.3133276856.57.2",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3234079,
+        "size_bytes": 392,
+        "alignment": 1,
+        "sha256": "3eefc4790b52024832ea4c03c6e7a781f3ef9416866a959b2777fce101ad9d61"
+      }
+    },
+    {
+      "record_index": 3,
+      "table_record_offset": 36,
+      "name_string_offset": 105,
+      "field_1_u32le": 3438488,
+      "field_1_hex": "0x00347798",
+      "field_2_u32le": 640,
+      "field_2_hex": "0x00000280",
+      "name_tokens_after_prefix": [
+        "0x280",
+        "3133276856",
+        "115",
+        "3"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2213,
+        "name": ".DVP.overlay..0x280.3133276856.115.3",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3234471,
+        "size_bytes": 656,
+        "alignment": 1,
+        "sha256": "e06e79cdfedfc6d6107b945613e65b2de3a209e40115b9b00ab048d2b91cd7d5"
+      }
+    },
+    {
+      "record_index": 4,
+      "table_record_offset": 48,
+      "name_string_offset": 142,
+      "field_1_u32le": 3439152,
+      "field_1_hex": "0x00347a30",
+      "field_2_u32le": 1296,
+      "field_2_hex": "0x00000510",
+      "name_tokens_after_prefix": [
+        "0x510",
+        "3133276856",
+        "201",
+        "4"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2214,
+        "name": ".DVP.overlay..0x510.3133276856.201.4",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3235127,
+        "size_bytes": 208,
+        "alignment": 1,
+        "sha256": "46f531b7ea0428fbf2c3ca2b60e8dc33d6bbfa000e0fd1b489c5e39140a47006"
+      }
+    },
+    {
+      "record_index": 5,
+      "table_record_offset": 60,
+      "name_string_offset": 179,
+      "field_1_u32le": 3439368,
+      "field_1_hex": "0x00347b08",
+      "field_2_u32le": 1536,
+      "field_2_hex": "0x00000600",
+      "name_tokens_after_prefix": [
+        "0x600",
+        "3133276856",
+        "235",
+        "5"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2215,
+        "name": ".DVP.overlay..0x600.3133276856.235.5",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3235335,
+        "size_bytes": 312,
+        "alignment": 1,
+        "sha256": "6287e17fe5efcb191aec8a2578e685d0a1040a0ab53bd1f02c7f49cc6c8fced7"
+      }
+    },
+    {
+      "record_index": 6,
+      "table_record_offset": 72,
+      "name_string_offset": 216,
+      "field_1_u32le": 3439688,
+      "field_1_hex": "0x00347c48",
+      "field_2_u32le": 1888,
+      "field_2_hex": "0x00000760",
+      "name_tokens_after_prefix": [
+        "0x760",
+        "3133276856",
+        "283",
+        "6"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2216,
+        "name": ".DVP.overlay..0x760.3133276856.283.6",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3235647,
+        "size_bytes": 304,
+        "alignment": 1,
+        "sha256": "e2fc162ed9124452d23c85e81d60a0c228f414c3214a5de635737e25fbd29ac1"
+      }
+    },
+    {
+      "record_index": 7,
+      "table_record_offset": 84,
+      "name_string_offset": 253,
+      "field_1_u32le": 3440000,
+      "field_1_hex": "0x00347d80",
+      "field_2_u32le": 2192,
+      "field_2_hex": "0x00000890",
+      "name_tokens_after_prefix": [
+        "0x890",
+        "3133276856",
+        "331",
+        "7"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2217,
+        "name": ".DVP.overlay..0x890.3133276856.331.7",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3235951,
+        "size_bytes": 296,
+        "alignment": 1,
+        "sha256": "250f52cb2d6f1966a29f6ac771fa1cd185b8f8531396c8a4026c0fe635617e0c"
+      }
+    },
+    {
+      "record_index": 8,
+      "table_record_offset": 96,
+      "name_string_offset": 290,
+      "field_1_u32le": 3440304,
+      "field_1_hex": "0x00347eb0",
+      "field_2_u32le": 2736,
+      "field_2_hex": "0x00000ab0",
+      "name_tokens_after_prefix": [
+        "0xab0",
+        "3133276856",
+        "386",
+        "8"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2218,
+        "name": ".DVP.overlay..0xab0.3133276856.386.8",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3236247,
+        "size_bytes": 224,
+        "alignment": 1,
+        "sha256": "6eb69e26de2a26eda48af77d4cec893aa0cf4748a64cbefcfe11a22c1e680ad9"
+      }
+    },
+    {
+      "record_index": 9,
+      "table_record_offset": 108,
+      "name_string_offset": 328,
+      "field_1_u32le": 4019064,
+      "field_1_hex": "0x003d5378",
+      "field_2_u32le": 10384,
+      "field_2_hex": "0x00002890",
+      "name_tokens_after_prefix": [
+        "0x2890",
+        "1973459570",
+        "21",
+        "0"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2219,
+        "name": ".DVP.overlay..0x2890.1973459570.21.0",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3236471,
+        "size_bytes": 1128,
+        "alignment": 1,
+        "sha256": "3731b0a75ab19d96b774da62d37eccacd517c6593af20aa66525dc0b951cdba9"
+      }
+    },
+    {
+      "record_index": 10,
+      "table_record_offset": 120,
+      "name_string_offset": 365,
+      "field_1_u32le": 4020200,
+      "field_1_hex": "0x003d57e8",
+      "field_2_u32le": 15392,
+      "field_2_hex": "0x00003c20",
+      "name_tokens_after_prefix": [
+        "0x3c20",
+        "1973459570",
+        "284",
+        "1"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2220,
+        "name": ".DVP.overlay..0x3c20.1973459570.284.1",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3237599,
+        "size_bytes": 536,
+        "alignment": 1,
+        "sha256": "7d73a488b95b99a42237504643b79aa49c55a9aad3cd97e58518f093d3e095df"
+      }
+    },
+    {
+      "record_index": 11,
+      "table_record_offset": 132,
+      "name_string_offset": 404,
+      "field_1_u32le": 4020776,
+      "field_1_hex": "0x003d5a28",
+      "field_2_u32le": 160,
+      "field_2_hex": "0x000000a0",
+      "name_tokens_after_prefix": [
+        "0xa0",
+        "2253100359",
+        "63",
+        "0"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2221,
+        "name": ".DVP.overlay..0xa0.2253100359.63.0",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3238135,
+        "size_bytes": 744,
+        "alignment": 1,
+        "sha256": "1b66520d471367f736d50c070a2e2bba8ad88ac58743394a764b888e9cb6f6be"
+      }
+    },
+    {
+      "record_index": 12,
+      "table_record_offset": 144,
+      "name_string_offset": 439,
+      "field_1_u32le": 4021528,
+      "field_1_hex": "0x003d5d18",
+      "field_2_u32le": 1440,
+      "field_2_hex": "0x000005a0",
+      "name_tokens_after_prefix": [
+        "0x5a0",
+        "2253100359",
+        "210",
+        "1"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2222,
+        "name": ".DVP.overlay..0x5a0.2253100359.210.1",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3238879,
+        "size_bytes": 1080,
+        "alignment": 1,
+        "sha256": "d20d5d685a1fdb28a974551a0c8c0eed3f75410cf9055957b7a3a9790fc2e06a"
+      }
+    },
+    {
+      "record_index": 13,
+      "table_record_offset": 156,
+      "name_string_offset": 476,
+      "field_1_u32le": 4022616,
+      "field_1_hex": "0x003d6158",
+      "field_2_u32le": 2560,
+      "field_2_hex": "0x00000a00",
+      "name_tokens_after_prefix": [
+        "0xa00",
+        "2253100359",
+        "411",
+        "2"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2223,
+        "name": ".DVP.overlay..0xa00.2253100359.411.2",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3239959,
+        "size_bytes": 888,
+        "alignment": 1,
+        "sha256": "f0402756b4ecd3e4ad6fcc4ff95f76bcf2bf1733d897f79972aaedb03f87dfd3"
+      }
+    },
+    {
+      "record_index": 14,
+      "table_record_offset": 168,
+      "name_string_offset": 513,
+      "field_1_u32le": 4023512,
+      "field_1_hex": "0x003d64d8",
+      "field_2_u32le": 3680,
+      "field_2_hex": "0x00000e60",
+      "name_tokens_after_prefix": [
+        "0xe60",
+        "2253100359",
+        "581",
+        "3"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2224,
+        "name": ".DVP.overlay..0xe60.2253100359.581.3",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3240847,
+        "size_bytes": 736,
+        "alignment": 1,
+        "sha256": "c6c9b8650bdf333e657353246bc6f5b02f61950d8990935e2f0e38a63197c80c"
+      }
+    },
+    {
+      "record_index": 15,
+      "table_record_offset": 180,
+      "name_string_offset": 551,
+      "field_1_u32le": 4024296,
+      "field_1_hex": "0x003d67e8",
+      "field_2_u32le": 160,
+      "field_2_hex": "0x000000a0",
+      "name_tokens_after_prefix": [
+        "0xa0",
+        "2678974773",
+        "63",
+        "0"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2225,
+        "name": ".DVP.overlay..0xa0.2678974773.63.0",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3241583,
+        "size_bytes": 856,
+        "alignment": 1,
+        "sha256": "ab9ac8d62fd064748c921e6bd4c123f5cc8910a384d1804bec33ffe27da27c4c"
+      }
+    },
+    {
+      "record_index": 16,
+      "table_record_offset": 192,
+      "name_string_offset": 586,
+      "field_1_u32le": 4025160,
+      "field_1_hex": "0x003d6b48",
+      "field_2_u32le": 1440,
+      "field_2_hex": "0x000005a0",
+      "name_tokens_after_prefix": [
+        "0x5a0",
+        "2678974773",
+        "309",
+        "1"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2226,
+        "name": ".DVP.overlay..0x5a0.2678974773.309.1",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3242439,
+        "size_bytes": 824,
+        "alignment": 1,
+        "sha256": "7de592043d3613deb65a36d48372038b1b0a910e79f60b360988df59a391e970"
+      }
+    },
+    {
+      "record_index": 17,
+      "table_record_offset": 204,
+      "name_string_offset": 623,
+      "field_1_u32le": 4025992,
+      "field_1_hex": "0x003d6e88",
+      "field_2_u32le": 2560,
+      "field_2_hex": "0x00000a00",
+      "name_tokens_after_prefix": [
+        "0xa00",
+        "2678974773",
+        "546",
+        "2"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2227,
+        "name": ".DVP.overlay..0xa00.2678974773.546.2",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3243263,
+        "size_bytes": 736,
+        "alignment": 1,
+        "sha256": "c6c9b8650bdf333e657353246bc6f5b02f61950d8990935e2f0e38a63197c80c"
+      }
+    },
+    {
+      "record_index": 18,
+      "table_record_offset": 216,
+      "name_string_offset": 660,
+      "field_1_u32le": 4026736,
+      "field_1_hex": "0x003d7170",
+      "field_2_u32le": 3680,
+      "field_2_hex": "0x00000e60",
+      "name_tokens_after_prefix": [
+        "0xe60",
+        "2678974773",
+        "757",
+        "3"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2228,
+        "name": ".DVP.overlay..0xe60.2678974773.757.3",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3243999,
+        "size_bytes": 528,
+        "alignment": 1,
+        "sha256": "8889eb3cdd3d0ac94711b47ce78b430d8e23a7b31ecc994c56d0c3310c87674a"
+      }
+    },
+    {
+      "record_index": 19,
+      "table_record_offset": 228,
+      "name_string_offset": 698,
+      "field_1_u32le": 4027304,
+      "field_1_hex": "0x003d73a8",
+      "field_2_u32le": 160,
+      "field_2_hex": "0x000000a0",
+      "name_tokens_after_prefix": [
+        "0xa0",
+        "3241658244",
+        "63",
+        "0"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2229,
+        "name": ".DVP.overlay..0xa0.3241658244.63.0",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3244527,
+        "size_bytes": 680,
+        "alignment": 1,
+        "sha256": "3893c122a235d76ac34b7853ae88aae7b72c2785f12e0e5ba05506aa89f4cf6c"
+      }
+    },
+    {
+      "record_index": 20,
+      "table_record_offset": 240,
+      "name_string_offset": 733,
+      "field_1_u32le": 4027992,
+      "field_1_hex": "0x003d7658",
+      "field_2_u32le": 1440,
+      "field_2_hex": "0x000005a0",
+      "name_tokens_after_prefix": [
+        "0x5a0",
+        "3241658244",
+        "277",
+        "1"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2230,
+        "name": ".DVP.overlay..0x5a0.3241658244.277.1",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3245207,
+        "size_bytes": 616,
+        "alignment": 1,
+        "sha256": "f9d54bbe3ccaf08564c2928c55218a3f696989a05dffc8edf057773751aae153"
+      }
+    },
+    {
+      "record_index": 21,
+      "table_record_offset": 252,
+      "name_string_offset": 770,
+      "field_1_u32le": 4028616,
+      "field_1_hex": "0x003d78c8",
+      "field_2_u32le": 2560,
+      "field_2_hex": "0x00000a00",
+      "name_tokens_after_prefix": [
+        "0xa00",
+        "3241658244",
+        "476",
+        "2"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2231,
+        "name": ".DVP.overlay..0xa00.3241658244.476.2",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3245823,
+        "size_bytes": 608,
+        "alignment": 1,
+        "sha256": "4beb641f77c3df2749a5dffc0a23f4270dc4b94e1e940287fc3ebfa05b720662"
+      }
+    },
+    {
+      "record_index": 22,
+      "table_record_offset": 264,
+      "name_string_offset": 807,
+      "field_1_u32le": 4029232,
+      "field_1_hex": "0x003d7b30",
+      "field_2_u32le": 3680,
+      "field_2_hex": "0x00000e60",
+      "name_tokens_after_prefix": [
+        "0xe60",
+        "3241658244",
+        "654",
+        "3"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2232,
+        "name": ".DVP.overlay..0xe60.3241658244.654.3",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3246431,
+        "size_bytes": 408,
+        "alignment": 1,
+        "sha256": "c76903cde8580d1c809ac5352aab33af5a310ad05126294d66e06db880c463ed"
+      }
+    },
+    {
+      "record_index": 23,
+      "table_record_offset": 276,
+      "name_string_offset": 845,
+      "field_1_u32le": 4029896,
+      "field_1_hex": "0x003d7dc8",
+      "field_2_u32le": 0,
+      "field_2_hex": "0x00000000",
+      "name_tokens_after_prefix": [
+        "0x0",
+        "2471659816",
+        "83",
+        "0"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2233,
+        "name": ".DVP.overlay..0x0.2471659816.83.0",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3246839,
+        "size_bytes": 96,
+        "alignment": 1,
+        "sha256": "2ea9ab9198d1638007400cd2c3bef1cc745b864b76011a0e1bc52180ac6452d4"
+      }
+    },
+    {
+      "record_index": 24,
+      "table_record_offset": 288,
+      "name_string_offset": 879,
+      "field_1_u32le": 4030000,
+      "field_1_hex": "0x003d7e30",
+      "field_2_u32le": 5120,
+      "field_2_hex": "0x00001400",
+      "name_tokens_after_prefix": [
+        "0x1400",
+        "2471659816",
+        "159",
+        "1"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2234,
+        "name": ".DVP.overlay..0x1400.2471659816.159.1",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3246935,
+        "size_bytes": 160,
+        "alignment": 1,
+        "sha256": "b393978842a0fa3d3e1470196f098f473f9678e72463cb65ec4ab5581856c2e4"
+      }
+    },
+    {
+      "record_index": 25,
+      "table_record_offset": 300,
+      "name_string_offset": 917,
+      "field_1_u32le": 4030168,
+      "field_1_hex": "0x003d7ed8",
+      "field_2_u32le": 5280,
+      "field_2_hex": "0x000014a0",
+      "name_tokens_after_prefix": [
+        "0x14a0",
+        "2471659816",
+        "200",
+        "2"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2235,
+        "name": ".DVP.overlay..0x14a0.2471659816.200.2",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3247095,
+        "size_bytes": 2008,
+        "alignment": 1,
+        "sha256": "e991c0a37471f8f9fe6763f2427c9b16725ba1401c9b8be930840c14a5feb9a9"
+      }
+    },
+    {
+      "record_index": 26,
+      "table_record_offset": 312,
+      "name_string_offset": 955,
+      "field_1_u32le": 4032184,
+      "field_1_hex": "0x003d86b8",
+      "field_2_u32le": 7296,
+      "field_2_hex": "0x00001c80",
+      "name_tokens_after_prefix": [
+        "0x1c80",
+        "2471659816",
+        "512",
+        "3"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2236,
+        "name": ".DVP.overlay..0x1c80.2471659816.512.3",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3249103,
+        "size_bytes": 2048,
+        "alignment": 1,
+        "sha256": "e5a00aa9991ac8a5ee3109844d84a55583bd20572ad3ffcd42792f3c36b183ad"
+      }
+    },
+    {
+      "record_index": 27,
+      "table_record_offset": 324,
+      "name_string_offset": 993,
+      "field_1_u32le": 4034240,
+      "field_1_hex": "0x003d8ec0",
+      "field_2_u32le": 9344,
+      "field_2_hex": "0x00002480",
+      "name_tokens_after_prefix": [
+        "unknvma",
+        "2471659816",
+        "850",
+        "4"
+      ],
+      "field_2_matches_numeric_first_name_token": null,
+      "section": {
+        "index": 2237,
+        "name": ".DVP.overlay..unknvma.2471659816.850.4",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3251151,
+        "size_bytes": 560,
+        "alignment": 1,
+        "sha256": "738c079dff6c9b77a0891ac42db1cabcab933a672b14aed8ecfcf94c0e77bb40"
+      }
+    },
+    {
+      "record_index": 28,
+      "table_record_offset": 336,
+      "name_string_offset": 1032,
+      "field_1_u32le": 4034808,
+      "field_1_hex": "0x003d90f8",
+      "field_2_u32le": 9920,
+      "field_2_hex": "0x000026c0",
+      "name_tokens_after_prefix": [
+        "0x26c0",
+        "2471659816",
+        "940",
+        "5"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2238,
+        "name": ".DVP.overlay..0x26c0.2471659816.940.5",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3251711,
+        "size_bytes": 456,
+        "alignment": 1,
+        "sha256": "b960fb5cb94682dfc4a873035d65f8befdcb9bed0e7db0feb905f0dcf437b38c"
+      }
+    },
+    {
+      "record_index": 29,
+      "table_record_offset": 348,
+      "name_string_offset": 1070,
+      "field_1_u32le": 4035304,
+      "field_1_hex": "0x003d92e8",
+      "field_2_u32le": 10384,
+      "field_2_hex": "0x00002890",
+      "name_tokens_after_prefix": [
+        "0x2890",
+        "2471659816",
+        "1017",
+        "6"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2239,
+        "name": ".DVP.overlay..0x2890.2471659816.1017.6",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3252167,
+        "size_bytes": 1568,
+        "alignment": 1,
+        "sha256": "7fbcfcd86bdfa943dbd68f67c3fcba6e7ab86fda2d14d28862c176bf18579fca"
+      }
+    },
+    {
+      "record_index": 30,
+      "table_record_offset": 360,
+      "name_string_offset": 1109,
+      "field_1_u32le": 4036880,
+      "field_1_hex": "0x003d9910",
+      "field_2_u32le": 11968,
+      "field_2_hex": "0x00002ec0",
+      "name_tokens_after_prefix": [
+        "0x2ec0",
+        "2471659816",
+        "1291",
+        "7"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2240,
+        "name": ".DVP.overlay..0x2ec0.2471659816.1291.7",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3253735,
+        "size_bytes": 1776,
+        "alignment": 1,
+        "sha256": "cac301e92bd8b54a2baf8dec1aa1f58707f5ad9fa4958b64eedd900dd667fe45"
+      }
+    },
+    {
+      "record_index": 31,
+      "table_record_offset": 372,
+      "name_string_offset": 1148,
+      "field_1_u32le": 4038664,
+      "field_1_hex": "0x003da008",
+      "field_2_u32le": 13760,
+      "field_2_hex": "0x000035c0",
+      "name_tokens_after_prefix": [
+        "0x35c0",
+        "2471659816",
+        "1591",
+        "8"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2241,
+        "name": ".DVP.overlay..0x35c0.2471659816.1591.8",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3255511,
+        "size_bytes": 1616,
+        "alignment": 1,
+        "sha256": "5a95c72bfe2ce9e1039613d39293c0cc996113038b46cd41ed8ec30ec2663594"
+      }
+    },
+    {
+      "record_index": 32,
+      "table_record_offset": 384,
+      "name_string_offset": 1187,
+      "field_1_u32le": 4040288,
+      "field_1_hex": "0x003da660",
+      "field_2_u32le": 15392,
+      "field_2_hex": "0x00003c20",
+      "name_tokens_after_prefix": [
+        "0x3c20",
+        "2471659816",
+        "1870",
+        "9"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2242,
+        "name": ".DVP.overlay..0x3c20.2471659816.1870.9",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3257127,
+        "size_bytes": 336,
+        "alignment": 1,
+        "sha256": "52a3e0804d93dc525ec3c67ef8ac5b01756ecf0513e36f3c19435e4c82cb5d29"
+      }
+    },
+    {
+      "record_index": 33,
+      "table_record_offset": 396,
+      "name_string_offset": 1226,
+      "field_1_u32le": 4040632,
+      "field_1_hex": "0x003da7b8",
+      "field_2_u32le": 15760,
+      "field_2_hex": "0x00003d90",
+      "name_tokens_after_prefix": [
+        "0x3d90",
+        "2471659816",
+        "2001",
+        "10"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2243,
+        "name": ".DVP.overlay..0x3d90.2471659816.2001.10",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3257463,
+        "size_bytes": 400,
+        "alignment": 1,
+        "sha256": "7a12e561363385e9dfeeab326368731c030ed4b374e7f5897ac819159d2884c5"
+      }
+    },
+    {
+      "record_index": 34,
+      "table_record_offset": 408,
+      "name_string_offset": 1266,
+      "field_1_u32le": 4041080,
+      "field_1_hex": "0x003da978",
+      "field_2_u32le": 10384,
+      "field_2_hex": "0x00002890",
+      "name_tokens_after_prefix": [
+        "0x2890",
+        "2471659816",
+        "2126",
+        "11"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2244,
+        "name": ".DVP.overlay..0x2890.2471659816.2126.11",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3257863,
+        "size_bytes": 1472,
+        "alignment": 1,
+        "sha256": "9232cc04ab27b5a912314608cd84190ca7954206063f2706b393f80d0e74ff3f"
+      }
+    },
+    {
+      "record_index": 35,
+      "table_record_offset": 420,
+      "name_string_offset": 1306,
+      "field_1_u32le": 4042600,
+      "field_1_hex": "0x003daf68",
+      "field_2_u32le": 10384,
+      "field_2_hex": "0x00002890",
+      "name_tokens_after_prefix": [
+        "0x2890",
+        "2471659816",
+        "2384",
+        "12"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2245,
+        "name": ".DVP.overlay..0x2890.2471659816.2384.12",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3259335,
+        "size_bytes": 472,
+        "alignment": 1,
+        "sha256": "22fec3bc784546d70e79696b405d950aff355b6f429f266ceacffe0cc2e5ba02"
+      }
+    },
+    {
+      "record_index": 36,
+      "table_record_offset": 432,
+      "name_string_offset": 1346,
+      "field_1_u32le": 4043112,
+      "field_1_hex": "0x003db168",
+      "field_2_u32le": 10384,
+      "field_2_hex": "0x00002890",
+      "name_tokens_after_prefix": [
+        "0x2890",
+        "2471659816",
+        "2500",
+        "13"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2246,
+        "name": ".DVP.overlay..0x2890.2471659816.2500.13",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3259807,
+        "size_bytes": 624,
+        "alignment": 1,
+        "sha256": "afc249b32e5549092c980b1995ea5401e73af3fcda168c1da9ae1bdbfce0d447"
+      }
+    },
+    {
+      "record_index": 37,
+      "table_record_offset": 444,
+      "name_string_offset": 1386,
+      "field_1_u32le": 4043784,
+      "field_1_hex": "0x003db408",
+      "field_2_u32le": 10384,
+      "field_2_hex": "0x00002890",
+      "name_tokens_after_prefix": [
+        "0x2890",
+        "2471659816",
+        "2636",
+        "14"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2247,
+        "name": ".DVP.overlay..0x2890.2471659816.2636.14",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3260431,
+        "size_bytes": 2048,
+        "alignment": 1,
+        "sha256": "e5a00aa9991ac8a5ee3109844d84a55583bd20572ad3ffcd42792f3c36b183ad"
+      }
+    },
+    {
+      "record_index": 38,
+      "table_record_offset": 456,
+      "name_string_offset": 1426,
+      "field_1_u32le": 4045840,
+      "field_1_hex": "0x003dbc10",
+      "field_2_u32le": 12432,
+      "field_2_hex": "0x00003090",
+      "name_tokens_after_prefix": [
+        "unknvma",
+        "2471659816",
+        "3014",
+        "15"
+      ],
+      "field_2_matches_numeric_first_name_token": null,
+      "section": {
+        "index": 2248,
+        "name": ".DVP.overlay..unknvma.2471659816.3014.15",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3262479,
+        "size_bytes": 1792,
+        "alignment": 1,
+        "sha256": "7b4fc1a8dbe6b6121f16ada516e2ac27e02964716bacea5fb7d07cf30595948e"
+      }
+    },
+    {
+      "record_index": 39,
+      "table_record_offset": 468,
+      "name_string_offset": 1467,
+      "field_1_u32le": 4047672,
+      "field_1_hex": "0x003dc338",
+      "field_2_u32le": 10384,
+      "field_2_hex": "0x00002890",
+      "name_tokens_after_prefix": [
+        "0x2890",
+        "2471659816",
+        "3326",
+        "16"
+      ],
+      "field_2_matches_numeric_first_name_token": true,
+      "section": {
+        "index": 2249,
+        "name": ".DVP.overlay..0x2890.2471659816.3326.16",
+        "type": 2147480609,
+        "flags": 5,
+        "address": 0,
+        "file_offset": 3264271,
+        "size_bytes": 1792,
+        "alignment": 1,
+        "sha256": "7b4fc1a8dbe6b6121f16ada516e2ac27e02964716bacea5fb7d07cf30595948e"
+      }
+    }
+  ],
+  "checks": {
+    "source_hash_matches_elf_section_report": true,
+    "every_dvp_extent_within_source_file": true,
+    "every_dvp_section_hash_matches_report": true,
+    "dvp_section_extents_pairwise_disjoint": true,
+    "dvp_section_extents_contiguous": true,
+    "all_table_string_offsets_valid": true,
+    "table_record_names_equal_overlay_section_names": true
+  },
+  "limits": [
+    "DVP table word 1 and word 2 semantics have not been established; raw values are preserved.",
+    "Opaque numeric name tokens are not identified as hashes, module IDs, or semantic labels.",
+    "Overlay section contents have not been disassembled, translated, rebuilt, relocated, or runtime-tested.",
+    "This inventory does not establish loader behavior, relocation records, cross-references, or safe overlay growth."
+  ],
+  "standard_elf_relocation_sections": {
+    "SHT_REL_count": 0,
+    "SHT_RELA_count": 0,
+    "interpretation_limit": "No standard ELF REL/RELA section is present; this does not rule out DVP-specific load or fixup behavior."
+  },
+  "coverage": {
+    "structural_inventory": "complete for all 42 .DVP.* ELF sections in this source executable; all 40 table records resolve one-to-one to overlay sections",
+    "semantic_editability": "unresolved; overlay payload contents and table fields 1/2 are not decoded",
+    "lossless_rebuild": "not demonstrated",
+    "runtime_validation": "not performed"
+  }
+}
