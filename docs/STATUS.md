@@ -24,17 +24,20 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   placeholder use, or historical purpose.
   Expanded logical information payload Y is 1,303,947,016 bytes (28.4224% of
   physical image size) after BPE bundle expansion and de-duplication.
-  Parser-backed structural coverage is Z/Y = 249,834,218/1,303,947,016
-  (19.1598%); unchanged-source rebuildability is A/Y = 100%; semantic
+  Parser-backed structural coverage is Z/Y = 446,919,526/1,303,947,016
+  (34.2744%); unchanged-source rebuildability is A/Y = 100%; semantic
   editability is B/Y = 239,532,814/1,303,947,016 (18.3698%); runtime-validated
   editability is C/Y = 0%. The non-editable queue Y-B is 1,064,414,202 bytes
-  (81.6302% of Y), including 10,301,404 bytes that are structurally classified
-  but not yet editable (Z-B). Strictly unclassified payload Y-Z is 1,054,112,798
-  bytes (80.8402% of Y); of that, video is 64.9941%, model/geometry candidates
-  19.0326%, audio/sound candidates 14.8422%, animation/motion 0.3540%, and
-  unresolved graphics 0.0133%. A validated AT3 envelope parser covers 723 direct
+  (81.6302% of Y), including 207,386,712 bytes that are structurally classified
+  but not yet editable (Z-B). Strictly unclassified payload Y-Z is 857,027,490
+  bytes (65.7256% of Y); of that, video is 79.9404%, audio/sound candidates
+  18.2554%, animation/motion 0.4354%, model/geometry candidates 0.4130%, and
+  unresolved graphics 0.0164%. A validated AT3 envelope parser covers 723 direct
   and 1,605 nested resources (26,798 named nodes), all of which rebuild exactly;
-  internal animation fields remain opaque. The report gives the full disjoint breakdown
+  internal animation fields remain opaque. A YOBJ/POF0 envelope parser covers
+  899 direct YMPs and 14 nested UI resources, all with exact no-op rebuilds and
+  807,439 decoded pointer-slot entries; model-body semantics remain opaque. The
+  report gives the full disjoint breakdown
   and evidence basis. These are separate preservation, structure, editability,
   and runtime measures, not one decompilation or translation percentage. The 43
   incomplete RTX3 records are excluded from Z because their complete length
@@ -109,8 +112,9 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   40 candidate bytes versus 24 original bytes, with unaligned versus aligned
   transfers. Member types/alignment require independent evidence; all original
   bytes remain preserved. See [the probe](tasks/VIEW_RECT_PROBE.md).
-- No runtime/emulator test or gameplay validation has been performed. Asset leaves
-  such as YPC geometry, audio, fonts and scripts remain binary; moved/grown assets
+- No runtime/emulator test or gameplay validation has been performed. YPC model
+  candidates, YOBJ body data, audio, fonts and scripts remain semantically opaque;
+  moved/grown assets
   have no runtime validation. The two catalog tables and recovered `_msg.dat`
   table are translation-bearing surfaces. All 724 menu `.b` leaves now have a
   verified decoded-binary layer; 721 also have 3,084 individually extracted

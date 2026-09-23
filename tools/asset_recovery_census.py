@@ -19,8 +19,10 @@ from pathlib import Path
 
 try:
     from tools.at3 import parse as parse_at3, rebuild as rebuild_at3
+    from tools.yobj import parse as parse_yobj, rebuild as rebuild_yobj
 except ModuleNotFoundError:  # Direct execution places tools/ on sys.path.
     from at3 import parse as parse_at3, rebuild as rebuild_at3
+    from yobj import parse as parse_yobj, rebuild as rebuild_yobj
 
 
 def _read_json(path: Path):
@@ -149,6 +151,12 @@ def _load_inputs(workspace: Path, catalog_path: Path, graphics_path: Path,
                 leaf["_at3_node_record_count"] = 0
                 leaf["_at3_preamble_bytes"] = 0
                 leaf["_at3_node_record_bytes"] = 0
+        if leaf.get("source") and _source_extension(leaf["name"]) == ".ymp":
+            raw = (workspace / leaf["source"]).read_bytes()
+            try:
+                leaf["_yobj_structural_bytes"] = parse_yobj(raw)["file_size"]
+            except ValueError:
+                leaf["_yobj_structural_bytes"] = 0
         if leaf.get("source") and "MOVIE.AFS;1" in leaf["name"]:
             with (workspace / leaf["source"]).open("rb") as stream:
                 leaf["_mpeg_program_stream"] = stream.read(4) == b"\0\0\1\xba"
@@ -234,6 +242,78 @@ def _load_inputs(workspace: Path, catalog_path: Path, graphics_path: Path,
         "child extents and are not double-counted."
     )
     graphics["_at3_resource_corpus"] = at3_stats
+
+    # YMP resources directly listed in the archive catalog can contribute
+    # their complete bounded YOBJ/POF0 envelope to Z. YMP members nested in
+    # parsed UI bundles are audited too, but those bytes already count once as
+    # bounded bundle children and must not be added again.
+    yobj_stats = {
+        "direct_resources": {"file_count": 0, "source_bytes": 0,
+                             "parse_successful_count": 0,
+                             "parse_failure_count": 0,
+                             "pof0_reference_slot_count": 0,
+                             "exact_noop_roundtrip_count": 0,
+                             "pof0_zero_tail_bytes": 0,
+                             "format_variants": {}},
+        "nested_ui_bundle_resources": {"file_count": 0, "source_bytes": 0,
+                                        "parse_successful_count": 0,
+                                        "parse_failure_count": 0,
+                                        "pof0_reference_slot_count": 0,
+                                        "exact_noop_roundtrip_count": 0,
+                                        "pof0_zero_tail_bytes": 0,
+                                        "format_variants": {}},
+    }
+
+    def audit_yobj(raw: bytes, stats: dict):
+        stats["file_count"] += 1
+        stats["source_bytes"] += len(raw)
+        try:
+            parsed = parse_yobj(raw)
+        except ValueError:
+            stats["parse_failure_count"] += 1
+            return
+        stats["parse_successful_count"] += 1
+        stats["pof0_reference_slot_count"] += parsed["pof0_reference_count"]
+        stats["pof0_zero_tail_bytes"] += parsed["pof0_zero_tail_bytes"]
+        variant = parsed["variant"]
+        stats["format_variants"][variant] = stats["format_variants"].get(variant, 0) + 1
+        if rebuild_yobj(parsed) == raw:
+            stats["exact_noop_roundtrip_count"] += 1
+
+    direct_yobj_sources = {leaf.get("source") for leaf in catalog
+                           if leaf.get("source") and
+                           _source_extension(leaf["name"]) == ".ymp"}
+    for source in direct_yobj_sources:
+        audit_yobj((workspace / source).read_bytes(), yobj_stats["direct_resources"])
+
+    for manifest_path, manifest in graphics["_manifest_entries"].items():
+        rel = Path(manifest_path)
+        resources_dir = workspace / rel.parent / (
+            rel.name.removesuffix(".bundle.json") + ".resources"
+        )
+        for member in manifest.get("entries", []):
+            if _member_extension(member) != ".ymp":
+                continue
+            member_path = resources_dir / member["source"]
+            raw = member_path.read_bytes()
+            if len(raw) != member.get("size"):
+                raise ValueError(f"nested YMP size disagrees with bundle manifest: {member_path}")
+            expected_hash = member.get("source_sha256")
+            if expected_hash and hashlib.sha256(raw).hexdigest() != expected_hash:
+                raise ValueError(f"nested YMP hash disagrees with bundle manifest: {member_path}")
+            audit_yobj(raw, yobj_stats["nested_ui_bundle_resources"])
+
+    for kind, stats in yobj_stats.items():
+        if stats["exact_noop_roundtrip_count"] != stats["parse_successful_count"]:
+            raise ValueError(f"YOBJ no-op round-trip audit failed for {kind}")
+    yobj_stats["note"] = (
+        "The parser validates the 0x40-byte header envelope, four bounded "
+        "numeric count/offset pairs, the exact POF0-to-EOF extent, and the "
+        "delta-coded pointer-slot list. Header/body semantics remain unresolved. "
+        "Direct YMP envelopes may contribute to Z. Nested UI-bundle YMP files "
+        "are already counted as bounded child extents and are not double-counted."
+    )
+    graphics["_yobj_resource_corpus"] = yobj_stats
     return catalog, graphics, disc, roundtrip
 
 
@@ -478,6 +558,8 @@ def build_census(catalog, graphics_index, disc, roundtrip):
             row["structural_bytes"] = (leaf.get("_at3_reference_table_bytes", 0) +
                                         leaf.get("_at3_preamble_bytes", 0) +
                                         leaf.get("_at3_node_record_bytes", 0))
+        elif extension == ".ymp":
+            row["structural_bytes"] = leaf.get("_yobj_structural_bytes", 0)
         expanded_rows.append(row)
 
     expanded_payload_bytes = sum(row["size"] for row in expanded_rows)
@@ -513,11 +595,16 @@ def build_census(catalog, graphics_index, disc, roundtrip):
         leaf.get("_at3_node_record_bytes", 0) for leaf in leaves
         if _source_extension(leaf["name"]) == ".at3"
     )
+    direct_yobj_file_bytes = sum(
+        leaf.get("_yobj_structural_bytes", 0) for leaf in leaves
+        if _source_extension(leaf["name"]) == ".ymp"
+    )
     txc_structural_bytes = sum(size for entry, size, key in txc_rows
                                if txc_parse_status[key])
     structurally_classified_bytes = (txc_structural_bytes + bundle_nontexture_member_bytes +
                                      text_bytes + message_bytes + direct_at3_table_bytes +
-                                     direct_at3_preamble_bytes + direct_at3_node_record_bytes)
+                                     direct_at3_preamble_bytes + direct_at3_node_record_bytes +
+                                     direct_yobj_file_bytes)
     row_structural_bytes = sum(row["structural_bytes"] for row in expanded_rows)
     if row_structural_bytes != structurally_classified_bytes:
         raise ValueError("parser-backed structural spans overlap or disagree with their components")
@@ -621,7 +708,7 @@ def build_census(catalog, graphics_index, disc, roundtrip):
 
     zero_span_bytes = layout["all_zero_named_member_bytes"] + layout["all_zero_gap_bytes"]
     return {
-        "schema_version": 4,
+        "schema_version": 5,
         "evidence_date": dt.date.today().isoformat(),
         "reference_sha256": reference_hash,
         "scope": "Pinned physical image partition plus a de-duplicated expanded logical content inventory; recovery levels have separate definitions and evidence.",
@@ -686,8 +773,9 @@ def build_census(catalog, graphics_index, disc, roundtrip):
                         "direct_AT3_reference_table_bytes": direct_at3_table_bytes,
                         "direct_AT3_bounded_preamble_bytes": direct_at3_preamble_bytes,
                         "direct_AT3_validated_node_record_bytes": direct_at3_node_record_bytes,
+                        "direct_YOBJ_YMP_validated_envelope_bytes": direct_yobj_file_bytes,
                     },
-                    "meaning": "Bytes assigned to complete parser-validated records or bounded child extents, de-duplicated across nested TXCs. The 43 RTX3 records that fail the complete length contract are excluded. Direct AT3 preambles are bounded between the reference table and first node; node records require every name slot and extent to satisfy the observed corpus invariant. Their internal fields remain opaque.",
+                    "meaning": "Bytes assigned to complete parser-validated records or bounded child extents, de-duplicated across nested TXCs. The 43 RTX3 records that fail the complete length contract are excluded. Direct AT3 preambles and node envelopes are validated but internally opaque. Direct YOBJ/YMP files require a bounded header and exact POF0 extent; body and field semantics remain opaque.",
                 },
                 "losslessly_rebuildable": {
                     "bytes_A": expanded_payload_bytes,
@@ -737,6 +825,7 @@ def build_census(catalog, graphics_index, disc, roundtrip):
         },
         "texture_corpus": texture_corpus,
         "animation_resource_corpus": graphics_index.get("_at3_resource_corpus", {}),
+        "model_resource_corpus": graphics_index.get("_yobj_resource_corpus", {}),
         "logical_leaf_extensions": extensions,
         "limits": [
             "All-zero members and gaps are measured by byte value only. Their zero contents do not prove intentional padding, placeholder use, or historical purpose.",
@@ -766,17 +855,45 @@ def main():
     args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n",
                            encoding="utf-8")
     physical = report["physical_disc_accounting"]
-    recovery = report["expanded_logical_payload"]["recovery_levels"]
-    print(f"disc: {physical['image_bytes']:,} bytes; measured all-zero spans: "
-          f"{physical['measured_all_zero_bytes']:,}")
-    print(f"logical payload Y: "
-          f"{report['expanded_logical_payload']['information_bearing_payload_bytes_Y']:,} bytes")
-    for name in ("structurally_classified", "losslessly_rebuildable",
-                 "semantically_editable", "runtime_validated_editable"):
+    logical = report["expanded_logical_payload"]
+    recovery = logical["recovery_levels"]
+    print(f"Disc image: {physical['image_bytes']:,} bytes "
+          f"({physical['image_bytes'] / 1_000_000_000:.3f} GB)")
+    print(f"Measured all-zero members/gaps: {physical['measured_all_zero_bytes']:,} bytes "
+          f"({physical['measured_all_zero_percent_of_image']:.4f}% of image)")
+    print(f"Information-bearing terminal members: "
+          f"{physical['information_bearing_terminal_member_bytes']:,} bytes "
+          f"({physical['information_bearing_terminal_member_percent_of_image']:.4f}% of image)")
+    print(f"Nonzero gap/structure spans: "
+          f"{physical['nonzero_unassigned_gap_or_structure_bytes']:,} bytes "
+          f"({physical['nonzero_unassigned_gap_or_structure_percent_of_image']:.4f}% of image)")
+    print(f"Expanded information-bearing payload Y: "
+          f"{logical['information_bearing_payload_bytes_Y']:,} bytes "
+          f"({logical['expanded_payload_percent_of_physical_image']:.4f}% of image)")
+    for name, bytes_key, percent_key, label in (
+        ("structurally_classified", "bytes_Z", "percent_Z_of_Y", "Structurally classified Z/Y"),
+        ("losslessly_rebuildable", "bytes_A", "percent_A_of_Y", "Losslessly rebuildable A/Y"),
+        ("semantically_editable", "bytes_B", "percent_B_of_Y", "Semantically editable B/Y"),
+        ("runtime_validated_editable", "bytes_C", "percent_C_of_Y", "Runtime-validated editable C/Y"),
+    ):
         row = recovery[name]
-        percent_key = next(key for key in row if key.startswith("percent_") and key.endswith("_of_Y"))
-        bytes_key = next(key for key in row if key in ("bytes_Z", "bytes_A", "bytes_B", "bytes_C"))
-        print(f"{name}: {row[percent_key]:.4f}% ({row[bytes_key]:,}/{row['denominator_bytes_Y']:,})")
+        print(f"{label}: {row[bytes_key]:,}/{row['denominator_bytes_Y']:,} bytes "
+              f"({row[percent_key]:.4f}%)")
+
+    classified_only = logical["classified_but_not_semantically_editable"]
+    opaque = logical["opaque_after_structural_classification"]
+    remaining = logical["remaining_after_semantic_editability"]
+    print(f"Structurally classified, not editable Z-B: {classified_only['bytes']:,} bytes "
+          f"({classified_only['percent_of_Y']:.4f}% of Y)")
+    print(f"All non-editable payload Y-B: {remaining['bytes']:,} bytes "
+          f"({remaining['percent_of_Y']:.4f}% of Y)")
+    print(f"Strictly unclassified payload Y-Z: {opaque['bytes']:,} bytes "
+          f"({opaque['percent_of_Y']:.4f}% of Y)")
+    print("Opaque Y-Z byte breakdown:")
+    for item in opaque["exclusive_byte_weighted_categories"]:
+        label = item["name"].replace("_", " ")
+        print(f"  {label}: {item['source_bytes']:,} bytes "
+              f"({item['percent_of_opaque_payload']:.4f}% of Y-Z)")
     print(f"report: {args.output}")
 
 

@@ -114,6 +114,17 @@ regions but does not decode their fields, establish UV meaning, or support safe
 growth. Compare reference name stems with sibling TXC member names to identify
 which textures an AT file references.
 
+For `.ymp` resources, `python3 tools/yobj.py SOURCE.ymp --output-json
+EDITABLE.json` inspects the observed `YOBJ` envelope and delta-coded `POF0`
+pointer-slot list. Rebuild an unchanged or same-size-edited representation with
+`python3 tools/yobj.py --build-json EDITABLE.json --output REBUILT.ymp`. The
+parser accepts the direct `YOBJ` prefix and one `DUMY`-prefixed variant, checks
+the fixed header and exact POF0-to-EOF extent, and verifies that decoded pointer
+slots and their nonzero targets stay within the model envelope. The body remains
+opaque. The current writer rejects growth because it does not yet establish
+which pointer classes the runtime relocates or the semantics of body arrays.
+See [YOBJ evidence](../tasks/YOBJ_MODEL_RECOVERY.md).
+
 `--stored-order` is a diagnostic that reads indexed pixels linearly and uses
 palette entries as stored, without the PSMT8 CLUT index permutation or GS alpha
 expansion. The normal export applies that CLUT map, expands GS alpha, and leaves
@@ -225,9 +236,10 @@ bytes as editable meaning.
 
 Report each recovery level independently. Every nonzero physical member has a
 validated hierarchy path and extent. Strict parser-backed structural coverage
-is **Z/Y = 249,834,218 / 1,303,947,016 = 19.1598%**: complete RTX3 parses,
+is **Z/Y = 446,919,526 / 1,303,947,016 = 34.2744%**: complete RTX3 parses,
 non-texture members bounded by parsed UI bundle tables, reversible text/message
-sources, and directly parsed AT3 reference tables and validated node envelopes.
+sources, directly parsed AT3 reference tables and validated node envelopes, and
+direct YOBJ/YMP header-plus-POF0 envelopes.
 The 43 PSMCT32 RTX3 records fail the complete declared-length check and are
 excluded from Z even though their headers identify candidate dimensions and
 storage mode. The graphics index records strict parse success separately from
@@ -247,6 +259,20 @@ reference tables (68,144 bytes), bounded preambles (3,328), and node records
 counted as bounded UI-bundle members and are not added again. See
 [`AT3 parser evidence`](../tasks/TITLE_TEXTURE_RENDERING.md) and the
 `animation_resource_corpus` section of the census JSON.
+
+The YOBJ audit covers 899 direct YMP resources (197,085,308 bytes) and 14
+nested UI-bundle YMP resources (1,007,280 bytes). All 913 resources parse and
+rebuild byte-identically. The parser validates a fixed 0x40-byte header, the
+duplicated POF0 offset, a POF0 signature/length that reaches EOF, four bounded
+numeric count/offset fields, and 807,439 delta-coded pointer-slot entries across
+the direct and nested corpus. Each decoded nonzero target is inside the model
+envelope or exactly at the POF0 boundary. One `DUMY`-prefixed basebone file has
+an extended all-zero POF0 tail; it is preserved. Direct YMP envelopes add
+197,085,308 bytes to Z. Nested YMP members were already counted once as bounded
+UI-bundle extents. The parser does not name the numeric fields, decode geometry,
+prove runtime relocation behavior, or permit file growth. See
+[`YOBJ model evidence`](../tasks/YOBJ_MODEL_RECOVERY.md) and the
+`model_resource_corpus` census section.
 Semantic editability is **B/Y = 239,532,814 / 1,303,947,016 = 18.3698%**,
 comprising 239,444,320 editable texture bytes and 88,494 reversible text/message
 source bytes. This measures available editable representations, not the share
@@ -254,9 +280,9 @@ already translated. Runtime-validated editable coverage is **C/Y = 0%**.
 
 Keep two disjoint work-queue views. The complete non-editable remainder **Y-B**
 is 1,064,414,202 bytes (81.6302% of Y); it includes structurally bounded members
-that do not yet have an editable representation. Of that, **Z-B = 10,301,404**
-bytes (0.7900% of Y) are structurally classified but not semantically editable.
-The strictly unclassified remainder **Y-Z = 1,054,112,798** bytes (80.8402% of
+that do not yet have an editable representation. Of that, **Z-B = 207,386,712**
+bytes (15.9045% of Y) are structurally classified but not semantically editable.
+The strictly unclassified remainder **Y-Z = 857,027,490** bytes (65.7256% of
 Y) is the byte base for the opaque-payload breakdown below. These bases answer
 different questions and must not be substituted for one another.
 
@@ -280,14 +306,14 @@ signature, bundle member type, filename or path; they do not claim the opaque
 bodies have been semantically decoded.
 
 For the stricter opaque queue, use `Y - Z`, not `Y - B`. Its disjoint byte shares
-are: video/cinematics 64.9941% (685,111,296 bytes), model/geometry candidates
-19.0326% (200,625,168), audio/sound candidates 14.8422% (156,453,642),
-executables/modules 0.3891% (4,101,870), animation/motion candidates 0.3540%
-(3,731,880), other unclassified 0.2073% (2,184,740), font assets 0.0851%
-(896,928), script/data candidates 0.0822% (866,626), and unresolved graphics
-0.0133% (140,648). These are evidence-led inventory labels; candidate models,
-audio, animation and script bodies remain opaque. The AT3 node envelopes narrow
-the opaque queue without increasing semantic editability.
+are: video/cinematics 79.9404% (685,111,296 bytes), audio/sound candidates
+18.2554% (156,453,642), executables/modules 0.4786% (4,101,870),
+animation/motion candidates 0.4354% (3,731,880), model/geometry candidates
+0.4130% (3,539,860), other unclassified 0.2549% (2,184,740), font assets
+0.1047% (896,928), script/data candidates 0.1011% (866,626), and unresolved
+graphics 0.0164% (140,648). These are evidence-led inventory labels; video,
+audio, YPC model and animation bodies remain opaque. The AT3 and YOBJ envelopes
+narrow the opaque queue without increasing semantic editability.
 
 Texture-specific coverage remains a distinct measure: 30,397 occurrences
 contain 239,584,968 TXC bytes, of which 239,444,320 (99.9413%) have editable

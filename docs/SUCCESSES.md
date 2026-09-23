@@ -224,6 +224,39 @@ References: `tools/at3.py`, `tools/asset_recovery_census.py`,
 [`asset census`](../reports/asset_recovery_census.json),
 [`title evidence`](../tasks/TITLE_TEXTURE_RENDERING.md).
 
+## YOBJ/YMP header and POF0 extents can be audited and rebuilt losslessly
+
+Symptom: nearly 200 MB of `.ymp` model candidates were counted only by filename;
+their model bodies were opaque and could not be separated from malformed or
+misidentified files by the asset census.
+Mechanism: 898 direct files begin with `YOBJ`; one `basebone.ymp` begins with an
+8-byte `DUMY` preamble and then `YOBJ`. Both variants carry a fixed 0x40-byte
+header whose duplicated POF0 offset resolves to a `POF0` block ending exactly
+at EOF. Its length-bounded payload decodes into monotonically increasing,
+four-byte-aligned pointer-slot offsets. The parser validates all listed slots
+and their nonzero targets against the complete model envelope. It keeps all
+header numbers and body bytes opaque. The basebone file's additional zero tail
+inside POF0 is retained.
+Pathway: use `python3 tools/yobj.py SOURCE.ymp --output-json EDITABLE.json`, then
+`python3 tools/yobj.py --build-json EDITABLE.json --output REBUILT.ymp` for an
+unchanged or same-size body edit. The bounded writer rejects growth.
+Verification: `make asset-census` parses and rebuilds all 899 direct YMP files
+(197,085,308 bytes) and 14 nested UI-bundle YMP members exactly. It validates
+803,754 direct and 3,685 nested POF0 pointer slots. The 899 direct envelopes
+add 197,085,308 bytes to structural coverage Z; nested members were already
+counted in their bundle extents. Tests cover both header variants, POF0 decoding,
+same-size body edits, malformed pointer streams and no-growth rejection.
+Scope: every YMP in the current prepared archive catalog and parsed UI bundles.
+Limits: this establishes envelope structure, not geometry/material semantics,
+safe internal relocation, YPC structure, edited-model runtime behavior or
+semantic editability. The external
+[YOBJ POF0 generator](https://github.com/rumblerosesxx/yobj_pof0_generator/blob/main/pof0gen.c)
+was a cross-format lead; the tool's claims are not treated as game provenance.
+References: `tools/yobj.py`, `tools/asset_recovery_census.py`,
+`tests/test_yobj.py`, `tests/test_asset_recovery_census.py`,
+[`YOBJ evidence`](../tasks/YOBJ_MODEL_RECOVERY.md),
+[`asset census`](../reports/asset_recovery_census.json).
+
 ## UTF-8 translation edits can grow through CP932 and ISO relocation
 
 Symptom: translated text may encode to more bytes than the original Japanese
@@ -421,15 +454,16 @@ measurements only; do not infer intentional padding from zero contents.
 
 Verification: `make asset-census` partitions the 4,587,749,376-byte image
 exactly and reports expanded logical payload Y=1,303,947,016. The distinct
-levels are Z/Y=19.1598% parser-backed structure, A/Y=100% unchanged-source
+levels are Z/Y=34.2744% parser-backed structure, A/Y=100% unchanged-source
 rebuildability, B/Y=18.3698% semantic editability, and C/Y=0% runtime-validated
 editability. The 43 short PSMCT32 records (140,648 bytes) are excluded from Z
 because strict RTX3 parsing rejects their complete lengths; they remain in the
 unresolved graphics queue. TXC-only editability is 239,444,320/239,584,968 bytes
 (99.9413%). The AT3 audit covers 2,328 direct/nested resources and validates
-26,798 node envelopes with exact no-op rebuilds. `Y-B` is 1,064,414,202 bytes;
-the bridge `Z-B` is 10,301,404 bytes; the strictly unclassified `Y-Z` remainder
-is 1,054,112,798 bytes. Separate
+26,798 node envelopes with exact no-op rebuilds. The YOBJ audit covers 899
+direct and 14 nested resources, validating 807,439 POF0 pointer slots with exact
+no-op rebuilds. `Y-B` is 1,064,414,202 bytes; the bridge `Z-B` is 207,386,712
+bytes; the strictly unclassified `Y-Z` remainder is 857,027,490 bytes. Separate
 byte-weighted category reports balance each denominator. Tests verify physical
 partitioning, nested accounting, parser-validity gating, distinct level
 numerators, `Y-B` and `Y-Z` category totals, and reference binding.

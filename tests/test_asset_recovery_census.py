@@ -137,6 +137,23 @@ class AssetRecoveryCensusTests(unittest.TestCase):
             31,
         )
 
+    def test_validated_direct_yobj_envelope_extends_structure_not_editability(self):
+        leaves, index, disc, roundtrip = self.fixture()
+        ymp_leaf = next(leaf for leaf in leaves if leaf["source"] == "00007.bin")
+        ymp_leaf["name"] = "disc!/model/test.ymp"
+        ymp_leaf["_yobj_structural_bytes"] = ymp_leaf["size"]
+
+        census = build_census(leaves, index, disc, roundtrip)
+        levels = census["expanded_logical_payload"]["recovery_levels"]
+        self.assertEqual(levels["structurally_classified"]["bytes_Z"], 50)
+        self.assertEqual(
+            levels["structurally_classified"]["components"][
+                "direct_YOBJ_YMP_validated_envelope_bytes"
+            ],
+            16,
+        )
+        self.assertEqual(levels["semantically_editable"]["bytes_B"], 31)
+
 
 if __name__ == "__main__":
     unittest.main()
