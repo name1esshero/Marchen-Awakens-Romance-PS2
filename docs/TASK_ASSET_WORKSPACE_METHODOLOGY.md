@@ -56,16 +56,45 @@ keeps the original compressed bytes for untouched files; edited decoded files ar
 wrapped with a literal identity table, and normal container relocation can carry
 their growth. This is a decoded binary editing layer, not yet image editing.
 
-The decoded bundles begin with a little-endian resource count and 32-byte records
-containing a name, type (`at3` or `txc` in examined menu examples), size, and offset.
-`at3` payloads begin `AT  ` and contain animation/resource metadata with references
-such as `window.tga` and `icon.tga`; texture resources in examined bundles begin
-`RTX3`. The `.tga` names identify authoring-image references; they do not mean the
-decoded `.b` itself is a standalone TGA. Next establish the nested table contract,
-then recover an RTX3-to-editable-image decoder and matching importer. Prove pixel
-and container round-trips on one representative before changing a graphical
-translation, and keep unknown fields/palette or texture constraints unresolved
-until observed. Runtime support remains unverified.
+The common decoded bundle begins with a little-endian resource count and 32-byte
+records containing a 16-byte name, 4-byte type, size at record +20, offset at +24,
+and an unknown field at +28. `tools/ui_bundle.py` validates extents and extracts
+stable-index member sidecars; its manifest anchors the source hash and preserves
+unknown record fields. `make prepare-assets` extracted 3,084 records from 721 of
+the 724 `.b` payloads. Types observed were `at3` (1,605), `txc` (1,457), `ymp`
+(14), `pac` (7), and `txt` (1). All observed member offsets are 16-byte aligned;
+no table entry extents overlap. `python3 tools/ui_bundle.py audit extracted/assets`
+rebuilds every untouched extracted bundle and verifies exact decoded-byte identity:
+all 721 passed. Editing an extracted member and running the normal relocated asset
+build updates its size/offset in the inner table, wraps the changed bundle in BPE,
+and allows growth through the enclosing archive. Do not edit the decoded `.bin`
+and its extracted members in the same build; the builder rejects that conflict.
+
+Three `.yma` files (`top_yma.b`, `war_common_yma.b`, `war_stage_yma.b`) do not
+match this bundle header and remain decoded raw files. Treat that as a known format
+boundary, not malformed input. `at3` payloads begin `AT  ` and contain
+animation/resource metadata with references such as `window.tga` and `icon.tga`;
+sampled `txc` payloads begin `RTX3`. The `.tga` names identify raster-image
+authoring references; the `.b` and `.txc` members contain animation and RTX3
+texture data. `tools/rtx3.py` exports PSMT4, PSMT8 and PSMCT32 to uncompressed
+32-bit TGA, and imports uncompressed 24/32-bit TGA back into the original RTX3
+dimensions and palette. For example:
+
+```sh
+python3 tools/rtx3.py export SOURCE.txc /tmp/texture.tga
+# Edit /tmp/texture.tga in an image editor, preserving dimensions.
+python3 tools/rtx3.py import SOURCE.txc /tmp/texture-edited.txc /tmp/texture.tga
+```
+
+Copy the rebuilt TXC over its corresponding `.resources/` member sidecar, then
+use the normal relocated asset build. A no-op import returns the exact source
+bytes. Indexed imports choose the nearest color in the existing palette; they do
+not create colors or enlarge a texture. PSMT8H/PSMT4HL/PSMT4HH are recognized by
+the header parser but deliberately rejected by the image decoder until their
+storage order is established. Treat standalone previews as texture surfaces:
+transparency, atlas regions, UVs, and repeated texture coordinates can make them
+look incomplete or tiled. Decode associated `AT  ` metadata and render the
+composition before translating artwork. Runtime support remains unverified.
 
 For a discovered plain-text leaf, edit its `.utf8.txt` companion. For `_msg.dat`, use `localization/messages.json`; for the two tab-separated menu
 tables, use `localization/card_list.json` and `localization/database.json`. These

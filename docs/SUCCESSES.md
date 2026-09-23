@@ -57,6 +57,66 @@ References: [asset methodology](TASK_ASSET_WORKSPACE_METHODOLOGY.md),
 `tools/bpe.py`, `tools/assets.py`, `tests/test_bpe.py`, `tests/test_assets.py`,
 `reports/ui_b_format_survey.json`.
 
+## Common menu bundles expose typed resources with lossless extraction and relocation
+
+Symptom: the decoded BPE bytes still combine animation metadata, textures, and
+other resources, so editing a whole opaque bundle would leave inner extents stale.
+Mechanism: in 721 of 724 menu `.b` payloads, `u32le@0` is an entry count followed by
+a `01 01 00 00` marker and 32-byte records. Each record carries a 16-byte name,
+4-byte type, size at +20, offset at +24, and an unknown +28 field. The parser checks
+the table extent, 16-byte member alignment and non-overlap, while retaining the
+original decoded container bytes and all gaps. Extracted members use stable index
+names and source-hash manifests. Same-size edits patch the old range; grown members
+append at a 16-byte boundary and update size/offset. BPE and outer archive builders
+then propagate growth.
+Pathway: `make prepare-assets` creates `.bundle.json` manifests and `.resources/`
+member sidecars beside decoded `.b` payloads. Edit one member and run the existing
+`tools/assets.py build ... --relocate` workflow. Do not edit both a decoded bundle
+and its member sidecars in the same build.
+Verification: `python3 tools/ui_bundle.py audit extracted/assets` reports 721/721
+untouched bundle rebuilds byte-identically across 3,084 resources (1,605 `at3`,
+1,457 `txc`, 14 `ymp`, seven `pac`, one `txt`); no table ranges overlap and all
+offsets are 16-byte aligned. A synthetic `txc` growth test reparses after BPE and
+PAC relocation. `python3 -m unittest tests.test_ui_bundle tests.test_assets -v`
+passed 13 tests.
+Limits: three `.yma` BPE payloads use an unresolved layout. TXC pixel conversion is
+covered in the later RTX3 entry below; runtime asset acceptance and runtime
+relocation remain unverified.
+References: `tools/ui_bundle.py`, `tools/assets.py`, `tests/test_ui_bundle.py`,
+`tests/test_assets.py`, `reports/ui_bundle_survey.json`,
+[asset methodology](TASK_ASSET_WORKSPACE_METHODOLOGY.md).
+
+## Common RTX3 modes convert to editable TGA while preserving indexed palettes
+
+Symptom: animation metadata names `.tga` authoring images, but the corresponding
+menu resources are `RTX3` textures whose GS layout cannot be opened directly as a
+normal raster image.
+Mechanism: the 64-byte RTX3 header carries GS TEX0 PSM/TW/TH fields, dimensions,
+pixel extent and (for indexed modes) a trailing CLUT. The PSMCT32, PSMT8 and PSMT4
+pixel swizzles can be decoded to RGBA and exported as uncompressed 32-bit TGA.
+Import keeps the original dimensions and CLUT, maps colors to existing palette
+entries, and swizzles them back into the original layout. When imported pixels
+equal the source, it returns the original bytes to avoid gratuitous changes.
+Pathway: `python3 tools/rtx3.py export SOURCE.txc OUTPUT.tga`, edit at the same
+dimensions, then `python3 tools/rtx3.py import SOURCE.txc OUTPUT.txc INPUT.tga`
+and replace the matching extracted UI-resource sidecar before the normal asset
+build. Bundle/BPE/archive growth handling is already tested independently.
+Verification: synthetic PSMT4/PSMT8/PSMCT32 export/import tests pass, including an
+indexed pixel edit and malformed input checks. Actual 512x512 PSMT8 and 128x128
+PSMT4 textures export/import unchanged byte-identically; one-pixel edits in both
+real samples decode back to the expected RGBA. `python3 -m unittest
+tests.test_rtx3 tests.test_ui_bundle tests.test_assets -v` passed 18 tests.
+Scope: the observed RTX3 corpus; census has 30,397 resources (PSMCT32 43, PSMT8
+27,316, PSMT4 1,654, PSMT8H 677, PSMT4HL 690, PSMT4HH 17).
+Limits: PSMT8H/PSMT4HL/PSMT4HH are parsed but not rendered because their storage
+ordering has not been corroborated. Indexed palette colors and dimensions cannot
+grow. Initial previews can be transparent atlases or repeat-wrapped textures;
+AT animation/UV composition and runtime rendering are unresolved. No English
+graphic has yet been translated and validated in game.
+References: `tools/rtx3.py`, `tests/test_rtx3.py`,
+`reports/rtx3_format_survey.json`, `reports/translation_surfaces.json`,
+[asset methodology](TASK_ASSET_WORKSPACE_METHODOLOGY.md).
+
 ## UTF-8 translation edits can grow through CP932 and ISO relocation
 
 Symptom: translated text may encode to more bytes than the original Japanese

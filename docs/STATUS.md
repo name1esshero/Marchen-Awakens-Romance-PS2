@@ -78,10 +78,13 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   such as YPC geometry, texture payloads, audio, fonts and scripts remain binary;
   moved/grown assets have no runtime validation. The two catalog tables and the
   recovered `_msg.dat` table are translation-bearing surfaces. All 724 menu `.b`
-  leaves now have a verified decoded-binary layer and experimental edited-payload
-  reinsertion, but their nested `at3`/`txc` resources are not yet editable as images;
-  sampled `AT  ` records reference authoring names such as `window.tga`, and sampled
-  texture data begins `RTX3`. All 229 messages have draft translations; names,
+  leaves now have a verified decoded-binary layer; 721 also have 3,084 individually
+  extracted nested resources that rebuild byte-exactly when untouched. Three `.yma`
+  payloads use a different unresolved layout. RTX3 PSMT4/PSMT8/PSMCT32 have an
+  editable-TGA conversion path; PSMT8H/PSMT4HL/PSMT4HH are parsed but deliberately
+  not rendered while their storage ordering is unresolved. Initial previews include
+  atlas/tiled-looking textures, and animation/UV references are not yet decoded, so
+  they are not evidence of correct whole-screen composition. All 229 messages have draft translations; names,
   mechanics, and display constraints need review. DMY files, module internals and DVP
   overlay semantics remain open.
 - Independent retail-dump authentication remains unestablished.

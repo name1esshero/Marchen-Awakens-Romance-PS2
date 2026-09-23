@@ -14,6 +14,7 @@ import messages
 import bpe
 import message_catalog
 import text_catalog
+import ui_bundle
 from test_bootstrap import iso as make_iso
 
 
@@ -243,6 +244,46 @@ class AssetsTests(unittest.TestCase):
                 rebuilt_bpe = stream.read(member['size'])
             self.assertEqual(bpe.decode(rebuilt_bpe), edited)
             self.assertGreater(len(rebuilt_bpe), len(bpe.encode(edited)) - 1)
+
+    def test_ui_bundle_member_edit_grows_and_relocates_through_bpe_and_pac(self):
+        decoded = bytearray(0x36)
+        struct.pack_into('<I', decoded, 0, 1)
+        decoded[4:8] = b'\x01\x01\0\0'
+        decoded[16:22] = b'window'
+        decoded[32:36] = b'txc\0'
+        struct.pack_into('<III', decoded, 36, 6, 0x30, 0)
+        decoded[0x30:] = b'pixels'
+        original = bytearray(pac([bpe.encode(bytes(decoded))]))
+        original[16 + 16:16 + 20] = b'b\0\0\0'
+        original = bytes(original)
+
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d) / 'source'
+            self.export(original, root)
+            with redirect_stdout(io.StringIO()):
+                assets.prepare(root, report=None)
+            audit = ui_bundle.audit(root)
+            self.assertEqual(audit['bundle_count'], 1)
+            self.assertEqual(audit['untouched_exact_rebuilds'], 1)
+            self.assertEqual(audit['type_counts'], {'txc': 1})
+            layout = json.loads((root / 'layout.json').read_text())
+            leaf = next(piece for piece in layout['pieces'] if piece.get('name') == 'test.b')
+            manifest = json.loads((root / leaf['ui_bundle_source']).read_text())
+            member_path = root / leaf['ui_bundle_dir'] / manifest['entries'][0]['source']
+            member_path.write_bytes(b'English image replacement')
+
+            output = Path(d) / 'mod.pac'
+            assets.build(root, output, relocate=True)
+            with output.open('rb') as stream:
+                pac_entry = assets.archive(stream, 0, output.stat().st_size)[2][0]
+                stream.seek(pac_entry['offset'])
+                packed_bundle = stream.read(pac_entry['size'])
+            rebuilt_bundle = bpe.decode(packed_bundle)
+            rebuilt_manifest = ui_bundle.parse(rebuilt_bundle)
+            entry = rebuilt_manifest['entries'][0]
+            self.assertEqual(rebuilt_bundle[entry['offset']:entry['offset'] + entry['size']],
+                             b'English image replacement')
+            self.assertGreater(entry['offset'], 0x30)
 
 
 if __name__ == '__main__':

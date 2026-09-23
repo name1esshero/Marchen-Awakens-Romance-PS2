@@ -16,6 +16,34 @@ is not a PAC container or that the field is necessarily a flag. Evidence:
 `reports/assets_census.json`, generated from the pinned image;
 [asset methodology](TASK_ASSET_WORKSPACE_METHODOLOGY.md).
 
+## Three `.yma.b` menu payloads do not use the common UI resource table
+
+Hypothesis: every BPE-decoded menu `.b` starts with a `u32le` entry count,
+`01 01 00 00` marker, and `16 + count * 32` table. `top_yma.b`,
+`war_common_yma.b`, and `war_stage_yma.b` contradict this: their decoded payloads
+are 4,576, 64, and 256 bytes, and the candidate table marker is absent or shifted.
+The generic parser rejects these rather than interpreting their bytes as member
+records. Keep their decoded payloads available as raw sidecars until another
+independent layout is established. This does not show that they are not YMA files,
+that their content is uneditable, or that other `.yma` resources share one format.
+Evidence: `reports/ui_bundle_survey.json`; the other 721 menu bundles pass the
+common table parser and exact no-op rebuild audit.
+
+## A decoded texture preview is not necessarily a complete UI image
+
+Hypothesis: a rendered RTX3 image should appear as one complete screen graphic,
+so repeated or incomplete content indicates failed decoding. Actual menu TXCs
+include transparent texture surfaces and large PSMT8 images with repeated-looking
+regions; the paired `AT  ` members contain animation/authoring references, and
+the texture may be addressed through atlas regions or repeat-wrapped UVs. Preview
+appearance alone therefore does not distinguish bad swizzling from intended
+texture layout or missing composition metadata. Keep the verified PSMT4/PSMT8
+pixel import/export separate from claims about final UI appearance. Decode the
+associated AT/UV metadata and compare rendered output before changing the
+swizzler. PSMT8H/PSMT4HL/PSMT4HH stay parse-only pending their own storage-order
+evidence. Evidence: RTX3 census and sample previews in
+`reports/rtx3_format_survey.json`; final in-game rendering has not been tested.
+
 ## A 16-byte copy does not establish a four-float aggregate
 
 Hypothesis: `CCamera::GetViewRect` returns a four-float rectangle by value.

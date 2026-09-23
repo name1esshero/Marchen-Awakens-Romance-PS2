@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "evidence_date": "2026-09-22",
+  "reference_sha256": "cc059a3acf818dfbd0a782a9d20ee67e020d167866cd1c4dca77e6eb9224e3ec",
+  "scope": "Prepared workspace bundles accepted by the observed menu resource-table parser",
+  "schema": {
+    "count": "u32le@0",
+    "header_marker_hex": "01010000",
+    "record_size": 32,
+    "name": "16 bytes",
+    "type": "4 bytes",
+    "size": "u32le@record+20",
+    "offset": "u32le@record+24",
+    "flags": "u32le@record+28; observed zero, semantics unresolved",
+    "member_alignment": 16
+  },
+  "bundle_count": 721,
+  "resource_count": 3084,
+  "decoded_bytes": 127779968,
+  "type_counts": {
+    "at3": 1605,
+    "txc": 1457,
+    "ymp": 14,
+    "txt": 1,
+    "pac": 7
+  },
+  "untouched_exact_rebuilds": 721,
+  "edited_bundles": 0,
+  "unparsed": [
+    {
+      "name": "disc!/_DATA.YFS;1!/data/menu/top_yma.b",
+      "reason": "unknown UI bundle header variant"
+    },
+    {
+      "name": "disc!/_DATA.YFS;1!/data/menu/war_common_yma.b",
+      "reason": "unknown UI bundle header variant"
+    },
+    {
+      "name": "disc!/_DATA.YFS;1!/data/menu/war_stage_yma.b",
+      "reason": "unknown UI bundle header variant"
+    }
+  ]
+}

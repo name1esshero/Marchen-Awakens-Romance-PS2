@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "evidence_date": "2026-09-22",
+  "reference_sha256": "cc059a3acf818dfbd0a782a9d20ee67e020d167866cd1c4dca77e6eb9224e3ec",
+  "scope": "RTX3 texture payload census in the prepared disc workspace",
+  "count": 30397,
+  "header": {
+    "magic": "RTX3",
+    "declared_size": "u32le@4 equals file_size - 8",
+    "gs_tex0": "u64le@8; observed PSM/TW/TH decode agrees with dimension fields",
+    "dimensions": "u16le width,height @0x20; powers of two observed",
+    "pixel_bytes": "u32le@0x24; equals dimensions times PSM bits per pixel",
+    "pixel_data": "offset 0x40",
+    "palette": "trailing 16-entry/64-byte or 256-entry/1024-byte CLUT for indexed modes"
+  },
+  "psm_counts": {
+    "0_PSMCT32": 43,
+    "19_PSMT8": 27316,
+    "20_PSMT4": 1654,
+    "27_PSMT8H": 677,
+    "36_PSMT4HL": 690,
+    "44_PSMT4HH": 17
+  },
+  "capabilities": {
+    "export_import": ["PSMCT32", "PSMT8", "PSMT4"],
+    "tga_output": "Uncompressed true-color 32-bit TGA",
+    "tga_input": "Uncompressed true-color 24- or 32-bit TGA",
+    "indexed_palette": "Preserved; imported pixels map to nearest existing palette color",
+    "canvas_growth": "Unsupported; replacement dimensions must match the source",
+    "high_bit_psm": "Header and extents parse; pixel decoding is deliberately refused pending swizzle/layout evidence"
+  },
+  "verification": {
+    "synthetic": "PSMT4/PSMT8/PSMCT32 TGA export/import tests; unchanged files remain byte-identical; same-size indexed pixel edit reparses and decodes as expected",
+    "real_samples": "One PSMT8 512x512 and one PSMT4 128x128 game TXC export/import to TGA without edits and remain byte-identical",
+    "container": "Synthetic grown nested TXC resource reinserted through UI table, BPE wrapper and PAC relocation",
+    "runtime": "Not performed"
+  },
+  "limits": [
+    "TGA pixel data is decoded, but AT animation, atlas regions, UV coordinates and final screen composition are not yet interpreted.",
+    "The preview may show transparent regions or repeated texture content; this alone does not prove a swizzle failure or a complete UI image.",
+    "No English graphic has been translated or validated in game yet.",
+    "No indexed palette creation, canvas resizing, or PSMT8H/PSMT4HL/PSMT4HH pixel decode is supported."
+  ]
+}

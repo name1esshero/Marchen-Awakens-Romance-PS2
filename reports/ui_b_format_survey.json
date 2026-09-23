@@ -2,7 +2,7 @@
   "version": 1,
   "evidence_date": "2026-09-22",
   "reference_sha256": "cc059a3acf818dfbd0a782a9d20ee67e020d167866cd1c4dca77e6eb9224e3ec",
-  "scope": "All 724 .b leaves under disc!/_DATA.YFS;1!/data/menu/ in the prepared workspace. Wrapper decode census plus sampled nested resource-table inspection; RTX3 pixel decoding is not implemented.",
+  "scope": "All 724 menu .b leaves under disc!/_DATA.YFS;1!/data/menu/ in the prepared workspace. Wrapper decode census plus sampled nested resource-table inspection; selected RTX3 modes now export/import through TGA.",
   "count": 724,
   "common_signature_hex": "42504500",
   "signature_ascii": "BPE\\0",
@@ -30,9 +30,9 @@
       "64k_to_1m": 338
     },
     "roundtrip_tested": "decoded payloads are reinsertable; unchanged compressed leaves preserve source bytes; edited payload packing uses a literal identity table and does not claim compressed-byte identity",
-    "nested_resources": "Sampled decoded bundles use 32-byte records with names, type at3/txc, size, offset; sampled at3 payloads begin AT  and reference .tga names; sampled txc payloads begin RTX3.",
+    "nested_resources": "Sampled decoded bundles use 32-byte records with names and type at3/txc; sampled at3 payloads begin AT  and reference .tga raster-image names; sampled txc payloads begin RTX3.",
     "decoded_all_entries": true,
-    "rendered": false
+    "rendered": "Individual RTX3 PSMT4/PSMT8/PSMCT32 textures can be exported as TGA. AT composition, atlas/UV interpretation and whole-screen rendering have not been implemented."
   },
   "entries": [
     {

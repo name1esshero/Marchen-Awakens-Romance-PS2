@@ -61,13 +61,15 @@
       "path": "disc!/_DATA.YFS;1!/data/menu/*.b",
       "count": 724,
       "translation_relevance": "likely_graphical_or_structured_menu_content",
-      "evidence": "All 724 leaves decoded successfully and produced exactly the output length declared at u32le@0x0c. Sampled decoded files contain 32-byte at3/txc resource records; AT  payloads reference .tga authoring names, and sampled txc payloads begin RTX3.",
-      "confidence": "OBSERVED: BPE wrapper and declared output sizes validated across all entries; nested entry schema established on samples; image semantics unresolved",
-      "extraction_status": "raw source plus adjacent .decoded.bin sidecar for all 724 resources",
-      "editability_status": "decoded binary editable; graphics not yet image-editable",
-      "rebuild_status": "untouched compressed source preserved; edited payload is wrapped with identity-table BPE and reinserted by the asset builder",
-      "relocation_status": "synthetic edited-BPE growth and nested archive relocation tested; retail runtime acceptance unverified",
-      "header_survey": "reports/ui_b_format_survey.json"
+      "evidence": "All 724 leaves decode to declared sizes. A validated 32-byte bundle table occurs in 721 files: 3,084 members across at3/txc/ymp/pac/txt; three .yma bundles use an unresolved alternate layout. All 721 untouched extracted tables rebuild byte-exactly. AT payloads reference raster TGA authoring names. tools/rtx3.py exports/imports PSMT4, PSMT8 and PSMCT32 at fixed dimensions with the original palette; PSMT8H/PSMT4HL/PSMT4HH are parse-only pending storage-order evidence. Atlas/UV composition and game runtime display remain unverified.",
+      "confidence": "OBSERVED: BPE, common resource-table layouts and selected RTX3 conversions validated; unknown fields, high-bit texture layouts and full UI composition unresolved",
+      "extraction_status": "original, decoded .bin, and separate raw sidecars for 3,084 nested resources; three alternate .yma payloads remain decoded raw",
+      "editability_status": "decoded payload and member sidecars editable; PSMT4/PSMT8/PSMCT32 TXC members convert to fixed-dimension TGA using existing palettes",
+      "rebuild_status": "untouched BPE preserved byte-identically; edited members update inner table and rewrap BPE",
+      "relocation_status": "synthetic edited-resource growth tested through BPE and PAC; game runtime acceptance unverified",
+      "header_survey": "reports/ui_b_format_survey.json",
+      "resource_table_survey": "reports/ui_bundle_survey.json",
+      "texture_survey": "reports/rtx3_format_survey.json"
     },
     {
       "path": "disc!/_DATA.YFS;1!/data/script/*.SCD and MAR_SCP.SCI",
@@ -87,9 +89,9 @@
       "evidence": "Sampled standalone and bundled texture resources begin RTX3; pixel layout, dimensions/palette semantics and import/export are unresolved.",
       "confidence": "HYPOTHESIS: translation relevance inferred from path and asset role",
       "extraction_status": "raw binary leaves",
-      "editability_status": "opaque",
-      "rebuild_status": "container reinsertion only",
-      "relocation_status": "texture references/runtime behavior not audited"
+      "editability_status": "PSMT4/PSMT8/PSMCT32 editable as fixed-dimension TGA using existing palette; unsupported PSMs retained raw",
+      "rebuild_status": "imported RTX3 replaces its extracted nested TXC member; existing UI-table/BPE/archive builders reinsert it",
+      "relocation_status": "nested container growth is supported; texture canvas/palette growth and runtime references are not audited"
     }
   ]
 }

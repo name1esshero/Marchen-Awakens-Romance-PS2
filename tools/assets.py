@@ -16,6 +16,7 @@ import messages
 import message_catalog
 import text_catalog
 import bpe
+import ui_bundle
 
 CHUNK = 1024 * 1024
 
@@ -251,8 +252,20 @@ def build_node(root, output, relocate=False, translations=None, text_translation
                 original = source.read_bytes()
                 if hashlib.sha256(original).hexdigest() != p.get('bpe_original_sha256'):
                     raise ValueError(f'BPE source differs from prepared original: {logical_path}')
-                decoded = safe(root, p['bpe_source']).read_bytes()
-                if hashlib.sha256(decoded).hexdigest() != p.get('bpe_decoded_sha256'):
+                decoded_source = safe(root, p['bpe_source'])
+                decoded = decoded_source.read_bytes()
+                decoded_edited = hashlib.sha256(decoded).hexdigest() != p.get('bpe_decoded_sha256')
+                if p.get('ui_bundle_source'):
+                    bundle_manifest_path = safe(root, p['ui_bundle_source'])
+                    bundle_dir = safe(root, p['ui_bundle_dir'])
+                    manifest = json.loads(bundle_manifest_path.read_text(encoding='utf-8'))
+                    members_edited = ui_bundle.has_edits(manifest, bundle_dir)
+                    if decoded_edited and members_edited:
+                        raise ValueError(f'both decoded BPE payload and UI bundle members edited: {logical_path}')
+                    if members_edited:
+                        decoded = ui_bundle.rebuild(decoded, manifest, bundle_dir)
+                        decoded_edited = True
+                if decoded_edited:
                     patched = Path(temp) / f'bpe-{i}'
                     patched.write_bytes(bpe.encode(decoded))
                     source = patched
@@ -418,11 +431,24 @@ def prepare(root, report=Path('reports/assets_census.json')):
                     e['bpe_original_sha256'] = hashlib.sha256(raw).hexdigest()
                     e['bpe_decoded_sha256'] = hashlib.sha256(decoded_raw).hexdigest()
                     e['bpe_decoded_size'] = len(decoded_raw)
+                try:
+                    ui_bundle.parse(decoded_raw)
+                except ValueError as exc:
+                    census.setdefault('ui_bundle_unparsed', []).append(
+                        dict(name=name, reason=str(exc)))
+                else:
+                    bundle_manifest = source.with_name(source.stem + '.bundle.json')
+                    bundle_dir = source.with_name(source.stem + '.resources')
+                    ui_bundle.extract(decoded_raw, bundle_dir, bundle_manifest)
+                    e['ui_bundle_source'] = bundle_manifest.name
+                    e['ui_bundle_dir'] = bundle_dir.name
             rows.append(dict(name=name, size=e['size'],
                              source=str(source.relative_to(root)) if source else None,
                              text_source=str((folder / e['text_source']).relative_to(root)) if e.get('text_source') else None,
                              message_source=str((folder / e['message_source']).relative_to(root)) if e.get('message_source') else None,
                              bpe_source=str((folder / e['bpe_source']).relative_to(root)) if e.get('bpe_source') else None,
+                             ui_bundle_source=str((folder / e['ui_bundle_source']).relative_to(root)) if e.get('ui_bundle_source') else None,
+                             ui_bundle_dir=str((folder / e['ui_bundle_dir']).relative_to(root)) if e.get('ui_bundle_dir') else None,
                              zero=e.get('zero', False)))
             census['leaves'] += 1
             census['extensions'][extension] = census['extensions'].get(extension, 0) + 1

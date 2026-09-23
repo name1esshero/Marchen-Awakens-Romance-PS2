@@ -46,5 +46,19 @@
       "name": "disc!/_DATA.YFS;1!/data/bg/00.pac!/tex.pac",
       "reason": "PAC unknown member flags"
     }
+  ],
+  "ui_bundle_unparsed": [
+    {
+      "name": "disc!/_DATA.YFS;1!/data/menu/top_yma.b",
+      "reason": "unknown UI bundle header variant"
+    },
+    {
+      "name": "disc!/_DATA.YFS;1!/data/menu/war_common_yma.b",
+      "reason": "unknown UI bundle header variant"
+    },
+    {
+      "name": "disc!/_DATA.YFS;1!/data/menu/war_stage_yma.b",
+      "reason": "unknown UI bundle header variant"
+    }
   ]
 }
