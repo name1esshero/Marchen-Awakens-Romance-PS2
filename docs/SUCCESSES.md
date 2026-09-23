@@ -413,7 +413,12 @@ times independently: `C3dObject::SetLinkBoneMat(objMatrix *)` (`P`),
 `CCharaBase::SetCurrentStatus(int, int, TypeArmParam *, int)` (`P`), and
 `CWeapon::SetSubMotion(MotionNo, int, float)` (`G`, after an initial `R` guess
 compiled cleanly but produced `R8MotionNoif` instead of the target
-`G8MotionNoif`).
+`G8MotionNoif`). The same length-prefixed-name shape also applies to enum
+parameters (no `P`/`R`/`G` letter — an enum is a value type, so it just needs
+a matching-named definition, e.g. `enum InterpType { ... };` for
+`SetInterpolateType__7CMotion10InterpType`); unlike the class/`G` case, no
+non-trivial-constructor trick is needed since the enum already mangles by its
+own name.
 Verification: all cases compile with the unchanged EE GCC `2.96-ee-001003-1`
 `-O2` probe and reproduce the exact target section after the fix, confirmed
 by `make verify-ee`.

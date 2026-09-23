@@ -357,3 +357,34 @@ Not recovered this batch: the remaining ~547 still-untouched trivial 8-byte
 sections, still excluding all UI/menu-adjacent and texture-adjacent classes
 (`MenuFrame*`, `MenuEsy`, `CTexData`, `CTexGroup`) given the concurrent
 localization session's territory.
+
+## CMotion accessor batch — 2026-09-23
+
+Agent: Claude Sonnet 5; role: Contributor. Same deliberate scoping.
+
+All 14 remaining trivial 8-byte `CMotion` sections (`0x33c69c`–`0x33c774`)
+were disassembled and confirmed trivial: nine field reads (int/float/pointer),
+four field writes, and one address-return. Two enum-typed setter parameters
+required exact-name enum definitions to match their mangled encoding —
+`SetInterpolateType__7CMotion10InterpType` and
+`SetTargetType__7CMotion16MotionTargetType` — the same "match the encoded
+type exactly" lesson as the `P`/`R`/`G` class-parameter trap, but for enums:
+a plain `enum InterpType { INTERP_TYPE_UNKNOWN };` (one placeholder
+enumerator, since the definition must be nonempty to use the type) was
+sufficient; unlike the `G` case, an enum does not need a non-trivial
+constructor to mangle by its own name — it already does, being a value type.
+
+`GetAttribute` (`lw`, offset `0xc`) and `GetNowAttributeClass` (`addiu`
+address-of, same offset `0xc`) are another same-offset aliased pair, treated
+as one `int attribute` field with two accessor bodies (one returning the
+value, one returning its address) — the same pattern as `CCamera::GetViewAngle`
+/`GetViewAngleDir` and `CChara::GetLocate`/`GetLocateV`.
+
+The unmodified EE GCC `2.96-ee-001003-1` `-O2` invocation matched all 14 new
+sections on the first attempt. Reconstruction now covers **200 sections /
+1,600 bytes across twelve partial classes**; 3,443,604 bytes remain explicit
+raw debt. `make test verify-boot verify-source-only verify-ee` passes (full
+boot ELF and full EE-probe ELF both byte-identical).
+
+Not recovered this batch: the remaining 533 still-untouched trivial 8-byte
+sections, still excluding UI/menu/texture-adjacent classes.

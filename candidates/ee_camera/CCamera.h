@@ -477,4 +477,50 @@ public:
     int IsError() { return isError; }
 };
 
+// Named only to reproduce the mangled parameter types in
+// SetInterpolateType__7CMotion10InterpType and
+// SetTargetType__7CMotion16MotionTargetType; no enumerators are evidenced
+// beyond needing a nonempty definition to use these as parameter types.
+enum InterpType { INTERP_TYPE_UNKNOWN };
+enum MotionTargetType { MOTION_TARGET_TYPE_UNKNOWN };
+
+class CMotion {
+public:
+    InterpType interpolateType;
+    int scaleEnable;
+    void *model;
+    int attribute;
+    unsigned char unknown010[0x8];
+    float frame;
+    float addFrame;
+    unsigned char unknown020[0x4];
+    int motion;
+    unsigned char unknown028[0x20];
+    int linkBone;
+    unsigned char unknown04c[0x4];
+    int endMotion;
+    unsigned char unknown054[0x4];
+    MotionTargetType targetType;
+    unsigned char unknown05c[0x4];
+    int enableColorMotion;
+
+    void *GetModel() { return model; }
+    void SetInterpolateType(InterpType value) { interpolateType = value; }
+    void SetScaleEnable(int value) { scaleEnable = value; }
+    void EnableColorMotion(int value) { enableColorMotion = value; }
+    int IsEnableColorMotion() { return enableColorMotion; }
+    MotionTargetType GetTargetType() { return targetType; }
+    void SetTargetType(MotionTargetType value) { targetType = value; }
+    float GetFrame() { return frame; }
+    float GetAddFrame() { return addFrame; }
+    int GetMotion() { return motion; }
+    int GetAttribute() { return attribute; }
+    // GetAttribute and GetNowAttributeClass read/address the identical
+    // offset (0xc); whether the original source used one field or a
+    // sub-object here is not established.
+    void *GetNowAttributeClass() { return &attribute; }
+    int IsEndMotion() { return endMotion; }
+    int GetLinkBone() { return linkBone; }
+};
+
 #endif

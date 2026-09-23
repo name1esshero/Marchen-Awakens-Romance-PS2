@@ -561,3 +561,45 @@ lw $2, 0xe0($4)
 .section .gnu.linkonce.t.IsError__8CMotion3,"ax",@progbits
 jr $31
 lw $2, 0xf0($4)
+.section .gnu.linkonce.t.GetModel__7CMotion,"ax",@progbits
+jr $31
+lw $2, 0x8($4)
+.section .gnu.linkonce.t.SetInterpolateType__7CMotion10InterpType,"ax",@progbits
+jr $31
+sw $5, 0x0($4)
+.section .gnu.linkonce.t.SetScaleEnable__7CMotioni,"ax",@progbits
+jr $31
+sw $5, 0x4($4)
+.section .gnu.linkonce.t.EnableColorMotion__7CMotioni,"ax",@progbits
+jr $31
+sw $5, 0x60($4)
+.section .gnu.linkonce.t.IsEnableColorMotion__7CMotion,"ax",@progbits
+jr $31
+lw $2, 0x60($4)
+.section .gnu.linkonce.t.GetTargetType__7CMotion,"ax",@progbits
+jr $31
+lw $2, 0x58($4)
+.section .gnu.linkonce.t.SetTargetType__7CMotion16MotionTargetType,"ax",@progbits
+jr $31
+sw $5, 0x58($4)
+.section .gnu.linkonce.t.GetFrame__7CMotion,"ax",@progbits
+jr $31
+lwc1 $f0, 0x18($4)
+.section .gnu.linkonce.t.GetAddFrame__7CMotion,"ax",@progbits
+jr $31
+lwc1 $f0, 0x1c($4)
+.section .gnu.linkonce.t.GetMotion__7CMotion,"ax",@progbits
+jr $31
+lw $2, 0x24($4)
+.section .gnu.linkonce.t.GetAttribute__7CMotion,"ax",@progbits
+jr $31
+lw $2, 0xc($4)
+.section .gnu.linkonce.t.GetNowAttributeClass__7CMotion,"ax",@progbits
+jr $31
+addiu $2, $4, 0xc
+.section .gnu.linkonce.t.IsEndMotion__7CMotion,"ax",@progbits
+jr $31
+lw $2, 0x50($4)
+.section .gnu.linkonce.t.GetLinkBone__7CMotion,"ax",@progbits
+jr $31
+lw $2, 0x48($4)

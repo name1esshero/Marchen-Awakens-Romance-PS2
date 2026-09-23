@@ -184,3 +184,17 @@
 .gnu.linkonce.t.GetNextLabel__8CMotion3
 .gnu.linkonce.t.GetJumpMode__8CMotion3
 .gnu.linkonce.t.IsError__8CMotion3
+.gnu.linkonce.t.GetModel__7CMotion
+.gnu.linkonce.t.SetInterpolateType__7CMotion10InterpType
+.gnu.linkonce.t.SetScaleEnable__7CMotioni
+.gnu.linkonce.t.EnableColorMotion__7CMotioni
+.gnu.linkonce.t.IsEnableColorMotion__7CMotion
+.gnu.linkonce.t.GetTargetType__7CMotion
+.gnu.linkonce.t.SetTargetType__7CMotion16MotionTargetType
+.gnu.linkonce.t.GetFrame__7CMotion
+.gnu.linkonce.t.GetAddFrame__7CMotion
+.gnu.linkonce.t.GetMotion__7CMotion
+.gnu.linkonce.t.GetAttribute__7CMotion
+.gnu.linkonce.t.GetNowAttributeClass__7CMotion
+.gnu.linkonce.t.IsEndMotion__7CMotion
+.gnu.linkonce.t.GetLinkBone__7CMotion

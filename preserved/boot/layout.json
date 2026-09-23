@@ -497,9 +497,111 @@
     },
     {
       "offset": 2345616,
-      "size": 3692,
+      "size": 3084,
       "kind": "unrecovered_hex",
       "source": "unrecovered_0023ca90.hex"
+    },
+    {
+      "offset": 2348700,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetModel__7CMotion"
+    },
+    {
+      "offset": 2348708,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetInterpolateType__7CMotion10InterpType"
+    },
+    {
+      "offset": 2348716,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetScaleEnable__7CMotioni"
+    },
+    {
+      "offset": 2348724,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.EnableColorMotion__7CMotioni"
+    },
+    {
+      "offset": 2348732,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.IsEnableColorMotion__7CMotion"
+    },
+    {
+      "offset": 2348740,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetTargetType__7CMotion"
+    },
+    {
+      "offset": 2348748,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetTargetType__7CMotion16MotionTargetType"
+    },
+    {
+      "offset": 2348756,
+      "size": 76,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023d6d4.hex"
+    },
+    {
+      "offset": 2348832,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetFrame__7CMotion"
+    },
+    {
+      "offset": 2348840,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetAddFrame__7CMotion"
+    },
+    {
+      "offset": 2348848,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetMotion__7CMotion"
+    },
+    {
+      "offset": 2348856,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetAttribute__7CMotion"
+    },
+    {
+      "offset": 2348864,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetNowAttributeClass__7CMotion"
+    },
+    {
+      "offset": 2348872,
+      "size": 32,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023d748.hex"
+    },
+    {
+      "offset": 2348904,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.IsEndMotion__7CMotion"
+    },
+    {
+      "offset": 2348912,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetLinkBone__7CMotion"
+    },
+    {
+      "offset": 2348920,
+      "size": 388,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023d778.hex"
     },
     {
       "offset": 2349308,
