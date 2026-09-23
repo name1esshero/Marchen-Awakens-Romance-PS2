@@ -949,4 +949,72 @@ public:
     int GetTotalDataCapa() { return totalDataCapa; }
 };
 
+// Named only to reproduce SetDispMode__5CFade11ACTOBJ_TYPE's mangled enum
+// parameter; no enumerators beyond the placeholder are evidenced.
+enum ACTOBJ_TYPE { ACTOBJ_TYPE_UNKNOWN };
+
+class CFade {
+public:
+    unsigned char unknown000[0x18];
+    ACTOBJ_TYPE dispMode;
+    unsigned char unknown01c[0x18];
+    int fadeExcute;
+    int fadeOut;
+
+    int isFadeExcute() { return fadeExcute; }
+    int isFadeOut() { return fadeOut; }
+    void SetDispMode(ACTOBJ_TYPE value) { dispMode = value; }
+};
+
+class CBgCtrl {
+public:
+    unsigned char unknown000[0x30];
+    int bg;
+    int nowBg;
+    unsigned char unknown038[0xec];
+    int disp;
+
+    int GetBg() { return bg; }
+    int GetNowBg() { return nowBg; }
+    void SetDisp(int value) { disp = value; }
+};
+
+class CGameCntrlGm {
+public:
+    unsigned char unknown000[0xb0];
+    float gameCtrlTimer;
+    float gameCtrlTimeOver;
+    unsigned char unknown0b8[0x6c];
+    int pauseMenu;
+
+    float GetGameCtrlTimer() const { return gameCtrlTimer; }
+    float GetGameCtrlTimeOver() const { return gameCtrlTimeOver; }
+    int GetPauseMenu() { return pauseMenu; }
+};
+
+class CMotionPMS {
+public:
+    unsigned char unknown000[0x128];
+    int directFlag;
+    unsigned int pmvMotSts;
+    unsigned char unknown130[0x5c];
+    int human;
+
+    void *GetPmvMotSts() { return &pmvMotSts; }
+    void SetHuman(int value) { human = value; }
+    int GetDirectFlag() { return directFlag; }
+};
+
+class CPDataGef {
+public:
+    unsigned char unknown000[0x108];
+    void *data;
+    int gefNo;
+    int scnNo;
+
+    void *GetData() { return data; }
+    int GetGefNo() { return gefNo; }
+    int GetScnNo() { return scnNo; }
+};
+
 #endif

@@ -378,3 +378,23 @@ int (CMCard2::*gMCard2GetActNoAddress)() = &CMCard2::GetActNo;
 void *(CMCard2::*gMCard2GetActionParamAddress)() = &CMCard2::GetActionParam;
 int (CMCard2::*gMCard2GetDataCapaAddress)() = &CMCard2::GetDataCapa;
 int (CMCard2::*gMCard2GetTotalDataCapaAddress)() = &CMCard2::GetTotalDataCapa;
+
+int (CFade::*gFadeIsFadeExcuteAddress)() = &CFade::isFadeExcute;
+int (CFade::*gFadeIsFadeOutAddress)() = &CFade::isFadeOut;
+void (CFade::*gFadeSetDispModeAddress)(ACTOBJ_TYPE) = &CFade::SetDispMode;
+
+int (CBgCtrl::*gBgCtrlGetBgAddress)() = &CBgCtrl::GetBg;
+int (CBgCtrl::*gBgCtrlGetNowBgAddress)() = &CBgCtrl::GetNowBg;
+void (CBgCtrl::*gBgCtrlSetDispAddress)(int) = &CBgCtrl::SetDisp;
+
+float (CGameCntrlGm::*gGameCntrlGmGetGameCtrlTimerAddress)() const = &CGameCntrlGm::GetGameCtrlTimer;
+float (CGameCntrlGm::*gGameCntrlGmGetGameCtrlTimeOverAddress)() const = &CGameCntrlGm::GetGameCtrlTimeOver;
+int (CGameCntrlGm::*gGameCntrlGmGetPauseMenuAddress)() = &CGameCntrlGm::GetPauseMenu;
+
+void *(CMotionPMS::*gMotionPMSGetPmvMotStsAddress)() = &CMotionPMS::GetPmvMotSts;
+void (CMotionPMS::*gMotionPMSSetHumanAddress)(int) = &CMotionPMS::SetHuman;
+int (CMotionPMS::*gMotionPMSGetDirectFlagAddress)() = &CMotionPMS::GetDirectFlag;
+
+void *(CPDataGef::*gPDataGefGetDataAddress)() = &CPDataGef::GetData;
+int (CPDataGef::*gPDataGefGetGefNoAddress)() = &CPDataGef::GetGefNo;
+int (CPDataGef::*gPDataGefGetScnNoAddress)() = &CPDataGef::GetScnNo;

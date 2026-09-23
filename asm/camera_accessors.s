@@ -1032,3 +1032,48 @@ lw $2, 0x5fc($4)
 .section .gnu.linkonce.t.GetTotalDataCapa__7CMCard2,"ax",@progbits
 jr $31
 lw $2, 0x5f8($4)
+.section .gnu.linkonce.t.isFadeExcute__5CFade,"ax",@progbits
+jr $31
+lw $2, 0x34($4)
+.section .gnu.linkonce.t.isFadeOut__5CFade,"ax",@progbits
+jr $31
+lw $2, 0x38($4)
+.section .gnu.linkonce.t.SetDispMode__5CFade11ACTOBJ_TYPE,"ax",@progbits
+jr $31
+sw $5, 0x18($4)
+.section .gnu.linkonce.t.GetBg__7CBgCtrl,"ax",@progbits
+jr $31
+lw $2, 0x30($4)
+.section .gnu.linkonce.t.GetNowBg__7CBgCtrl,"ax",@progbits
+jr $31
+lw $2, 0x34($4)
+.section .gnu.linkonce.t.SetDisp__7CBgCtrli,"ax",@progbits
+jr $31
+sw $5, 0x124($4)
+.section .gnu.linkonce.t.GetGameCtrlTimer__C12CGameCntrlGm,"ax",@progbits
+jr $31
+lwc1 $f0, 0xb0($4)
+.section .gnu.linkonce.t.GetGameCtrlTimeOver__C12CGameCntrlGm,"ax",@progbits
+jr $31
+lwc1 $f0, 0xb4($4)
+.section .gnu.linkonce.t.GetPauseMenu__12CGameCntrlGm,"ax",@progbits
+jr $31
+lw $2, 0x124($4)
+.section .gnu.linkonce.t.GetPmvMotSts__10CMotionPMS,"ax",@progbits
+jr $31
+addiu $2, $4, 0x12c
+.section .gnu.linkonce.t.SetHuman__10CMotionPMSi,"ax",@progbits
+jr $31
+sw $5, 0x18c($4)
+.section .gnu.linkonce.t.GetDirectFlag__10CMotionPMS,"ax",@progbits
+jr $31
+lw $2, 0x128($4)
+.section .gnu.linkonce.t.GetData__9CPDataGef,"ax",@progbits
+jr $31
+lw $2, 0x108($4)
+.section .gnu.linkonce.t.GetGefNo__9CPDataGef,"ax",@progbits
+jr $31
+lw $2, 0x10c($4)
+.section .gnu.linkonce.t.GetScnNo__9CPDataGef,"ax",@progbits
+jr $31
+lw $2, 0x110($4)

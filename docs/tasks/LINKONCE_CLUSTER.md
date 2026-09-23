@@ -591,3 +591,31 @@ passes (full boot ELF and full EE-probe ELF both byte-identical).
 
 Not recovered this batch: the remaining 390 still-untouched trivial 8-byte
 sections, still excluding UI/menu/texture/model/movie-adjacent classes.
+
+## CFade/CBgCtrl/CGameCntrlGm/CMotionPMS/CPDataGef batch — 2026-09-23
+
+Agent: Claude Sonnet 5; role: Contributor. Same deliberate scoping; the
+remaining safe candidate list is now mostly classes with 1-3 sections each
+(148 sections across ~100 classes, versus 238 sections still excluded
+across 49 UI/texture/model/movie-adjacent classes).
+
+All 15 remaining trivial 8-byte sections across `CFade` (3), `CBgCtrl` (3),
+`CGameCntrlGm` (3), `CMotionPMS` (3) and `CPDataGef` (3) were disassembled
+and confirmed trivial. `CFade::SetDispMode` takes a bare (letterless) enum
+parameter (`ACTOBJ_TYPE`), the same enum shape already established.
+
+A second occurrence of the hand-written-struct offset-ordering mistake (see
+`CODE_FAILURES.md`) was caught before compiling: `CMotionPMS`'s first draft
+inserted a spurious 4-byte gap between `directFlag` (`0x128`) and
+`pmvMotSts` (`0x12c`), which the evidence does not support (the two fields
+are contiguous). Re-derived with the offset-sorting generator and fixed
+before the EE GCC step.
+
+The unmodified EE GCC `2.96-ee-001003-1` `-O2` invocation matched all 15
+sections after the fix. Reconstruction now covers **358 sections / 2,864
+bytes across thirty-eight partial classes**; 3,442,340 bytes remain
+explicit raw debt. `make test verify-boot verify-source-only verify-ee`
+passes (full boot ELF and full EE-probe ELF both byte-identical).
+
+Not recovered this batch: the remaining 375 still-untouched trivial 8-byte
+sections, still excluding UI/menu/texture/model/movie-adjacent classes.

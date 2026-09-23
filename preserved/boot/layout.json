@@ -965,9 +965,63 @@
     },
     {
       "offset": 2351076,
-      "size": 1648,
+      "size": 584,
       "kind": "unrecovered_hex",
       "source": "unrecovered_0023dfe4.hex"
+    },
+    {
+      "offset": 2351660,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.isFadeExcute__5CFade"
+    },
+    {
+      "offset": 2351668,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.isFadeOut__5CFade"
+    },
+    {
+      "offset": 2351676,
+      "size": 16,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023e23c.hex"
+    },
+    {
+      "offset": 2351692,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetDispMode__5CFade11ACTOBJ_TYPE"
+    },
+    {
+      "offset": 2351700,
+      "size": 616,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023e254.hex"
+    },
+    {
+      "offset": 2352316,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetBg__7CBgCtrl"
+    },
+    {
+      "offset": 2352324,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetNowBg__7CBgCtrl"
+    },
+    {
+      "offset": 2352332,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetDisp__7CBgCtrli"
+    },
+    {
+      "offset": 2352340,
+      "size": 384,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023e4d4.hex"
     },
     {
       "offset": 2352724,
@@ -1085,9 +1139,57 @@
     },
     {
       "offset": 2353120,
-      "size": 992,
+      "size": 96,
       "kind": "unrecovered_hex",
       "source": "unrecovered_0023e7e0.hex"
+    },
+    {
+      "offset": 2353216,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetGameCtrlTimer__C12CGameCntrlGm"
+    },
+    {
+      "offset": 2353224,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetGameCtrlTimeOver__C12CGameCntrlGm"
+    },
+    {
+      "offset": 2353232,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetPauseMenu__12CGameCntrlGm"
+    },
+    {
+      "offset": 2353240,
+      "size": 764,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023e858.hex"
+    },
+    {
+      "offset": 2354004,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetPmvMotSts__10CMotionPMS"
+    },
+    {
+      "offset": 2354012,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetHuman__10CMotionPMSi"
+    },
+    {
+      "offset": 2354020,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetDirectFlag__10CMotionPMS"
+    },
+    {
+      "offset": 2354028,
+      "size": 84,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023eb6c.hex"
     },
     {
       "offset": 2354112,
@@ -1253,9 +1355,33 @@
     },
     {
       "offset": 2357032,
-      "size": 1652,
+      "size": 292,
       "kind": "unrecovered_hex",
       "source": "unrecovered_0023f728.hex"
+    },
+    {
+      "offset": 2357324,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetData__9CPDataGef"
+    },
+    {
+      "offset": 2357332,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetGefNo__9CPDataGef"
+    },
+    {
+      "offset": 2357340,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetScnNo__9CPDataGef"
+    },
+    {
+      "offset": 2357348,
+      "size": 1336,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023f864.hex"
     },
     {
       "offset": 2358684,
