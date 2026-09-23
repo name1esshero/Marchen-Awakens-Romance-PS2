@@ -455,10 +455,12 @@ measurements only; do not infer intentional padding from zero contents.
 
 Verification: `make test` and `python3 tools/asset_recovery_census.py` pass; the
 census audits all 13 video streams, partitions the 4,587,749,376-byte image
-exactly, and reports expanded logical payload Y=1,303,947,016. Its human-readable
+exactly, and reports expanded logical payload Y=1,303,947,016. The schema-v6
+snapshot at this milestone reported Z/Y=86.8157%, A/Y=100%, B/Y=18.3698%, and
+C/Y=0%. Its human-readable
 summary prints the zero-byte measurement with intent caveat, physical and
 expanded byte bases, independent recovery levels, and both remaining queues.
-The current levels are Z/Y=86.8157% parser-backed structure, A/Y=100%
+The snapshot's levels were Z/Y=86.8157% parser-backed structure, A/Y=100%
 unchanged-input no-op rebuild, B/Y=18.3698% semantic editability, and C/Y=0%
 runtime-validated editability. The increase in Z includes complete packet/sector
 coverage for all 13 direct movie streams (685,111,296 bytes); packet framing
@@ -515,3 +517,42 @@ References: `graphics/title/00039_01566_0002_title_marh_eng.tga`,
 `graphics/title/00039_01565_0003_sbttl_jp.tga`,
 [`TITLE_TEXTURE_RENDERING.md`](../tasks/TITLE_TEXTURE_RENDERING.md),
 `tools/graphics.py`, `tools/rtx3.py`.
+
+## Byte-weight the recovery levels and only count editable source spans
+
+Symptom: one "decompiled percentage" conflates file preservation, parser
+structure, semantic editability and runtime acceptance, while file counts hide
+large opaque resources.
+Mechanism: use one de-duplicated expanded information-bearing payload `Y` and
+report hierarchy addressing separately from `Z` (parser-validated spans), `A`
+(unchanged-input lossless rebuild), `B` (source bytes with semantic editing
+representation and insertion path), and `C` (runtime-validated edited bytes).
+For partially editable resources, count only source fields exposed through the
+verified editable representation; leave remaining bytes in the weighted queue.
+Successful pathway: preserve a disjoint physical ISO partition; replace BPE
+wrappers with parsed child payloads once; audit source hashes and exact no-op
+rebuilds; then count TXC/text/message spans and only the validated XYZ float
+components from YOBJ geometry. Partition `Y-B` and `Y-Z` independently because
+the former includes structurally known but opaque bytes.
+Verification: `make asset-census` reports `Z/Y=86.8157%`, `A/Y=100%`,
+`B/Y=20.9454%`, and `C/Y=0%` for this pinned image. B is 273,116,350 of
+1,303,947,016 bytes, including 33,583,536 editable YOBJ coordinate bytes.
+The B components contribute 18.3630% of Y from textures, 0.0052% from
+reversible text, 0.0016% from message catalogs, and 2.5755% from YOBJ
+coordinates (rounded independently). `make test` passes all 101 tests. A fresh
+unchanged build followed by `make compare-disc` matches the 4,587,749,376-byte
+pinned image with zero differing bytes.
+Synthetic tests verify that direct and nested YOBJ edit spans are counted
+without counting the entire model, and a synthetic nested edit survives bundle,
+BPE and PAC reinsertion. Census invariants check denominator balance and both
+remaining-payload partitions.
+Scope: this image, its expanded bundle catalog, and the current validated asset
+editors. Limits: source-span coverage is not translation completion or runtime
+acceptance; coordinate semantics remain unconfirmed by the game, and all-zero
+byte spans do not prove intentional padding. Remainder labels are inventory
+candidates rather than complete semantic classification.
+References: `tools/asset_recovery_census.py`, `tools/yobj_geometry.py`,
+`tests/test_asset_recovery_census.py`, `tests/test_assets.py`,
+[`YOBJ evidence`](../tasks/YOBJ_MODEL_RECOVERY.md),
+[`asset census report`](../reports/asset_recovery_census.json),
+[asset methodology](TASK_ASSET_WORKSPACE_METHODOLOGY.md).

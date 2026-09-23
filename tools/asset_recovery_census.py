@@ -21,10 +21,14 @@ try:
     from tools.at3 import parse as parse_at3, rebuild as rebuild_at3
     from tools.mpeg_ps import parse as parse_mpeg_ps, rebuild as rebuild_mpeg_ps
     from tools.yobj import parse as parse_yobj, rebuild as rebuild_yobj
+    from tools.yobj_geometry import export_geometry as export_yobj_geometry
+    from tools.yobj_geometry import rebuild_geometry as rebuild_yobj_geometry
 except ModuleNotFoundError:  # Direct execution places tools/ on sys.path.
     from at3 import parse as parse_at3, rebuild as rebuild_at3
     from mpeg_ps import parse as parse_mpeg_ps, rebuild as rebuild_mpeg_ps
     from yobj import parse as parse_yobj, rebuild as rebuild_yobj
+    from yobj_geometry import export_geometry as export_yobj_geometry
+    from yobj_geometry import rebuild_geometry as rebuild_yobj_geometry
 
 
 def _read_json(path: Path):
@@ -292,30 +296,32 @@ def _load_inputs(workspace: Path, catalog_path: Path, graphics_path: Path,
     # their complete bounded YOBJ/POF0 envelope to Z. YMP members nested in
     # parsed UI bundles are audited too, but those bytes already count once as
     # bounded bundle children and must not be added again.
+    def new_yobj_stats():
+        return {"file_count": 0, "source_bytes": 0,
+                "parse_successful_count": 0, "parse_failure_count": 0,
+                "pof0_reference_slot_count": 0, "exact_noop_roundtrip_count": 0,
+                "pof0_zero_tail_bytes": 0, "format_variants": {},
+                "geometry_parse_successful_count": 0,
+                "geometry_parse_failure_count": 0,
+                "geometry_mesh_count": 0, "geometry_vertex_count": 0,
+                "editable_xyz_source_bytes": 0,
+                "exact_geometry_noop_roundtrip_count": 0,
+                "geometry_failures": []}
+
     yobj_stats = {
-        "direct_resources": {"file_count": 0, "source_bytes": 0,
-                             "parse_successful_count": 0,
-                             "parse_failure_count": 0,
-                             "pof0_reference_slot_count": 0,
-                             "exact_noop_roundtrip_count": 0,
-                             "pof0_zero_tail_bytes": 0,
-                             "format_variants": {}},
-        "nested_ui_bundle_resources": {"file_count": 0, "source_bytes": 0,
-                                        "parse_successful_count": 0,
-                                        "parse_failure_count": 0,
-                                        "pof0_reference_slot_count": 0,
-                                        "exact_noop_roundtrip_count": 0,
-                                        "pof0_zero_tail_bytes": 0,
-                                        "format_variants": {}},
+        "direct_resources": new_yobj_stats(),
+        "nested_ui_bundle_resources": new_yobj_stats(),
     }
 
-    def audit_yobj(raw: bytes, stats: dict):
+    def audit_yobj(raw: bytes, stats: dict, owner: dict | None = None):
         stats["file_count"] += 1
         stats["source_bytes"] += len(raw)
         try:
             parsed = parse_yobj(raw)
         except ValueError:
             stats["parse_failure_count"] += 1
+            if owner is not None:
+                owner["_yobj_editable_geometry_bytes"] = 0
             return
         stats["parse_successful_count"] += 1
         stats["pof0_reference_slot_count"] += parsed["pof0_reference_count"]
@@ -324,12 +330,32 @@ def _load_inputs(workspace: Path, catalog_path: Path, graphics_path: Path,
         stats["format_variants"][variant] = stats["format_variants"].get(variant, 0) + 1
         if rebuild_yobj(parsed) == raw:
             stats["exact_noop_roundtrip_count"] += 1
+        try:
+            geometry = export_yobj_geometry(raw)
+            rebuilt_geometry = rebuild_yobj_geometry(raw, geometry)
+            if rebuilt_geometry != raw:
+                raise ValueError("YOBJ geometry no-op rebuild differs from its source")
+        except ValueError as exc:
+            stats["geometry_parse_failure_count"] += 1
+            stats["geometry_failures"].append({"source": (owner or {}).get("name"),
+                                               "reason": str(exc)})
+            if owner is not None:
+                owner["_yobj_editable_geometry_bytes"] = 0
+            return
+        stats["geometry_parse_successful_count"] += 1
+        stats["geometry_mesh_count"] += geometry["mesh_count"]
+        stats["geometry_vertex_count"] += sum(
+            mesh["vertex_count"] for mesh in geometry["meshes"]
+        )
+        stats["editable_xyz_source_bytes"] += geometry["editable_xyz_source_bytes"]
+        stats["exact_geometry_noop_roundtrip_count"] += 1
+        if owner is not None:
+            owner["_yobj_editable_geometry_bytes"] = geometry["editable_xyz_source_bytes"]
 
-    direct_yobj_sources = {leaf.get("source") for leaf in catalog
-                           if leaf.get("source") and
-                           _source_extension(leaf["name"]) == ".ymp"}
-    for source in direct_yobj_sources:
-        audit_yobj((workspace / source).read_bytes(), yobj_stats["direct_resources"])
+    for leaf in catalog:
+        if leaf.get("source") and _source_extension(leaf["name"]) == ".ymp":
+            audit_yobj((workspace / leaf["source"]).read_bytes(),
+                       yobj_stats["direct_resources"], leaf)
 
     for manifest_path, manifest in graphics["_manifest_entries"].items():
         rel = Path(manifest_path)
@@ -346,17 +372,25 @@ def _load_inputs(workspace: Path, catalog_path: Path, graphics_path: Path,
             expected_hash = member.get("source_sha256")
             if expected_hash and hashlib.sha256(raw).hexdigest() != expected_hash:
                 raise ValueError(f"nested YMP hash disagrees with bundle manifest: {member_path}")
-            audit_yobj(raw, yobj_stats["nested_ui_bundle_resources"])
+            audit_yobj(raw, yobj_stats["nested_ui_bundle_resources"], member)
 
     for kind, stats in yobj_stats.items():
         if stats["exact_noop_roundtrip_count"] != stats["parse_successful_count"]:
             raise ValueError(f"YOBJ no-op round-trip audit failed for {kind}")
+        if (stats["exact_geometry_noop_roundtrip_count"] !=
+                stats["geometry_parse_successful_count"] or
+                stats["geometry_parse_successful_count"] +
+                stats["geometry_parse_failure_count"] != stats["parse_successful_count"]):
+            raise ValueError(f"YOBJ geometry audit did not account for every parsed source in {kind}")
     yobj_stats["note"] = (
         "The parser validates the 0x40-byte header envelope, four bounded "
         "numeric count/offset pairs, the exact POF0-to-EOF extent, and the "
-        "delta-coded pointer-slot list. Header/body semantics remain unresolved. "
-        "Direct YMP envelopes may contribute to Z. Nested UI-bundle YMP files "
-        "are already counted as bounded child extents and are not double-counted."
+        "delta-coded pointer-slot list. A corpus-validated same-count editor "
+        "covers XYZ position and normal floats in Vector4f mesh buffers; W, "
+        "vertex counts, pointers, face/UV topology, object data, skinning, and "
+        "material semantics remain unchanged or opaque. Direct YMP envelopes "
+        "may contribute to Z. Nested UI-bundle YMP files are already counted as "
+        "bounded child extents and are not double-counted."
     )
     graphics["_yobj_resource_corpus"] = yobj_stats
     return catalog, graphics, disc, roundtrip
@@ -379,7 +413,10 @@ def _residual_category(row: dict) -> tuple[str, str]:
     if "bgm.afs;1" in name or "/data/sound/" in name:
         return "audio_sound_candidates", "BGM archive or sound-directory path; payload audio is not decoded"
     if extension in (".ymp", ".ypc"):
-        return "model_geometry_candidates", "YMP/YPC resource naming; model bodies are not decoded here"
+        return "model_geometry_candidates", (
+            "YMP/YPC resource naming; corpus-validated YMP coordinate vectors are editable, "
+            "but the remaining model fields and YPC bodies are not decoded"
+        )
     if extension in (".at3", ".yap", ".mpc", ".yma"):
         return "animation_motion_candidates", "AT3/YAP/MPC/YMA name or member type; bodies are not fully decoded"
     if "/data/font/" in name:
@@ -557,6 +594,10 @@ def build_census(catalog, graphics_index, disc, roundtrip):
                            "editable_kind": None, "is_txc": extension == ".txc",
                            "structural_bytes": size if extension != ".txc" else 0,
                            "semantic_editable_bytes": 0}
+                    if extension == ".ymp":
+                        row["semantic_editable_bytes"] = member.get(
+                            "_yobj_editable_geometry_bytes", 0
+                        )
                     if row["is_txc"]:
                         key = ("bundle", manifest_path, member["source"])
                         if key not in txc_status:
@@ -607,6 +648,9 @@ def build_census(catalog, graphics_index, disc, roundtrip):
                                         leaf.get("_at3_node_record_bytes", 0))
         elif extension == ".ymp":
             row["structural_bytes"] = leaf.get("_yobj_structural_bytes", 0)
+            row["semantic_editable_bytes"] = leaf.get(
+                "_yobj_editable_geometry_bytes", 0
+            )
         elif leaf.get("_mpeg_ps_structural_bytes"):
             row["structural_bytes"] = leaf["_mpeg_ps_structural_bytes"]
         expanded_rows.append(row)
@@ -622,7 +666,18 @@ def build_census(catalog, graphics_index, disc, roundtrip):
 
     editable_graphics = txc_editable_bytes
     semantically_editable_bytes = sum(row["semantic_editable_bytes"] for row in expanded_rows)
-    expected_editable_bytes = editable_graphics + text_bytes + message_bytes
+    row_model_geometry_bytes = sum(
+        row["semantic_editable_bytes"] for row in expanded_rows
+        if row["extension"] == ".ymp"
+    )
+    yobj_corpus = graphics_index.get("_yobj_resource_corpus", {})
+    editable_model_geometry_bytes = sum(
+        stats.get("editable_xyz_source_bytes", 0)
+        for stats in yobj_corpus.values() if isinstance(stats, dict)
+    )
+    if row_model_geometry_bytes != editable_model_geometry_bytes:
+        raise ValueError("editable YOBJ geometry spans disagree with the audited model corpus")
+    expected_editable_bytes = editable_graphics + text_bytes + message_bytes + editable_model_geometry_bytes
     if semantically_editable_bytes != expected_editable_bytes:
         raise ValueError("editable source spans do not match indexed texture/text sources")
     remaining_bytes = expanded_payload_bytes - semantically_editable_bytes
@@ -761,7 +816,7 @@ def build_census(catalog, graphics_index, disc, roundtrip):
 
     zero_span_bytes = layout["all_zero_named_member_bytes"] + layout["all_zero_gap_bytes"]
     return {
-        "schema_version": 6,
+        "schema_version": 7,
         "evidence_date": dt.date.today().isoformat(),
         "reference_sha256": reference_hash,
         "scope": "Pinned physical image partition plus a de-duplicated expanded logical content inventory; recovery levels have separate definitions and evidence.",
@@ -775,6 +830,9 @@ def build_census(catalog, graphics_index, disc, roundtrip):
             "all_zero_gap_percent_of_image": _percent(layout["all_zero_gap_bytes"], image_bytes),
             "measured_all_zero_bytes": zero_span_bytes,
             "measured_all_zero_percent_of_image": _percent(zero_span_bytes, image_bytes),
+            "intentional_zero_padding_bytes": None,
+            "zero_byte_purpose_established": False,
+            "zero_byte_interpretation": "Measured by byte value only; intentional padding or placeholder use is not established.",
             "information_bearing_terminal_member_bytes": layout["information_bearing_named_member_bytes"],
             "information_bearing_terminal_member_count": layout["information_bearing_named_member_count"],
             "information_bearing_terminal_member_percent_of_image": _percent(nonzero_bytes, image_bytes),
@@ -846,6 +904,21 @@ def build_census(catalog, graphics_index, disc, roundtrip):
                         "supported_editable_TGA_texture_source_bytes": editable_graphics,
                         "reversible_text_companion_source_bytes": text_bytes,
                         "structured_message_catalog_source_bytes": message_bytes,
+                        "editable_YOBJ_position_and_normal_source_bytes": editable_model_geometry_bytes,
+                    },
+                    "component_percentages_of_Y": {
+                        "supported_editable_TGA_texture_source_bytes": _percent(
+                            editable_graphics, expanded_payload_bytes
+                        ),
+                        "reversible_text_companion_source_bytes": _percent(
+                            text_bytes, expanded_payload_bytes
+                        ),
+                        "structured_message_catalog_source_bytes": _percent(
+                            message_bytes, expanded_payload_bytes
+                        ),
+                        "editable_YOBJ_position_and_normal_source_bytes": _percent(
+                            editable_model_geometry_bytes, expanded_payload_bytes
+                        ),
                     },
                     "meaning": "A source representation has an evidence-backed editable representation and insertion path. This measures editability, not the fraction already translated.",
                 },
@@ -879,7 +952,7 @@ def build_census(catalog, graphics_index, disc, roundtrip):
         },
         "texture_corpus": texture_corpus,
         "animation_resource_corpus": graphics_index.get("_at3_resource_corpus", {}),
-        "model_resource_corpus": graphics_index.get("_yobj_resource_corpus", {}),
+        "model_resource_corpus": yobj_corpus,
         "video_resource_corpus": graphics_index.get("_mpeg_ps_resource_corpus", {}),
         "logical_leaf_extensions": extensions,
         "limits": [
@@ -890,7 +963,7 @@ def build_census(catalog, graphics_index, disc, roundtrip):
             "MPEG program-stream packet framing is structural evidence only; a frame/sample decode smoke test does not provide an editable or reinsertable media representation.",
             "A byte-identical unchanged rebuild proves source preservation. It does not prove relocation correctness for every edit or runtime correctness.",
             "Candidate remainder classes rely on signatures, member types, extensions, or directory names as documented; unparsed member bodies are not claimed to be semantically recovered.",
-            "Generated TGAs are editable representations; their uncompressed output sizes are not counted as original source bytes.",
+            "Generated TGAs and YOBJ geometry JSON are editable representations; their output sizes are not counted as original source bytes. YOBJ contributes only validated XYZ position/normal float spans, not opaque model bytes.",
         ],
     }
 
@@ -906,6 +979,7 @@ def format_census_summary(report: dict) -> str:
         "Measured all-zero members/gaps (padding intent unverified): "
         f"{physical['measured_all_zero_bytes'] / 1_000_000_000:.3f} GB "
         f"({physical['measured_all_zero_percent_of_image']:.4f}% of disc)",
+        "Intentional zero/padding: not established from byte contents alone",
         "Information-bearing physical terminal members: "
         f"{physical['information_bearing_terminal_member_bytes'] / 1_000_000_000:.3f} GB "
         f"({physical['information_bearing_terminal_member_percent_of_image']:.4f}% of disc)",
@@ -940,6 +1014,12 @@ def format_census_summary(report: dict) -> str:
         "Z is parser-backed structure, not necessarily semantic understanding; "
         "A is unchanged-input preservation; B is editable source plus an insertion path."
     )
+    editable = recovery["semantically_editable"]
+    lines.append("Semantically editable source components (% of Y; rounded independently):")
+    for name, source_bytes in editable["components"].items():
+        label = name.removesuffix("_source_bytes").replace("_", " ")
+        percent = editable["component_percentages_of_Y"][name]
+        lines.append(f"  {label}: {source_bytes:,} bytes ({percent:.4f}%)")
 
     classified_only = logical["classified_but_not_semantically_editable"]
     remaining = logical["remaining_after_semantic_editability"]

@@ -75,6 +75,8 @@ class AssetRecoveryCensusTests(unittest.TestCase):
         self.assertTrue(physical["partition_matches_image"])
         self.assertEqual(physical["information_bearing_terminal_member_bytes"], 71)
         self.assertEqual(physical["measured_all_zero_bytes"], 1029)
+        self.assertIsNone(physical["intentional_zero_padding_bytes"])
+        self.assertFalse(physical["zero_byte_purpose_established"])
 
         logical = census["expanded_logical_payload"]
         self.assertEqual(logical["information_bearing_payload_bytes_Y"], 68)
@@ -84,6 +86,12 @@ class AssetRecoveryCensusTests(unittest.TestCase):
         self.assertEqual(levels["losslessly_rebuildable"]["bytes_A"], 68)
         self.assertEqual(levels["semantically_editable"]["bytes_B"], 31)
         self.assertAlmostEqual(levels["semantically_editable"]["percent_B_of_Y"], 45.5882)
+        self.assertAlmostEqual(
+            levels["semantically_editable"]["component_percentages_of_Y"][
+                "supported_editable_TGA_texture_source_bytes"
+            ],
+            23.5294,
+        )
         self.assertEqual(levels["runtime_validated_editable"]["bytes_C"], 0)
 
         logical = census["expanded_logical_payload"]
@@ -113,10 +121,13 @@ class AssetRecoveryCensusTests(unittest.TestCase):
         summary = format_census_summary(build_census(leaves, index, disc, roundtrip))
 
         self.assertIn("padding intent unverified", summary)
+        self.assertIn("Intentional zero/padding: not established from byte contents alone", summary)
         self.assertIn("Structurally classified Z/Y: 50/68 bytes (73.5294%)", summary)
         self.assertIn("Losslessly rebuildable from unchanged inputs A/Y: 68/68 bytes (100.0000%)",
                       summary)
         self.assertIn("Semantically editable B/Y: 31/68 bytes (45.5882%)", summary)
+        self.assertIn("Semantically editable source components (% of Y; rounded independently):",
+                      summary)
         self.assertIn("Runtime-validated editable C/Y: 0/68 bytes (0.0000%)", summary)
         self.assertIn("Y-B byte breakdown (% of Y-B):", summary)
         self.assertIn("Y-Z structurally unclassified inventory (% of Y-Z; not all semantic opacity):",
@@ -174,6 +185,47 @@ class AssetRecoveryCensusTests(unittest.TestCase):
             16,
         )
         self.assertEqual(levels["semantically_editable"]["bytes_B"], 31)
+
+    def test_direct_yobj_geometry_is_counted_only_for_editable_coordinate_bytes(self):
+        leaves, index, disc, roundtrip = self.fixture()
+        ymp_leaf = next(leaf for leaf in leaves if leaf["source"] == "00007.bin")
+        ymp_leaf["name"] = "disc!/model/test.ymp"
+        ymp_leaf["_yobj_structural_bytes"] = ymp_leaf["size"]
+        ymp_leaf["_yobj_editable_geometry_bytes"] = 8
+        index["_yobj_resource_corpus"] = {
+            "direct_resources": {"editable_xyz_source_bytes": 8},
+            "nested_ui_bundle_resources": {"editable_xyz_source_bytes": 0},
+        }
+
+        census = build_census(leaves, index, disc, roundtrip)
+        levels = census["expanded_logical_payload"]["recovery_levels"]
+        editable = levels["semantically_editable"]
+        self.assertEqual(editable["bytes_B"], 39)
+        self.assertEqual(
+            editable["components"]["editable_YOBJ_position_and_normal_source_bytes"], 8
+        )
+        self.assertEqual(
+            census["expanded_logical_payload"]["remaining_after_semantic_editability"]["bytes"],
+            29,
+        )
+
+    def test_nested_yobj_geometry_is_counted_without_counting_entire_member(self):
+        leaves, index, disc, roundtrip = self.fixture()
+        nested_model = index["_manifest_entries"]["00003.bundle.json"]["entries"][2]
+        nested_model["source"] = "other.ymp"
+        nested_model["kind_hex"] = "796d7000"
+        nested_model["_yobj_editable_geometry_bytes"] = 2
+        index["_yobj_resource_corpus"] = {
+            "direct_resources": {"editable_xyz_source_bytes": 0},
+            "nested_ui_bundle_resources": {"editable_xyz_source_bytes": 2},
+        }
+
+        census = build_census(leaves, index, disc, roundtrip)
+        editable = census["expanded_logical_payload"]["recovery_levels"]["semantically_editable"]
+        self.assertEqual(editable["bytes_B"], 33)
+        self.assertEqual(
+            editable["components"]["editable_YOBJ_position_and_normal_source_bytes"], 2
+        )
 
     def test_validated_movie_packet_extents_extend_structure_not_editability(self):
         leaves, index, disc, roundtrip = self.fixture()

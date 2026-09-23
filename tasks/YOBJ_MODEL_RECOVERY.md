@@ -15,6 +15,28 @@ The parser finds two prefix variants:
 | Direct YOBJ | 912 | `YOBJ` at offset 0, including 14 nested members |
 | DUMY-prefixed YOBJ | 1 | `DUMY\0\0\0\0YOBJ` |
 
+## Validated coordinate editing
+
+`tools/yobj_geometry.py` adds a deliberately narrow, source-hash-bound JSON
+representation for same-count mesh coordinate edits. Across all 913 direct and
+nested resources, it validates 9,976 mesh records and 1,399,314 vertices. Each
+mesh's vertex pointer is present in POF0; its target points to a VIF buffer whose
+Vector4f `0x6c` command and count match the mesh descriptor. A second adjacent
+Vector4f buffer has the same count. Every vector component is finite throughout
+the corpus, and the fourth position/normal components consistently equal 1.0
+and 0.0. These checks support treating the first three components of the paired
+buffers as editable position and normal coordinates; the labels remain a local
+format interpretation, not runtime-confirmed game semantics.
+
+The editor exposes exactly 33,583,536 source bytes: six XYZ float components per
+vertex (24 bytes). It preserves both W components and every other byte, requires
+the original file hash and size, and rejects changed mesh/vertex counts or
+non-finite/out-of-range floats. All 899 direct and 14 nested resources export
+and rebuild to byte-identical no-ops. A synthetic edited model also passed
+through UI bundle, BPE and PAC rebuilding and reparsed with its changed
+coordinate. This is a fixed-size edit; it does not change vertex counts or
+support model growth.
+
 The YOBJ header is a bounded 0x40-byte range after the four-byte magic and
 length prefix. Its duplicate POF0 offset resolves to a `POF0` signature and
 little-endian length whose extent ends exactly at EOF. The parser reads four
@@ -42,26 +64,34 @@ Representative pinned workspace samples:
 ```sh
 python3 tools/yobj.py SOURCE.ymp --output-json EDITABLE.json
 python3 tools/yobj.py --build-json EDITABLE.json --output REBUILT.ymp
+python3 tools/yobj_geometry.py SOURCE.ymp --output-json GEOMETRY.json
+python3 tools/yobj_geometry.py SOURCE.ymp --build-json GEOMETRY.json --output EDITED.ymp
 ```
 
 The JSON separates prefix, fixed header, opaque model body, and POF0 bytes. The
-builder accepts same-size edits when the header, POF0 bounds, decoded slots and
-targets remain valid. It rejects growth. It does not regenerate POF0 or update
-relocation fields after a shifted body.
+envelope builder accepts same-size edits when the header, POF0 bounds, decoded
+slots and targets remain valid. The geometry builder patches only validated XYZ
+components and likewise rejects growth. To insert a geometry edit, replace the
+matching extracted `.ymp` member sidecar with the geometry builder output, then
+run the usual asset build; the member rebuilds through its UI bundle/BPE/PAC
+parents. The container builder may relocate or grow those parents, but no model
+body growth or runtime pointer-fixup behavior is established.
 
 ## Limits and next work
 
-The fixed record sizes or names for mesh, bone, texture/material, and object
-structures have not been established from this game's executable or runtime.
-Geometry, skinning, UVs, materials, and animation remain opaque. A POF0 pointer
-slot list alone does not prove the engine's load-time fixup behavior or identify
-every field that must change when a model grows. Do not treat the same-size raw
-writer as a semantic model editor or claim safe internal relocation.
+The coordinate arrays are now editable, but topology/face indices, UVs, object
+data, skinning, materials, animation, and most mesh/bone records remain opaque.
+A POF0 pointer-slot list alone does not prove the engine's load-time fixup
+behavior or identify every field that must change when a model grows. Do not
+claim safe internal growth, shiftability, visual correctness or runtime
+acceptance. The 333 YPC candidates (3,539,860 bytes) are a separate unresolved
+format.
 
-Next, correlate header counts, body records, and POF0 slot patterns with the
-game's model-loading code; then produce a semantic model export/import path and
-test growth through POF0, PAC, YFS, and the full ISO. The 333 YPC candidates
-(3,539,860 bytes) are a separate unresolved format.
+Next, validate coordinate interpretation against the model draw path or a
+runtime render, then recover topology/UVs and determine which POF0 references
+the loader rebases. Extend the same-count editor only when each new field has
+bounded corpus evidence, and test internal growth separately through POF0,
+PAC, YFS and the full ISO.
 
 A community [YOBJ POF0 generator](https://github.com/rumblerosesxx/yobj_pof0_generator/blob/main/pof0gen.c)
 provided a cross-format lead for delta coding. The local parser derives and

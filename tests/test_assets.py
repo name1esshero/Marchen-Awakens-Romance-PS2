@@ -17,6 +17,8 @@ import text_catalog
 import ui_bundle
 import graphics
 import rtx3
+import yobj
+import yobj_geometry
 from test_bootstrap import iso as make_iso
 
 
@@ -362,6 +364,66 @@ class AssetsTests(unittest.TestCase):
             self.assertEqual(rebuilt_bundle[entry['offset']:entry['offset'] + entry['size']],
                              b'English image replacement')
             self.assertGreater(entry['offset'], 0x30)
+
+    def test_yobj_geometry_edit_reinserts_through_ui_bundle_bpe_and_pac(self):
+        header_base = 8
+        pof0_offset = 0x100
+        model = bytearray(header_base + pof0_offset)
+        model[:4] = b'YOBJ'
+        struct.pack_into('<I', model, 4, pof0_offset)
+        struct.pack_into('<I', model, header_base + 4, pof0_offset)
+        struct.pack_into('<I', model, header_base + 0x10, 1)
+        struct.pack_into('<I', model, header_base + 0x1C, 0x40)
+        descriptor = header_base + 0x40
+        struct.pack_into('<I', model, descriptor + 0x18, 0x80)
+        struct.pack_into('<I', model, descriptor + 0x28, 1)
+        vertex_data = header_base + 0x80
+        struct.pack_into('<I', model, vertex_data, 0x90)
+        position_header = header_base + 0x90
+        model[position_header + 14:position_header + 16] = bytes((1, 0x6C))
+        struct.pack_into('<4f', model, position_header + 16, 1.0, 2.0, 3.0, 1.0)
+        normal_header = position_header + 32
+        model[normal_header + 14:normal_header + 16] = bytes((1, 0x6C))
+        struct.pack_into('<4f', model, normal_header + 16, 0.0, 0.0, 1.0, 0.0)
+        pointer_slots = [descriptor + 0x18, vertex_data]
+        pof0 = yobj._encode_pof0(pointer_slots, header_base)
+        model.extend(b'POF0' + struct.pack('<I', len(pof0)) + pof0)
+
+        decoded = bytearray(0x30)
+        struct.pack_into('<I', decoded, 0, 1)
+        decoded[4:8] = b'\x01\x01\0\0'
+        decoded[16:20] = b'mesh'
+        decoded[32:36] = b'ymp\0'
+        struct.pack_into('<III', decoded, 36, len(model), 0x30, 0)
+        decoded.extend(model)
+        original = bytearray(pac([bpe.encode(bytes(decoded))]))
+        original[32:36] = b'b\0\0\0'
+
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d) / 'source'
+            self.export(bytes(original), root)
+            with redirect_stdout(io.StringIO()):
+                assets.prepare(root, report=None)
+            layout = json.loads((root / 'layout.json').read_text())
+            leaf = next(piece for piece in layout['pieces'] if piece.get('name') == 'test.b')
+            manifest = json.loads((root / leaf['ui_bundle_source']).read_text())
+            member_path = root / leaf['ui_bundle_dir'] / manifest['entries'][0]['source']
+            editable = yobj_geometry.export_geometry(member_path.read_bytes())
+            editable['meshes'][0]['positions_xyz'][0] = [7.0, 8.0, 9.0]
+            rebuilt_model = yobj_geometry.rebuild_geometry(member_path.read_bytes(), editable)
+            member_path.write_bytes(rebuilt_model)
+
+            output = Path(d) / 'mod.pac'
+            assets.build(root, output, relocate=True)
+            with output.open('rb') as stream:
+                pac_entry = assets.archive(stream, 0, output.stat().st_size)[2][0]
+                stream.seek(pac_entry['offset'])
+                rebuilt_bundle = bpe.decode(stream.read(pac_entry['size']))
+            entry = ui_bundle.parse(rebuilt_bundle)['entries'][0]
+            inserted_model = rebuilt_bundle[entry['offset']:entry['offset'] + entry['size']]
+            self.assertEqual(inserted_model, rebuilt_model)
+            self.assertEqual(yobj_geometry.export_geometry(inserted_model)['meshes'][0]
+                             ['positions_xyz'][0], [7.0, 8.0, 9.0])
 
     def test_graphics_override_reinserts_through_ui_bundle_bpe_and_pac(self):
         width, height = 128, 64

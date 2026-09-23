@@ -27,23 +27,27 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   covers 100% of nonzero physical terminal members. Parser-backed structural
   coverage is Z/Y = 1,132,030,822/1,303,947,016 (86.8157%); unchanged-input
   no-op rebuildability is A/Y = 100%; semantic editability is
-  B/Y = 239,532,814/1,303,947,016 (18.3698%); runtime-validated editability is
-  C/Y = 0%. The non-editable queue Y-B is 1,064,414,202 bytes (81.6302% of Y),
-  including 892,498,008 structurally classified but not semantically editable
-  bytes (Z-B). Strictly unclassified payload Y-Z is 171,916,194 bytes (13.1843%
+  B/Y = 273,116,350/1,303,947,016 (20.9454%); runtime-validated editability is
+  C/Y = 0%. B comprises 239,444,320 texture source bytes, 88,494 text/message
+  bytes, and 33,583,536 editable YOBJ position/normal XYZ bytes. The non-editable
+  queue Y-B is 1,030,830,666 bytes (79.0546% of Y), including 858,914,472
+  structurally classified but not semantically editable bytes (Z-B). Strictly
+  unclassified payload Y-Z is 171,916,194 bytes (13.1843%
   of Y), comprising audio/sound candidates 91.0058%, executables/modules
   2.3860%, animation/motion 2.1708%, model/geometry candidates 2.0591%, and
   other classes in the report. The full Y-B queue is largest in video/cinematics
-  (64.3651%), model/geometry candidates (18.9430%), and audio/sound candidates
-  (14.6986%). The census validates packet extents in all 13 movie streams
+  (66.4621%), model/geometry candidates (16.3023%), and audio/sound candidates
+  (15.1774%). The census validates packet extents in all 13 movie streams
   (685,111,296 bytes); this adds structural coverage, not editable video or
   runtime evidence. A validated AT3 envelope parser covers 723 direct
   and 1,605 nested resources (26,798 named nodes), all of which rebuild exactly;
   internal animation fields remain opaque. A YOBJ/POF0 envelope parser covers
   899 direct YMPs and 14 nested UI resources, all with exact no-op rebuilds and
-  807,439 decoded pointer-slot entries; model-body semantics remain opaque. The
-  report gives the full disjoint breakdown
-  and evidence basis. These are separate preservation, structure, editability,
+  807,439 decoded pointer-slot entries. A same-count geometry editor exposes
+  9,976 meshes / 1,399,314 vertices and only their XYZ position/normal fields;
+  faces, UVs, materials, skinning, runtime interpretation and growth remain
+  unresolved. The report gives the full disjoint breakdown and evidence basis.
+  These are separate preservation, structure, editability,
   and runtime measures, not one decompilation or translation percentage. The 43
   incomplete RTX3 records are excluded from Z because their complete length
   contract fails. Regenerate with `make asset-census`.
@@ -118,10 +122,9 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   transfers. Member types/alignment require independent evidence; all original
   bytes remain preserved. See [the probe](tasks/VIEW_RECT_PROBE.md).
 - No runtime/emulator test or gameplay validation has been performed. YPC model
-  candidates, YOBJ body data, audio, fonts and scripts remain semantically opaque;
-  moved/grown assets
-  have no runtime validation. The two catalog tables and recovered `_msg.dat`
-  table are translation-bearing surfaces. All 724 menu `.b` leaves now have a
+  candidates, most YOBJ body data, audio, fonts and scripts remain semantically
+  opaque; moved/grown assets have no runtime validation. The two catalog tables
+  and recovered `_msg.dat` table are translation-bearing surfaces. All 724 menu `.b` leaves now have a
   verified decoded-binary layer; 721 also have 3,084 individually extracted
   nested resources that rebuild byte-exactly when untouched. Three `.yma` payloads
   use a different unresolved layout. The graphics index covers all 30,397
@@ -160,9 +163,11 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
 `make test`, `make verify-boot`, `make verify-source-only`, and `make verify-ee`.
 Exact executed outcomes and investigation failures are recorded in
 [the compiler task](tasks/COMPILER_PROBE.md) and the commit footer.
-Asset gates are `make export-assets prepare-assets verify-disc`; the fully
-prepared unchanged full-disc comparison passed again after structured message
-source integration. The edited full-mod-image comparison and nested structural
+Asset gates are `make export-assets prepare-assets verify-disc`; following this
+census refresh, a fresh source-only build with `--replace-existing` followed by
+`make compare-disc` again matched the complete 4,587,749,376-byte pinned image
+with zero differing bytes.
+The edited full-mod-image comparison and nested structural
 verification are recorded in [message-table evidence](tasks/MESSAGE_TABLE.md).
 See
 [asset methodology](TASK_ASSET_WORKSPACE_METHODOLOGY.md).

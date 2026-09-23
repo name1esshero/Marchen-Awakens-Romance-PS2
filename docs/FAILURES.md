@@ -20,13 +20,15 @@ validation C separate. Preserve physical disc accounting as its own partition;
 do not call either ratio a generic decompilation percentage. The revised tool
 fails if physical spans or exclusive remainder categories do not balance.
 
-Evidence: v5 `reports/asset_recovery_census.json` reports Y=1,303,947,016,
+Evidence: v5 `reports/asset_recovery_census.json` reported Y=1,303,947,016,
 Z/Y=34.2744%, A/Y=100%, B/Y=18.3698%, and C/Y=0%, alongside the exact physical
 partition. It reports both `Y-B` and `Y-Z` work queues and the `Z-B` bridge.
 The high-bit indexed TGA recovery raised B while retaining the same Y
-denominator. The AT3 and YOBJ envelope parsers raise Z while leaving B
-unchanged because their property and model fields remain opaque. The revision
-supersedes the former 13.5887% leaf-only headline.
+denominator. At the v5/v6 milestones, AT3 and YOBJ envelope parsing raised Z
+without raising B because those fields were still opaque. The later v7 census
+adds only corpus-validated YOBJ XYZ position/normal spans to B; it does not
+count whole models. The revision supersedes the former 13.5887% leaf-only
+headline.
 See `tools/asset_recovery_census.py`,
 `tests/test_asset_recovery_census.py`, and
 [`TASK_ASSET_WORKSPACE_METHODOLOGY.md`](TASK_ASSET_WORKSPACE_METHODOLOGY.md).

@@ -120,10 +120,17 @@ pointer-slot list. Rebuild an unchanged or same-size-edited representation with
 `python3 tools/yobj.py --build-json EDITABLE.json --output REBUILT.ymp`. The
 parser accepts the direct `YOBJ` prefix and one `DUMY`-prefixed variant, checks
 the fixed header and exact POF0-to-EOF extent, and verifies that decoded pointer
-slots and their nonzero targets stay within the model envelope. The body remains
-opaque. The current writer rejects growth because it does not yet establish
-which pointer classes the runtime relocates or the semantics of body arrays.
-See [YOBJ evidence](../tasks/YOBJ_MODEL_RECOVERY.md).
+slots and their nonzero targets stay within the model envelope. The separate
+`tools/yobj_geometry.py` exporter exposes hash-bound XYZ arrays for paired,
+same-count Vector4f mesh buffers and patches only those float components. It
+rejects topology/count changes and growth. Current corpus audit: 913/913
+resources rebuild to exact no-ops, with 9,976 meshes, 1,399,314 vertices, and
+33,583,536 editable position/normal XYZ source bytes. Patching a nested `.ymp`
+sidecar then using the ordinary assets builder carries the edit through the UI
+bundle/BPE/PAC path; a synthetic regression reparses the changed coordinate.
+Most model fields remain opaque, and runtime meaning, internal growth, and
+loader pointer-fixup behavior are not established. See
+[YOBJ evidence](../tasks/YOBJ_MODEL_RECOVERY.md).
 
 `--stored-order` is a diagnostic that reads indexed pixels linearly and uses
 palette entries as stored, without the PSMT8 CLUT index permutation or GS alpha
@@ -213,8 +220,8 @@ Use `make asset-census` to regenerate
 [`reports/asset_recovery_census.json`](../reports/asset_recovery_census.json).
 The generator combines the prepared leaf catalog, recursively validated layout
 pieces, TXC index, parsed UI-bundle manifests, reversible text and message
-catalogs, AT3 parser evidence, pinned disc inventory, and authenticated
-unchanged-round-trip report. It fails if the reference or physical partition
+catalogs, AT3 and YOBJ geometry parser evidence, pinned disc inventory, and
+authenticated unchanged-round-trip report. It fails if the reference or physical partition
 does not balance, a standalone TXC is missing, a nested member hash disagrees,
 or exclusive byte categories do not sum to their denominator.
 
@@ -222,9 +229,11 @@ Keep physical-disc accounting separate from the normalized logical payload.
 The **physical image** is 4,587,749,376 bytes (4.588 decimal GB). It contains
 3,324,768,000 bytes in all-zero named members and 2,527,881 bytes in all-zero
 gaps, totaling 3,327,295,881 measured all-zero bytes (72.5257%). These are
-zero-byte measurements; call them padding candidates only when useful, and do
-not claim their intent. The other disjoint physical spans are 1,237,522,725
-bytes in nonzero terminal members (26.9745%) and 22,930,770 bytes in nonzero
+zero-byte measurements only; intentional padding, placeholders or historical
+purpose are not established. The report therefore leaves intentional-padding
+bytes unknown rather than relabeling every zero span. The other disjoint
+physical spans are 1,237,522,725 bytes in nonzero terminal members (26.9745%)
+and 22,930,770 bytes in nonzero
 gap/structure extents (0.4998%). The four spans partition the image exactly.
 
 The **expanded logical information payload Y** is 1,303,947,016 bytes (1.304
@@ -243,8 +252,8 @@ bundle tables, reversible text/message sources, directly parsed AT3 reference
 tables and node envelopes, direct YOBJ/YMP envelopes, and all 685,111,296 bytes
 of validated sectorized MPEG program-stream packet/sector extents. Structural
 coverage does not mean the bytes inside those records are semantically
-understood: video/audio samples, model geometry and animation properties still
-contain opaque fields. The 43 PSMCT32 RTX3 records fail the complete declared-
+understood: video/audio samples, most model fields and animation properties
+still contain opaque fields. The 43 PSMCT32 RTX3 records fail the complete declared-
 length check and are excluded from Z even though their headers identify
 candidate dimensions and storage mode. The graphics index records strict parse
 success separately from image-export support.
@@ -253,9 +262,15 @@ Unchanged-input no-op rebuild coverage is **A/Y = 100%**, backed by an
 authenticated byte-identical full-disc rebuild and exact parsed-bundle no-op
 reassembly. A does not establish that arbitrary edited data, growth, relocation,
 or runtime behavior is correct. Semantic editability is **B/Y =
-239,532,814 / 1,303,947,016 = 18.3698%**. Runtime-validated edited coverage is
-**C/Y = 0%**. These levels are separate measures, not a combined
-"decompiled" percentage.
+273,116,350 / 1,303,947,016 = 20.9454%**: 239,444,320 editable texture
+source bytes, 88,494 reversible text/message bytes, and 33,583,536 YOBJ
+position/normal XYZ bytes. Only the six XYZ float components per validated
+vertex count for YOBJ; opaque model bytes are excluded. Runtime-validated edited
+coverage is **C/Y = 0%**. These levels are separate measures, not a combined
+"decompiled" percentage. The independently rounded B components are 18.3630%
+textures, 0.0052% reversible text, 0.0016% messages, and 2.5755% YOBJ
+coordinates; their displayed sum can differ from total B/Y by 0.0001 percentage
+points due to rounding.
 
 The AT3 envelope audit covers 723 direct archive leaves (1,840,708 bytes) and
 1,605 nested UI-bundle resources (6,979,660 bytes). All 2,328 resources parse and
@@ -277,10 +292,13 @@ duplicated POF0 offset, a POF0 signature/length that reaches EOF, four bounded
 numeric count/offset fields, and 807,439 delta-coded pointer-slot entries across
 the direct and nested corpus. Each decoded nonzero target is inside the model
 envelope or exactly at the POF0 boundary. One `DUMY`-prefixed basebone file has
-an extended all-zero POF0 tail; it is preserved. Direct YMP envelopes add
-197,085,308 bytes to Z. Nested YMP members were already counted once as bounded
-UI-bundle extents. The parser does not name the numeric fields, decode geometry,
-prove runtime relocation behavior, or permit file growth. See
+an extended all-zero POF0 tail; it is preserved. A corpus-validated narrow
+editor covers 33,314,544 direct and 268,992 nested position/normal XYZ bytes.
+It decodes 9,897 direct and 79 nested meshes with 1,388,106 direct and 11,208
+nested vertices. Direct YMP envelopes add 197,085,308 bytes to Z. Nested YMP
+members were already counted once as bounded UI-bundle extents. Faces/topology,
+UVs, material/skin/object fields, most header semantics, internal growth and
+runtime relocation remain unresolved. See
 [`YOBJ model evidence`](../tasks/YOBJ_MODEL_RECOVERY.md) and the
 `model_resource_corpus` census section.
 
@@ -292,33 +310,34 @@ decoded a frame and an audio sample per file. Generic MPEG/VCD/VOB muxers
 rejected the ADX input, so there is not yet an edited/reinsertable movie path.
 See [movie stream evidence](../tasks/VIDEO_STREAM_RECOVERY.md).
 
-Semantic editability comprises 239,444,320 editable texture bytes and 88,494
-reversible text/message source bytes. It measures available editable
-representations, not the share already translated.
+Semantic editability comprises 239,444,320 editable texture bytes, 88,494
+reversible text/message source bytes, and 33,583,536 editable YOBJ coordinate
+bytes. It measures available editable representations, not the share already
+translated.
 
 Keep two disjoint work-queue views. The complete non-editable remainder **Y-B**
-is 1,064,414,202 bytes (81.6302% of Y); it includes structurally bounded members
-that do not yet have an editable representation. Of that, **Z-B = 892,498,008**
-bytes (68.4459% of Y) are structurally classified but not semantically editable.
+is 1,030,830,666 bytes (79.0546% of Y); it includes structurally bounded members
+that do not yet have an editable representation. Of that, **Z-B = 858,914,472**
+bytes (65.8704% of Y) are structurally classified but not semantically editable.
 The strictly structurally unclassified remainder **Y-Z = 171,916,194** bytes
 (13.1843% of Y) is the byte base for the unclassified-inventory breakdown
 below. These bases answer different questions and must not be substituted for
 one another.
 
-The disjoint `Y - B` remainder is 1,064,414,202 bytes. Its byte-weighted
+The disjoint `Y - B` remainder is 1,030,830,666 bytes. Its byte-weighted
 inventory is:
 
 | Remaining class | Bytes | Share of `Y - B` |
 | --- | ---: | ---: |
-| Video/cinematics | 685,111,296 | 64.3651% |
-| Model/geometry candidates | 201,632,448 | 18.9430% |
-| Audio/sound candidates | 156,453,642 | 14.6986% |
-| Animation/motion candidates | 12,552,248 | 1.1793% |
-| Executables/modules | 4,101,870 | 0.3854% |
-| Other unclassified | 2,644,996 | 0.2485% |
-| Font assets | 896,928 | 0.0843% |
-| Script/data candidates | 880,126 | 0.0827% |
-| Unresolved graphics (43 short PSMCT32 records) | 140,648 | 0.0132% |
+| Video/cinematics | 685,111,296 | 66.4621% |
+| Model/geometry candidates | 168,048,912 | 16.3023% |
+| Audio/sound candidates | 156,453,642 | 15.1774% |
+| Animation/motion candidates | 12,552,248 | 1.2177% |
+| Executables/modules | 4,101,870 | 0.3979% |
+| Other unclassified | 2,644,996 | 0.2566% |
+| Font assets | 896,928 | 0.0870% |
+| Script/data candidates | 880,126 | 0.0854% |
+| Unresolved graphics (43 short PSMCT32 records) | 140,648 | 0.0136% |
 
 These classes partition `Y - B`. Their names classify inventory by validated
 signature, bundle member type, filename or path; they do not claim the opaque
@@ -331,7 +350,7 @@ executables/modules 2.3860% (4,101,870), animation/motion candidates 2.1708%
 1.2708% (2,184,740), font assets 0.5217% (896,928), script/data candidates
 0.5041% (866,626), and unresolved graphics 0.0818% (140,648). The video files
 leave this strict remainder after packet extents parse successfully; their
-payload codecs remain opaque and they still comprise 64.3651% of the complete
+payload codecs remain opaque and they still comprise 66.4621% of the complete
 `Y-B` queue. These are evidence-led inventory labels, not semantic asset
 decodes. `Y-Z` is not a measure of every semantically opaque byte: validated
 MPEG packet extents, YOBJ envelopes and AT3 records can contain uninterpreted
