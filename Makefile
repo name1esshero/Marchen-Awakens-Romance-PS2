@@ -2,7 +2,7 @@
 EE_GCC := .tools/ee-gcc2.96/bin/ee-gcc
 BOOT_SOURCES := $(wildcard preserved/boot/*.hex) preserved/boot/layout.json
 
-.PHONY: test inventory verify-camera verify-reference build-boot verify-boot setup-ee verify-ee verify-source-only
+.PHONY: test inventory verify-camera verify-reference build-boot verify-boot setup-ee verify-ee verify-source-only export-assets prepare-assets build-disc compare-disc verify-disc
 
 test:
 	python3 -m unittest discover -s tests -v
@@ -35,6 +35,22 @@ verify-boot: build-boot verify-camera
 
 verify-source-only:
 	python3 tools/check_source_only.py
+
+# Explicit asset research workflow. The output workspace is ignored/reference-derived;
+# builds consume that workspace, never the baserom directly.
+export-assets:
+	python3 tools/assets.py export baserom.iso extracted/assets
+
+prepare-assets:
+	python3 tools/assets.py prepare extracted/assets
+
+build-disc:
+	python3 tools/assets.py build extracted/assets build/assets-rebuilt.iso
+
+compare-disc:
+	python3 tools/compare_disc.py build/assets-rebuilt.iso
+
+verify-disc: build-disc compare-disc
 
 setup-ee:
 	python3 tools/setup_ee_compiler.py

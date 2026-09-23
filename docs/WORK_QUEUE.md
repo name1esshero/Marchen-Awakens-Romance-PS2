@@ -12,10 +12,12 @@ Manager maintains this page and [status](STATUS.md) at each verified milestone.
 | P1 | Reduce main ELF raw regions | Five explicit preserved intervals remain (was two); split further by evidenced sections as recovery proceeds | Full byte equality and provenance for each replacement |
 | P2 | Inventory DVP overlays and IOP modules | Headers known, internal semantics not yet researched | Tested format/ISA inventory; round trips before replacement |
 | P2 | Inventory AFS/YFS/IOPRP internals | Top-level extents known, internal entries unresolved | Evidence-based parsers, malformed-input tests, lossless round trips |
-| P2 | Full-disc reconstruction | Not implemented | Source-artifact rebuild, all metadata/gaps preserved, complete image comparison |
+| P1 | Asset workspace and full-disc rebuild | ISO/YFS/AFS/PAC extraction and source-only rebuilding implemented; untouched 4.59 GB rebuild compares byte-identically. Prepared census: 3,557 PAC, 2 AFS, 1 YFS and 34,486 leaves; six text/source leaves have CP932 companions and one unknown PAC variant remains raw. | Format-specific editable conversions, changed-member round trips, runtime verification; see [method](TASK_ASSET_WORKSPACE_METHODOLOGY.md) |
+| P2 | Full-disc reconstruction and relocation | Fully prepared unchanged rebuild compares exactly; `--relocate` appends grown members and updates observed parent tables/ISO records, but is experimental | Changed full-image compare from an edited workspace, broader independently parsed nested offsets, filesystem/runtime verification |
 | P3 | Independent provenance / runtime checks | Not performed | External dump provenance and recorded runtime validation |
 
-Completed enabling work: ISO/ELF inventory, selected assembly preservation,
+Completed enabling work: ISO/ELF inventory, lossless asset export/rebuild and
+streaming whole-disc comparison, selected assembly preservation,
 historical compiler probe, explicit boot reconstruction, isolated rebuild check,
 mandatory commit attribution trailers, and a linkonce-cluster census tool.
 

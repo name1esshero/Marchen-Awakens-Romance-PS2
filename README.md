@@ -29,6 +29,26 @@ make inventory       # validates image hash; inventories and explicitly extracts
 make verify-boot     # authenticates extracted ELF, then compares the entire rebuilt file
 ```
 
+The full disc also has a first lossless asset workspace. Export once, prepare the
+catalogue, then build and compare the image:
+
+```sh
+make export-assets   # authenticates the ISO, extracts nested YFS/AFS/PAC members
+make prepare-assets  # indexes 34,486 leaves; adds reversible UTF-8 copies of text
+make build-disc      # rebuilds from extracted/assets only
+make compare-disc    # streams the complete rebuilt ISO against the pinned image
+make verify-disc     # rebuilds and compares in one gate
+```
+
+`extracted/assets/catalog.json` maps readable archive paths to workspace files.
+Raw leaves remain editable as bytes; recognized text leaves have `.utf8.txt`
+companions that are encoded back to the game's observed CP932 encoding. `--relocate`
+allows larger members to be appended and their observed container table offsets
+updated, but game runtime support for moved resources is not yet verified.
+Formats inside PAC leaves such as YPC models, fonts, audio and script bytecode
+remain binary until their internal structures and conversion round trips are
+recovered. See [asset workflow](docs/TASK_ASSET_WORKSPACE_METHODOLOGY.md).
+
 For the historical compiler experiment (requires a Linux i386-compatible host):
 
 ```sh
@@ -52,9 +72,10 @@ belong to is in `reports/linkonce_text_inventory.json`; see
 Extracted reference files, downloaded tools and build outputs are ignored.
 The normal build reads no reference bytes. Comparison deliberately reads the reference executable.
 
-The boot ELF equality and isolated build gates pass. Full-disc reconstruction,
-authentic source/class recovery, original game compiler identification and archive
-recovery remain outstanding. Hashes identify this supplied image; independent
+The boot ELF equality and isolated build gates pass. Full-disc byte-preserving
+reconstruction now has an asset workspace and comparator; editable semantic
+conversion, runtime validation, authentic source/class recovery and original game
+compiler identification remain outstanding. Hashes identify this supplied image; independent
 retail-dump provenance has not been established.
 
 New commits require the variable attribution/evidence footers in

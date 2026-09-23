@@ -2,6 +2,20 @@
 
 Authority: [STANDARDS.md](STANDARDS.md).
 
+## One nested `.pac` file does not meet the observed PAC table contract
+
+Hypothesis: every file named `.pac` in the recognized asset tree uses the same
+little-endian PAC member table and can be recursively unpacked. The prepared
+census found `disc!/_DATA.YFS;1!/data/bg/00.pac!/tex.pac` with a PAC-like header,
+but its table contains a nonzero member field rejected by the current observed
+format contract (`PAC unknown member flags`). Keep this file as an opaque leaf;
+do not clear or reinterpret the field to force extraction.
+Revisit when an independent parser/runtime trace or multiple structurally
+consistent examples establish that field's meaning. This does not prove the file
+is not a PAC container or that the field is necessarily a flag. Evidence:
+`reports/assets_census.json`, generated from the pinned image;
+[asset methodology](TASK_ASSET_WORKSPACE_METHODOLOGY.md).
+
 ## A 16-byte copy does not establish a four-float aggregate
 
 Hypothesis: `CCamera::GetViewRect` returns a four-float rectangle by value.

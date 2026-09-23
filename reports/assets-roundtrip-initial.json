@@ -1,0 +1,10 @@
+{
+  "authenticated": true,
+  "match": true,
+  "reference_size": 4587749376,
+  "rebuilt_size": 4587749376,
+  "reference_sha256": "cc059a3acf818dfbd0a782a9d20ee67e020d167866cd1c4dca77e6eb9224e3ec",
+  "rebuilt_sha256": "cc059a3acf818dfbd0a782a9d20ee67e020d167866cd1c4dca77e6eb9224e3ec",
+  "differing_bytes": 0,
+  "first_differences": []
+}

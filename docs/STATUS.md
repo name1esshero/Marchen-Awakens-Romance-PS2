@@ -8,6 +8,18 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
 ## Verified scope
 
 - The supplied ISO is pinned by SHA-256; its inventory has 41 files and one directory.
+- A lossless workspace now recursively exposes the ISO, two AFS archives, the YFS
+  archive, and observed PAC archives: 3,557 PAC, two AFS and one YFS containers,
+  with 34,486 leaves. Six text/source leaves have reversible CP932 text companions; one
+  nested `tex.pac` candidate with an unknown table field remains raw. See the
+  tracked `reports/assets_census.json` and ignored
+  `extracted/assets/catalog.json`.
+- Both the initial and fully prepared 4,587,749,376-byte disc rebuilds from
+  workspace files compare byte-for-byte with the pinned ISO; the streaming
+  comparator authenticates both source hashes and whole-image equality. This
+  proves lossless container round-trip for this image, not semantic recovery,
+  relocation safety or game runtime behavior. See
+  `reports/assets-roundtrip-prepared.json`.
 - The complete 3,445,204-byte boot ELF now rebuilds identically from repository
   text artifacts plus assembled code. `cmp` verifies every output byte.
 - An isolated build containing no ISO, extracted files, reports, existing build
@@ -42,8 +54,10 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   40 candidate bytes versus 24 original bytes, with unaligned versus aligned
   transfers. Member types/alignment require independent evidence; all original
   bytes remain preserved. See [the probe](tasks/VIEW_RECT_PROBE.md).
-- No full-disc rebuild, archive round trip, runtime/emulator test or gameplay
-  validation has been performed. Module internals and DVP overlay semantics remain open.
+- No runtime/emulator test or gameplay validation has been performed. Asset leaves
+  such as YPC geometry, texture payloads, audio, fonts and scripts remain binary;
+  moved/grown assets have no runtime validation. DMY files, module internals and DVP
+  overlay semantics remain open.
 - Independent retail-dump authentication remains unestablished.
 
 ## Current gates
@@ -51,8 +65,10 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
 `make test`, `make verify-boot`, `make verify-source-only`, and `make verify-ee`.
 Exact executed outcomes and investigation failures are recorded in
 [the compiler task](tasks/COMPILER_PROBE.md) and the commit footer.
-Full-disc SHA-256 was checked during initial bootstrap; routine source changes do
-not reread the unchanged 4.6 GB input. `make verify-reference` checks it when needed.
+Asset gates are `make export-assets prepare-assets verify-disc`; the fully
+prepared unchanged full-disc comparison passed. See
+[asset methodology](TASK_ASSET_WORKSPACE_METHODOLOGY.md).
+Full-disc SHA-256 is checked by the streaming comparison gate.
 
 The owner initialized Git in `8d5068a` after the initial bootstrap. Commits are
 now authorized. New commits carry model, role, work type, actual verification and

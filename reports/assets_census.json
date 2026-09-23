@@ -1,0 +1,50 @@
+{
+  "containers": {
+    "ISO": 1,
+    "AFS": 2,
+    "YFS": 1,
+    "PAC": 3557
+  },
+  "leaves": 34486,
+  "extensions": {
+    "cnf;1": 1,
+    "56;1": 1,
+    "irx;1": 14,
+    "img;1": 1,
+    "dir;1": 1,
+    ";1": 20,
+    "bin": 40,
+    "ymp": 899,
+    "dat": 121,
+    "yap": 92,
+    "atr": 162,
+    "at3": 723,
+    "da_": 1,
+    "txc": 28940,
+    "ycg": 1983,
+    "pac": 6,
+    "at": 5,
+    "mpc": 7,
+    "fdb": 2,
+    "gef": 82,
+    "bpe": 2,
+    "p2i": 2,
+    "ico": 1,
+    "b": 724,
+    "txt": 2,
+    "ypc": 333,
+    "pms": 196,
+    "scd": 8,
+    "sci": 1,
+    "cpp": 1,
+    "h": 1,
+    "acx": 58,
+    "snd": 56
+  },
+  "unparsed": [
+    {
+      "name": "disc!/_DATA.YFS;1!/data/bg/00.pac!/tex.pac",
+      "reason": "PAC unknown member flags"
+    }
+  ]
+}

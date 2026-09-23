@@ -2,6 +2,31 @@
 
 Authority: [STANDARDS.md](STANDARDS.md).
 
+## Recursive container layouts make a full disc round-trip without source-byte fallback
+
+Symptom: ISO extraction alone cannot support editing or prove reconstruction when
+large data archives and unknown padding are present.
+Mechanism: represent each recognized container as an exact ordered partition of
+members and intervening gaps/tails. Preserve unrecognized leaves as raw files;
+record observed parent offset/size fields for members. A source-only builder can
+then recreate untouched containers without reading the reference image.
+Pathway: authenticate the ISO before export; recursively parse only evidenced
+ISO9660, YFS, AFS and PAC signatures; use stable numeric filenames plus a logical
+catalog; compare complete reconstructed image using a streaming comparator that
+also authenticates the reference hash.
+Verification: both the initial and fully prepared workspace rebuilds of the supplied
+4,587,749,376-byte image compare exactly; output and input SHA-256
+both equal `cc059a3acf818dfbd0a782a9d20ee67e020d167866cd1c4dca77e6eb9224e3ec`,
+and comparison reports zero differing bytes. Synthetic tests cover nested archive
+round-trip and relocation-table updates.
+Scope: one single-volume ISO, its observed YFS, AFS and two PAC table variants.
+Limits: byte equality does not recover internal model/texture/audio/font/script
+semantics. Appending grown members and changing archive/ISO references has not been
+tested by game runtime. Reference provenance remains limited to the pinned file.
+References: [asset methodology](TASK_ASSET_WORKSPACE_METHODOLOGY.md),
+`tools/assets.py`, `tools/compare_disc.py`, `tests/test_assets.py`,
+`tests/test_compare_disc.py`.
+
 ## Section names survive removal of the symbol table
 
 Symptom: ELF has no SHT_SYMTAB but thousands of named sections.
