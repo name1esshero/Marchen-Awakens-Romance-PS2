@@ -128,14 +128,15 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   together they cover 22 textures and identify Japanese wordmark, control, and
   menu-label candidates. The 17-row war-selection audit is integrated; 16 paths
   are exact zero-payload duplicates and one frame remains unclassified.
-  Winner-screen (`winner_tex.b`) and war-common (`war_common_tex.b`) audits are
-  active in separate worker worktrees, while the option-menu audit is active
-  with the coordinator. The queue holds four `READY` bounded asset cards for
-  two authorized workers (2.0 ready cards per worker slot). The completed
+  The winner-screen audit is integrated with 22 paths and seven unique raster
+  hashes. War-common (`war_common_tex.b`) and shop-menu (`shop_tex.b`) audits
+  are active in separate worker worktrees, while the option-menu audit is
+  active with the coordinator. The queue holds five `READY` bounded asset cards
+  for two authorized workers (2.5 ready cards per worker slot). The completed
   title-remainder audit is integrated. Map,
   special-font, AFS suffix, background, and title-remainder audits are
-  integrated. Library/movie-summary, training, GameOver, and shop texture
-  audits remain ready. The coordinator's read-only PSMCT32 investigation found a
+  integrated. Library/movie-summary, training, GameOver, library-main, and
+  transition-menu texture audits remain ready. The coordinator's read-only PSMCT32 investigation found a
   common eight-byte shortfall across 43 records but no safe decode; those
   records remain raw.
   The `ttlprts` and `title000` English siblings, task notes and success entries
