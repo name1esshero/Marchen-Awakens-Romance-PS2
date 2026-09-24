@@ -1026,3 +1026,28 @@ expected for the relocated, translated image.
 References: `graphics_rules.mk`, `tools/graphics.py`, `tools/assets.py`,
 `tools/verify_graphics_in_iso.py`, `tools/compare_disc.py`, and the linked task
 evidence.
+
+## Weapon texture audits should separate Japanese writing from decorative and language-neutral marks
+
+Symptom: an asset category containing weapon sprites and UI parts can mix genuine
+Japanese instructions with English labels, controller glyphs, and abstract art.
+Mechanism: inspect every indexed baseline visually, then distinguish readable
+Japanese text from Latin labels, control symbols, decorative trim, and unresolved
+glyph-like marks; use exact file hashes to identify byte-identical repeats without
+losing per-file inventory coverage.
+Successful pathway: the 300-image weapons review found a clear Japanese command
+(`ARMを装着する`, visually “Equip ARM”) in `00039_00921_0004_arrm_jp.tga`,
+English `GET` and `ARM START` marks, a language-neutral control atlas, and two
+slot strips with unresolved color-coded labels that remain localization candidates.
+Keep those candidates separate from confirmed Japanese readings and leave every
+`_jp.tga` baseline intact.
+Verification: all 300 source filenames, dimensions, and complete TGA SHA-256 values
+match the 300 corresponding `graphics/index.json` entries; all 300 contact-sheet
+images were visually reviewed, representing 71 distinct file hashes. The TGA headers
+are consistently type 2, 32-bit, top-origin (`0x28`).
+Scope: the 300 Japanese baselines under `graphics/weapons/`.
+Limits: the two slot-strip labels are not confidently transcribed or confirmed as
+Japanese; flat-texture review does not identify UVs, runtime use, or presentation.
+No baseline/override was edited, and no ISO or emulator/runtime validation was run.
+References: [`weapon texture audit`](../tasks/GRAPHIC_TEXT_WEAPONS.md),
+`graphics/index.json`, [`LOCALIZATION_METHODOLOGY.md`](LOCALIZATION_METHODOLOGY.md).
