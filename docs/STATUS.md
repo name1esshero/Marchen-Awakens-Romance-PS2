@@ -161,14 +161,16 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   the same misidentified subtitle art. The owner-supplied MÄR HEAVEN mark has a
   distinctive style across the franchise and is now the visual source for the
   DQ-38 rework; `ARM FIGHT DREAM` remains a separate subtitle. DQ-30 and DQ-38
-  are coordinator work. DQ-40 and DQ-41 are assigned to separate worker
-  worktrees for DQ-32's single save/load UI texture audit and DQ-41's 16-image
-  `lib_voice_sum.b` audit. DQ-40's 16-image `lib_char_sum.b` audit is integrated
-  as `743ec3e` (worker source `d0be870`); its opaque portraits contain no
-  readable text. Active scopes and their `SUCCESSES.md` anchors are disjoint.
-  Four `READY` bounded asset cards remain for the authorized capacity of two
-  (reserve/capacity = 4/2 = 2.0); DQ-43 is a new four-atlas character-surface
-  audit, with unique hashes and no overlap against DQ-40 or DQ-41.
+  are coordinator work. DQ-32 and DQ-33 are assigned to separate worker
+  worktrees for the save/load and war-close single-texture audits. DQ-40's
+  `lib_char_sum.b` audit is integrated as `743ec3e` (source `d0be870`); all 16
+  images are opaque portraits with no readable text. DQ-41's `lib_voice_sum.b`
+  audit is integrated as `d1aedad` (source `dafa268`); all 16 portraits are
+  opaque, with tiny balloon-like strokes left unclassified. Both worker authors
+  and trailers are preserved. Active scopes and their success-log anchors are
+  disjoint. Four `READY` cards remain for capacity two (reserve/capacity = 2.0).
+  DQ-43 and DQ-44 cover separate four-image character texture sets with unique
+  hashes and no overlap against DQ-40 or DQ-41.
   The completed
   title-remainder audit is integrated. Map,
   special-font, AFS suffix, background, and title-remainder audits are
