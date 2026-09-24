@@ -162,10 +162,13 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   distinctive style across the franchise and is now the visual source for the
   DQ-38 rework; `ARM FIGHT DREAM` remains a separate subtitle. DQ-30 and DQ-38
   are coordinator work. DQ-40 and DQ-41 are assigned to separate worker
-  worktrees for 16-image audits of `lib_char_sum.b` and `lib_voice_sum.b`.
-  Their source image sets are disjoint, and their required success findings use
-  distinct reserved anchors in `SUCCESSES.md`. Four `READY` bounded asset cards
-  remain for the authorized capacity of two (reserve/capacity = 4/2 = 2.0).
+  worktrees for DQ-32's single save/load UI texture audit and DQ-41's 16-image
+  `lib_voice_sum.b` audit. DQ-40's 16-image `lib_char_sum.b` audit is integrated
+  as `743ec3e` (worker source `d0be870`); its opaque portraits contain no
+  readable text. Active scopes and their `SUCCESSES.md` anchors are disjoint.
+  Four `READY` bounded asset cards remain for the authorized capacity of two
+  (reserve/capacity = 4/2 = 2.0); DQ-43 is a new four-atlas character-surface
+  audit, with unique hashes and no overlap against DQ-40 or DQ-41.
   The completed
   title-remainder audit is integrated. Map,
   special-font, AFS suffix, background, and title-remainder audits are
