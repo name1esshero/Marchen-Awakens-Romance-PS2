@@ -1244,6 +1244,24 @@ References: [war-selection texture audit](../tasks/GRAPHIC_TEXT_WAR_SEL_BASE_TEX
 `graphics/index.json`, and
 [`localization methodology`](LOCALIZATION_METHODOLOGY.md).
 
+## Training-bundle audit separates tutorial labels from message records
+
+Symptom: `train_tex.b` mixes interface labels, character art, effects and other
+textures, so bundle membership alone cannot show what carries translatable
+text. Method: authenticate every indexed export by name, dimensions, full
+SHA-256, TGA header and extent; visually inspect all images and compare clearly
+readable tutorial terms against the tutorial-message catalog. Finding: the
+controller-help atlas includes Japanese labels such as `ARM セット` and
+`ランダム`, and a separate texture visibly spells `トレーニング`; the catalog
+shares control vocabulary but contains no literal match for those label terms.
+A narrow arm-parts strip has small Latin `SLOT` labels; gate/window marks remain
+unresolved candidates. Verification: all 11 scoped images passed index/hash/
+header/extent checks and were visually reviewed; no source or override changed.
+Limits: no UV/runtime association, ISO rebuild or emulator validation was made.
+References: [training texture audit](../tasks/GRAPHIC_TEXT_TRAINING_TEX.md),
+`graphics/index.json`, `localization/messages.json`, and
+[`localization methodology`](LOCALIZATION_METHODOLOGY.md).
+
 ## Card-text audits should inspect nameplates separately from illustrations
 
 Symptom: a large card-texture category appears to offer broad localization
