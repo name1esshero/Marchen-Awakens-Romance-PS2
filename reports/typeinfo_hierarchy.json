@@ -1,0 +1,2827 @@
+{
+  "section_count": 498,
+  "size_histogram": {
+    "52": 56,
+    "64": 2,
+    "80": 14,
+    "84": 182,
+    "88": 243,
+    "92": 1
+  },
+  "root_count": 58,
+  "edge_count": 440,
+  "helper_call_targets_by_size": {
+    "52": [
+      "0x32c1f8"
+    ],
+    "64": [
+      "0x32c1f8"
+    ],
+    "80": [
+      "0x32c1d8"
+    ],
+    "84": [
+      "0x32c1d8"
+    ],
+    "88": [
+      "0x32c1d8"
+    ],
+    "92": [
+      "0x32c1b0"
+    ]
+  },
+  "roots": [
+    {
+      "class_name": "ActionObject",
+      "size": 52
+    },
+    {
+      "class_name": "ArmEffectBase",
+      "size": 52
+    },
+    {
+      "class_name": "ArmEffectCtrl",
+      "size": 52
+    },
+    {
+      "class_name": "C3dObject",
+      "size": 52
+    },
+    {
+      "class_name": "CActTbl",
+      "size": 52
+    },
+    {
+      "class_name": "CAlpha",
+      "size": 52
+    },
+    {
+      "class_name": "CArmNameDraw",
+      "size": 52
+    },
+    {
+      "class_name": "CBgCol",
+      "size": 52
+    },
+    {
+      "class_name": "CCharCom",
+      "size": 52
+    },
+    {
+      "class_name": "CFreeListNode",
+      "size": 52
+    },
+    {
+      "class_name": "CGameCntrl",
+      "size": 52
+    },
+    {
+      "class_name": "CGameEffect_Base",
+      "size": 52
+    },
+    {
+      "class_name": "CGameWarMenu",
+      "size": 52
+    },
+    {
+      "class_name": "CGef",
+      "size": 52
+    },
+    {
+      "class_name": "CGefAttribute",
+      "size": 52
+    },
+    {
+      "class_name": "CGefBirth",
+      "size": 52
+    },
+    {
+      "class_name": "CGefCalculation",
+      "size": 52
+    },
+    {
+      "class_name": "CGefFactor",
+      "size": 52
+    },
+    {
+      "class_name": "CGefObj",
+      "size": 52
+    },
+    {
+      "class_name": "CGefScene",
+      "size": 52
+    },
+    {
+      "class_name": "CMCard",
+      "size": 52
+    },
+    {
+      "class_name": "CMcFunc",
+      "size": 52
+    },
+    {
+      "class_name": "CMotion",
+      "size": 52
+    },
+    {
+      "class_name": "CMotionSts",
+      "size": 52
+    },
+    {
+      "class_name": "CObj",
+      "size": 52
+    },
+    {
+      "class_name": "CPClassObj",
+      "size": 52
+    },
+    {
+      "class_name": "CPDataObj",
+      "size": 52
+    },
+    {
+      "class_name": "CPMovie",
+      "size": 52
+    },
+    {
+      "class_name": "CPMovieBank",
+      "size": 52
+    },
+    {
+      "class_name": "CPad2",
+      "size": 52
+    },
+    {
+      "class_name": "CPrim",
+      "size": 52
+    },
+    {
+      "class_name": "CRender",
+      "size": 52
+    },
+    {
+      "class_name": "CRenderCallBack",
+      "size": 52
+    },
+    {
+      "class_name": "CScriptTask",
+      "size": 52
+    },
+    {
+      "class_name": "CStringBase",
+      "size": 52
+    },
+    {
+      "class_name": "CStringStream",
+      "size": 52
+    },
+    {
+      "class_name": "CTexData",
+      "size": 52
+    },
+    {
+      "class_name": "CTexGroup",
+      "size": 52
+    },
+    {
+      "class_name": "CWeapon",
+      "size": 52
+    },
+    {
+      "class_name": "Char2DAnimCtrl",
+      "size": 52
+    },
+    {
+      "class_name": "ClsSpring",
+      "size": 52
+    },
+    {
+      "class_name": "CockpitDraw",
+      "size": 52
+    },
+    {
+      "class_name": "Curse_Impl",
+      "size": 52
+    },
+    {
+      "class_name": "DebPrint",
+      "size": 52
+    },
+    {
+      "class_name": "FireWall_Ground",
+      "size": 52
+    },
+    {
+      "class_name": "FootStamp_Base",
+      "size": 52
+    },
+    {
+      "class_name": "MarRectDraw",
+      "size": 52
+    },
+    {
+      "class_name": "MarTempRegister",
+      "size": 52
+    },
+    {
+      "class_name": "Mar_MCardATFile",
+      "size": 52
+    },
+    {
+      "class_name": "MenuDrawClass",
+      "size": 52
+    },
+    {
+      "class_name": "MenuEsy",
+      "size": 52
+    },
+    {
+      "class_name": "MenuFrame",
+      "size": 52
+    },
+    {
+      "class_name": "PLObj",
+      "size": 52
+    },
+    {
+      "class_name": "PiyoPiyo_Impl",
+      "size": 52
+    },
+    {
+      "class_name": "VramRealTimeSend",
+      "size": 52
+    },
+    {
+      "class_name": "Weapon_Arm_Effect_Base",
+      "size": 52
+    },
+    {
+      "class_name": "exception",
+      "size": 64
+    },
+    {
+      "class_name": "type_info",
+      "size": 64
+    }
+  ],
+  "edges": [
+    {
+      "class_name": "ArmEffectCtrl_Plus",
+      "base_class": "ArmEffectCtrl",
+      "size": 84
+    },
+    {
+      "class_name": "ArmList",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "ArmSet_Info",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "ArmSet_SortList",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "AttackEffect",
+      "base_class": "ArmEffectBase",
+      "size": 84
+    },
+    {
+      "class_name": "Aura_Effect",
+      "base_class": "C3dMotModel",
+      "size": 88
+    },
+    {
+      "class_name": "BigIcedEarth",
+      "base_class": "IcedEarth",
+      "size": 88
+    },
+    {
+      "class_name": "BigIcedEarth_Gir",
+      "base_class": "AttackEffect",
+      "size": 88
+    },
+    {
+      "class_name": "Boulder_Fang_Manager",
+      "base_class": "CGameEffect_Base",
+      "size": 84
+    },
+    {
+      "class_name": "C3dModel",
+      "base_class": "C3dObject",
+      "size": 84
+    },
+    {
+      "class_name": "C3dMotModel",
+      "base_class": "CAlphaModel",
+      "size": 88
+    },
+    {
+      "class_name": "CActArm",
+      "base_class": "CWeapon",
+      "size": 84
+    },
+    {
+      "class_name": "CActBoyake",
+      "base_class": "ActionObject",
+      "size": 84
+    },
+    {
+      "class_name": "CActFilter",
+      "base_class": "ActionObject",
+      "size": 84
+    },
+    {
+      "class_name": "CActFilter2",
+      "base_class": "ActionObject",
+      "size": 84
+    },
+    {
+      "class_name": "CActFootStmp",
+      "base_class": "CEffPrimBase",
+      "size": 88
+    },
+    {
+      "class_name": "CActHit",
+      "base_class": "CHitEff",
+      "size": 88
+    },
+    {
+      "class_name": "CActHitGuard",
+      "base_class": "CHitEff",
+      "size": 88
+    },
+    {
+      "class_name": "CActReversal",
+      "base_class": "ActionObject",
+      "size": 84
+    },
+    {
+      "class_name": "CActTblC",
+      "base_class": "CActTbl",
+      "size": 84
+    },
+    {
+      "class_name": "CActTgt",
+      "base_class": "ActionObject",
+      "size": 84
+    },
+    {
+      "class_name": "CAlphaModel",
+      "base_class": "CSkinModel2",
+      "size": 88
+    },
+    {
+      "class_name": "CArmEffect",
+      "base_class": "CGameEffect_Base",
+      "size": 84
+    },
+    {
+      "class_name": "CBabGun",
+      "base_class": "CEffPrimBase",
+      "size": 88
+    },
+    {
+      "class_name": "CBabbo",
+      "base_class": "CWeaponArm",
+      "size": 88
+    },
+    {
+      "class_name": "CBabboMdl_0",
+      "base_class": "CWeaponArmMdl",
+      "size": 88
+    },
+    {
+      "class_name": "CBabboMdl_Head",
+      "base_class": "CWeaponArmMdl",
+      "size": 88
+    },
+    {
+      "class_name": "CBgCtrl",
+      "base_class": "ActionObject",
+      "size": 84
+    },
+    {
+      "class_name": "CBradeEff",
+      "base_class": "ActionObject",
+      "size": 84
+    },
+    {
+      "class_name": "CCamera",
+      "base_class": "C3dObject",
+      "size": 84
+    },
+    {
+      "class_name": "CCamera2",
+      "base_class": "CCamera",
+      "size": 88
+    },
+    {
+      "class_name": "CCameraMv",
+      "base_class": "CMotionCam",
+      "size": 88
+    },
+    {
+      "class_name": "CCaseAlfTest",
+      "base_class": "CEasyMenu",
+      "size": 88
+    },
+    {
+      "class_name": "CCaseArm",
+      "base_class": "CEasyMenu",
+      "size": 88
+    },
+    {
+      "class_name": "CCaseBgData",
+      "base_class": "CEasyMenu",
+      "size": 88
+    },
+    {
+      "class_name": "CCaseBgSetData",
+      "base_class": "CEasyMenu",
+      "size": 88
+    },
+    {
+      "class_name": "CCaseCamera",
+      "base_class": "CEasyMenu",
+      "size": 88
+    },
+    {
+      "class_name": "CCaseCamera2",
+      "base_class": "CEasyMenu",
+      "size": 88
+    },
+    {
+      "class_name": "CCaseChain",
+      "base_class": "CEasyMenu",
+      "size": 88
+    },
+    {
+      "class_name": "CCaseChara",
+      "base_class": "CEasyMenu",
+      "size": 88
+    },
+    {
+      "class_name": "CCaseChara2",
+      "base_class": "CEasyMenu",
+      "size": 88
+    },
+    {
+      "class_name": "CCaseChara3",
+      "base_class": "CEasyMenu",
+      "size": 88
+    },
+    {
+      "class_name": "CCaseCloth",
+      "base_class": "CEasyMenu",
+      "size": 88
+    },
+    {
+      "class_name": "CCaseCloth2",
+      "base_class": "CEasyMenu",
+      "size": 88
+    },
+    {
+      "class_name": "CCaseCol",
+      "base_class": "CEasyMenu",
+      "size": 88
+    },
+    {
+      "class_name": "CCaseCom",
+      "base_class": "CEasyMenu",
+      "size": 88
+    },
+    {
+      "class_name": "CCaseEffect",
+      "base_class": "CEasyMenu",
+      "size": 88
+    },
+    {
+      "class_name": "CCaseEvntMot",
+      "base_class": "CEasyMenu",
+      "size": 88
+    },
+    {
+      "class_name": "CCaseFBuffer",
+      "base_class": "CEasyMenu",
+      "size": 88
+    },
+    {
+      "class_name": "CCaseFogSt",
+      "base_class": "CEasyMenu",
+      "size": 88
+    },
+    {
+      "class_name": "CCaseFtStmp",
+      "base_class": "CEasyMenu",
+      "size": 88
+    },
+    {
+      "class_name": "CCaseGef",
+      "base_class": "CEasyMenu",
+      "size": 88
+    },
+    {
+      "class_name": "CCaseGlobal",
+      "base_class": "CEasyMenu",
+      "size": 88
+    },
+    {
+      "class_name": "CCaseLight",
+      "base_class": "CEasyMenu",
+      "size": 88
+    },
+    {
+      "class_name": "CCaseMotion",
+      "base_class": "CEasyMenu",
+      "size": 88
+    },
+    {
+      "class_name": "CCasePad",
+      "base_class": "CEasyMenu",
+      "size": 88
+    },
+    {
+      "class_name": "CCasePadVib",
+      "base_class": "CEasyMenu",
+      "size": 88
+    },
+    {
+      "class_name": "CCasePmovie",
+      "base_class": "CEasyMenu",
+      "size": 88
+    },
+    {
+      "class_name": "CCaseScrnEff",
+      "base_class": "CEasyMenu",
+      "size": 88
+    },
+    {
+      "class_name": "CCaseSysParam",
+      "base_class": "CEasyMenu",
+      "size": 88
+    },
+    {
+      "class_name": "CCaseTexture",
+      "base_class": "CEasyMenu",
+      "size": 88
+    },
+    {
+      "class_name": "CCharCol",
+      "base_class": "CCol",
+      "size": 88
+    },
+    {
+      "class_name": "CCharComAlv",
+      "base_class": "CCharCom",
+      "size": 84
+    },
+    {
+      "class_name": "CCharComArn",
+      "base_class": "CCharCom",
+      "size": 84
+    },
+    {
+      "class_name": "CCharComCan",
+      "base_class": "CCharCom",
+      "size": 84
+    },
+    {
+      "class_name": "CCharComDor",
+      "base_class": "CCharCom",
+      "size": 84
+    },
+    {
+      "class_name": "CCharComFan",
+      "base_class": "CCharCom",
+      "size": 84
+    },
+    {
+      "class_name": "CCharComGir",
+      "base_class": "CCharCom",
+      "size": 84
+    },
+    {
+      "class_name": "CCharComGnt",
+      "base_class": "CCharCom",
+      "size": 84
+    },
+    {
+      "class_name": "CCharComHar",
+      "base_class": "CCharCom",
+      "size": 84
+    },
+    {
+      "class_name": "CCharComIan",
+      "base_class": "CCharCom",
+      "size": 84
+    },
+    {
+      "class_name": "CCharComJac",
+      "base_class": "CCharCom",
+      "size": 84
+    },
+    {
+      "class_name": "CCharComNns",
+      "base_class": "CCharCom",
+      "size": 84
+    },
+    {
+      "class_name": "CCharComOrc",
+      "base_class": "CCharCom",
+      "size": 84
+    },
+    {
+      "class_name": "CCharComRoc",
+      "base_class": "CCharCom",
+      "size": 84
+    },
+    {
+      "class_name": "CCharComRor",
+      "base_class": "CCharCom",
+      "size": 84
+    },
+    {
+      "class_name": "CCharComSnw",
+      "base_class": "CCharCom",
+      "size": 84
+    },
+    {
+      "class_name": "CCharGauge",
+      "base_class": "CockpitBase",
+      "size": 88
+    },
+    {
+      "class_name": "CChara",
+      "base_class": "CCharaBase",
+      "size": 88
+    },
+    {
+      "class_name": "CCharaBase",
+      "base_class": "CHuman",
+      "size": 88
+    },
+    {
+      "class_name": "CCharaCntrl",
+      "base_class": "ActionObject",
+      "size": 84
+    },
+    {
+      "class_name": "CCharaDataSts",
+      "base_class": "CMotionSts",
+      "size": 84
+    },
+    {
+      "class_name": "CCharaMotion",
+      "base_class": "CMotionC",
+      "size": 88
+    },
+    {
+      "class_name": "CCharaPmv",
+      "base_class": "CCharaBase",
+      "size": 88
+    },
+    {
+      "class_name": "CCharaSts",
+      "base_class": "CCharaDataSts",
+      "size": 88
+    },
+    {
+      "class_name": "CCharaTr",
+      "base_class": "CChara",
+      "size": 88
+    },
+    {
+      "class_name": "CCharaTrE",
+      "base_class": "CChara",
+      "size": 88
+    },
+    {
+      "class_name": "CCol",
+      "base_class": "CObj",
+      "size": 84
+    },
+    {
+      "class_name": "CColBg",
+      "base_class": "CCol",
+      "size": 88
+    },
+    {
+      "class_name": "CColGroup",
+      "base_class": "CObjList",
+      "size": 88
+    },
+    {
+      "class_name": "CDebDraw",
+      "base_class": "DebPrint",
+      "size": 84
+    },
+    {
+      "class_name": "CDebPmvMenu",
+      "base_class": "ActionObject",
+      "size": 84
+    },
+    {
+      "class_name": "CEasyMenu",
+      "base_class": "CDebDraw",
+      "size": 88
+    },
+    {
+      "class_name": "CEasyMenuCtl",
+      "base_class": "ActionObject",
+      "size": 84
+    },
+    {
+      "class_name": "CEffCol",
+      "base_class": "CCol",
+      "size": 88
+    },
+    {
+      "class_name": "CEffColPlus",
+      "base_class": "CEffCol",
+      "size": 88
+    },
+    {
+      "class_name": "CEffObject",
+      "base_class": "C3dObject",
+      "size": 84
+    },
+    {
+      "class_name": "CEffObjectPlus",
+      "base_class": "CEffObject",
+      "size": 88
+    },
+    {
+      "class_name": "CEffPrimBase",
+      "base_class": "ActionObject",
+      "size": 84
+    },
+    {
+      "class_name": "CEffPrimObj",
+      "base_class": "CEffPrimBase",
+      "size": 88
+    },
+    {
+      "class_name": "CEffectArm",
+      "base_class": "CWeapon",
+      "size": 84
+    },
+    {
+      "class_name": "CEffectArmActTbl",
+      "base_class": "CEffectArm",
+      "size": 88
+    },
+    {
+      "class_name": "CEffectWeaponArm",
+      "base_class": "CEffectArm",
+      "size": 88
+    },
+    {
+      "class_name": "CEffectWeaponGun",
+      "base_class": "CEffectWeaponArm",
+      "size": 88
+    },
+    {
+      "class_name": "CEventAct",
+      "base_class": "ActionObject",
+      "size": 84
+    },
+    {
+      "class_name": "CEventObjMdl",
+      "base_class": "CAlphaModel",
+      "size": 88
+    },
+    {
+      "class_name": "CFade",
+      "base_class": "ActionObject",
+      "size": 84
+    },
+    {
+      "class_name": "CFree128",
+      "base_class": "CFreeListNode",
+      "size": 84
+    },
+    {
+      "class_name": "CFtStmpCtrl",
+      "base_class": "ActionObject",
+      "size": 84
+    },
+    {
+      "class_name": "CGameCamera",
+      "base_class": "CCamera2",
+      "size": 88
+    },
+    {
+      "class_name": "CGameCntrlDemo",
+      "base_class": "CGameCntrlGm",
+      "size": 88
+    },
+    {
+      "class_name": "CGameCntrlGm",
+      "base_class": "CGameCntrl",
+      "size": 84
+    },
+    {
+      "class_name": "CGameCntrlPmv",
+      "base_class": "CGameCntrlGm",
+      "size": 88
+    },
+    {
+      "class_name": "CGameCntrlTr",
+      "base_class": "CGameCntrlGm",
+      "size": 88
+    },
+    {
+      "class_name": "CGameEffect_Aura",
+      "base_class": "CGameEffect_Base",
+      "size": 84
+    },
+    {
+      "class_name": "CGameEffect_Circle",
+      "base_class": "CGameEffect_Base",
+      "size": 84
+    },
+    {
+      "class_name": "CGameEffect_Confine",
+      "base_class": "CGameEffect_Base",
+      "size": 84
+    },
+    {
+      "class_name": "CGameEffect_Counter",
+      "base_class": "CGameEffect_Base",
+      "size": 84
+    },
+    {
+      "class_name": "CGameEffect_Ctrl",
+      "base_class": "ActionObject",
+      "size": 84
+    },
+    {
+      "class_name": "CGameEffect_Curse",
+      "base_class": "CGameEffect_Base",
+      "size": 84
+    },
+    {
+      "class_name": "CGameEffect_Dammy",
+      "base_class": "CGameEffect_Base",
+      "size": 84
+    },
+    {
+      "class_name": "CGameEffect_Explosion_K",
+      "base_class": "CGameEffect_Base",
+      "size": 84
+    },
+    {
+      "class_name": "CGameEffect_Explosion_Y",
+      "base_class": "CGameEffect_Base",
+      "size": 84
+    },
+    {
+      "class_name": "CGameEffect_FootStamp",
+      "base_class": "CGameEffect_Base",
+      "size": 84
+    },
+    {
+      "class_name": "CGameEffect_Instant_Move",
+      "base_class": "CGameEffect_Base",
+      "size": 84
+    },
+    {
+      "class_name": "CGameEffect_Piece",
+      "base_class": "CGameEffect_Base",
+      "size": 84
+    },
+    {
+      "class_name": "CGameEffect_Pim",
+      "base_class": "CGameEffect_Base",
+      "size": 84
+    },
+    {
+      "class_name": "CGameEffect_PiyoPiyo",
+      "base_class": "CGameEffect_Base",
+      "size": 84
+    },
+    {
+      "class_name": "CGameEffect_Smoke",
+      "base_class": "CGameEffect_Base",
+      "size": 84
+    },
+    {
+      "class_name": "CGameEffect_Star",
+      "base_class": "CGameEffect_Base",
+      "size": 84
+    },
+    {
+      "class_name": "CGameTrainingCommand",
+      "base_class": "ActionObject",
+      "size": 84
+    },
+    {
+      "class_name": "CGefLineCalc",
+      "base_class": "CGefPs2Calc",
+      "size": 88
+    },
+    {
+      "class_name": "CGefPointCalc",
+      "base_class": "CGefPs2Calc",
+      "size": 88
+    },
+    {
+      "class_name": "CGefPs2Calc",
+      "base_class": "CGefCalculation",
+      "size": 84
+    },
+    {
+      "class_name": "CGefSquareCalc",
+      "base_class": "CGefPs2Calc",
+      "size": 88
+    },
+    {
+      "class_name": "CHitEff",
+      "base_class": "CEffPrimBase",
+      "size": 88
+    },
+    {
+      "class_name": "CHitEffCtrl",
+      "base_class": "ActionObject",
+      "size": 84
+    },
+    {
+      "class_name": "CHuman",
+      "base_class": "C3dMotModel",
+      "size": 88
+    },
+    {
+      "class_name": "CLight",
+      "base_class": "ActionObject",
+      "size": 84
+    },
+    {
+      "class_name": "CMCard2",
+      "base_class": "CMCard",
+      "size": 84
+    },
+    {
+      "class_name": "CMcCheck",
+      "base_class": "CMcFunc",
+      "size": 84
+    },
+    {
+      "class_name": "CMcDownload",
+      "base_class": "CMcFunc",
+      "size": 84
+    },
+    {
+      "class_name": "CMcExistFile",
+      "base_class": "CMcFunc",
+      "size": 84
+    },
+    {
+      "class_name": "CMcFormat",
+      "base_class": "CMcFunc",
+      "size": 84
+    },
+    {
+      "class_name": "CMcGetDir",
+      "base_class": "CMcFunc",
+      "size": 84
+    },
+    {
+      "class_name": "CMcGetDirList",
+      "base_class": "CMcFunc",
+      "size": 84
+    },
+    {
+      "class_name": "CMcGetEntSpace",
+      "base_class": "CMcFunc",
+      "size": 84
+    },
+    {
+      "class_name": "CMcLoadFile",
+      "base_class": "CMcFunc",
+      "size": 84
+    },
+    {
+      "class_name": "CMcMkDir",
+      "base_class": "CMcFunc",
+      "size": 84
+    },
+    {
+      "class_name": "CMcSaveFile",
+      "base_class": "CMcFunc",
+      "size": 84
+    },
+    {
+      "class_name": "CMcUpload",
+      "base_class": "CMcFunc",
+      "size": 84
+    },
+    {
+      "class_name": "CMojiEffCtrl",
+      "base_class": "ActionObject",
+      "size": 84
+    },
+    {
+      "class_name": "CMojiModel",
+      "base_class": "CAlphaModel",
+      "size": 88
+    },
+    {
+      "class_name": "CMotion2",
+      "base_class": "CMotion",
+      "size": 84
+    },
+    {
+      "class_name": "CMotion3",
+      "base_class": "CMotion2",
+      "size": 88
+    },
+    {
+      "class_name": "CMotionBg",
+      "base_class": "CMotion2",
+      "size": 88
+    },
+    {
+      "class_name": "CMotionC",
+      "base_class": "CMotion3",
+      "size": 88
+    },
+    {
+      "class_name": "CMotionCa",
+      "base_class": "CMotion2",
+      "size": 88
+    },
+    {
+      "class_name": "CMotionCam",
+      "base_class": "CCamera2",
+      "size": 88
+    },
+    {
+      "class_name": "CMotionMv",
+      "base_class": "CMotionCa",
+      "size": 88
+    },
+    {
+      "class_name": "CMotionPMS",
+      "base_class": "CMotionC",
+      "size": 88
+    },
+    {
+      "class_name": "CObjList",
+      "base_class": "CObj",
+      "size": 84
+    },
+    {
+      "class_name": "CPAppear",
+      "base_class": "PLObj",
+      "size": 84
+    },
+    {
+      "class_name": "CPAppear_PS2",
+      "base_class": "CPAppear",
+      "size": 88
+    },
+    {
+      "class_name": "CPArm_PS2",
+      "base_class": "CPAppear_PS2",
+      "size": 88
+    },
+    {
+      "class_name": "CPBG_PS2",
+      "base_class": "CPAppear_PS2",
+      "size": 88
+    },
+    {
+      "class_name": "CPCamera_PS2",
+      "base_class": "CPAppear_PS2",
+      "size": 88
+    },
+    {
+      "class_name": "CPCast",
+      "base_class": "CPAppear_PS2",
+      "size": 88
+    },
+    {
+      "class_name": "CPCast_PS2",
+      "base_class": "CPCast",
+      "size": 88
+    },
+    {
+      "class_name": "CPClassArmObj",
+      "base_class": "CPClassObj",
+      "size": 84
+    },
+    {
+      "class_name": "CPClassBG",
+      "base_class": "CPClassObj",
+      "size": 84
+    },
+    {
+      "class_name": "CPClassCast",
+      "base_class": "CPClassObj",
+      "size": 84
+    },
+    {
+      "class_name": "CPClassEventObj",
+      "base_class": "CPClassObj",
+      "size": 84
+    },
+    {
+      "class_name": "CPClassGef",
+      "base_class": "CPClassObj",
+      "size": 84
+    },
+    {
+      "class_name": "CPClassYPC",
+      "base_class": "CPClassObj",
+      "size": 84
+    },
+    {
+      "class_name": "CPCut",
+      "base_class": "PLObj",
+      "size": 84
+    },
+    {
+      "class_name": "CPCut_PS2",
+      "base_class": "CPCut",
+      "size": 88
+    },
+    {
+      "class_name": "CPDataArmObj",
+      "base_class": "CPDataNameObj",
+      "size": 88
+    },
+    {
+      "class_name": "CPDataBG",
+      "base_class": "CPDataObj",
+      "size": 84
+    },
+    {
+      "class_name": "CPDataCast",
+      "base_class": "CPDataObj",
+      "size": 84
+    },
+    {
+      "class_name": "CPDataEventObj",
+      "base_class": "CPDataNameObj",
+      "size": 88
+    },
+    {
+      "class_name": "CPDataGef",
+      "base_class": "CPDataNameObj",
+      "size": 88
+    },
+    {
+      "class_name": "CPDataGefDt",
+      "base_class": "CPDataNameObj",
+      "size": 88
+    },
+    {
+      "class_name": "CPDataNameObj",
+      "base_class": "CPDataObj",
+      "size": 84
+    },
+    {
+      "class_name": "CPDataSeDt",
+      "base_class": "CPDataNameObj",
+      "size": 88
+    },
+    {
+      "class_name": "CPDataYPC",
+      "base_class": "CPDataObj",
+      "size": 84
+    },
+    {
+      "class_name": "CPGef_PS2",
+      "base_class": "CPAppear_PS2",
+      "size": 88
+    },
+    {
+      "class_name": "CPMovieBank_PS2",
+      "base_class": "CPMovieBank",
+      "size": 84
+    },
+    {
+      "class_name": "CPMovieCtrl",
+      "base_class": "ActionObject",
+      "size": 84
+    },
+    {
+      "class_name": "CPMovie_PS2",
+      "base_class": "CPMovie",
+      "size": 84
+    },
+    {
+      "class_name": "CPObject_PS2",
+      "base_class": "CPAppear_PS2",
+      "size": 88
+    },
+    {
+      "class_name": "CPartsMdl",
+      "base_class": "CAlphaModel",
+      "size": 88
+    },
+    {
+      "class_name": "CPisonWhip",
+      "base_class": "CWeaponArm",
+      "size": 88
+    },
+    {
+      "class_name": "CPisonWhipMdl",
+      "base_class": "CWeaponArmMdl",
+      "size": 88
+    },
+    {
+      "class_name": "CPrimList",
+      "base_class": "CPrim",
+      "size": 92
+    },
+    {
+      "class_name": "CRender2",
+      "base_class": "CRender",
+      "size": 84
+    },
+    {
+      "class_name": "CScreenEff",
+      "base_class": "ActionObject",
+      "size": 84
+    },
+    {
+      "class_name": "CShadow",
+      "base_class": "CSkinModel2",
+      "size": 88
+    },
+    {
+      "class_name": "CSkelton",
+      "base_class": "C3dObject",
+      "size": 84
+    },
+    {
+      "class_name": "CSkinModel",
+      "base_class": "CSkelton",
+      "size": 88
+    },
+    {
+      "class_name": "CSkinModel2",
+      "base_class": "CSkinModelEx",
+      "size": 88
+    },
+    {
+      "class_name": "CSkinModelEx",
+      "base_class": "CSkinModel",
+      "size": 88
+    },
+    {
+      "class_name": "CStage",
+      "base_class": "CSkinModel2",
+      "size": 88
+    },
+    {
+      "class_name": "CStageObj",
+      "base_class": "CAlphaModel",
+      "size": 88
+    },
+    {
+      "class_name": "CStageSk",
+      "base_class": "CSkinModel2",
+      "size": 88
+    },
+    {
+      "class_name": "CStageWall",
+      "base_class": "CAlphaModel",
+      "size": 88
+    },
+    {
+      "class_name": "CStringWork",
+      "base_class": "CStringBase",
+      "size": 84
+    },
+    {
+      "class_name": "CSubObject",
+      "base_class": "CRenderCallBack",
+      "size": 84
+    },
+    {
+      "class_name": "CTempCTexGroup",
+      "base_class": "CTexGroup",
+      "size": 84
+    },
+    {
+      "class_name": "CTexDataFPac",
+      "base_class": "CTexData",
+      "size": 84
+    },
+    {
+      "class_name": "CTexDataMTP",
+      "base_class": "CTexData",
+      "size": 84
+    },
+    {
+      "class_name": "CTexDataTxc",
+      "base_class": "CTexData",
+      "size": 84
+    },
+    {
+      "class_name": "CTexGroupFPac",
+      "base_class": "CTexGroup",
+      "size": 84
+    },
+    {
+      "class_name": "CTexGroupMTP",
+      "base_class": "CTexGroup",
+      "size": 84
+    },
+    {
+      "class_name": "CTexGroupTxc",
+      "base_class": "CTexGroup",
+      "size": 84
+    },
+    {
+      "class_name": "CTrainingMenu",
+      "base_class": "ActionObject",
+      "size": 84
+    },
+    {
+      "class_name": "CWeaponArm",
+      "base_class": "CWeapon",
+      "size": 84
+    },
+    {
+      "class_name": "CWeaponArmMdl",
+      "base_class": "C3dMotModel",
+      "size": 88
+    },
+    {
+      "class_name": "CWeaponArmSubMdl",
+      "base_class": "CWeaponArmMdl",
+      "size": 88
+    },
+    {
+      "class_name": "CWeaponPmv",
+      "base_class": "CWeapon",
+      "size": 84
+    },
+    {
+      "class_name": "CWeaponPmvMdl",
+      "base_class": "CAlphaModel",
+      "size": 88
+    },
+    {
+      "class_name": "CWeaponPmvMdl_Face",
+      "base_class": "CWeaponPmvMdl",
+      "size": 88
+    },
+    {
+      "class_name": "CWordStream",
+      "base_class": "CStringStream",
+      "size": 84
+    },
+    {
+      "class_name": "Char2DAnimCtrl2",
+      "base_class": "Char2DAnimCtrl",
+      "size": 84
+    },
+    {
+      "class_name": "Chara2DAnimTest",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "ClsSpringBabbo",
+      "base_class": "ClsSpring",
+      "size": 84
+    },
+    {
+      "class_name": "CockpitBase",
+      "base_class": "CockpitDraw",
+      "size": 84
+    },
+    {
+      "class_name": "CockpitCntrl",
+      "base_class": "ActionObject",
+      "size": 84
+    },
+    {
+      "class_name": "CommandList",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "CtempCTexData",
+      "base_class": "CTexData",
+      "size": 84
+    },
+    {
+      "class_name": "DataBaseArm",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "DataBaseBuy",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "DataBaseCard",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "DataBaseCardDouble",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "DataBaseChar",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "DataBaseCheck",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "DataBaseField",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "DataBaseMovie",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "DebugMenuArm",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "DebugMenuCard",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "DebugMenuChar",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "DebugMenuDisp",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "DebugMenuLaby",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "DebugMenuLibrary",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "DebugMenuLoad",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "DebugMenuMoney",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "Exercise",
+      "base_class": "C3dMotModel",
+      "size": 88
+    },
+    {
+      "class_name": "FireBall",
+      "base_class": "AttackEffect",
+      "size": 88
+    },
+    {
+      "class_name": "FireStorm",
+      "base_class": "AttackEffect",
+      "size": 88
+    },
+    {
+      "class_name": "FireStorm_Ptcl",
+      "base_class": "ArmEffectBase",
+      "size": 84
+    },
+    {
+      "class_name": "FireStorm_Seed",
+      "base_class": "ArmEffectBase",
+      "size": 84
+    },
+    {
+      "class_name": "FireWall",
+      "base_class": "ArmEffectBase",
+      "size": 84
+    },
+    {
+      "class_name": "FireWall_Ctrl",
+      "base_class": "AttackEffect",
+      "size": 88
+    },
+    {
+      "class_name": "FireWall_Seed",
+      "base_class": "ArmEffectBase",
+      "size": 84
+    },
+    {
+      "class_name": "FootStamp_Brake",
+      "base_class": "FootStamp_Base",
+      "size": 84
+    },
+    {
+      "class_name": "FootStamp_Jump",
+      "base_class": "FootStamp_Base",
+      "size": 84
+    },
+    {
+      "class_name": "FootStamp_Land",
+      "base_class": "FootStamp_Base",
+      "size": 84
+    },
+    {
+      "class_name": "FootStamp_Run",
+      "base_class": "FootStamp_Base",
+      "size": 84
+    },
+    {
+      "class_name": "GameStartTransition",
+      "base_class": "ActionObject",
+      "size": 84
+    },
+    {
+      "class_name": "GameWinTransition",
+      "base_class": "ActionObject",
+      "size": 84
+    },
+    {
+      "class_name": "GiveUp",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "GranBoulder",
+      "base_class": "AttackEffect",
+      "size": 88
+    },
+    {
+      "class_name": "Ice_Spike_Manager",
+      "base_class": "CGameEffect_Base",
+      "size": 84
+    },
+    {
+      "class_name": "IcedEarth",
+      "base_class": "AttackEffect",
+      "size": 88
+    },
+    {
+      "class_name": "IcedEarthCircle",
+      "base_class": "ArmEffectBase",
+      "size": 84
+    },
+    {
+      "class_name": "KeyConfig",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "LabyArm_Ctrl",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "LabyEve_GameOver",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "LabyEve_PozenResult",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "LabyEve_PozenSelect",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "LabyStart_Dlg",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "LabyrinthAdxMovie",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "LabyrinthBattle",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "LabyrinthCharSelectMenu",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "LabyrinthCharaCursor",
+      "base_class": "LabyrinthCursor",
+      "size": 88
+    },
+    {
+      "class_name": "LabyrinthCursor",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "LabyrinthDebugMenu",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "LabyrinthDebugRoutine",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "LabyrinthMainMenu",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "LabyrinthMapSelect",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "LabyrinthScript",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "LabyrinthStartMenu",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "LabyrinthSubMenu",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "LabyrinthSub_SaveDlg",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "LabyrinthUserCursor",
+      "base_class": "LabyrinthCursor",
+      "size": 88
+    },
+    {
+      "class_name": "Labyrinth_Accident",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "Labyrinth_ArmGet",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "Labyrinth_ArmGetAbandon",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "Labyrinth_ArmGetCheck",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "Labyrinth_ArmGetEnd",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "Labyrinth_ArmGetFull",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "Labyrinth_ArmGetMain",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "Labyrinth_ArmGetRemove",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "Labyrinth_ArmGetSort",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "Labyrinth_BreakArm",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "Labyrinth_CharSelect",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "Labyrinth_IconInfo",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "Labyrinth_MoneyGet",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "Labyrinth_Result",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "Labyrinth_Subject",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "Labyrinth_Transition",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "LoadAnimNormal",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MCardAutoSave",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarArmSet_ArmEquip",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarArmSet_ArmList",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarArmSet_CharSelect",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarCharSelectMenu",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarCharSelectUI",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarCharSelectWarning",
+      "base_class": "MarWarningMenuYesNo",
+      "size": 88
+    },
+    {
+      "class_name": "MarDataBaseTop",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarFighterSelectMenu",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarFighterSelectUI",
+      "base_class": "MenuFrameUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarMenuDebugTop",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarMenuDrawObjectCtrlPrivate",
+      "base_class": "ActionObject",
+      "size": 84
+    },
+    {
+      "class_name": "MarNumberSelectMenu",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarOptionGame",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarOptionGameSub",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarOptionLoadStart",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarOptionSaveLoad",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarOptionSaveStart",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarOptionSound",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarOptionTopMenu",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarPadSelectMenu",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarPasswordDlg",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarPasswordGet",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarPasswordTop",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarRectDrawTex",
+      "base_class": "MarRectDraw",
+      "size": 84
+    },
+    {
+      "class_name": "MarSelectCharStageMenu",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarShopArm",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarShopArmCheck",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarShopArmInfo",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarShopArmSort",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarShopArmkind",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarShopCharacter",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarShopDataBase",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarShopTopMenu",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarStageSelectMenu",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarTitleMenu",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarTopMenu",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarTopTransition",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarWarGameMatch",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarWarningMenuBase",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "MarWarningMenuTime",
+      "base_class": "MarWarningMenuBase",
+      "size": 88
+    },
+    {
+      "class_name": "MarWarningMenuYesNo",
+      "base_class": "MarWarningMenuBase",
+      "size": 88
+    },
+    {
+      "class_name": "Mar_MCAutoSave",
+      "base_class": "Mar_MCardATFile",
+      "size": 84
+    },
+    {
+      "class_name": "Mar_MCLoad_Option",
+      "base_class": "Mar_MCardATFile",
+      "size": 84
+    },
+    {
+      "class_name": "Mar_MCSave_Option",
+      "base_class": "Mar_MCardATFile",
+      "size": 84
+    },
+    {
+      "class_name": "Mar_MCStartingLoad",
+      "base_class": "Mar_MCardATFile",
+      "size": 84
+    },
+    {
+      "class_name": "MenuEsy_DramaMode",
+      "base_class": "MenuEsy",
+      "size": 84
+    },
+    {
+      "class_name": "MenuEsy_Option",
+      "base_class": "MenuEsy_Select",
+      "size": 88
+    },
+    {
+      "class_name": "MenuEsy_Select",
+      "base_class": "MenuEsy",
+      "size": 84
+    },
+    {
+      "class_name": "MenuEsy_SelectNo",
+      "base_class": "MenuEsy_Select",
+      "size": 88
+    },
+    {
+      "class_name": "MenuEsy_SelectRev",
+      "base_class": "MenuEsy_Select",
+      "size": 88
+    },
+    {
+      "class_name": "MenuEsy_SndTest",
+      "base_class": "MenuEsy",
+      "size": 84
+    },
+    {
+      "class_name": "MenuEsy_Title",
+      "base_class": "MenuEsy",
+      "size": 84
+    },
+    {
+      "class_name": "MenuFrameSimpleUI",
+      "base_class": "MenuFrameUI",
+      "size": 88
+    },
+    {
+      "class_name": "MenuFrameUI",
+      "base_class": "MenuFrame",
+      "size": 84
+    },
+    {
+      "class_name": "MissionSelect",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "PauseGameEnd",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "PauseMenuTop",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "PauseTrainTop",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "ScpClearAll",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpClearBg",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpClearChar2D",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpClearMsg",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpClearName",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpDelChar2D",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpDelCharVoice",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpDisappearAll",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpDispBg",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpDispChar2D",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpDispIconPos",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpDispMsg",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpDispMsgPos",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpDispName",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpDispTaskMsg",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpGetDoorMemberNum",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpGetMarMemberNum",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpGetPlayerChar",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpGetRescueChar",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpGetTimeOver",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpLoadChar2D",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpLoadCharVoice",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpPlayBgm",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpPlaySe",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpPlayVoice",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpPozenExplainWindowClose",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpPozenExplainWindowOpen",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpPozenResultWindowOpen",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpPozenScrollToGoal",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpPozenSelectRepeatWindowOpen",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpPozenSelectWindowOpen",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpSetDispNamePos",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpSetMsgInfo",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpSetMsgSize",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpSetUseNamePos",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpStopBgm",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpStopSe",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpStopSoundAll",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpStopVoice",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpStopVoiceAll",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpWait",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "ScpWaitPad",
+      "base_class": "CScriptTask",
+      "size": 84
+    },
+    {
+      "class_name": "SelectLoad",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "SelectLoadStart",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "SelectLoadTop",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "SyuurennModeStart",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "SyuurennTop",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "SyuurennTrans",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "TGS_Menu",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "Thunder",
+      "base_class": "AttackEffect",
+      "size": 88
+    },
+    {
+      "class_name": "ThunderSeed",
+      "base_class": "Thunder",
+      "size": 88
+    },
+    {
+      "class_name": "ThunderSeedH",
+      "base_class": "Thunder",
+      "size": 88
+    },
+    {
+      "class_name": "ThunderStorm",
+      "base_class": "ArmEffectBase",
+      "size": 84
+    },
+    {
+      "class_name": "Tornade",
+      "base_class": "FireStorm",
+      "size": 88
+    },
+    {
+      "class_name": "Tornade_X4",
+      "base_class": "FireStorm",
+      "size": 88
+    },
+    {
+      "class_name": "TrainArmList",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "TrainCombo",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "TrainEnd",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "TrainKey",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "TrainList",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "TrainingCharaSelect",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "TutorialSelect",
+      "base_class": "MenuFrameSimpleUI",
+      "size": 88
+    },
+    {
+      "class_name": "UI_ONLY",
+      "base_class": "MenuFrameUI",
+      "size": 88
+    },
+    {
+      "class_name": "WindCutter",
+      "base_class": "AttackEffect",
+      "size": 88
+    },
+    {
+      "class_name": "__array_type_info",
+      "base_class": "type_info",
+      "size": 80
+    },
+    {
+      "class_name": "__attr_type_info",
+      "base_class": "type_info",
+      "size": 80
+    },
+    {
+      "class_name": "__builtin_type_info",
+      "base_class": "type_info",
+      "size": 80
+    },
+    {
+      "class_name": "__class_type_info",
+      "base_class": "__user_type_info",
+      "size": 80
+    },
+    {
+      "class_name": "__func_type_info",
+      "base_class": "type_info",
+      "size": 80
+    },
+    {
+      "class_name": "__pointer_type_info",
+      "base_class": "type_info",
+      "size": 80
+    },
+    {
+      "class_name": "__ptmd_type_info",
+      "base_class": "type_info",
+      "size": 80
+    },
+    {
+      "class_name": "__ptmf_type_info",
+      "base_class": "type_info",
+      "size": 80
+    },
+    {
+      "class_name": "__si_type_info",
+      "base_class": "__user_type_info",
+      "size": 80
+    },
+    {
+      "class_name": "__user_type_info",
+      "base_class": "type_info",
+      "size": 80
+    },
+    {
+      "class_name": "bad_alloc",
+      "base_class": "exception",
+      "size": 80
+    },
+    {
+      "class_name": "bad_cast",
+      "base_class": "exception",
+      "size": 80
+    },
+    {
+      "class_name": "bad_exception",
+      "base_class": "exception",
+      "size": 80
+    },
+    {
+      "class_name": "bad_typeid",
+      "base_class": "exception",
+      "size": 80
+    },
+    {
+      "class_name": "t12CStringStack1i_256_",
+      "base_class": "CStringBase",
+      "size": 84
+    }
+  ],
+  "base_class_fanout": [
+    [
+      "MenuFrameSimpleUI",
+      111
+    ],
+    [
+      "CScriptTask",
+      42
+    ],
+    [
+      "CEasyMenu",
+      29
+    ],
+    [
+      "ActionObject",
+      26
+    ],
+    [
+      "CGameEffect_Base",
+      18
+    ],
+    [
+      "CCharCom",
+      15
+    ],
+    [
+      "CMcFunc",
+      11
+    ],
+    [
+      "AttackEffect",
+      8
+    ],
+    [
+      "type_info",
+      8
+    ],
+    [
+      "CAlphaModel",
+      7
+    ],
+    [
+      "ArmEffectBase",
+      7
+    ],
+    [
+      "CPAppear_PS2",
+      6
+    ],
+    [
+      "CPClassObj",
+      6
+    ],
+    [
+      "CPDataNameObj",
+      5
+    ],
+    [
+      "C3dObject",
+      4
+    ],
+    [
+      "CTexData",
+      4
+    ],
+    [
+      "CTexGroup",
+      4
+    ],
+    [
+      "CEffPrimBase",
+      4
+    ],
+    [
+      "CSkinModel2",
+      4
+    ],
+    [
+      "CPDataObj",
+      4
+    ],
+    [
+      "C3dMotModel",
+      4
+    ],
+    [
+      "CWeapon",
+      4
+    ],
+    [
+      "CWeaponArmMdl",
+      4
+    ],
+    [
+      "FootStamp_Base",
+      4
+    ],
+    [
+      "MenuEsy",
+      4
+    ],
+    [
+      "Mar_MCardATFile",
+      4
+    ],
+    [
+      "exception",
+      4
+    ],
+    [
+      "CMotion2",
+      3
+    ],
+    [
+      "CCol",
+      3
+    ],
+    [
+      "CGameCntrlGm",
+      3
+    ],
+    [
+      "MenuFrameUI",
+      3
+    ],
+    [
+      "CGefPs2Calc",
+      3
+    ],
+    [
+      "MenuEsy_Select",
+      3
+    ],
+    [
+      "CCamera2",
+      2
+    ],
+    [
+      "CMotionC",
+      2
+    ],
+    [
+      "PLObj",
+      2
+    ],
+    [
+      "CStringBase",
+      2
+    ],
+    [
+      "CCharaBase",
+      2
+    ],
+    [
+      "CChara",
+      2
+    ],
+    [
+      "CEffectArm",
+      2
+    ],
+    [
+      "CWeaponArm",
+      2
+    ],
+    [
+      "CObj",
+      2
+    ],
+    [
+      "CHitEff",
+      2
+    ],
+    [
+      "Thunder",
+      2
+    ],
+    [
+      "FireStorm",
+      2
+    ],
+    [
+      "MarWarningMenuBase",
+      2
+    ],
+    [
+      "LabyrinthCursor",
+      2
+    ],
+    [
+      "__user_type_info",
+      2
+    ],
+    [
+      "CRender",
+      1
+    ],
+    [
+      "CCamera",
+      1
+    ],
+    [
+      "CMotionCa",
+      1
+    ],
+    [
+      "CMotionCam",
+      1
+    ],
+    [
+      "CFreeListNode",
+      1
+    ],
+    [
+      "CRenderCallBack",
+      1
+    ],
+    [
+      "CSkelton",
+      1
+    ],
+    [
+      "CSkinModel",
+      1
+    ],
+    [
+      "CSkinModelEx",
+      1
+    ],
+    [
+      "CMotion",
+      1
+    ],
+    [
+      "CMotion3",
+      1
+    ],
+    [
+      "CObjList",
+      1
+    ],
+    [
+      "CGameCntrl",
+      1
+    ],
+    [
+      "CPAppear",
+      1
+    ],
+    [
+      "CPCast",
+      1
+    ],
+    [
+      "CPCut",
+      1
+    ],
+    [
+      "CPMovie",
+      1
+    ],
+    [
+      "CPMovieBank",
+      1
+    ],
+    [
+      "CMotionSts",
+      1
+    ],
+    [
+      "CCharaDataSts",
+      1
+    ],
+    [
+      "CActTbl",
+      1
+    ],
+    [
+      "CHuman",
+      1
+    ],
+    [
+      "CWeaponPmvMdl",
+      1
+    ],
+    [
+      "CEffectWeaponArm",
+      1
+    ],
+    [
+      "ClsSpring",
+      1
+    ],
+    [
+      "CPrim",
+      1
+    ],
+    [
+      "CGefCalculation",
+      1
+    ],
+    [
+      "CockpitDraw",
+      1
+    ],
+    [
+      "CockpitBase",
+      1
+    ],
+    [
+      "ArmEffectCtrl",
+      1
+    ],
+    [
+      "CEffObject",
+      1
+    ],
+    [
+      "CEffCol",
+      1
+    ],
+    [
+      "IcedEarth",
+      1
+    ],
+    [
+      "CStringStream",
+      1
+    ],
+    [
+      "DebPrint",
+      1
+    ],
+    [
+      "CDebDraw",
+      1
+    ],
+    [
+      "Char2DAnimCtrl",
+      1
+    ],
+    [
+      "CMCard",
+      1
+    ],
+    [
+      "MarRectDraw",
+      1
+    ],
+    [
+      "MenuFrame",
+      1
+    ],
+    [
+      "MarWarningMenuYesNo",
+      1
+    ]
+  ]
+}

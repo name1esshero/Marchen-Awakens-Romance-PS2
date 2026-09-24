@@ -87,3 +87,46 @@ and 8-byte alignment (see `CODE_SUCCESSES.md`) are wrong, or that EE GCC
 pair of accessor shapes cannot be reproduced byte-exactly with current
 tooling and without a forbidden register-pinning or flag change.
 References: [camera matrix probe](tasks/CAMERA_MATRIX_PROBE.md).
+
+## Identical-shape original-binary sections still vary in register allocation — this is not just a probe-isolation artifact
+
+Hypothesis: the register-allocation/instruction-count mismatches already
+seen when comparing an isolated probe against the original binary (the
+`GetViewMatrix` case above, and the `$gp`-relative-static case in
+`CODE_SUCCESSES.md`) are specifically caused by the probe's *isolation* —
+a real, full translation unit's original source would not show this kind of
+variance between two functions of the identical C++ shape.
+Observed result: disassembling every `__tf*` RTTI section (498 total, see
+`docs/tasks/TYPEINFO_SECTIONS.md`) found the same root construct-on-first-use
+shape compiled to five different byte counts (52/64/80/84/88/92) purely from
+how many separate `lui` instructions the address computations needed —
+itself just a coincidence of which absolute addresses happen to share upper
+16 bits. Concretely, `__tf9type_info` (64 bytes) and `__tf6CBgCol` (52
+bytes) are the *exact same* shape (guard check, one conditional call to the
+shared one-argument helper) but `__tf9type_info` spills an extra
+callee-saved register (`$16`) that `__tf6CBgCol` never touches — and both
+sections are part of the same original, fully-linked binary, not one probe
+vs. one original.
+Mechanism: GCC 2.96's register allocator/scheduler decisions are sensitive
+to per-translation-unit context (what else is live, what else competes for
+registers, what other constants are nearby) even for structurally identical
+generated code, independent of whether that code came from an isolated
+probe or the original multi-thousand-file build. This means "recompile just
+this one class in isolation and expect an exact byte match" is not a
+reliably achievable goal for aggregate-shaped or multi-register-address
+code in general, not only for the specific `GetViewMatrix`/`$gp`-static
+cases already logged.
+Supporting evidence: `reports/typeinfo_hierarchy.json` (`size_histogram`);
+disassembly excerpts for `__tf6CBgCol`, `__tf9type_info`, `__tf8bad_cast`,
+`__tf7CCamera`, `__tf8CCamera2` in `docs/tasks/TYPEINFO_SECTIONS.md`.
+Reconsideration conditions: none identified; treat exact-byte reproduction
+of any multi-address-computation function recovered via an isolated probe
+as inherently best-effort (size/shape/field-offset match, not guaranteed
+byte match) unless a smaller, single-address-computation shape (most of the
+441 already-recovered accessors) applies instead.
+What this does not justify: this does not mean the recovered class/field
+evidence from these sections is wrong — the *shape*, *base-class calls*,
+and *argument roles* are still fully evidenced; only the exact register
+choice within a shape is shown to be non-deterministic across otherwise
+identical code in the same binary.
+References: [typeinfo sections task](tasks/TYPEINFO_SECTIONS.md).

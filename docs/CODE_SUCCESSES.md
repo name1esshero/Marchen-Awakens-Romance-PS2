@@ -189,3 +189,47 @@ exact pair, see `CAMERA_MATRIX_PROBE.md`). This technique establishes
 alignment, not a complete recovery.
 References: [camera matrix probe](tasks/CAMERA_MATRIX_PROBE.md),
 [view rect probe](tasks/VIEW_RECT_PROBE.md).
+
+## A class's own compiler-synthesized RTTI function calls its base class's RTTI function
+
+Symptom: `config/camera_sections.txt`/`candidates/ee_camera` only recovers
+member accessors; nothing in the recovered evidence base says which classes
+derive from which, even though 440 classes' worth of that information turns
+out to be sitting in a linkonce cluster nobody had disassembled yet.
+Mechanism: every `__tf<len><Name>` (GNU v2/cfront RTTI "type-info accessor")
+function in the boot ELF follows a guard-checked construct-on-first-use
+pattern. A "root" (no polymorphic base) class's function calls one shared
+helper with just its own name string. A class with a polymorphic base
+instead calls that base class's *own* `__tf` function first (guaranteeing
+the base's guard runs), then calls a different shared helper passing three
+addresses: its own guard, its own name, and the base's guard. The base's
+identity is therefore directly readable as a `jal` target address inside the
+derived class's own machine code — confirmed on `CCamera` (calls
+`C3dObject`'s `__tf` function) and `CCamera2` (calls `CCamera`'s), matching
+the class family already in `candidates/ee_camera/CCamera.h`.
+Pathway: for any class with a `__tf*` linkonce section, decode every `jal`
+in that section's bytes (standard MIPS encoding: opcode 6, 26-bit
+word-aligned target, top 4 bits from the delay slot's own address) and check
+whether the target address falls inside another `__tf*` section's address
+range. If it does, that other class is a base class of this one. Sections
+with no such call (only a call to the shared one-argument helper) are root
+classes for RTTI purposes. Never conflate this with full inheritance,
+vtable layout, or object size — a non-polymorphic base contributes no such
+call, and this reveals only what the compiler's own RTTI runtime tracked.
+Verification: `tools/typeinfo_hierarchy.py` (tested in
+`tests/test_typeinfo_hierarchy.py`, including a real boot-ELF byte sequence
+as a regression anchor) decodes all 498 `__tf*` sections and finds 440
+single-base edges and 58 roots; its pure-Python `jal` decoder was
+cross-checked against `llvm-objdump-21`'s independent disassembly of the
+same 498 sections (938 `jal` instructions, zero mismatches) before being
+trusted as the tool's only decoding path.
+Scope: GNU v2/cfront-style RTTI codegen on this compiler target; the
+`jal`-decoding technique itself is standard MIPS and portable to any other
+linkonce cluster on this binary.
+Limits: only single-inheritance-shaped calls are decoded (no
+two-`__tf*`-call shape was observed in this cluster, i.e. no confirmed
+multiple-inheritance case); one 92-byte outlier (`CPrimList` -> `CPrim`)
+uses a different shared helper with an extra literal-`1` argument, plausibly
+but not confirmedly a virtual-base variant (single occurrence, left open).
+References: [typeinfo sections task](tasks/TYPEINFO_SECTIONS.md),
+[linkonce cluster task](tasks/LINKONCE_CLUSTER.md).
