@@ -115,14 +115,14 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   title subtitle `sbttl` and `BATTLE START` UI label. The `ttlprts` atlas and
   repeated `title000` title texture are now localized and reinserted; details
   are in their linked task notes. A corpus-wide UI/title text audit remains
-  open. The queue has four `READY` bounded Luna/assets cards for the current
-  two-worker limit (2.0 per authorized slot); the completed title-remainder
+  open. The queue has five `READY` bounded Luna/assets cards for the current
+  two-worker limit (2.5 per authorized slot); the completed title-remainder
   audit is integrated, and effects-text and weapon-text audits are active. Map,
   special-font, AFS suffix, background, and title-remainder audits are
-  integrated. Icons, environment textures, card textures and alternate
-  `.yma` layouts remain ready. The coordinator's read-only PSMCT32 investigation
-  found a common eight-byte shortfall across 43 records but no safe decode; they
-  remain raw.
+  integrated. Icons, environment textures, card textures, alternate `.yma`
+  layouts and the bounded database-condition review remain ready. The
+  coordinator's read-only PSMCT32 investigation found a common eight-byte
+  shortfall across 43 records but no safe decode; those records remain raw.
   The `ttlprts` and `title000` English siblings, task notes and success entries
   are integrated, locally round-trip, and reparse from the rebuilt ISO. None of
   the graphics has runtime validation. The worker procedure now requires each delegated task to
