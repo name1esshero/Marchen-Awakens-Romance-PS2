@@ -967,6 +967,26 @@ References: [transition texture audit](../tasks/GRAPHIC_TEXT_TRANS_TEX.md),
 `graphics/index.json`, and
 [`localization methodology`](LOCALIZATION_METHODOLOGY.md).
 
+## Remaining small-menu audit separates one localized title from UI labels
+
+Symptom: the remaining small menu bundles mix title artwork, controller-mode
+labels, frame/window textures, and card-game prompts, so `_jp` filenames do
+not identify which images contain Japanese copy. Method: select exactly the
+13 indexed `user_interface` rows across `esy_menu.tex`, `war_deci_01_tex.b`,
+`war_deci_02_tex.b`, `war_dialog_tex.b`, `war_pad_tex.b`, `war_sel_act_tex.b`,
+and `wgm_card7_txc.b`; verify names, dimensions, complete hashes, TGA headers
+and extents, then visually inspect each raster. Finding: the `title000`
+baseline contains the Japanese title mark and creator/publisher line, while
+the `war_pad` selection modes and five `wgm_card7` text images are already
+English; one shared outlined `window` texture has three unreadable,
+Japanese-looking label rows, and the `center_bar` pattern remains ambiguous.
+Verification: all 13 indexed images were visually reviewed; the four
+selection-frame paths are exact raster duplicates. No baseline or override
+was modified. Limits: this does not resolve the `window` wording or establish
+UVs, runtime visibility, layout, or screen composition; no ISO/emulator test
+was run. References: [remaining small-menu audit](../tasks/GRAPHIC_TEXT_REMAINING_MENU_TEX.md),
+`graphics/index.json`, and [localization methodology](LOCALIZATION_METHODOLOGY.md).
+
 ## War-common textures expose a localized wordmark among mixed UI surfaces
 
 Symptom: `war_common_tex.b` mixes patterned panels, shading shapes, small scene
