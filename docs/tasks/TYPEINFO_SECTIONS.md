@@ -142,13 +142,20 @@ pre-standard `libstdc++`/`libg++` RTTI support classes, not game code:
 `__array_type_info` all appear as `__tf*` sections with matching
 constructor/destructor linkonce sections alongside them, and their observed
 single-base chain (e.g. `__si_type_info` -> `__user_type_info`) matches the
-well-known GCC 2.x RTTI class hierarchy. This means the shared helper
-addresses (`0x32c138`, `0x32c170`, `0x32c1b0`, `0x32c1d8`, `0x32c1f8`) most
-likely belong to that same statically-linked compiler runtime library rather
-than to game logic — a potentially independently reproducible chunk of the
-"raw hex" boot region if the pinned EE GCC's own bundled runtime object
-files can be obtained, which this task did not attempt (out of scope for a
-read-only characterization pass; recorded as a discovered task, see below).
+well-known GCC 2.x RTTI class hierarchy. This means the three shared
+`__tf*`-registration helper addresses (`0x32c1b0`, `0x32c1d8`, `0x32c1f8`)
+most likely belong to that same statically-linked compiler runtime library
+rather than to game logic — a potentially independently reproducible chunk
+of the "raw hex" boot region if the pinned EE GCC's own bundled runtime
+object files can be obtained, which this task did not attempt (out of scope
+for a read-only characterization pass; recorded as a discovered task, see
+below). Two related addresses, `0x32c138` and `0x32c170`, were separately
+observed being called from `type_info::operator!=` and from several
+`__user_type_info`-family destructors (not from any `__tf*` registration
+function itself); they are plausibly more of the same runtime library, but
+were not run through `tools/typeinfo_hierarchy.py`'s cross-validated
+decoding and are left unverified here rather than folded into the count
+above.
 
 ## Natural-candidate reproduction (structural, not byte-exact)
 
@@ -181,8 +188,10 @@ pair a mismatch with a specific class's real evidenced layout).
 
 ## Discovered follow-up (bounded, independent, queued separately)
 
-Identifying and attempting to reproduce the five shared helper functions
-(`0x32c138`, `0x32c170`, `0x32c1b0`, `0x32c1d8`, `0x32c1f8`) from the pinned
-EE GCC `2.96-ee-001003-1`'s own bundled runtime library objects is a
-separate, bounded task, queued as DQ-18 in `docs/WORK_QUEUE.md` for any
-worker in the code pool (including a future run of this same lead).
+Identifying and attempting to reproduce the three confirmed shared
+`__tf*`-registration helper functions (`0x32c1b0`, `0x32c1d8`, `0x32c1f8`),
+plus the two related but separately-observed addresses `0x32c138`/`0x32c170`
+noted above, from the pinned EE GCC `2.96-ee-001003-1`'s own bundled runtime
+library objects is a separate, bounded task, queued as DQ-18 in
+`docs/WORK_QUEUE.md` for any worker in the code pool (including a future run
+of this same lead).
