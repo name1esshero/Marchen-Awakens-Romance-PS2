@@ -306,6 +306,34 @@ independent parser, format sample, or runtime/tool trace establishes the PSMCT32
 variant. This does not imply the payloads are corrupt; it establishes only that
 they fail the current bounded RTX3 contract. Evidence: `graphics/index.json`,
 `reports/rtx3_format_survey.json`, and the full source-hash/TGA-dimension audit.
+The 2026-09-23 read-only follow-up verified all 43 source hashes and strict
+parse failures. The corpus contains three unique payloads (28 at 8×8, 14 at
+32×64, and one at 64×64); each header declares exactly `file_size - 8`, records
+`width * height * 4` pixel bytes, and has only eight fewer bytes after its
+64-byte header. The current PSMCT32 unswizzler's page geometry additionally
+does not accept the 8×8 and 32×64 dimensions; this says nothing about the
+game's actual representation. No particular omitted region, trailer, or
+corruption hypothesis is established. Keep all records raw. See
+[`RTX3_PSMCT32_VARIANT.md`](../tasks/RTX3_PSMCT32_VARIANT.md) for the grouped
+hashes, measurements, rejected interpretations, and next evidence needed.
+
+## First mod-ISO build attempt terminated before replacement
+
+On 2026-09-23, the first `make build-mod-disc` attempt staged the 12 graphics
+overrides and began the relocated image build, then ended with
+`make: *** [Makefile:55: build-mod-disc] Terminated`. It left a `.assets-*`
+temporary at the pinned input image's 4,587,749,376-byte length. The existing
+`mar_eng.iso` remained intact at 5,023,174,656 bytes and its prior SHA-256
+`b5344203f78392318dfe37fa9118ca3046e1b3f52bc88ab38c3b73ac2ae50842`; the
+baserom still matched its pinned SHA-256. The partial temporary was removed.
+
+The termination cause was not reported, so do not attribute it to a specific
+asset or format. Retrying the same `tools/assets.py build` recipe with the
+already staged overrides completed atomically. The new `mar_eng.iso` passed
+`make verify-graphics-image` for all twelve TXCs and the authenticated streaming
+comparison against the baserom. See
+[`GRAPHIC_TEXT_LOCALIZATION.md`](../tasks/GRAPHIC_TEXT_LOCALIZATION.md) and
+`reports/mar_eng_compare_12_graphics.json` for the resulting build evidence.
 
 ## Concurrent agents shared one Git index
 

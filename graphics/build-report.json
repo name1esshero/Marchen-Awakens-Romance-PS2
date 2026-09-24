@@ -36,6 +36,14 @@
       "bytes": 263232
     },
     {
+      "key": "00039.asset/01565.resources!/0000_ttlprts.txc.bin",
+      "language": "eng",
+      "image": "title/00039_01565_0000_ttlprts_eng.tga",
+      "source_sha256": "55b24160b8c3c56db4e02f8f2cd945594c5347c43685842d986a985427b556bb",
+      "override_sha256": "531af0d45dd58cf327ff7d43549d5abdaf7b7752d79bc6faea970fbf6164367f",
+      "bytes": 263232
+    },
+    {
       "key": "00039.asset/01565.resources!/0003_sbttl.txc.bin",
       "language": "eng",
       "image": "title/00039_01565_0003_sbttl_eng.tga",
@@ -82,6 +90,14 @@
       "source_sha256": "f55a6efde5a1f5fe924c22037cd573421f9de738ff0f05c6444687ea99cc25c8",
       "override_sha256": "d79ccf43e99f4483571626484ebd7821018ae5af8880f90aa25b9ea95a5f2129",
       "bytes": 16512
+    },
+    {
+      "key": "standalone:/00039.asset/00985.asset/00000.bin",
+      "language": "eng",
+      "image": "user_interface/00039_00985_00000_title000_eng.tga",
+      "source_sha256": "cfc91c5f6539f0240790c4ed2086d77ec4c853b309227461be5699e7dfadd15b",
+      "override_sha256": "fbe2ee68108ba7bd4455f415c6bb86ace5b2988b401793c57679319abb658911",
+      "bytes": 263232
     }
   ],
   "english_overrides": [
@@ -89,12 +105,14 @@
     "00039.asset/01556.resources!/0010_shop.txc.bin",
     "00039.asset/01556.resources!/0014_subtitle.txc.bin",
     "00039.asset/01559.resources!/0003_title.txc.bin",
+    "00039.asset/01565.resources!/0000_ttlprts.txc.bin",
     "00039.asset/01565.resources!/0003_sbttl.txc.bin",
     "00039.asset/01566.resources!/0002_title_marh_jp.txc.bin",
     "00039.asset/01566.resources!/0003_title_parts.txc.bin",
     "00039.asset/01569.resources!/0007_modename.txc.bin",
     "00039.asset/01631.resources!/0025_windisp.txc.bin",
-    "00039.asset/01635.resources!/0028_field_name.txc.bin"
+    "00039.asset/01635.resources!/0028_field_name.txc.bin",
+    "standalone:/00039.asset/00985.asset/00000.bin"
   ],
   "unresolved": [
     "standalone:/00039.asset/00125.asset/00013.asset/00029.bin",

@@ -4,7 +4,7 @@ Updated: 2026-09-23.
 
 ## Authored images
 
-The Japanese `_jp.tga` files remain immutable recovered baselines. Ten
+The Japanese `_jp.tga` files remain immutable recovered baselines. Twelve
 `_eng.tga` siblings are selected by the graphics build and staged as same-size
 RTX3/TXC overrides:
 
@@ -20,6 +20,8 @@ RTX3/TXC overrides:
 | `00039_01565_0003_sbttl_jp.tga` | ARM FIGHT DREAM, replacing the katakana subtitle while preserving the title artwork. |
 | `00039_01635_0028_field_name_jp.tga` | EARTH FIELD / WATER FIELD; FIRE FIELD / WOOD FIELD; WIND FIELD / THUNDER FIELD; SHADOW FIELD. |
 | `00039_01631_0025_windisp_jp.tga` | MÄR TEAM / CHESS TEAM; REMATCH / EXIT; NEXT BATTLE / WAR GAMES. |
+| `00039_01565_0000_ttlprts_jp.tga` | Replaces the three Japanese title-mark placements with the game's native MÄR HEAVEN lettering and translates the creator/publisher strip; retains existing English marks. |
+| `00039_00985_00000_title000_jp.tga` | Replaces the repeated title mark and translates the creator/publisher credit; retains the existing English tagline, start prompt, and Konami mark. |
 
 The shop, mode, field, and shop-action UI images were authored from reviewed
 English layouts and imported into their original PSMT8/PSMT4 palettes. The shop
@@ -34,6 +36,15 @@ localization drafts; no emulator or gameplay review has occurred. The subtitle
 override reuses uppercase letter shapes from the game's
 `00039_00825_font_jp.tga` atlas. The `btst_txt` override has its own source and
 palette measurements in [`GRAPHIC_TEXT_BTST.md`](GRAPHIC_TEXT_BTST.md).
+
+The `ttlprts` atlas replaces its gray, color, and gray Japanese wordmark
+placements plus the creator/publisher strip using English lettering already
+recovered from the game. The `title000` title screen replaces only its title
+mark and credit line while retaining the English tagline, start prompt, and
+Konami mark. Each change is confined to measured regions and preserves the
+source palette and canvas. Their static import/export evidence and unresolved
+display/UV questions are recorded in [`GRAPHIC_TEXT_TTLPRTS.md`](GRAPHIC_TEXT_TTLPRTS.md)
+and [`GRAPHIC_TEXT_TITLE000.md`](GRAPHIC_TEXT_TITLE000.md).
 
 ## Winner-screen label edit
 
@@ -86,20 +97,20 @@ phrase and surrounding composition, not runtime UV placement or display.
 
 ## Build and verification
 
-`make build-mod-disc` wrote the root-level `mar_eng.iso` (5,023,174,656 bytes,
-SHA-256 `b5344203f78392318dfe37fa9118ca3046e1b3f52bc88ab38c3b73ac2ae50842`).
-The comparison in `reports/mar_eng_compare_10_graphics.json` authenticated the
-pinned Japanese reference
+The root-level `mar_eng.iso` is 5,023,174,656 bytes, SHA-256
+`b42048452f8d8b41497fff87f4fa5e5f15f983529d179012e6a868482494f5a0`. The
+streaming comparison in `reports/mar_eng_compare_12_graphics.json` authenticated
+the pinned Japanese reference
 (`cc059a3acf818dfbd0a782a9d20ee67e020d167866cd1c4dca77e6eb9224e3ec`) and found
 757,730,801 differing bytes, as expected for a relocated localized build; this
 is not a byte-match claim.
 
 The fresh graphics audit covered all 30,397 indexed TXCs, retained 43 unresolved
-records, found ten English overrides, and reported zero modified Japanese
-baselines. `make verify-graphics-image` reparsed all ten English textures from
-the built ISO through ISO9660, YFS, BPE and UI resource tables and compared each
-complete TXC byte-for-byte to its staged override. All ten passed (851,904
-combined bytes), including exact hashes for `sbttl` and `btst_txt` above.
+records, found twelve English overrides, and reported zero modified Japanese
+baselines. `make verify-graphics-image` reparsed all twelve English textures
+from the built ISO through ISO9660, YFS, BPE and UI resource tables and compared
+each complete TXC byte-for-byte to its staged override. All twelve passed
+(1,378,368 combined bytes), including the `ttlprts` and `title000` textures.
 Synthetic tests separately cover nested UI-table/BPE/PAC reinsertion and
 relocation. A previous ISO reparse compared `_msg.dat`, `CardList.txt` and
 `DataBase.txt` against bytes generated from their tracked catalogues; all three

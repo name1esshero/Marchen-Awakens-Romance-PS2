@@ -959,3 +959,29 @@ glyph metrics, screen use, or renderer sampling; no ISO/runtime validation was
 run. The four top-row character-like forms remain unmapped.
 References: [`SPECIAL_FONT_ATLASES.md`](../tasks/SPECIAL_FONT_ATLASES.md),
 `graphics/index.json`, `tools/rtx3.py`, and localization methodology §14.
+
+## English texture siblings reinsert byte-exactly through a relocated ISO build
+
+Symptom: localized texture edits need to remain separate from recovered
+Japanese artwork while still flowing through indexed RTX3 resources, nested
+containers, and a testable emulator image.
+Method: retain each `_jp.tga` as the immutable export, author a same-size
+`_eng.tga` sibling, map its colors through the original texture palette, stage
+the English TXC, then rebuild with relocation into root-level `mar_eng.iso`.
+Verification: the audit covered all 30,397 indexed TXCs, kept 43 short PSMCT32
+records raw, found twelve overrides, and reported zero changed Japanese
+baselines. `make verify-graphics-image` reparsed and byte-compared all twelve
+overrides (1,378,368 bytes). The authenticated streaming comparison against
+the pinned baserom produced the expected nonmatch: 5,023,174,656-byte output,
+SHA-256 `b42048452f8d8b41497fff87f4fa5e5f15f983529d179012e6a868482494f5a0`,
+and 757,730,801 differing bytes. Full evidence is in
+[`graphic localization`](../tasks/GRAPHIC_TEXT_LOCALIZATION.md) and
+`reports/mar_eng_compare_12_graphics.json`.
+Scope: the twelve currently authored title/UI graphics and their observed
+standalone and nested reinsertion paths.
+Limits: this verifies file/container reinsertion, not the game's runtime UVs,
+screen composition, or emulator acceptance. Whole-image byte equality is not
+expected for the relocated, translated image.
+References: `graphics_rules.mk`, `tools/graphics.py`, `tools/assets.py`,
+`tools/verify_graphics_in_iso.py`, `tools/compare_disc.py`, and the linked task
+evidence.
