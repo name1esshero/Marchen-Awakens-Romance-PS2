@@ -1287,3 +1287,24 @@ glyphs are unclear, UV placement, composition, animation, or runtime visibility.
 References: [top texture audit](../tasks/GRAPHIC_TEXT_TOP_TEX.md),
 `graphics/index.json`, and
 [`LOCALIZATION_METHODOLOGY.md`](LOCALIZATION_METHODOLOGY.md).
+
+## Option-menu audit isolates one confirmed Japanese wordmark
+
+Finding: the six in-scope `option_tex.b` UI textures mix a controller diagram,
+chessboard art, object/panel imagery, and one clear text-bearing label. The
+`optn` texture reads `オプション` (“OPTIONS”) inside a measured 188×46-pixel
+region. The `window` texture has a very small, low-contrast glyph-like strip;
+its words are not confidently readable and remain unresolved. The separate
+`icon` bundle row is excluded here because DQ-10 already covered it.
+
+Verification: all six Japanese TGA filenames, dimensions and complete hashes
+match `graphics/index.json`; each mapped TXC member hash also matches. Every TGA
+is type 2, 32-bit, top-origin (`0x28`) with an exact declared extent. All six
+images were visually reviewed, including an enlarged view of the unresolved
+window strip. No baseline or override was changed during this audit.
+Scope: `disc!/_DATA.YFS;1!/data/menu/option_tex.b`, six `user_interface` rows.
+Limits: the tiny `window` marks are not a confirmed transcription; flat-image
+review establishes no UV, draw path, screen placement, or runtime visibility.
+References: [option-menu audit](../tasks/GRAPHIC_TEXT_OPTION_TEX.md),
+`graphics/index.json`, and
+[`LOCALIZATION_METHODOLOGY.md`](LOCALIZATION_METHODOLOGY.md).

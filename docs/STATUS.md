@@ -129,9 +129,12 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   menu-label candidates. The 17-row war-selection audit is integrated; 16 paths
   are exact zero-payload duplicates and one frame remains unclassified.
   The winner-screen audit is integrated with 22 paths and seven unique raster
-  hashes. War-common (`war_common_tex.b`) and shop-menu (`shop_tex.b`) audits
-  are active in separate worker worktrees, while the option-menu audit is
-  active with the coordinator. The queue holds five `READY` bounded asset cards
+  hashes. The option-menu audit confirms `オプション` inside a 188×46-pixel
+  label band; a tiny glyph-like strip in the separate window asset remains
+  unresolved. The coordinator is building its `OPTIONS` sibling from a tracked
+  transparent layer and measured-region compositor. War-common
+  (`war_common_tex.b`) and shop-menu (`shop_tex.b`) audits are active in
+  separate worker worktrees. The queue holds five `READY` bounded asset cards
   for two authorized workers (2.5 ready cards per worker slot). The completed
   title-remainder audit is integrated. Map,
   special-font, AFS suffix, background, and title-remainder audits are
