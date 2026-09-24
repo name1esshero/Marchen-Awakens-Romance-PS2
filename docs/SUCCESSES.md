@@ -949,6 +949,24 @@ References: [password texture audit](../tasks/GRAPHIC_TEXT_PASSWORD_TEX.md),
 `graphics/index.json`, and
 [`localization methodology`](LOCALIZATION_METHODOLOGY.md).
 
+## Transition-bundle audit keeps ring glyphs separate from confirmed text
+
+Symptom: the three `trans_tex.b` user-interface exports include a conspicuous
+circular emblem and mask, but their grouping and filename do not prove that the
+small ring marks are readable Japanese. Method: authenticate each exact indexed
+TGA by path, dimensions, full hash, header and extent, then review all images on
+a transparency checkerboard and enlarge the ambiguous circular detail. Finding:
+none of the three contains confidently readable Japanese or English wording;
+the ring's irregular marks remain an unresolved candidate, the second image is
+a radial mask/emblem, and the 16×16 `mat` export is a flat white swatch.
+Verification: all three names, dimensions and SHA-256 values match the index;
+all have exact type-2 32-bit top-origin extents and were visually reviewed. No
+baseline or override was changed. Limits: the marks' language and runtime use,
+UVs, animation, and screen composition are unknown.
+References: [transition texture audit](../tasks/GRAPHIC_TEXT_TRANS_TEX.md),
+`graphics/index.json`, and
+[`localization methodology`](LOCALIZATION_METHODOLOGY.md).
+
 ## War-common textures expose a localized wordmark among mixed UI surfaces
 
 Symptom: `war_common_tex.b` mixes patterned panels, shading shapes, small scene
