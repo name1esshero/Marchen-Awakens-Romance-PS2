@@ -191,6 +191,19 @@ regressions cover both paths, and the unchanged source sidecars remain intact.
 The normal mod-disc build consumes those overrides and builds `mar_eng.iso` in
 the workspace root. In-game display is not yet validated.
 
+For an authorized generated-art path, keep the transparent PNG lettering layer
+as a tracked sibling such as `*_eng_layer.png`; do not rely on a file in a
+user-specific generation cache. Fit it to measured source bounds with
+`tools/graphics_compose.py` or `make graphics-compose`, optionally thresholding
+low-alpha model noise and clearing only the measured Japanese text rectangle.
+The normalizer preserves the base canvas, composites alpha, downsamples with
+area filtering or upsamples bilinearly, writes a new TGA, and reports dimensions
+and hashes. Use the immutable `_jp.tga` as `--base` and the separate `_eng.tga`
+as output. Inspect the exact-size raster, then run `make graphics-stage` to map
+it through the source RTX3 palette; never treat a successful image conversion
+as runtime/UV evidence. Rebuilding from the tracked PNG, measured rectangles,
+threshold, and command must reproduce the same TGA bytes.
+
 The synthetic regressions exercise UTF-8 editing, CP932 encoding, ISO directory
 extent growth, and volume-length update, plus structured message editing with
 offset updates through a PAC. The real `_msg.dat` table has also been extracted,

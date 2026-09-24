@@ -108,16 +108,19 @@ mechanics, and line layout still need human and in-game review.
 The combined translated `_msg.dat` table is 20,700 bytes (+248) for the current
 229-entry draft. The current catalog-driven build also applies the two tracked
 menu text catalogues: 142 names, 51 character titles, 141 categories and 142
-captions have English drafts in the 142-row `CardList.txt`; 87/126 fields are
+captions have English drafts in the 142-row `CardList.txt`; 126/126 fields are
 translated in the 71-row `DataBase.txt`. The applied CardList output is 14,152
-bytes (+701). Thirty-nine database condition/metadata strings remain unchanged
-because their runtime meaning is uncertain. Current `make build-mod-disc`
-output is 5,016,750,080 bytes, SHA-256
-`1f62176480ce1bd57c2c8db28f84b629d0125d4511f5e85767400ccc9f5ebf6e`. The ISO
-inventory passed with 42 entries; nested ISO/YFS/PAC reparsing recovered exact
-catalog-applied bytes for all three resources. `compare_disc.py` authenticated the
-pinned reference and reported the expected mismatch of 751,306,225 bytes. The
-image has not been tested in a PS2 runtime.
+bytes (+701). All 126/126 database fields now have English drafts, including
+literal renderings of the 39 condition strings that preserve `hidden flag OFF`
+without asserting visibility or unlock behavior. Applying the catalog produces
+3,684 bytes (+271). The current `mar_eng.iso` is 5,023,940,608 bytes
+(SHA-256 `9590a689a512d035e8073f44917eb78b6ee35841e549c61dd065641230e25e67`);
+a direct nested ISO/YFS/PAC reparse confirms `_msg.dat` at 20,714 bytes,
+`CardList.txt` at 14,120 bytes, and `DataBase.txt` at 3,684 bytes exactly match
+their catalog-generated CP932 outputs. The image has not been tested in a PS2
+runtime. The authenticated baserom comparison records 758,496,753 expected
+differences after localization and relocation in
+`reports/mar_eng_compare_14_graphics_database.json`.
 
 Both full catalog builds prove encoding, table offsets, container relocation and
 ISO packaging, not legibility or gameplay: runtime line wrapping, glyph behavior,

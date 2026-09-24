@@ -442,6 +442,20 @@ to serialize its work/commit. If an unintended file is included, preserve
 history, notify the coordinator, and record the incident; do not amend or reset
 without owner authorization.
 
+Before staging and again before committing, verify `git rev-parse --show-toplevel`,
+`git worktree list --porcelain`, the expected branch/path, and the effective
+worktree-specific `user.name` / `user.email` (`git config --show-origin
+--worktree ...`). Stage explicit paths, inspect
+`git diff --cached --name-status`, and confirm the staged file list matches the
+declared scope. After committing, inspect `git show --stat --format=fuller HEAD`
+and all seven trailers. A prior staged-diff check does not
+protect a later commit from new entries in a shared index. In particular,
+`git commit --amend --no-edit` snapshots the current index; do not use it to
+change attribution in a checkout that another process can stage into. If a
+commit needs correction, preserve its old ref, verify the intended tree, create
+the corrected commit, and replay later commits only with operator
+authorization.
+
 ## Nested delegation
 
 An agent may spawn up to two simultaneous workers only when the user or

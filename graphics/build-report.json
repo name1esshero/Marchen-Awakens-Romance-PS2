@@ -4,12 +4,28 @@
   "source_index_sha256": "09c995d2dc10eca5596d5316e33d26f19af7dc09d8f3cab3c73003fb881f4a45",
   "changed": [
     {
+      "key": "00039.asset/00921.resources!/0004_arrm.txc.bin",
+      "language": "eng",
+      "image": "weapons/00039_00921_0004_arrm_eng.tga",
+      "source_sha256": "de9283c764fb097e677aad8600b6a24c602767eea07ab11868414dcea5817ba5",
+      "override_sha256": "0ab7047f48e2fbcbe48deaff45fc6702e05962feec84e7fb4f151b11bf516a2c",
+      "bytes": 17472
+    },
+    {
       "key": "00039.asset/00991.resources!/0002_btst_txt.txc.bin",
       "language": "eng",
       "image": "text/00039_00991_0002_btst_txt_eng.tga",
       "source_sha256": "e4a44a3dc6e4cd8faa16d97ce9040108275effce7e89820c7e58073b280bf09a",
       "override_sha256": "57cf1bd649038147717712a117a9ab255ea46a718f9b2b0e4e173a3813509879",
       "bytes": 2176
+    },
+    {
+      "key": "00039.asset/00991.resources!/0030_btnhlptxt.txc.bin",
+      "language": "eng",
+      "image": "backgrounds/00039_00991_0030_btnhlptxt_eng.tga",
+      "source_sha256": "c450833f1f1dcc3f80d204da27fbf8af078b8fe5f019b44ed8da34783c599d8b",
+      "override_sha256": "2affe5aa6690f2de0884e0ffac7892e2ef01829a22fc2566f5a9b360f4c212b7",
+      "bytes": 4224
     },
     {
       "key": "00039.asset/01556.resources!/0010_shop.txc.bin",
@@ -101,7 +117,9 @@
     }
   ],
   "english_overrides": [
+    "00039.asset/00921.resources!/0004_arrm.txc.bin",
     "00039.asset/00991.resources!/0002_btst_txt.txc.bin",
+    "00039.asset/00991.resources!/0030_btnhlptxt.txc.bin",
     "00039.asset/01556.resources!/0010_shop.txc.bin",
     "00039.asset/01556.resources!/0014_subtitle.txc.bin",
     "00039.asset/01559.resources!/0003_title.txc.bin",

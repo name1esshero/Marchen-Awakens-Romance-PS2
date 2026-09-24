@@ -378,3 +378,76 @@ The resulting 512x128 TGA imports to the original 66,624-byte TXC and reparses
 from the built ISO with an exact byte match. This establishes texture
 reinsertion, not runtime UV placement or on-screen acceptance. See
 [`graphic localization evidence`](../tasks/GRAPHIC_TEXT_LOCALIZATION.md).
+
+## First `EQUIP ARM` lettering layer fit too narrowly and carried faint noise
+
+The initial generated layer used beveled, shaded lettering. Alpha-cropping and
+uniform `contain` fitting into the 236×41 command band preserved its roughly
+3.3:1 content aspect ratio, so the wordmark occupied only about 135 pixels of
+the available 236-pixel width. At native 256×64 view it looked too subdued and
+small beside the original Japanese command. The transparent image also carried
+faint low-alpha fringes around the lettering.
+
+Do not stretch or import that draft. A revised flat, wide lettering layer was
+kept as a tracked PNG input; deterministic alpha thresholding at 128/255 removes
+the fringe before aspect-preserving fit, clearing only the measured Japanese
+rectangle. The final 256×64 TGA fills the source label band and imports through
+the original PSMT8 palette without growing the 17,472-byte TXC. The exact input,
+parameters, dimensions, hashes, and remaining runtime limits are in
+[`GRAPHIC_TEXT_ARM_COMMAND.md`](../tasks/GRAPHIC_TEXT_ARM_COMMAND.md). A higher
+threshold can clip useful antialiasing, so every chosen threshold still needs
+native-size review; palette import does not prove runtime legibility.
+
+
+## An amend absorbed localization files staged by the coordinator
+
+On 2026-09-23, a code commit had the wrong Git author. The worker attempted
+`git commit --amend --no-edit` to correct only attribution. In the interval,
+the coordinator staged eight localization paths in the same worktree index, so
+the amended code commit captured 49 code files and those eight unrelated paths.
+The original mixed commit was `09e2e3f`; no file content was lost. Claude had
+already produced the corrected code-only object `e3d5f1e` with the proper
+Claude author and exactly the 49 intended files.
+
+After the operator authorized the local correction, the old local chain was
+preserved at `backup/master-pre-correction-20260923`, `master` was rebuilt from
+`e653d63` onto the corrected `e3d5f1e`, and the two later DQ-18 commits were
+replayed as `2f3a0af` and `f3ea009` with Claude retained as author. The pending
+localization files were restored and subsequently rebuilt/reparsed. `origin/master`
+was not changed, and the backup ref still contains the original chain.
+
+Mechanism: `git commit --amend --no-edit` creates a new commit from the current
+index; it does not reuse the prior commit's tree. A staged-diff inspection made
+before another process stages files is not a commit boundary. Concurrent
+commits require separate worktrees and indexes. For an authorized correction,
+first preserve the old ref, verify the corrected commit's complete tree and
+identity, then replay subsequent commits and inspect every resulting file list.
+Do not infer that this incident justifies rewriting published history.
+
+## Delegated graphics branches contained author mismatches and duplicate content
+
+Commit `8c28d2e` is already in `origin/master` and contains the weapon audit, but
+its Git author is the repository owner's identity while its `Agent-Model`
+trailer says `GPT-6: Luna (Subagent)`; it also predates the required
+`Parent-Agent` and `Department` fields. A second branch commit, `772aa37`, has
+the same task-note blob and the same success finding apart from a trailing blank
+line, so its patch is already represented in the current tree and was not
+cherry-picked as a duplicate. The worker branch and worktree remain intact.
+
+The `ttlprts` side branch has a related case: commit `e5d7725` says
+`Agent-Model: GPT-6: Luna (Subagent)` but its Git author is also the repository
+owner. Its two changed paths are already present in `master` with identical
+blob IDs: the English TGA is `09142e68b9f5c0d5a53f9acf6d623ce52c3f75ea` and
+the task note is `39f93453ead345a46d30acf17dfe1253883e0a25`. Git's patch-ID
+check marked the side commit unique because its historical parent differs, but
+the exact resulting files prove there is no missing content to cherry-pick.
+The follow-up success-log commit is patch-equivalent as well. The candidate
+artifact and its evidence are already in `master`; the side branch remains
+intact for provenance.
+
+The commit metadata establishes the attribution mismatches but not why that
+identity was used. Before future delegation, provision and verify a
+worktree-specific worker identity; before integration, inspect author, all
+seven trailers, and exact file scope. Content already present in the
+integration tree should be recorded as already integrated rather than
+recommitted or rewritten solely to duplicate it.

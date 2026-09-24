@@ -1040,15 +1040,15 @@ Method: retain each `_jp.tga` as the immutable export, author a same-size
 `_eng.tga` sibling, map its colors through the original texture palette, stage
 the English TXC, then rebuild with relocation into root-level `mar_eng.iso`.
 Verification: the audit covered all 30,397 indexed TXCs, kept 43 short PSMCT32
-records raw, found twelve overrides, and reported zero changed Japanese
-baselines. `make verify-graphics-image` reparsed and byte-compared all twelve
-overrides (1,378,368 bytes). The authenticated streaming comparison against
-the pinned baserom produced the expected nonmatch: 5,023,174,656-byte output,
-SHA-256 `b42048452f8d8b41497fff87f4fa5e5f15f983529d179012e6a868482494f5a0`,
-and 757,730,801 differing bytes. Full evidence is in
+records raw, found fourteen overrides, and reported zero changed Japanese
+baselines. `make verify-graphics-image` reparsed and byte-compared all fourteen
+overrides (1,400,064 bytes). The authenticated streaming comparison against
+the pinned baserom produced the expected nonmatch: 5,023,940,608-byte output,
+SHA-256 `9590a689a512d035e8073f44917eb78b6ee35841e549c61dd065641230e25e67`,
+and 758,496,753 differing bytes. Full evidence is in
 [`graphic localization`](../tasks/GRAPHIC_TEXT_LOCALIZATION.md) and
-`reports/mar_eng_compare_12_graphics.json`.
-Scope: the twelve currently authored title/UI graphics and their observed
+`reports/mar_eng_compare_14_graphics_database.json`.
+Scope: the fourteen current title, UI, and weapon graphics and their observed
 standalone and nested reinsertion paths.
 Limits: this verifies file/container reinsertion, not the game's runtime UVs,
 screen composition, or emulator acceptance. Whole-image byte equality is not
@@ -1139,3 +1139,52 @@ remain unknown. The unresolved `center_bar` is not confirmed as Japanese text.
 References: [card texture text-surface audit](../tasks/GRAPHIC_TEXT_CARDS.md),
 `graphics/index.json`, and
 [localization methodology](LOCALIZATION_METHODOLOGY.md).
+
+
+## Local history correction can preserve collaborator authorship without losing concurrent work
+
+Symptom: an attribution-only `git commit --amend --no-edit` swept eight
+coordinator-staged localization paths into a collaborator's 49-file code
+commit because both processes shared one index.
+Method: after operator authorization, keep the old chain reachable, use the
+collaborator's verified code-only commit object as the new parent point, replay
+later verified commits without resetting their authors, and restore the separate
+localization changes for their own commit. Inspect each commit's author,
+committer, tree, and trailers after correction.
+Verification: Claude's corrected 49-file commit `e3d5f1e` is authored and
+committed by Claude; the local `master` chain is `e653d63 -> e3d5f1e ->
+2f3a0af -> f3ea009`; `backup/master-pre-correction-20260923` retains the prior
+chain; and `origin/master` remains unchanged. The restored localization set
+subsequently built and reparsed through ISO/YFS/PAC.
+Scope: authorized local history correction for the 2026-09-23 shared-index
+incident.
+Limits: this is a recovery procedure after an explicit authorization, not
+permission to rewrite published history. Separate worktrees remain the normal
+prevention mechanism.
+References: `docs/FAILURES.md`, `docs/AGENT_ENVIRONMENT.md`, and `git show` for
+`e3d5f1e`, `2f3a0af`, and `f3ea009`.
+
+## CP932 catalogue growth and localized graphics can be verified after ISO relocation
+
+Symptom: translated text tables can grow and texture overrides can be nested
+inside compressed menu bundles, so source-side validation alone does not prove
+the emulator image contains the intended bytes.
+Method: build the relocated `mar_eng.iso`, reparse the text resources through
+ISO/YFS/PAC, and run `make verify-graphics-image` for English TXCs through
+ISO/YFS/BPE/UI tables. Compare each extracted resource byte-for-byte against
+catalog-generated CP932 output or the staged paletted TXC; keep the Japanese
+TGA baselines immutable.
+Verification: the 71-row `DataBase.txt` catalogue now applies all 126 drafts,
+including 39 literal condition strings, to 3,684 CP932 bytes (+271). The current
+ISO reparses `_msg.dat` (20,714 bytes), `CardList.txt` (14,120 bytes), and
+`DataBase.txt` (3,684 bytes) exactly. Fourteen English graphics, totaling
+1,400,064 TXC bytes, reparse exactly; 43 unsupported PSMCT32 records remain
+raw and no Japanese baseline changed. The authenticated image comparison
+reports 758,496,753 expected differences after translation and relocation.
+Scope: the current message/catalogue and 14-graphic localization build.
+Limits: byte-exact extraction establishes reinsertion and encoding, not English
+editorial quality, screen layout, unlock behavior, UV placement, or emulator
+acceptance.
+References: `tasks/MESSAGE_TABLE.md`, `tasks/DATABASE_CONDITION_SEMANTICS.md`,
+`tasks/GRAPHIC_TEXT_ARM_COMMAND.md`, `reports/translation_surfaces.json`, and
+`reports/mar_eng_compare_14_graphics_database.json`.

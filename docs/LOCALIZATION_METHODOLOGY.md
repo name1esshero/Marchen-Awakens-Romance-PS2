@@ -283,6 +283,19 @@ source-sized, palette-mapped texture before staging it. The generated image is
 only a lettering source, not evidence of translation accuracy or runtime UV
 placement.
 
+Keep any approved generated PNG layer in the repository beside its target art;
+a path under a user's model cache is not a reproducible source. Use the
+deterministic `tools/graphics_compose.py` / `make graphics-compose` step to
+alpha-crop, apply a documented low-alpha threshold if needed, fit to measured
+source bounds, clear only the old lettering rectangle, and composite onto the
+immutable Japanese TGA canvas. The tool preserves exact dimensions and reports
+its source bounds, fit, threshold, and output hash. Reopen and inspect that final
+raster at native size, then stage it through the original RTX3 palette importer.
+Keep the input layer, exact command parameters, final TGA, and palette-mapped
+TXC evidence together; this makes model artwork an editable input and the
+postprocessing deterministic. A successful static import says nothing about
+runtime UV placement or screen composition.
+
 Preserve composition, non-text artwork, decorative/spinning effects,
 gradients, outlines, shadows, highlights, transparency, dimensions,
 palette constraints, texture layout, animation frames, and surrounding

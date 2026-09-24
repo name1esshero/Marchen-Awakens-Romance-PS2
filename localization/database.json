@@ -413,7 +413,7 @@
       "translations": {
         "0": "Character Voices",
         "2": "Ginta",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF; alternate pre/post-match voices."
       },
       "line_ending": "\r\n"
     },
@@ -432,7 +432,7 @@
       ],
       "translations": {
         "2": "Dorothy",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF; alternate pre/post-match voices."
       },
       "line_ending": "\r\n"
     },
@@ -451,7 +451,7 @@
       ],
       "translations": {
         "2": "Jack",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF; alternate pre/post-match voices."
       },
       "line_ending": "\r\n"
     },
@@ -470,7 +470,7 @@
       ],
       "translations": {
         "2": "Snow",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF; alternate pre/post-match voices."
       },
       "line_ending": "\r\n"
     },
@@ -489,7 +489,7 @@
       ],
       "translations": {
         "2": "Alan",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF; alternate pre/post-match voices."
       },
       "line_ending": "\r\n"
     },
@@ -508,7 +508,7 @@
       ],
       "translations": {
         "2": "Nanashi",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF; alternate pre/post-match voices."
       },
       "line_ending": "\r\n"
     },
@@ -527,7 +527,7 @@
       ],
       "translations": {
         "2": "Alviss",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF; alternate pre/post-match voices."
       },
       "line_ending": "\r\n"
     },
@@ -546,7 +546,7 @@
       ],
       "translations": {
         "2": "Roco",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF; pre/post-match voices available."
       },
       "line_ending": "\r\n"
     },
@@ -565,7 +565,7 @@
       ],
       "translations": {
         "2": "Ian",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF; pre/post-match voices available."
       },
       "line_ending": "\r\n"
     },
@@ -584,7 +584,7 @@
       ],
       "translations": {
         "2": "Girom",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF; pre/post-match voices available."
       },
       "line_ending": "\r\n"
     },
@@ -603,7 +603,7 @@
       ],
       "translations": {
         "2": "Roland",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF; pre/post-match voices available."
       },
       "line_ending": "\r\n"
     },
@@ -622,7 +622,7 @@
       ],
       "translations": {
         "2": "Halloween",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF; pre/post-match voices available."
       },
       "line_ending": "\r\n"
     },
@@ -641,7 +641,7 @@
       ],
       "translations": {
         "2": "Phantom",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF; pre/post-match voices available."
       },
       "line_ending": "\r\n"
     },
@@ -660,7 +660,7 @@
       ],
       "translations": {
         "2": "Orco",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF; pre/post-match voices available."
       },
       "line_ending": "\r\n"
     },
@@ -679,7 +679,7 @@
       ],
       "translations": {
         "2": "Candice",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF; pre/post-match voices available."
       },
       "line_ending": "\r\n"
     },
@@ -698,7 +698,7 @@
       ],
       "translations": {
         "2": "Edward",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF; pre/post-match voices available."
       },
       "line_ending": "\r\n"
     },
@@ -845,7 +845,7 @@
       "translations": {
         "0": "Movies",
         "2": "Opening",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF."
       },
       "line_ending": "\r\n"
     },
@@ -864,7 +864,7 @@
       ],
       "translations": {
         "2": "Prologue",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF."
       },
       "line_ending": "\r\n"
     },
@@ -883,7 +883,7 @@
       ],
       "translations": {
         "2": "Door Closes",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF."
       },
       "line_ending": "\r\n"
     },
@@ -902,7 +902,7 @@
       ],
       "translations": {
         "2": "Door Opens",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF."
       },
       "line_ending": "\r\n"
     },
@@ -921,7 +921,7 @@
       ],
       "translations": {
         "2": "Shattered Mirror",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF."
       },
       "line_ending": "\r\n"
     },
@@ -940,7 +940,7 @@
       ],
       "translations": {
         "2": "Ending",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF."
       },
       "line_ending": "\r\n"
     },
@@ -959,7 +959,7 @@
       ],
       "translations": {
         "2": "Staff Roll",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF."
       },
       "line_ending": "\r\n"
     },
@@ -979,7 +979,7 @@
       "translations": {
         "0": "Sound",
         "2": "Title",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF."
       },
       "line_ending": "\r\n"
     },
@@ -998,7 +998,7 @@
       ],
       "translations": {
         "2": "Main Menu (shared with menus)",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF."
       },
       "line_ending": "\r\n"
     },
@@ -1017,7 +1017,7 @@
       ],
       "translations": {
         "2": "Member Select (War Games Theme)",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF."
       },
       "line_ending": "\r\n"
     },
@@ -1036,7 +1036,7 @@
       ],
       "translations": {
         "2": "Shop",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF."
       },
       "line_ending": "\r\n"
     },
@@ -1055,7 +1055,7 @@
       ],
       "translations": {
         "2": "Database",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF."
       },
       "line_ending": "\r\n"
     },
@@ -1074,7 +1074,7 @@
       ],
       "translations": {
         "2": "Labyrinth Start",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF."
       },
       "line_ending": "\r\n"
     },
@@ -1093,7 +1093,7 @@
       ],
       "translations": {
         "2": "Labyrinth Main Menu",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF."
       },
       "line_ending": "\r\n"
     },
@@ -1112,7 +1112,7 @@
       ],
       "translations": {
         "2": "Stage 0 (Earth) - Battle Theme",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF."
       },
       "line_ending": "\r\n"
     },
@@ -1131,7 +1131,7 @@
       ],
       "translations": {
         "2": "Stage 1 (Fire) - Battle Theme",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF."
       },
       "line_ending": "\r\n"
     },
@@ -1150,7 +1150,7 @@
       ],
       "translations": {
         "2": "Stage 2 (Wind) - Battle Theme",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF."
       },
       "line_ending": "\r\n"
     },
@@ -1169,7 +1169,7 @@
       ],
       "translations": {
         "2": "Stage 3 (Water) - Battle Theme",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF."
       },
       "line_ending": "\r\n"
     },
@@ -1188,7 +1188,7 @@
       ],
       "translations": {
         "2": "Stage 4 (Wood) - Battle Theme",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF."
       },
       "line_ending": "\r\n"
     },
@@ -1207,7 +1207,7 @@
       ],
       "translations": {
         "2": "Stage 5 (Thunder) - Battle Theme",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF."
       },
       "line_ending": "\r\n"
     },
@@ -1226,7 +1226,7 @@
       ],
       "translations": {
         "2": "Stage 6 (Neutral) - Battle Theme",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF."
       },
       "line_ending": "\r\n"
     },
@@ -1245,7 +1245,7 @@
       ],
       "translations": {
         "2": "Opening Movie",
-        "5": null
+        "5": "Labyrinth: hidden flag OFF."
       },
       "line_ending": "\r\n"
     },
@@ -1264,7 +1264,7 @@
       ],
       "translations": {
         "2": "Ending Movie",
-        "5": null
+        "5": "Hidden flag OFF after clearing Labyrinth."
       },
       "line_ending": "\r\n"
     },

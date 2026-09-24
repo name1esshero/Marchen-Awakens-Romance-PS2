@@ -47,15 +47,19 @@
       "confidence": "OBSERVED: language-bearing menu/catalogue content; runtime use not yet traced",
       "extraction_status": "reversible CP932/UTF-8 companion",
       "editability_status": "source-hash-anchored UTF-8 JSON; stable row IDs; tab/blank-cell/CRLF-preserving CP932 apply",
-      "rebuild_status": "catalog translations inserted and reparsed exactly through ISO/YFS/PAC",
+      "rebuild_status": "Full mar_eng.iso/YFS/PAC reparse confirms the current 3,684-byte CP932 catalog exactly, including 271 bytes of growth; runtime semantics remain unverified",
       "relocation_status": "full ISO/YFS/PAC rebuild exercised; runtime acceptance unverified",
       "tracked_translation_source": "localization/database.json",
-      "translated_fields": 87,
+      "translated_fields": 126,
       "eligible_fields": 126,
       "translated_heading_fields": 7,
       "translated_label_fields": 70,
       "translated_password_markers": 10,
-      "limits": "7/7 headings and 70/70 display labels translated; 10 Password markers translated. Other 39 nonempty column-5 unlock-condition metadata fields remain original because their runtime semantics are not established."
+      "limits": "7/7 headings, 70/70 labels, 10 Password markers, and all 39 condition/metadata fields have English drafts. Hidden-flag wording is kept literal; field display and unlock/runtime semantics remain unverified.",
+      "translated_condition_fields": 39,
+      "translated_size": 3684,
+      "translated_growth": 271,
+      "translated_sha256": "cef6b975f4998bf00a7845e64a6519d92ad07bb67d7deaf58254cd52dfe17467"
     },
     {
       "path": "disc!/_DATA.YFS;1!/data/menu/*.b",
