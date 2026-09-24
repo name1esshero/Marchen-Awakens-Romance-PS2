@@ -2,6 +2,33 @@
 
 Authority: [STANDARDS.md](STANDARDS.md).
 
+## Subtitle lettering was misidentified as the MÄR HEAVEN brand logo
+
+Hypothesis: `00039_01565_0003_sbttl` or an existing English title sibling
+contained reusable native `MÄR HEAVEN` lettering. The inferred wording and
+appearance were applied to the title mark, `ttlprts`, `title_marh`, and
+`title000` English drafts. The owner's in-game title capture then showed the
+wrong `ARM FIGHT DREAM` lettering repeated where the distinctive franchise
+logo belongs. Comparing the claimed source confirmed the error:
+`sbttl` is specifically the subtitle `ARM FIGHT DREAM`, not the MÄR HEAVEN
+wordmark. Prior task notes and success entries that called this lettering
+native MÄR HEAVEN art were corrected or marked superseded.
+
+Correction: use the owner-supplied `T_TTL06.KCG_en.png` logo reference and its
+tracked transparent crops. DQ-38 regenerates affected English siblings through
+`tools/title_logo_localize.py`; the Japanese baselines remain immutable. The
+source palette index 0 is the keyed black background, while index 48 black
+pixels form visible outlines and must remain opaque. Tests enforce region-only
+clearing and deterministic canvas placement. See
+[`GRAPHIC_TEXT_TITLE_LOGO_REWORK.md`](../tasks/GRAPHIC_TEXT_TITLE_LOGO_REWORK.md)
+for source/output hashes and measured rectangles.
+
+Limits: this establishes the artwork identity and static texture edits only.
+It does not prove every atlas placement is simultaneously rendered or that the
+correct UV, animation frame, scale, or draw order is known. The rebuilt ISO and
+emulator image still require validation; reconsider if a directly verified
+game-specific English logo source becomes available.
+
 ## Image-generation edits did not preserve game UI atlas layouts
 
 Hypothesis: an image-generation edit could translate labels while preserving

@@ -630,6 +630,13 @@ References: `tools/asset_recovery_census.py`,
 
 ## Reuse native English lettering when localizing a Japanese logo atlas
 
+Correction (DQ-38): the earlier identification of this reused lettering as
+the native MÄR HEAVEN mark was wrong; the source was the `ARM FIGHT DREAM`
+subtitle. The old ISO/palette checks below remain historical packaging evidence
+for that superseded draft, not validation of the brand artwork. See
+[`FAILURES.md`](FAILURES.md) and
+[`title-logo correction`](../tasks/GRAPHIC_TEXT_TITLE_LOGO_REWORK.md).
+
 Symptom: a Japanese title wordmark needs an English graphic, while recreating
 the game's custom lettering with a generic font would lose the original brand
 style. A neighboring title texture already contains the same title in English,
@@ -663,6 +670,11 @@ References: `graphics/title/00039_01566_0002_title_marh_eng.tga`,
 `tools/graphics.py`, `tools/verify_graphics_in_iso.py`, `tools/rtx3.py`.
 
 ## Reuse localized title lettering in the ttlprts atlas
+
+Correction (DQ-38): the described title lettering was reused from the
+misidentified subtitle art and did not match the franchise logo. The old
+palette checks below concern the superseded image only; see the correction
+task for the tracked reference-based replacement.
 
 Symptom: `title_new_tex.b`'s 512x512 `ttlprts` atlas contains three Japanese
 wordmark treatments and a vertical Japanese creator/publisher credit alongside
@@ -776,6 +788,11 @@ References: [winner texture audit](../tasks/GRAPHIC_TEXT_WINNER_TEX.md),
 [`LOCALIZATION_METHODOLOGY.md`](LOCALIZATION_METHODOLOGY.md).
 
 ## Translate the title-screen mark and credit while preserving its indexed texture
+
+Correction (DQ-38): the former title mark inherited the same subtitle-lettering
+mistake. The source-palette and same-size conversion observations below remain
+technical evidence, but the old output is superseded; see the corrected logo
+task for its replacement and current validation state.
 
 Symptom: the `title000` texture contains a Japanese title mark and author/publisher
 credit beside English tagline, prompt, and Konami text. Recreating the mark with
@@ -1618,3 +1635,30 @@ UV/screen mapping, runtime visibility, or a translation-ready English string.
 References: [DQ-37 visual inventory](../tasks/GRAPHIC_TEXT_W_MENU_TEX.md),
 [`graphics/index.json`](../graphics/index.json), and
 [`LOCALIZATION_METHODOLOGY.md`](LOCALIZATION_METHODOLOGY.md).
+
+## Reference crops restore the MÄR HEAVEN wordmark in title textures
+
+Finding: the previous title-logo lettering was copied from `sbttl`, whose
+verified phrase is `ARM FIGHT DREAM`; it was not the franchise MÄR HEAVEN
+logo. Cropping the owner's English reference PNG yields editable full-logo and
+wordmark source layers. Keying palette index 0 removes its black background
+without dropping black outlines at index 48. `tools/title_logo_localize.py`
+fits the crops to explicit atlas rectangles, applies gray/color variants, and
+clears/composites at source coordinates while retaining the rest of each
+English sibling.
+
+Verification: the four 512×512 outputs keep their original TGA headers and
+1,048,594-byte extents; pixel comparisons against the previous English
+siblings found zero changes outside their declared replacement regions.
+`make test` passed all 126 tests. `make build-mod-disc` succeeded, then
+`make verify-graphics-image` reparsed all 17 English TXCs (1,501,632 bytes)
+from the root `mar_eng.iso` and matched them byte-for-byte to staged
+overrides, including all four title assets. Japanese baselines still match
+their indexed hashes.
+Scope: DQ-38's `title`, `ttlprts`, `title_marh`, and standalone `title000`
+English siblings and tracked editable logo sources/layers.
+Limits: exact TXC reinsertion does not validate title-animation UVs, draw order,
+runtime display, or emulator appearance. Those remain open.
+References: [DQ-38 evidence](../tasks/GRAPHIC_TEXT_TITLE_LOGO_REWORK.md),
+[`graphics/index.json`](../graphics/index.json), and
+[`localization methodology`](LOCALIZATION_METHODOLOGY.md).

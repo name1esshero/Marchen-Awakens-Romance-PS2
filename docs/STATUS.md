@@ -157,42 +157,44 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   full-width menu audit and DQ-31's TGS-menu audit are complete and integrated
   as `df4315d` and `2ea24f0`; the source worker commits are documented as
   patch-equivalent with their worker authorship retained. DQ-38 also covers the
-  standalone `title000` English texture; its prior title mark was copied from
-  the same misidentified subtitle art. The owner-supplied MÄR HEAVEN mark has a
-  distinctive style across the franchise and is now the visual source for the
-  DQ-38 rework; `ARM FIGHT DREAM` remains a separate subtitle. DQ-30 and DQ-38
-  are coordinator work. DQ-32 and DQ-33 are assigned to separate worker
-  Delegated work is paused at the owner's direction. DQ-32's staged,
-  uncommitted save/load audit remains preserved in its worker worktree for later
-  reconciliation. DQ-33's war-close audit is integrated as `cda3366` (source
-  `3d0e7a8`): the sole 32×32 frame has no visible text. DQ-40's
+  standalone `title000` English texture; its prior marks reused the
+  misidentified subtitle lettering. The reference-based DQ-38 corrections are
+  built into root `mar_eng.iso` and all four title TXCs reparse byte-exactly;
+  emulator/UV review remains open, with `ARM FIGHT DREAM` preserved as a
+  separate subtitle. DQ-30 and DQ-38 are coordinator work. Delegated work is
+  paused at the owner's direction. DQ-32's staged, uncommitted save/load audit
+  remains preserved in its worker worktree for later reconciliation. DQ-33's
+  war-close audit is integrated as `cda3366` (source `3d0e7a8`): the sole 32×32
+  frame has no visible text. DQ-40's
   `lib_char_sum.b` audit is integrated as `743ec3e` (source `d0be870`); all 16
   images are opaque portraits with no readable text. DQ-41's `lib_voice_sum.b`
   audit is integrated as `d1aedad` (source `dafa268`); all 16 portraits are
   opaque, with tiny balloon-like strokes left unclassified. Both worker authors
-  and trailers are preserved. Active scopes and their success-log anchors are
-  disjoint. Four `READY` cards remain; there are currently no active delegated
-  workers, so the reserve/capacity ratio is not meaningful.
+  and trailers are preserved. No delegated workers are active. Five `READY`
+  cards remain; the reserve/capacity ratio is not meaningful while delegation
+  is paused.
   DQ-43 and DQ-44 cover separate four-image character texture sets with unique
-  hashes and no overlap against DQ-40 or DQ-41.
+  hashes and no overlap against DQ-40 or DQ-41. DQ-45 is a read-only style
+  audit of the remaining `title_parts` strip, outside the four DQ-38 assets.
   The completed
   title-remainder audit is integrated. Map,
   special-font, AFS suffix, background, and title-remainder audits are
   integrated. Training-text, GameOver, and war-close are complete; the
-  transition-menu, library-character-summary, library-voice-summary, and
-  training-character texture audits are ready. Save/load is paused with
+  transition-menu, library-character-summary, library-voice-summary,
+  training-character, and `title_parts` style audits are ready. Save/load is paused with
   uncommitted worker changes preserved. The 13-row remaining-menu audit
   is integrated; the 30-row full-width `ｗ.b` audit and single-row TGS-menu
   audits are complete.
-  The training-title and training-controller artwork are integrated and await
-  lead palette/ISO validation. DQ-38 reworks three title atlases and the
-  dependent standalone `title000` English texture after the supplied in-game
-  capture showed repeated subtitle lettering and a mismatched logo. The
-  coordinator's read-only PSMCT32
-  investigation found a common eight-byte shortfall across 43 records but no safe decode; those
+  Training-title and training-controller artwork are integrated and await
+  lead palette/ISO validation. DQ-38 replaces the mistaken title marks in three
+  atlases and the dependent standalone `title000` texture with the tracked
+  franchise-style reference crop. All four ISO-reparsed exactly; emulator
+  review remains open. The coordinator's read-only PSMCT32 investigation found
+  a common eight-byte shortfall across 43 records but no safe decode; those
   records remain raw.
-  The `ttlprts` and `title000` English siblings, task notes and success entries
-  are integrated, locally round-trip, and reparse from the rebuilt ISO. None of
+  The four corrected title English siblings, layers, task notes, and success/
+  failure findings are integrated; their TXCs reparse from `mar_eng.iso`.
+  None of
   the graphics has runtime validation. The worker procedure now requires each delegated task to
   record its reusable result or negative finding in `SUCCESSES.md` or
   `FAILURES.md` as applicable. See the

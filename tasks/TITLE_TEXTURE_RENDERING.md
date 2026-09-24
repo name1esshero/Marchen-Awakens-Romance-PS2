@@ -129,7 +129,17 @@ These are static packaging checks. Neither title atlas has passed emulator
 review; the main wordmark may repeat the existing “MÄR HEAVEN” mark elsewhere
 on-screen, and the AT/UV draw composition has not been reconstructed.
 
-## English main-wordmark draft and insertion evidence
+## Superseded English main-wordmark draft
+
+Correction (DQ-38, 2026-09-24): the lettering source and MÄR HEAVEN
+identification stated in this former draft are wrong. The referenced `sbttl`
+art is the separate `ARM FIGHT DREAM` subtitle, and its reuse caused the
+mismatched/repeated logo seen in the owner's in-game capture. The English
+texture and TXC hashes below describe the superseded draft only. See
+[`GRAPHIC_TEXT_TITLE_LOGO_REWORK.md`](GRAPHIC_TEXT_TITLE_LOGO_REWORK.md) for the
+tracked reference crop, corrected siblings, and current hashes. This correction
+does not change the verified Japanese baseline hash or the wrapper/AT3
+structure evidence above.
 
 `graphics/title/00039_01566_0002_title_marh_jp.tga` remains the unchanged
 Japanese baseline (SHA-256
@@ -156,10 +166,9 @@ records, zero changed Japanese baselines and two English overrides. The full
 mod image comparison authenticated the pinned Japanese reference and recorded
 the current output hash above.
 
-This is a reusable-art draft, not runtime evidence of placement or scale. The
-existing title screen already draws English “MÄR HEAVEN” artwork from a sibling
-texture, so repeated branding is possible. The title animation body and UV
-rectangles still need decoding, and no emulator capture has been reviewed.
+This draft's output no longer represents the current English title texture.
+Runtime placement, scale, animation state, UV rectangles, and draw order still
+need direct validation; see the DQ-38 correction task.
 
 ## Evidence limits
 

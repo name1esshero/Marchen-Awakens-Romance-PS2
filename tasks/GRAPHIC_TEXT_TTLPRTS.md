@@ -1,6 +1,13 @@
-# English title-parts texture draft
+# Historical title-parts draft (superseded by DQ-38)
 
 Updated: 2026-09-23.
+
+Correction (DQ-38, 2026-09-24): the prior English output below used lettering
+from `sbttl` and incorrectly identified it as the franchise MÄR HEAVEN mark.
+The in-game capture disproved that identification. The old English hash and
+visual conclusions are superseded by
+[`GRAPHIC_TEXT_TITLE_LOGO_REWORK.md`](GRAPHIC_TEXT_TITLE_LOGO_REWORK.md); the
+Japanese source hash and source-palette method remain valid.
 
 `graphics/title/00039_01565_0000_ttlprts_jp.tga` remains the immutable
 recovered baseline (512×512, 32-bit TGA, 1,048,594 bytes; SHA-256
@@ -11,10 +18,11 @@ same-size draft (SHA-256
 baseline hash also matches `graphics/index.json`.
 
 The atlas has three Japanese wordmark placements in gray, color, and gray
-treatments. These were replaced with the already localized native `MÄR HEAVEN`
-wordmark from `00039_01566_0002_title_marh_eng.tga`; its gray and color
-lettering was scaled into the corresponding slots. The Japanese creator and
-publisher credit strip was replaced with the established line
+treatments. The superseded English draft filled these slots by copying
+`title_marh_eng`, which in turn used the separate `ARM FIGHT DREAM` subtitle
+letterforms. DQ-38 replaces those marks from the tracked reference crop; see
+[`GRAPHIC_TEXT_TITLE_LOGO_REWORK.md`](GRAPHIC_TEXT_TITLE_LOGO_REWORK.md). The
+Japanese creator and publisher credit strip was replaced with the established line
 `© Nobuyuki Anzai / Shogakukan • ShoPro • TV Tokyo`, reused from
 `00039_01566_0003_title_parts_eng.tga` and rotated into the source strip's
 vertical atlas orientation. Existing `MÄRCHEN AWAKENS ROMANCE`, `PRESS START

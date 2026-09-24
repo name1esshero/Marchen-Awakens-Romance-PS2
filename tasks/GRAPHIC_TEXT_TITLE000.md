@@ -2,7 +2,14 @@
 
 Updated: 2026-09-23.
 
-## Surface and translation
+Correction (DQ-38, 2026-09-24): the previous English title mark reused
+`title_marh_eng`, which was itself lettered from the `ARM FIGHT DREAM`
+subtitle. Its MÄR HEAVEN identification and output hash below are superseded.
+The Japanese baseline and separate translated credit remain valid. Current
+logo art, edit bounds, output hash and verification state are recorded in
+[`GRAPHIC_TEXT_TITLE_LOGO_REWORK.md`](GRAPHIC_TEXT_TITLE_LOGO_REWORK.md).
+
+## Surface and prior draft (superseded)
 
 The standalone TXC is `standalone:/00039.asset/00985.asset/00000.bin`, at
 `disc!/_DATA.YFS;1!/data/menu/esy_menu.tex!/title000.txc`. It is PSMT8, 512x512,
@@ -26,7 +33,7 @@ the source line's light gray while retaining antialiasing, and placed at `(8,433
 The canvas and source PSMT8 palette are retained. The `_jp.tga` remains the
 recovered baseline; localization is only in the `_eng.tga` sibling.
 
-## Verification and limits
+## Prior-draft verification and limits
 
 The English TGA is 512x512, 1,048,594 bytes, SHA-256
 `6851419b7b8db356435faa80dc7fba3536a695e9d2d2a51acc9dab11a3efa5bc`. Static

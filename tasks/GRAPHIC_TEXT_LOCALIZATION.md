@@ -11,8 +11,8 @@ RTX3/TXC overrides:
 | Japanese surface | English artwork |
 | --- | --- |
 | `00039_00991_0002_btst_txt_jp.tga` | BATTLE START, replacing the Japanese katakana label on the same 128x32 canvas. |
-| `00039_01559_0003_title_jp.tga` | Replaces the Japanese title mark with the established MÄR Heaven lettering; retains the surrounding ARM FIGHT DREAM artwork and English subtitle. |
-| `00039_01566_0002_title_marh_jp.tga` | MÄR Heaven wordmark draft. |
+| `00039_01559_0003_title_jp.tga` | Corrected with the franchise-style MÄR HEAVEN mark from the owner-supplied reference; the separate ARM FIGHT DREAM subtitle remains. |
+| `00039_01566_0002_title_marh_jp.tga` | Corrected gray/color MÄR HEAVEN logo placements from the same reference. |
 | `00039_01566_0003_title_parts_jp.tga` | MÄR Heaven / ÄRM Fight Dream, English creator and publisher line; existing English subtitle and Konami mark retained. |
 | `00039_01556_0010_shop_jp.tga` | ARM SHOP wordmark, preserving the source gradient and transparent surround. |
 | `00039_01556_0014_subtitle_jp.tga` | BUY ITEM / SELL ITEM / ARM REPAIR, adapted from the three Japanese shop actions. |
@@ -20,15 +20,18 @@ RTX3/TXC overrides:
 | `00039_01565_0003_sbttl_jp.tga` | ARM FIGHT DREAM, replacing the katakana subtitle while preserving the title artwork. |
 | `00039_01635_0028_field_name_jp.tga` | EARTH FIELD / WATER FIELD; FIRE FIELD / WOOD FIELD; WIND FIELD / THUNDER FIELD; SHADOW FIELD. |
 | `00039_01631_0025_windisp_jp.tga` | MÄR TEAM / CHESS TEAM; REMATCH / EXIT; NEXT BATTLE / WAR GAMES. |
-| `00039_01565_0000_ttlprts_jp.tga` | Replaces the three Japanese title-mark placements with the game's native MÄR HEAVEN lettering and translates the creator/publisher strip; retains existing English marks. |
-| `00039_00985_00000_title000_jp.tga` | Replaces the repeated title mark and translates the creator/publisher credit; retains the existing English tagline, start prompt, and Konami mark. |
+| `00039_01565_0000_ttlprts_jp.tga` | Replaces three Japanese title-mark placements with the reference's franchise-style MÄR HEAVEN logo; retains the existing English credit and prompt artwork. |
+| `00039_00985_00000_title000_jp.tga` | Uses the reference's MÄR HEAVEN logo and translated creator/publisher credit; retains the English tagline, start prompt, and Konami mark. |
 
 The shop, mode, field, and shop-action UI images were authored from reviewed
 English layouts and imported into their original PSMT8/PSMT4 palettes. The shop
 labels' first two lines use concise action wording in the ARM-shop context; the
-Japanese source says “buy ARM,” “sell ARM,” and “ARM repair.” The title-logo
-replacement uses English lettering already present in the recovered game
-artwork. The winner-screen `windisp` override preserves its 512x256 source canvas,
+Japanese source says “buy ARM,” “sell ARM,” and “ARM repair.” The owner's
+in-game capture disproved the former title-logo identification. DQ-38 replaces
+the affected English drafts with a tracked crop of the owner-supplied
+franchise-style MÄR HEAVEN reference; see
+[`GRAPHIC_TEXT_TITLE_LOGO_REWORK.md`](GRAPHIC_TEXT_TITLE_LOGO_REWORK.md). The
+winner-screen `windisp` override preserves its 512x256 source canvas,
 left logo, arrows, existing player labels, and PSMT4 palette. Only the Japanese
 label bands were cleared and replaced with English lettering, mapped back through
 the original palette. The War Games term follows the project glossary. These are
@@ -38,9 +41,8 @@ override reuses uppercase letter shapes from the game's
 palette measurements in [`GRAPHIC_TEXT_BTST.md`](GRAPHIC_TEXT_BTST.md).
 
 The `ttlprts` atlas replaces its gray, color, and gray Japanese wordmark
-placements plus the creator/publisher strip using English lettering already
-recovered from the game. The `title000` title screen replaces only its title
-mark and credit line while retaining the English tagline, start prompt, and
+placements with the reference logo. The `title000` title screen replaces only
+its title mark and credit line while retaining the English tagline, start prompt, and
 Konami mark. Each change is confined to measured regions and preserves the
 source palette and canvas. Their static import/export evidence and unresolved
 display/UV questions are recorded in [`GRAPHIC_TEXT_TTLPRTS.md`](GRAPHIC_TEXT_TTLPRTS.md)
