@@ -152,6 +152,15 @@ The generic parser rejects these rather than interpreting their bytes as member
 records. Keep their decoded payloads available as raw sidecars until another
 independent layout is established. This does not show that they are not YMA files,
 that their content is uneditable, or that other `.yma` resources share one format.
+Follow-up comparison: re-running `tools.bpe.decode()` in memory against each
+catalogued `.b` source reproduces the stored decoded sidecar and sibling `.pac`
+byte-for-byte; exact sizes and SHA-256 values are in the
+[YMA comparison](../tasks/YMA_BPE_VARIANTS.md). All three decoded payloads share
+`u32le@0x08 = 0x20` and a `root` string at `0x24`; `u32le@0x0c` matches the
+first `YANM` tag in `top_yma` and `war_stage_yma`, and equals EOF for
+`war_common_yma`. Every observed `YANM` length ends exactly at a `POF0` tag.
+This is a cross-file boundary clue only: the first header words, complete table
+layout, and pointer/fixup semantics remain unresolved.
 Evidence: `reports/ui_bundle_survey.json`; the other 721 menu bundles pass the
 common table parser and exact no-op rebuild audit.
 
