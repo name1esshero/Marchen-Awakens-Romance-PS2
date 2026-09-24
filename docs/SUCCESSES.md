@@ -1157,6 +1157,21 @@ References: `graphics_rules.mk`, `tools/graphics.py`, `tools/assets.py`,
 `tools/verify_graphics_in_iso.py`, `tools/compare_disc.py`, and the linked task
 evidence.
 
+## `lib_movie_sum.b` textures contain no visible translation text
+
+The 23 indexed 64×64 Japanese textures mapped to
+`disc!/_DATA.YFS;1!/data/menu/lib_movie_sum.b` were visually reviewed from
+their exported top-origin TGA pixels. The set consists of scene-like artwork,
+low-contrast panels, and a recurring green musical-note emblem; no readable
+Japanese or other text was found. Every file is a distinct, fully opaque,
+uncompressed 32-bit TGA with an exact 16,402-byte extent, and every full-file
+SHA-256 matches its `graphics/index.json` entry. This negative result narrows
+the bundle's known translation surfaces while retaining all per-file evidence.
+The audit does not establish UV use, screen composition, or runtime behavior.
+
+References: [`lib_movie_sum.b` texture audit](../tasks/GRAPHIC_TEXT_LIB_MOVIE_SUM.md),
+`graphics/index.json`, and localization methodology §14.
+
 ## Weapon texture audits should separate Japanese writing from decorative and language-neutral marks
 
 Symptom: an asset category containing weapon sprites and UI parts can mix genuine
