@@ -132,14 +132,16 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   hashes. The option-menu audit confirms `オプション` inside a 188×46-pixel
   label band; a tiny glyph-like strip in the separate window asset remains
   unresolved. The coordinator is building its `OPTIONS` sibling from a tracked
-  transparent layer and measured-region compositor. War-common
-  (`war_common_tex.b`) and shop-menu (`shop_tex.b`) audits are active in
-  separate worker worktrees. The queue holds five `READY` bounded asset cards
-  for two authorized workers (2.5 ready cards per worker slot). The completed
+  transparent layer and measured-region compositor. War-common's 13-row audit
+  is complete: the `wrgm` mark appears to read `ウォーハンター` (“War Hunter”),
+  while the calligraphic marks in `window` remain unresolved. Shop-menu and
+  library-main audits are active in separate worker worktrees. The queue holds
+  four `READY` bounded asset cards for two authorized workers (2.0 ready cards
+  per worker slot). The completed
   title-remainder audit is integrated. Map,
   special-font, AFS suffix, background, and title-remainder audits are
-  integrated. Library/movie-summary, training, GameOver, library-main, and
-  transition-menu texture audits remain ready. The coordinator's read-only PSMCT32 investigation found a
+  integrated. Library/movie-summary, training, GameOver, and transition-menu
+  texture audits remain ready. The coordinator's read-only PSMCT32 investigation found a
   common eight-byte shortfall across 43 records but no safe decode; those
   records remain raw.
   The `ttlprts` and `title000` English siblings, task notes and success entries
