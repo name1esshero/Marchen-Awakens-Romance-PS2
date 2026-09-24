@@ -121,16 +121,19 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   final screen placement remain unresolved. English siblings now also cover the
   title subtitle `sbttl` and `BATTLE START` UI label. The `ttlprts` atlas and
   repeated `title000` title texture are now localized and reinserted; details
-  are in their linked task notes. A corpus-wide UI/title text audit remains
-  open. The queue has four `READY` bounded Luna/assets cards for the current
-  two-worker limit (2.0 per authorized slot); effects and weapon reviews are
-  integrated, while icon and environment reviews are active. The coordinator is
-  building an English sibling for the confirmed “Equip ARM” command. The
-  completed title-remainder audit is integrated. Map,
+  are in their linked task notes. The corpus-wide UI/title text audit remains
+  open. The tracked English `EQUIP ARM` sibling is composed from a reusable,
+  deterministic transparent-layer workflow. Password-menu and `top_tex.b`
+  audits are integrated with visual review and full source/index hash checks;
+  together they cover 22 textures and identify Japanese wordmark, control, and
+  menu-label candidates. Winner-screen (`winner_tex.b`) and war-selection
+  (`war_sel_base_tex.b`) audits are active in separate worker worktrees, while
+  the option-menu audit is active with the coordinator. The queue holds five
+  `READY` bounded asset cards for two authorized workers (2.5 ready cards per
+  worker slot). The completed title-remainder audit is integrated. Map,
   special-font, AFS suffix, background, and title-remainder audits are
-  integrated. Card textures, alternate `.yma` layouts, the bounded
-  database-condition review, and the Japanese button-help localization remain
-  ready. The coordinator's read-only PSMCT32 investigation found a
+  integrated. Library/movie-summary, training, GameOver, war-common, and shop
+  texture audits remain ready. The coordinator's read-only PSMCT32 investigation found a
   common eight-byte shortfall across 43 records but no safe decode; those
   records remain raw.
   The `ttlprts` and `title000` English siblings, task notes and success entries

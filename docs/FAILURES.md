@@ -451,3 +451,18 @@ worktree-specific worker identity; before integration, inspect author, all
 seven trailers, and exact file scope. Content already present in the
 integration tree should be recorded as already integrated rather than
 recommitted or rewritten solely to duplicate it.
+
+## Blank lines split a commit's required attribution trailers
+
+The local queue commit `57885fd` included all seven required attribution and
+evidence fields in its message, but the coordinator passed each field as a
+separate `git commit -m` paragraph. Git therefore treated the fields as
+separate paragraphs; `git show -s --format='%(trailers)' HEAD` returned only
+the final `Knowledge-Updated` field. The labels are visible in the raw message,
+but they do not form one contiguous, machine-recognized trailer block.
+
+For future commits, prepare the full message in one file and use `git commit
+-F`, with all seven fields adjacent in one final paragraph. Verify the actual
+commit object using `git show -s --format='%(trailers)' <commit>` before
+reporting completion. This entry records a procedure failure; it does not
+change the queue content committed in `57885fd`.
