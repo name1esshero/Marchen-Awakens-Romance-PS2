@@ -803,6 +803,26 @@ runtime composition, and on-screen presentation remain unknown.
 References: [`map texture audit`](../tasks/GRAPHIC_TEXT_MAPS.md),
 `graphics/index.json`, `tools/rtx3.py`.
 
+## Effect-category textures contain no readable localized wording
+
+Symptom: effect folders mix sprites, gradients, and abstract marks, so names
+such as `thunder`, `door_eff`, or `flare` do not determine whether an image has
+language-bearing content.
+Mechanism: review every indexed Japanese TGA over a checkerboard, compare its
+dimensions and complete hash with the graphics index, and distinguish curved or
+branching effect strokes from discrete readable glyphs. Hash-identical images
+can be grouped for visual review while preserving every indexed path.
+Verification: all 27 effect images match their index entries; none shows
+readable Japanese or English wording. Six exact duplicate groups reduce the
+category to 18 distinct raster hashes, with all 27 filenames retained in the
+audit. No baseline or override was changed.
+Scope: the current 27 exported `_jp.tga` files under `graphics/effects/`.
+Limits: this is a static-pixel review and does not establish animation,
+cropping, layering, UV use, or runtime presentation.
+References: [`effect texture audit`](../tasks/GRAPHIC_TEXT_EFFECTS.md),
+`graphics/index.json`, `tools/rtx3.py`,
+[`localization methodology`](LOCALIZATION_METHODOLOGY.md).
+
 ## Background textures mix scene art with localized and language-neutral lettering
 
 Symptom: the `backgrounds` category contains both environmental/effect textures
