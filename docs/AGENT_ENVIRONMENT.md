@@ -316,6 +316,26 @@ seven trailers defined in `STANDARDS.md` §17. For delegated work,
 `Parent-Agent` names the direct delegator and `Department` records the owning
 domain. For direct lead work, use `Parent-Agent: none (lead work)`.
 
+### Lead integration of separate-worktree commits
+
+The coordinator integrates committed results from every delegated worktree,
+including Claude Code's separate VS Code worktree. Before integration, inspect
+`git worktree list --porcelain`, each relevant branch's status and commit log,
+and confirm the owner has committed the bounded task. Do not copy uncommitted
+files out of a worker's worktree; request a commit after its stated verification
+is complete.
+
+For each candidate commit, check its author, seven §17 trailers, changed-file
+scope, task evidence, and reported verification. Compare the branch's resulting
+files with the integration branch: if the same content is already present,
+record it as already integrated and avoid a duplicate commit. Otherwise cherry-
+pick the commit without resetting its author. Resolve conflicts by retaining
+both independent findings and the newest verified queue/status state; never
+discard task evidence merely to make a pick clean. Run the relevant tests or
+reparse gates after integration, update task/queue/status state, and report both
+the source commit and resulting integration commit. Keep a collaborator's branch
+and worktree intact unless its owner or the operator asks to remove them.
+
 Give a queue worker an acclimation prompt before delegating implementation:
 
 > Acclimate yourself to this workspace and choose a job from the queue
