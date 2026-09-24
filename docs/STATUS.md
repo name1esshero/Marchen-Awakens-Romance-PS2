@@ -140,16 +140,19 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   found no readable text and all images were fully opaque. Shop-menu's
   six UI textures include Japanese text candidates in `equip`, `wdw_pause`, and
   `window`; `shop` reads `ARMショップ` and already has an English sibling.
-  The training-text and GameOver audits are active in their verified isolated
-  worker worktrees. The queue holds four `READY` bounded asset cards for two
-  active delegated workers (2.0 ready cards per active worker; reserve/capacity
-  is 4/2 = 2.0).
+  The `train_tex.b` audit is complete: its `trng` texture reads
+  `トレーニング` (“Training”) and its controller atlas includes `ARM セット`
+  and `ランダム`; the title's visible letters span `(1,12)`–`(224,57)`.
+  DQ-34 queues an English title sibling. The GameOver audit is active in its
+  verified isolated worktree. The queue holds five `READY` bounded asset cards
+  for one active delegated worker (5.0 ready cards per active worker;
+  reserve/capacity is 5/2 = 2.5).
   The completed
   title-remainder audit is integrated. Map,
   special-font, AFS suffix, background, and title-remainder audits are
-  integrated. The training and GameOver audits are active; transition-menu,
-  TGS-menu, save/load, and war-close texture audits are ready. The coordinator's
-  read-only PSMCT32
+  integrated. Training-text is complete and GameOver is active; transition-menu,
+  TGS-menu, save/load, war-close, and training-title localization are ready. The
+  coordinator's read-only PSMCT32
   investigation found a common eight-byte shortfall across 43 records but no safe decode; those
   records remain raw.
   The `ttlprts` and `title000` English siblings, task notes and success entries
