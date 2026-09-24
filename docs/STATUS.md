@@ -1,6 +1,6 @@
 # Current project status
 
-Updated: 2026-09-23. Authority: [STANDARDS.md](STANDARDS.md).
+Updated: 2026-09-24. Authority: [STANDARDS.md](STANDARDS.md).
 Current contributor identity is session-specific; consult the relevant commit
 trailers. Role/model attribution is per session and commit, not a permanent
 assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
@@ -145,21 +145,26 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   and `ランダム`; the title's visible letters span `(1,12)`–`(224,57)`.
   DQ-23's GameOver audit is complete and integrated: the ending text is English
   artwork in low-alpha planes, so no translation override is needed. DQ-34's
-  `TRAINING` sibling is integrated as `f614b19`; lead RTX3 import and ISO
-  reparse remain pending. DQ-29's transition-menu audit is active in a clean,
-  identity-configured worktree. DQ-35's English siblings for the two confirmed
-  controller labels `ARM セット` and `ランダム` are active in a second isolated
-  worktree. The queue holds four `READY` bounded asset cards for two active
-  delegated workers (2.0 ready cards per active worker; reserve/capacity is
-  4/2 = 2.0).
+  `TRAINING` sibling and DQ-35's `ARM SET`/`RANDOM` controller labels are
+  integrated as `f614b19` and `747f4a4`; lead palette import and ISO reparse
+  remain pending for both. DQ-29's transition-text audit is integrated as
+  `53be1d4`; its three images contain no confident wording. DQ-36's remaining
+  small-menu audit and DQ-37's full-width menu audit are active in separate,
+  identity-configured worktrees. The owner-reported title-screen mismatch is
+  tracked as DQ-38: the English versions of `title`, `ttlprts`, and `title_marh`
+  do not match the expected logo composition and are being reworked. The queue
+  holds four `READY` bounded asset cards for two active delegated workers
+  (2.0 ready cards per active worker; reserve/capacity is 4/2 = 2.0).
   The completed
   title-remainder audit is integrated. Map,
   special-font, AFS suffix, background, and title-remainder audits are
   integrated. Training-text and GameOver are complete; transition-menu,
-  TGS-menu, save/load, war-close, and the 13-row remaining-menu audit are ready.
-  The training-title artwork is integrated and awaiting lead palette/ISO
-  validation; the two confirmed training-controller labels remain active in
-  their isolated branch. The
+  TGS-menu, save/load, and war-close audits are ready. The 13-row remaining-menu
+  audit and the 30-row full-width `ｗ.b` audit are active in separate branches.
+  The training-title and training-controller artwork are integrated and await
+  lead palette/ISO validation. DQ-38 reworks the three title-screen English
+  textures after the supplied in-game capture showed repeated subtitle lettering
+  and a mismatched logo. The
   coordinator's read-only PSMCT32
   investigation found a common eight-byte shortfall across 43 records but no safe decode; those
   records remain raw.
@@ -242,13 +247,14 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   TGA baselines and the index are version-controlled in `graphics/`. Japanese
   baselines end in `_jp.tga`, stay unchanged, and remain the recovered artwork;
   authored `_eng.tga` siblings are version-controlled localization assets and
-  take precedence in `mar_eng.iso` builds. Fourteen English graphics, including
-  the `EQUIP ARM` weapon command and button-help labels, reinsert byte-exactly
-  from the rebuilt ISO (1,400,064 TXC bytes); see the build report and task
-  evidence for the full set. The subtitle
-  draft reuses native
-  English lettering, but possible repeated
-  branding and AT/UV screen composition remain unresolved. Indexed exports use
+  take precedence in `mar_eng.iso` builds. The last verified image carries
+  fourteen English graphics, including the `EQUIP ARM` weapon command and
+  button-help labels, which reinserted byte-exactly from the ISO (1,400,064 TXC
+  bytes); see its build report and task evidence. `OPTIONS`, `TRAINING`, and the
+  training-controller labels now have tracked English sources but await inclusion
+  in a rebuilt image. The owner-reported title-logo mismatch is under rework;
+  static atlas previews do not prove repeated placements, UVs, or draw order.
+  Indexed exports use
   linear pixel order, mapped PSMT8 CLUT
   indices and expanded 0..128 GS alpha. This candidate was visually compared on
   20 PSMT4/PSMT8 resources plus three separate high-bit samples; this is not
