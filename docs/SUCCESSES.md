@@ -1130,6 +1130,28 @@ References: [environment text audit](../tasks/GRAPHIC_TEXT_ENVIRONMENTS.md),
 `graphics/index.json`, and
 [localization methodology](LOCALIZATION_METHODOLOGY.md).
 
+## War-selection texture audit finds blank duplicate strips and frame artwork
+
+Symptom: the `war_sel_base_tex.b` bundle contains many short name/index
+suffixes, but those names do not establish that the exported images carry
+visible selection labels.
+Method: select only the 17 `user_interface` index rows for the exact bundle
+path, authenticate each TGA's filename, dimensions, full hash, header, and
+extent, then group byte-identical exports for visual review.
+Finding: sixteen 32×16 entries are exact copies whose pixel payloads are fully
+zero/transparent. The only distinct image is a 128×128 ornate window/frame
+texture; its linework has no confident reading as text. No visible
+character-selection label was found in the scoped exports.
+Verification: all 17 names, dimensions, and full TGA SHA-256 values match the
+index; all 17 headers/extents pass and every duplicate compares byte-for-byte
+with its group representative. No Japanese baseline or override was changed.
+Limits: blank exports do not establish whether labels are drawn dynamically or
+supplied elsewhere; the ornamental marks are unresolved. No UV, runtime, ISO,
+or emulator behavior is inferred.
+References: [war-selection texture audit](../tasks/GRAPHIC_TEXT_WAR_SEL_BASE_TEX.md),
+`graphics/index.json`, and
+[`localization methodology`](LOCALIZATION_METHODOLOGY.md).
+
 ## Card-text audits should inspect nameplates separately from illustrations
 
 Symptom: a large card-texture category appears to offer broad localization
