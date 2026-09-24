@@ -149,18 +149,22 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   integrated as `f614b19` and `747f4a4`; lead palette import and ISO reparse
   remain pending for both. DQ-29's transition-text audit is integrated as
   `53be1d4`; its three images contain no confident wording. DQ-36's remaining
-  small-menu audit and DQ-37's full-width menu audit are active in separate,
-  identity-configured worktrees. The owner-reported title-screen mismatch is
+  small-menu audit is integrated as `8ff964d`; its 13 images passed indexed
+  hash/dimension/header checks and visual review. It found the `esy_menu.tex`
+  title mark and credits still Japanese despite an existing English sibling;
+  three outlined `window` rows and center-bar marks remain unresolved. DQ-37's
+  full-width menu audit is active in its identity-configured worktree. The
+  owner-reported title-screen mismatch is
   tracked as DQ-38: the English versions of `title`, `ttlprts`, and `title_marh`
   do not match the expected logo composition and are being reworked. The queue
-  holds four `READY` bounded asset cards for two active delegated workers
-  (2.0 ready cards per active worker; reserve/capacity is 4/2 = 2.0).
+  holds four `READY` bounded asset cards and one active delegated worker, with
+  capacity for two (reserve/capacity is 4/2 = 2.0).
   The completed
   title-remainder audit is integrated. Map,
   special-font, AFS suffix, background, and title-remainder audits are
   integrated. Training-text and GameOver are complete; transition-menu,
   TGS-menu, save/load, and war-close audits are ready. The 13-row remaining-menu
-  audit and the 30-row full-width `ｗ.b` audit are active in separate branches.
+  audit is integrated; the 30-row full-width `ｗ.b` audit remains active.
   The training-title and training-controller artwork are integrated and await
   lead palette/ISO validation. DQ-38 reworks the three title-screen English
   textures after the supplied in-game capture showed repeated subtitle lettering
