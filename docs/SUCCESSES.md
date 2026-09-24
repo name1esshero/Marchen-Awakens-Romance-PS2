@@ -1534,3 +1534,28 @@ References: [training icon localization evidence](../tasks/GRAPHIC_TEXT_TRAINING
 [`graphics/index.json`](../graphics/index.json), the native atlas
 `graphics/text/00039_00825_font_jp.tga`, and
 [`LOCALIZATION_METHODOLOGY.md`](LOCALIZATION_METHODOLOGY.md).
+
+## `ｗ.b` UI audits should isolate faint marks from confirmed text
+
+Finding: the 30 indexed `user_interface` TGAs mapped to
+`disc!/_DATA.YFS;1!/data/menu/ｗ.b` include a confirmed Japanese
+`field_name` atlas, with three paired `…のフィールド` rows and a centered
+`サイコロ操作` label. `silver_dice` and `window` contain additional text-like
+forms whose script or reading remains unresolved; the multicolor `wrgm`
+wordmark also needs contextual confirmation. Low-contrast forms in
+`center_bar` did not become readable against alternate backgrounds and remain
+unclassified. English labels such as `DRAW`, `SUDDEN DEATH`, and `HURRY UP!`
+should not be counted as Japanese localization work.
+
+Verification: all 30 filenames, dimensions, and full TGA hashes match
+`graphics/index.json`; all have type-2, 32-bit, top-origin TGA headers and
+exact extents. The 30 hashes are unique and total 2,048,540 bytes. Every
+image was visually reviewed with alpha visible, including close-ups of the
+candidate text rows. Japanese baselines and the graphics index were unchanged.
+Scope: DQ-37 read-only audit of the exact `user_interface` rows for
+`disc!/_DATA.YFS;1!/data/menu/ｗ.b`.
+Limits: image inspection establishes neither the candidate text readings nor
+UV/screen mapping, runtime visibility, or a translation-ready English string.
+References: [DQ-37 visual inventory](../tasks/GRAPHIC_TEXT_W_MENU_TEX.md),
+[`graphics/index.json`](../graphics/index.json), and
+[`LOCALIZATION_METHODOLOGY.md`](LOCALIZATION_METHODOLOGY.md).
