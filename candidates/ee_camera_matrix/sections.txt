@@ -1,0 +1,4 @@
+.gnu.linkonce.t.GetViewMatrix__7CCamera
+.gnu.linkonce.t.SetViewMatrix__7CCameraG9objMatrix
+.gnu.linkonce.t.GetProjectionMatrix__7CCamera
+.gnu.linkonce.t.SetProjectionMatrix__7CCameraG9objMatrix

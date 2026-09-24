@@ -148,3 +148,44 @@ Scope: GNU v2/cfront-style mangling on this EE GCC target.
 Limits: only `float`/`int` confirmed as the primitive operands; other
 primitive types are unverified but expected to follow the same rule.
 References: [linkonce cluster task](tasks/LINKONCE_CLUSTER.md).
+
+## A compiler's own codegen strategy reveals real alignment even without a byte match
+
+Symptom: an aggregate-returning accessor's candidate body is the right field
+and the right size in principle, but the compiler emits far more
+instructions/bytes than the target (defensive `ldl`/`ldr`/`sdl`/`sdr`
+unaligned-merge sequences instead of plain `ld`/`sd`).
+Mechanism: `CCamera::GetViewMatrix`/`GetProjectionMatrix` return a 64-byte
+`objMatrix` (16 floats) by hidden pointer. With `objMatrix` declared as a
+plain `{ float m[16]; }` (natural 4-byte alignment), EE GCC 2.96 conservatively
+assumes the aggregate might not be 8-byte aligned and emits paired
+`ldl`/`ldr`+`sdl`/`sdr` merges, doubling the instruction count (136 bytes
+instead of the target 72). Adding `__attribute__((aligned(8)))` to
+`objMatrix` alone — no register, flag, or ABI change — makes the compiler
+choose plain `ld`/`sd` and produces the exact target *size* (72 bytes) for
+both getters. The compiler's own choice of instruction family is therefore
+itself an alignment oracle: it reveals a genuine structural fact about the
+type (`objMatrix` requires >=8-byte alignment) independent of whether the
+exact bytes end up matching.
+Pathway: when an aggregate-copy accessor's byte count is roughly double the
+target with `ldl`/`ldr`/`sdl`/`sdr` present, don't just accept the mismatch —
+try `aligned(8)` (or check existing evidenced alignment for that field) on
+the aggregate type before concluding the case is unrecoverable. If the
+instruction family changes to unaligned `ld`/`sd` and the size now matches,
+that alignment fact is real, reusable evidence for the type's layout, even
+if the exact register allocation still differs afterward (a separate,
+independent gap — see `CAMERA_MATRIX_PROBE.md`).
+Verification: `python3 tools/run_ee_probe.py` + `llvm-objdump-21` on the
+standalone `objMatrix` probe, comparing with/without `aligned(8)`: without
+it, 136 bytes with `ldl`/`ldr`/`sdl`/`sdr`; with it, 72 bytes with plain
+`ld`/`sd`, matching the reference's exact size (byte content still differs —
+see limits).
+Scope: this compiler's alignment-driven choice between aligned and
+defensive-unaligned aggregate copy codegen; likely generalizes to any GCC
+targeting an ISA without efficient unaligned load/store.
+Limits: size match is not a byte match — register allocation/scheduling for
+the aligned case can still differ from the original (confirmed for this
+exact pair, see `CAMERA_MATRIX_PROBE.md`). This technique establishes
+alignment, not a complete recovery.
+References: [camera matrix probe](tasks/CAMERA_MATRIX_PROBE.md),
+[view rect probe](tasks/VIEW_RECT_PROBE.md).
