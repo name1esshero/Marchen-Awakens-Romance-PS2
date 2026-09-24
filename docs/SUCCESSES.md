@@ -987,6 +987,23 @@ UVs, runtime visibility, layout, or screen composition; no ISO/emulator test
 was run. References: [remaining small-menu audit](../tasks/GRAPHIC_TEXT_REMAINING_MENU_TEX.md),
 `graphics/index.json`, and [localization methodology](LOCALIZATION_METHODOLOGY.md).
 
+## TGS coming-soon texture contains a two-line Japanese date announcement
+
+Finding: the single `TGS_menu_tex.b` user-interface export,
+`00039_01559_0002_comingsoon_jp.tga`, visibly reads `1月3日まで!!` (“Until
+January 3!!”) and `あと3日間!!` (“3 days remaining!!”). The main text bands
+occupy `[97,416) × [9,50)` and `[128,376) × [67,108)` on the 512×256 canvas;
+soft low-opacity repeats below are likely shadow/echo art and remain a separate
+visual consideration. This is a confirmed localization-bearing surface.
+Verification: the sole exact index row matches the TGA filename, dimensions,
+and full SHA-256; image type 2, no color map, 32-bit depth, top-origin `0x28`
+header, and exact extent pass. The whole image and lettering were reviewed on
+light/dark backgrounds and at enlarged scale. The Japanese baseline was
+preserved and no override was made. Limits: the announcement’s relevance and
+runtime use, UVs, draw order, and appearance of its diffuse echoes are unknown;
+no ISO/emulator validation was run. References: [TGS menu texture audit](../tasks/GRAPHIC_TEXT_TGS_MENU_TEX.md),
+`graphics/index.json`, and [localization methodology](LOCALIZATION_METHODOLOGY.md).
+
 ## War-common textures expose a localized wordmark among mixed UI surfaces
 
 Symptom: `war_common_tex.b` mixes patterned panels, shading shapes, small scene
