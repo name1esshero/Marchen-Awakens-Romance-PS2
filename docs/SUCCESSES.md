@@ -1362,6 +1362,23 @@ References: [war-selection texture audit](../tasks/GRAPHIC_TEXT_WAR_SEL_BASE_TEX
 `graphics/index.json`, and
 [`localization methodology`](LOCALIZATION_METHODOLOGY.md).
 
+## War-close selection frame is non-text artwork
+
+Symptom: the `sel_frame` member of `war_close_tex.b` is a small UI texture
+whose name alone cannot establish whether it contains a localized label.
+Method: select by the exact bundle path and `user_interface` category, verify
+the indexed export's dimensions/hash/header/extent, and inspect the image with
+alpha visible over a contrasting background. Finding: the sole 32×32 PSMT4
+export is a pale square border with a transparent center and no visible text;
+its full-file TGA SHA-256 is `0591f3cd7ce8612b6e27ee2da5174a869f034653ef00a580515dddd39178803f`.
+The source TXC SHA-256 remains the catalogued index value because that source
+file is absent from this worktree. Verification: the TGA digest was recomputed,
+the 4,114-byte file's type-2 32-bit header and exact extent were checked, and
+the image was visually reviewed. Limits: this establishes only raster content;
+it does not establish UVs, draw order, runtime use, or whether a label is drawn
+elsewhere. References: [war-close texture audit](../tasks/GRAPHIC_TEXT_WAR_CLOSE_TEX.md),
+`graphics/index.json`, and [`localization methodology`](LOCALIZATION_METHODOLOGY.md).
+
 ## Training-bundle audit separates tutorial labels from message records
 
 Symptom: `train_tex.b` mixes interface labels, character art, effects and other
