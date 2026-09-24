@@ -1239,6 +1239,31 @@ References: [card texture text-surface audit](../tasks/GRAPHIC_TEXT_CARDS.md),
 `graphics/index.json`, and
 [localization methodology](LOCALIZATION_METHODOLOGY.md).
 
+## Shop-bundle UI audit separates command labels from portraits and shared frames
+
+Symptom: a menu bundle groups Japanese command lettering, portraits, and reused
+window art while the action-text surface may live in a different category.
+Method: select by exact `asset_path` and category, inventory every qualifying
+TGA, compare full hashes for shared images, and measure lettering separately
+from frame strips. Keep similarly named resources in other categories out of
+scope unless separately queued.
+Finding: six `user_interface` entries from `shop_tex.b` include Japanese text
+candidates in `equip`, `wdw_pause`, and `window`; the `shop` logo reads
+`ARMショップ` and already has an English sibling. `faceshop` is a face-icon
+grid and `shop_girl` is a character portrait, with no readable wording. The
+previously localized three action rows are in a `text`-category `subtitle`
+resource and are not among these six UI entries.
+Verification: all six names, dimensions, full SHA-256 hashes, TGA headers, and
+exact extents match `graphics/index.json`; each image was visually inspected.
+No Japanese baseline or existing English sibling was modified.
+Scope: the six UI-category entries for
+`disc!/_DATA.YFS;1!/data/menu/shop_tex.b` only.
+Limits: isolated artwork does not prove wording where rows are unclear, UV
+placement, screen composition, animation, draw order, or runtime visibility.
+References: [shop texture audit](../tasks/GRAPHIC_TEXT_SHOP_TEX.md),
+`graphics/index.json`, and
+[`LOCALIZATION_METHODOLOGY.md`](LOCALIZATION_METHODOLOGY.md).
+
 
 ## Local history correction can preserve collaborator authorship without losing concurrent work
 
