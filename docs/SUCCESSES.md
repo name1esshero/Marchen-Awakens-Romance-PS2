@@ -1473,3 +1473,27 @@ review establishes no UV, draw path, screen placement, or runtime visibility.
 References: [option-menu audit](../tasks/GRAPHIC_TEXT_OPTION_TEX.md),
 `graphics/index.json`, and
 [`LOCALIZATION_METHODOLOGY.md`](LOCALIZATION_METHODOLOGY.md).
+
+## Native atlas glyphs localize the training-control icon on a transparent layer
+
+Finding: the 256×256 training icon contains two clear labels, `ARM セット` and
+`ランダム`. Keeping the existing `ARM` pixels and replacing only the measured
+`セット` region yields `ARM SET`; a separate rectangle replaces all four
+`ランダム` characters with `RANDOM`. Reuse the game's 8×16 ASCII glyph atlas,
+color-mapped to the icon's existing grayscale ramp, and retain the English
+lettering on a transparent full-canvas layer. This separates editable wording
+from the recovered Japanese baseline and avoids modifying nearby player
+controls.
+
+Verification: the baseline and font-atlas hashes match their recorded values;
+the English TGA has the baseline's 256×256 canvas and exact TGA extent. Rebuild
+from the baseline, transparent layer and two separate clear rectangles matched
+every output pixel; pixels outside the rectangles are unchanged. The result was
+visually reviewed at native size. No TGA-to-TXC palette import, ISO build, UV,
+runtime, or emulator validation was performed.
+Scope: `graphics/icon/00039_01593_0008_icon_{jp,eng}.tga` and its editable PNG
+layer.
+References: [training icon localization evidence](../tasks/GRAPHIC_TEXT_TRAINING_ICON_LOCALIZATION.md),
+[`graphics/index.json`](../graphics/index.json), the native atlas
+`graphics/text/00039_00825_font_jp.tga`, and
+[`LOCALIZATION_METHODOLOGY.md`](LOCALIZATION_METHODOLOGY.md).
