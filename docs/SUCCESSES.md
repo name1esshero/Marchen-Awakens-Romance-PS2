@@ -823,6 +823,36 @@ References: [`effect texture audit`](../tasks/GRAPHIC_TEXT_EFFECTS.md),
 `graphics/index.json`, `tools/rtx3.py`,
 [`localization methodology`](LOCALIZATION_METHODOLOGY.md).
 
+## Icon textures include reusable Japanese command-label atlases
+
+Symptom: the icon category mixes equipment illustrations and UI sprite sheets, so
+filenames such as `icon` or `armset` do not identify Japanese text surfaces
+reliably.
+
+Mechanism: inspect each indexed Japanese TGA on a transparency checkerboard,
+compare its full hash and dimensions to the index, and group byte-identical
+copies only after retaining every path. The 194-image audit found 29 text-bearing
+instances in eight exact image hashes, including Japanese command labels and
+bilingual `GET!`/`New` sprites. The other 165 are pictorial or symbolic with no
+readable wording.
+
+Verification: all 194 TGA names, dimensions, and SHA-256 values match their
+index rows; every image was reviewed on a numbered contact sheet, with enlarged
+review of all eight text hashes. Approximate source-pixel wording bounds and
+each image's finding code are recorded in the inventory. No baseline or override
+was changed.
+
+Scope: the current 194 exported Japanese images under `graphics/icon/`.
+
+Limits: the atlas regions are collections of sprites; this static review does
+not recover text segmentation, glyph codes, UVs, renderer sampling, runtime use,
+or on-screen readability. Re-measure individual label components and confirm
+usage before authoring translated artwork. No ISO or emulator validation was run.
+
+References: [`icon texture audit`](../tasks/GRAPHIC_TEXT_ICONS.md),
+`graphics/index.json`, `tools/rtx3.py`,
+[`localization methodology`](LOCALIZATION_METHODOLOGY.md).
+
 ## Background textures mix scene art with localized and language-neutral lettering
 
 Symptom: the `backgrounds` category contains both environmental/effect textures
