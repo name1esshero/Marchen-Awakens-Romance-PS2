@@ -839,3 +839,86 @@ partial classes** (no new classes; all 34 recovered sections fell in
 already-partially-modeled classes); 3,441,268 bytes remain explicit raw
 debt. `make test verify-boot verify-source-only verify-ee` passes (full
 boot ELF and full EE-probe ELF both byte-identical).
+
+## Second non-trivial batch — 30 sections in 16 already-known classes — 2026-09-23
+
+Agent: Claude Sonnet 5; role: Code Department Lead. Continues into the
+16-byte tier (four instructions), surveyed the same way as the previous
+batch. 32 sections disassembled; 30 recovered, 2 deferred.
+
+New evidenced shapes:
+
+- **Arrays embedded directly in the object, not behind a loaded pointer**:
+  `CRender::GetVUEntryCV`/`GetVUEntryPrim`, `CBgCtrl::GetFilter`,
+  `CCharaCntrl::SetNowChara`, `CCharaDataSts::GetStatusBuf`,
+  `CCharaBase::SetPartsMdlSw`, `CMotionSts::GetStatus`/`GetStatusPre`/
+  `SetStatus`/`SetStatusPre`, `CGameEffect_Ctrl::GetGameEffectBase`, and
+  all five `Labyrinth_ArmGet` accessors compute `this + index*4 + offset`
+  directly from `$4` (never loading a pointer field first) — a
+  fixed-stride array whose first element sits at a byte offset *within
+  the class itself*, not a separately-allocated buffer reached through a
+  pointer. Modeled as `int fieldName[1];` at that offset (a one-element
+  placeholder; declared array length never affects codegen for a runtime
+  index).
+- **The same shape through an actual pointer field** (contrast with the
+  above): `CCharaBase::GetWeaponC`/`GetWeaponPmv`/
+  `SetCurrentSubWeaponPmv`, `CMotion::SetMask` first `lw` a pointer field,
+  *then* apply `index*stride` to the loaded value — declared as
+  `T *fieldName[1];` (array of pointers) or `T *fieldName;` plus manual
+  `sizeof`-driven pointer arithmetic (`CMotion::GetPose`/`GetColorPose`,
+  stride 0x40/0x20 confirmed from the `sll` shift amount, both deferred —
+  see below) or embedded-struct arrays returning an element's address
+  (`CGameEffect_FootStamp::GetFootPos`/`GetOldFootPos`, stride 0x10).
+- **`nor $2,$zero,$2` before `sltu`/`srl` is a bitwise-NOT idiom, not a new
+  operator**: `CMotion3::IsChangeMotionNo`/`IsChangeMotionNoS` compute
+  `~field` (via MIPS's standard "nor with zero" NOT idiom, since MIPS has
+  no dedicated NOT instruction) then boolify with `sltu`, which is exactly
+  `return field != -1;` (a "changed from its -1 sentinel" check, not a
+  generic `!= 0`). `CChara::IsStartActPmv` instead follows the `nor` with
+  `srl $2,$2,0x1f` (extract bit 31 of `~field`), which is
+  `return field >= 0;` — the sign bit of the field's complement is the
+  logical negation of the field's own sign bit.
+- **A field read through two different bit-manipulation idioms in the
+  same class needs two different types**: `CAlpha::IsFadeInDone`/
+  `IsFadeOutDone` are `(flags >> 2) & 1` / `(flags >> 3) & 1` — `srl`
+  (logical shift), which only reproduces with an `unsigned int` field;
+  an `int` field compiles the identical source to `sra` (arithmetic
+  shift, sign-extending), a silent mismatch that only shows up as a
+  wrong opcode nibble, not a size or structural difference.
+- **Independent 3-statement stores follow a scheduler pattern, confirmed
+  by exhaustive testing, not derivable by inspection**: for
+  `CWeapon::CreateModels` and `CCharCom::SetActTbl` (3 unrelated
+  pointer/int fields set from 3 params) and `CFade::SetFadeColor` (3
+  unrelated bytes), naive source order (matching either param order or
+  field-declaration order) did not reproduce the reference on the first
+  attempt in any of the 3 cases. A controlled 6-permutation probe (all
+  orderings of 3 independent pointer-field assignments) found the
+  reference's two distinct target shapes (ascending-offset-first vs.
+  descending-offset-first instruction order) each correspond to exactly
+  one specific, non-obvious source statement order (write the *second*
+  field's statement first, the *third* field's statement second, and the
+  *first* field's statement last, for an ascending-offset target; a
+  different single permutation for the descending-offset target) — with
+  no simpler rule (declaration order, param order, or "last touches the
+  delay slot" alone) explaining all 3 cases at once.
+- **A pointer-plus-sign-bit dual read needs a union, not two fields**:
+  `CChara::actPmv` is read as a pointer by `StartActPmv` and as a raw
+  signed 32-bit value by `IsStartActPmv`'s sign-bit test at the *same*
+  offset; an anonymous `union { void *actPmv; int actPmvRaw; };`
+  reproduces both accessors from one field without duplicating the
+  offset or touching `StartActPmv`'s existing match.
+
+Two sections deferred, both `CMotion` (`GetPose`, `GetColorPose`): the
+exact source (`return &poseArray[index];`) reproduces the reference's
+size, field offset and shift amount, but schedules the independent `sll`/
+`lw` pair in the opposite order and reverses the final `addu`'s operands.
+Confirmed unfixable by rephrasing across 3 independently-tested source
+forms (`&array[i]`, `array+i`, `i+array`) — the same isolated-probe
+register-allocation/scheduling limitation already logged for CCamera's
+matrix accessors and the RTTI cluster, now also confirmed for
+pointer-typed array-element address computation, not just field passthroughs.
+
+Reconstruction now covers **505 sections / 4,416 bytes across ninety-five
+partial classes** (no new classes); 3,440,788 bytes remain explicit raw
+debt. `make test verify-boot verify-source-only verify-ee` passes (full
+boot ELF and full EE-probe ELF both byte-identical).

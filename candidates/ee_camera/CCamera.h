@@ -20,6 +20,18 @@ class PRIMINF;
 // Named only to reproduce SetActTbl__7CActTblP9MOTNO_TBL's mangled
 // parameter type; no members are evidenced.
 class MOTNO_TBL;
+// Named only to reproduce GetVUEntryPrim__7CRender13YMP_PRIM_TYPE's bare
+// (letterless) mangled parameter type, which means an enum, not a class;
+// no enumerators beyond the placeholder are evidenced.
+enum YMP_PRIM_TYPE { YMP_PRIM_TYPE_UNKNOWN };
+// Named only to reproduce CreateModels__7CWeapon...'s mangled parameter
+// types; no members are evidenced.
+class CHR_PARAM;
+class ARM_PARAM;
+// Named only to reproduce SetActTbl__8CCharComP12CheckActListPii's mangled
+// parameter type; no members are evidenced.
+class CheckActList;
+class CWeapon;
 // Named only to reproduce SetSubMotion__7CWeaponG8MotionNoif's mangled
 // parameter: 'G' is this old ABI's encoding for a class passed BY VALUE
 // (any class type, trivial or not — an earlier belief that this required a
@@ -40,7 +52,10 @@ public:
 
 class CRender {
 public:
-    unsigned char unknown000[0x4a0];
+    int vuEntryCV[1];
+    unsigned char unknown004[0x10];
+    int vuEntryPrim[1];
+    unsigned char unknown018[0x4a0 - 0x18];
     unsigned int prmode;
     unsigned char unknown4a4[0x4c8 - 0x4a4];
     int frame;
@@ -67,6 +82,8 @@ public:
     int GetScreenHeight() const { return screenHeight; }
     void *GetFreeList() { return freeList; }
     int GetOldOddEven() const { return oldOddEven; }
+    int GetVUEntryCV(int index) { return vuEntryCV[index]; }
+    int GetVUEntryPrim(YMP_PRIM_TYPE index) { return vuEntryPrim[index]; }
 };
 
 class CCamera {
@@ -272,7 +289,13 @@ public:
     float lastSyncRate;
     float lastSyncRateMax;
     unsigned char unknownf80[0x28];
-    void *actPmv;
+    // IsStartActPmv reads this same field as a raw signed 32-bit value
+    // (sign-bit test), while StartActPmv treats it as a pointer; a union
+    // reproduces both without duplicating the offset.
+    union {
+        void *actPmv;
+        int actPmvRaw;
+    };
     void *actPmvTgt;
     unsigned char unknownfb0[0x8];
     float targetAngle;
@@ -291,6 +314,7 @@ public:
     int IsSyncroSeChk() { return syncroSeChk; }
     void SetSyncroSeChk(int value) { syncroSeChk = value; }
     void *StartActPmv() { return actPmv; }
+    int IsStartActPmv() { return actPmvRaw >= 0; }
     void *GetActPmvTgt() { return actPmvTgt; }
     void SetHpDamageBlock(int value) { hpDamageBlock = value; }
     // Evidenced body ignores all three arguments and returns void.
@@ -359,7 +383,12 @@ public:
     int charDataSts;
     unsigned char unknown398[0x8];
     int shadow;
-    unsigned char unknown3a4[0x68];
+    int partsMdlSw[1];
+    unsigned char unknown3a8[0x3ac - 0x3a8];
+    CWeapon *weaponPmvArray[1];
+    unsigned char unknown3b0[0x3dc - 0x3b0];
+    CWeapon *subWeaponPmvArray[1];
+    unsigned char unknown3e0[0x40c - 0x3e0];
     void *currentWeapon;
     void *currentWeaponTmp;
     void *curWeaponSnd;
@@ -397,6 +426,11 @@ public:
     void *GetCurrentWeapon() { return currentWeapon; }
     void *GetCurrentWeaponTmp() { return currentWeaponTmp; }
     void *GetCurWeaponSnd() { return curWeaponSnd; }
+    void SetPartsMdlSw(int index, int value) { partsMdlSw[index] = value; }
+    // GetWeaponC and GetWeaponPmv read the identical offset.
+    CWeapon *GetWeaponC(int index) { return weaponPmvArray[index]; }
+    CWeapon *GetWeaponPmv(int index) { return weaponPmvArray[index]; }
+    void SetCurrentSubWeaponPmv(CWeapon *value, int index) { subWeaponPmvArray[index] = value; }
     void *GetDoukiParent() { return doukiParent; }
     // Evidenced bodies ignore all arguments and return a fixed value (usually
     // zero); this is a stub shape, not a claim about why these are stubs
@@ -435,8 +469,11 @@ public:
 
 class CWeapon {
 public:
-    void *armParam;
-    unsigned char unknown004[0x4];
+    // Retyped from void*: CreateModels assigns an ARM_PARAM* into it,
+    // matching the field's existing name; GetArmParam returns the raw
+    // value unchanged either way.
+    ARM_PARAM *armParam;
+    CHR_PARAM *chrParam;
     void *chara;
     int linkBoneType;
     unsigned char unknown010[0x4];
@@ -478,13 +515,20 @@ public:
     int GetModel() { return 0; }
     int GetSubModelNum(int) { return 0; }
     void SetCurrentSubModel(int, int) {}
+    // Fourth argument (int) is evidenced as unused.
+    void CreateModels(CCharaBase *charaValue, CHR_PARAM *chrParamValue, ARM_PARAM *armParamValue, int) {
+        chrParam = chrParamValue;
+        armParam = armParamValue;
+        chara = charaValue;
+    }
 };
 
 class CMotion3 {
 public:
     unsigned char unknown000[0xa4];
     void *dataBase;
-    unsigned char unknown0a8[0x8];
+    int motionNoChanged;
+    int motionNoChangedS;
     float nextFrame;
     int nextLabel;
     CMotion3 *nextJumpDC;
@@ -522,6 +566,8 @@ public:
     int GetNextLabel() { return nextLabel; }
     int GetJumpMode() { return jumpMode; }
     int IsError() { return isError; }
+    int IsChangeMotionNo() { return motionNoChanged != -1; }
+    int IsChangeMotionNoS() { return motionNoChangedS != -1; }
 };
 
 // Named only to reproduce the mangled parameter types in
@@ -530,6 +576,19 @@ public:
 // beyond needing a nonempty definition to use these as parameter types.
 enum InterpType { INTERP_TYPE_UNKNOWN };
 enum MotionTargetType { MOTION_TARGET_TYPE_UNKNOWN };
+
+// Named only to reproduce GetPose's pointer-arithmetic stride (0x40 bytes
+// per element, from `sll $5,$5,0x6`); no members are evidenced.
+class Pose {
+public:
+    unsigned char unknown00[0x40];
+};
+// Named only to reproduce GetColorPose's stride (0x20 bytes per element,
+// from `sll $5,$5,0x5`); no members are evidenced.
+class ColorPose {
+public:
+    unsigned char unknown00[0x20];
+};
 
 class CMotion {
 public:
@@ -542,7 +601,10 @@ public:
     float addFrame;
     unsigned char unknown020[0x4];
     int motion;
-    unsigned char unknown028[0x20];
+    unsigned char unknown028[0x4];
+    Pose *poseArray;
+    unsigned char *mask;
+    unsigned char unknown034[0x48 - 0x34];
     int linkBone;
     unsigned char unknown04c[0x4];
     int endMotion;
@@ -550,6 +612,8 @@ public:
     MotionTargetType targetType;
     unsigned char unknown05c[0x4];
     int enableColorMotion;
+    unsigned char unknown064[0x6c - 0x64];
+    ColorPose *colorPoseArray;
 
     void *GetModel() { return model; }
     void SetInterpolateType(InterpType value) { interpolateType = value; }
@@ -568,6 +632,14 @@ public:
     void *GetNowAttributeClass() { return &attribute; }
     int IsEndMotion() { return endMotion; }
     int GetLinkBone() { return linkBone; }
+    void SetMask(int index, int value) { mask[index] = value; }
+    // GetPose (`return &poseArray[index];`) and GetColorPose
+    // (`return &colorPoseArray[index];`) are deferred: this exact source
+    // reproduces the target's size but schedules `sll`/`lw` in the opposite
+    // order and reverses the final `addu`'s operands -- the same
+    // isolated-probe register-allocation/scheduling limitation already
+    // documented for CCamera's matrix accessors (see CODE_FAILURES.md).
+    // Confirmed unfixable by rephrasing across 3 independent source forms.
 };
 
 class CGameCntrl {
@@ -663,7 +735,9 @@ class CCharaDataSts {
 public:
     unsigned char unknown000[0x180];
     unsigned int prgSts;
-    unsigned char unknown184[0x94c];
+    unsigned char unknown184[0xa90 - 0x184];
+    int statusBuf[1];
+    unsigned char unknowna94[0xad0 - 0xa94];
     int nowMotNo;
 
     // Evidenced bodies ignore all arguments and return void; a stub shape
@@ -680,6 +754,7 @@ public:
     void SetNowMotNo(int value) { nowMotNo = value; }
     void PreNutralJump() {}
     void ReturnArmObj() {}
+    int GetStatusBuf(int index) { return statusBuf[index]; }
 };
 
 // Named only to reproduce mangled parameter types for CMotionC's setters;
@@ -858,7 +933,9 @@ public:
 
 class Labyrinth_ArmGet {
 public:
-    unsigned char unknown000[0xdc];
+    unsigned char unknown000[0x6c];
+    int animArray[1];
+    unsigned char unknown070[0xdc - 0x70];
     int routine;
     unsigned char unknown0e0[0x8];
     unsigned int getArm;
@@ -868,12 +945,25 @@ public:
     int money;
     unsigned char unknown104[0x18];
     short checkChar;
+    unsigned char unknown11e[0x120 - 0x11e];
+    int brokenArmNoArray[1];
+    unsigned char unknown124[0x12c - 0x124];
+    int shopArmNoArray[1];
+    unsigned char unknown130[0x144 - 0x130];
+    int dbNoArray[1];
+    unsigned char unknown148[0x160 - 0x148];
+    int dbTypeArray[1];
 
     void *GetGetArm() { return &getArm; }
     int GetDelArm() { return delArm; }
     void SetDelArm(int value) { delArm = value; }
     int GetMoney() { return money; }
     int IsFullBag() { return fullBag; }
+    int GetAnim(int index) { return animArray[index]; }
+    int GetBrokenArmNo(int index) { return brokenArmNoArray[index]; }
+    int GetShopArmNo(int index) { return shopArmNoArray[index]; }
+    int GetDBNo(int index) { return dbNoArray[index]; }
+    int GetDBType(int index) { return dbTypeArray[index]; }
     short GetCheckChar() { return checkChar; }
     int GetRoutine() { return routine; }
 };
@@ -923,7 +1013,9 @@ public:
 
 class CCharaCntrl {
 public:
-    unsigned char unknown000[0x7c];
+    unsigned char unknown000[0x38];
+    CCharaBase *charaArray[1];
+    unsigned char unknown03c[0x7c - 0x3c];
     int camCheck;
     int activeDraw;
     int activeActionCh;
@@ -933,6 +1025,7 @@ public:
     int IsActiveDraw() const { return activeDraw; }
     void SetActiveActionCh(int value) { activeActionCh = value; }
     int IsActiveActionCh() const { return activeActionCh; }
+    void SetNowChara(int index, CCharaBase *value) { charaArray[index] = value; }
 };
 
 class CPrim {
@@ -988,7 +1081,7 @@ public:
 
 class CAlpha {
 public:
-    unsigned char unknown000[0x4];
+    unsigned int fadeFlags;
     float alpha;
     float maxAlpha;
     float minAlpha;
@@ -999,6 +1092,8 @@ public:
     float GetAlpha() { return alpha; }
     float GetMaxAlpha() { return maxAlpha; }
     float GetMinAlpha() { return minAlpha; }
+    int IsFadeInDone() { return (fadeFlags >> 2) & 1; }
+    int IsFadeOutDone() { return (fadeFlags >> 3) & 1; }
 };
 
 class CGameEffect_Base {
@@ -1049,10 +1144,18 @@ public:
     unsigned char unknown01c[0x18];
     int fadeExcute;
     int fadeOut;
+    unsigned char fadeColorR;
+    unsigned char fadeColorG;
+    unsigned char fadeColorB;
 
     int isFadeExcute() { return fadeExcute; }
     int isFadeOut() { return fadeOut; }
     void SetDispMode(ACTOBJ_TYPE value) { dispMode = value; }
+    void SetFadeColor(unsigned char r, unsigned char g, unsigned char b) {
+        fadeColorG = g;
+        fadeColorB = b;
+        fadeColorR = r;
+    }
 };
 
 // Named only to reproduce GetNowBgColGrp's pointer-chase through the
@@ -1071,7 +1174,8 @@ public:
     // pointer despite the flat 4-byte value GetNowBg already returns raw
     // (unchanged behavior for GetNowBg either way).
     BgColGrp *nowBg;
-    unsigned char unknown038[0xec];
+    int filter[1];
+    unsigned char unknown03c[0x124 - 0x3c];
     int disp;
 
     int GetBg() { return bg; }
@@ -1082,6 +1186,7 @@ public:
     // same isolated-probe register-allocation limitation already
     // documented for CCamera's matrix accessors (see CODE_FAILURES.md).
     void SetDisp(int value) { disp = value; }
+    int GetFilter(int index) { return filter[index]; }
 };
 
 class CGameCntrlGm {
@@ -1159,12 +1264,21 @@ public:
     unsigned char unknown000[0x4];
     int manualGuardFlag;
     unsigned int comPad;
-    unsigned char unknown00c[0x188];
+    unsigned char unknown00c[0x180 - 0xc];
+    CheckActList *actList;
+    int *actListParam;
+    int actListFlag;
+    unsigned char unknown18c[0x194 - 0x18c];
     ComTrainingStatus trainingStatus;
 
     void *GetComPad() { return &comPad; }
     void SetManualGuardFlag(int value) { manualGuardFlag = value; }
     void SetTrainingStatus(ComTrainingStatus value) { trainingStatus = value; }
+    void SetActTbl(CheckActList *list, int *param, int flag) {
+        actListParam = param;
+        actListFlag = flag;
+        actList = list;
+    }
 };
 
 class CObjList {
@@ -1325,6 +1439,9 @@ public:
 
 class CGameEffect_Ctrl {
 public:
+    unsigned char unknown000[0x30];
+    int gameEffectBase[1];
+
     // GetInstance reads via $gp-relative addressing (lw $2, -0x60e4($gp)),
     // not $this/$4 -- a singleton's static instance pointer, the same
     // structural case as CArmEffect::GetUpdateFlag/GetHead. Left
@@ -1332,6 +1449,7 @@ public:
     // and docs/CODE_SUCCESSES.md).
     int GetDispPosE() { return 4; }
     float GetDispPosZ() { return 0.0f; }
+    int GetGameEffectBase(int index) { return gameEffectBase[index]; }
 };
 
 class FireWall_Seed {
@@ -1502,8 +1620,17 @@ public:
 
 class CMotionSts {
 public:
+    unsigned char unknown000[0xf0];
+    int status[1];
+    unsigned char unknown0f4[0x130 - 0xf4];
+    int statusPre[1];
+
     // Evidenced body returns the object's own address unchanged.
     void *GetAtrSts() { return this; }
+    int GetStatus(int index) { return status[index]; }
+    int GetStatusPre(int index) { return statusPre[index]; }
+    void SetStatus(int index, int value) { status[index] = value; }
+    void SetStatusPre(int index, int value) { statusPre[index] = value; }
 };
 
 class CActTbl {
@@ -1624,12 +1751,27 @@ public:
     int GetCharNo() { return charNo; }
 };
 
+// Named only to reproduce GetFootPos/GetOldFootPos's pointer-arithmetic
+// stride (0x10 bytes per element, from `sll $5,$5,0x4`); no members are
+// evidenced.
+class FootPosEntry {
+public:
+    unsigned char unknown00[0x10];
+};
+
 class CGameEffect_FootStamp {
 public:
+    unsigned char unknown000[0x70];
+    FootPosEntry footPos[1];
+    unsigned char unknown080[0x90 - 0x80];
+    FootPosEntry oldFootPos[1];
+
     // Evidenced body ignores its argument and returns void. GetpFootStamp
     // is deferred: it reads via $gp-relative addressing, not $this (same
     // reason as LoadAnimNormal::GetInstance above).
     void GameEffectOn(const objMatrix &) {}
+    FootPosEntry *GetFootPos(int index) { return &footPos[index]; }
+    FootPosEntry *GetOldFootPos(int index) { return &oldFootPos[index]; }
 };
 
 class FootStamp_Base {

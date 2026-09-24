@@ -1466,3 +1466,153 @@ sw $2, 0x34($4)
 lw $2, 0x0($5)
 jr $31
 sw $2, 0x2e2c($4)
+.section .gnu.linkonce.t.GetVUEntryCV__7CRenderi,"ax",@progbits
+sll $5, $5, 0x2
+addu $4, $4, $5
+jr $31
+lw $2, 0x0($4)
+.section .gnu.linkonce.t.GetVUEntryPrim__7CRender13YMP_PRIM_TYPE,"ax",@progbits
+sll $5, $5, 0x2
+addu $5, $5, $4
+jr $31
+lw $2, 0x14($5)
+.section .gnu.linkonce.t.SetMask__7CMotionii,"ax",@progbits
+lw $2, 0x30($4)
+addu $2, $2, $5
+jr $31
+sb $6, 0x0($2)
+.section .gnu.linkonce.t.IsChangeMotionNo__8CMotion3,"ax",@progbits
+lw $2, 0xa8($4)
+nor $2, $zero, $2
+jr $31
+sltu $2, $zero, $2
+.section .gnu.linkonce.t.IsChangeMotionNoS__8CMotion3,"ax",@progbits
+lw $2, 0xac($4)
+nor $2, $zero, $2
+jr $31
+sltu $2, $zero, $2
+.section .gnu.linkonce.t.SetFadeColor__5CFadeUcUcUc,"ax",@progbits
+sb $5, 0x3c($4)
+sb $6, 0x3d($4)
+jr $31
+sb $7, 0x3e($4)
+.section .gnu.linkonce.t.GetFilter__7CBgCtrli,"ax",@progbits
+sll $5, $5, 0x2
+addu $5, $5, $4
+jr $31
+lw $2, 0x38($5)
+.section .gnu.linkonce.t.SetNowChara__11CCharaCntrliP10CCharaBase,"ax",@progbits
+sll $5, $5, 0x2
+addu $5, $5, $4
+jr $31
+sw $6, 0x38($5)
+.section .gnu.linkonce.t.IsStartActPmv__6CChara,"ax",@progbits
+lw $2, 0xfa8($4)
+nor $2, $zero, $2
+jr $31
+srl $2, $2, 0x1f
+.section .gnu.linkonce.t.GetStatusBuf__13CCharaDataStsi,"ax",@progbits
+sll $5, $5, 0x2
+addu $5, $5, $4
+jr $31
+lw $2, 0xa90($5)
+.section .gnu.linkonce.t.SetPartsMdlSw__10CCharaBaseii,"ax",@progbits
+sll $5, $5, 0x2
+addu $5, $5, $4
+jr $31
+sw $6, 0x3a4($5)
+.section .gnu.linkonce.t.GetWeaponC__10CCharaBasei,"ax",@progbits
+sll $5, $5, 0x2
+addu $5, $5, $4
+jr $31
+lw $2, 0x3ac($5)
+.section .gnu.linkonce.t.SetCurrentSubWeaponPmv__10CCharaBaseP7CWeaponi,"ax",@progbits
+sll $6, $6, 0x2
+addu $6, $6, $4
+jr $31
+sw $5, 0x3dc($6)
+.section .gnu.linkonce.t.GetWeaponPmv__10CCharaBasei,"ax",@progbits
+sll $5, $5, 0x2
+addu $5, $5, $4
+jr $31
+lw $2, 0x3ac($5)
+.section .gnu.linkonce.t.GetStatus__10CMotionStsi,"ax",@progbits
+sll $5, $5, 0x2
+addu $5, $5, $4
+jr $31
+lw $2, 0xf0($5)
+.section .gnu.linkonce.t.GetStatusPre__10CMotionStsi,"ax",@progbits
+sll $5, $5, 0x2
+addu $5, $5, $4
+jr $31
+lw $2, 0x130($5)
+.section .gnu.linkonce.t.SetStatus__10CMotionStsii,"ax",@progbits
+sll $5, $5, 0x2
+addu $5, $5, $4
+jr $31
+sw $6, 0xf0($5)
+.section .gnu.linkonce.t.SetStatusPre__10CMotionStsii,"ax",@progbits
+sll $5, $5, 0x2
+addu $5, $5, $4
+jr $31
+sw $6, 0x130($5)
+.section .gnu.linkonce.t.CreateModels__7CWeaponP10CCharaBaseP9CHR_PARAMP9ARM_PARAMi,"ax",@progbits
+sw $5, 0x8($4)
+sw $6, 0x4($4)
+jr $31
+sw $7, 0x0($4)
+.section .gnu.linkonce.t.SetActTbl__8CCharComP12CheckActListPii,"ax",@progbits
+sw $5, 0x180($4)
+sw $6, 0x184($4)
+jr $31
+sw $7, 0x188($4)
+.section .gnu.linkonce.t.IsFadeInDone__6CAlpha,"ax",@progbits
+lw $2, 0x0($4)
+srl $2, $2, 0x2
+jr $31
+andi $2, $2, 0x1
+.section .gnu.linkonce.t.IsFadeOutDone__6CAlpha,"ax",@progbits
+lw $2, 0x0($4)
+srl $2, $2, 0x3
+jr $31
+andi $2, $2, 0x1
+.section .gnu.linkonce.t.GetGameEffectBase__16CGameEffect_Ctrli,"ax",@progbits
+sll $5, $5, 0x2
+addu $5, $5, $4
+jr $31
+lw $2, 0x30($5)
+.section .gnu.linkonce.t.GetFootPos__21CGameEffect_FootStampi,"ax",@progbits
+sll $5, $5, 0x4
+addu $2, $4, $5
+jr $31
+addiu $2, $2, 0x70
+.section .gnu.linkonce.t.GetOldFootPos__21CGameEffect_FootStampi,"ax",@progbits
+sll $5, $5, 0x4
+addu $2, $4, $5
+jr $31
+addiu $2, $2, 0x90
+.section .gnu.linkonce.t.GetAnim__16Labyrinth_ArmGeti,"ax",@progbits
+sll $5, $5, 0x2
+addu $5, $5, $4
+jr $31
+lw $2, 0x6c($5)
+.section .gnu.linkonce.t.GetBrokenArmNo__16Labyrinth_ArmGeti,"ax",@progbits
+sll $5, $5, 0x2
+addu $5, $5, $4
+jr $31
+lw $2, 0x120($5)
+.section .gnu.linkonce.t.GetShopArmNo__16Labyrinth_ArmGeti,"ax",@progbits
+sll $5, $5, 0x2
+addu $5, $5, $4
+jr $31
+lw $2, 0x12c($5)
+.section .gnu.linkonce.t.GetDBNo__16Labyrinth_ArmGeti,"ax",@progbits
+sll $5, $5, 0x2
+addu $5, $5, $4
+jr $31
+lw $2, 0x144($5)
+.section .gnu.linkonce.t.GetDBType__16Labyrinth_ArmGeti,"ax",@progbits
+sll $5, $5, 0x2
+addu $5, $5, $4
+jr $31
+lw $2, 0x160($5)

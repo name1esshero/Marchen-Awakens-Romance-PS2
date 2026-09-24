@@ -207,3 +207,78 @@ possible to even attempt remains valid, reusable evidence recorded in
 left as a comment in `candidates/ee_camera/CCamera.h` rather than a
 compiled, verified section.
 References: [linkonce cluster task](tasks/LINKONCE_CLUSTER.md).
+
+## Three-independent-statement store order has no rule derivable from declaration or parameter order; only exhaustive testing finds it
+
+Hypothesis: for a `void` setter writing three unrelated fields from three
+parameters (`CWeapon::CreateModels`, `CCharCom::SetActTbl`,
+`CFade::SetFadeColor`), the two-statement rule already found this session
+(write the later-declared field's statement first, so it lands away from
+the delay slot) would generalize directly to three statements by writing
+them in some single, guessable order (param order, declaration order, or
+reverse of either).
+Observed result: naive param-order source failed on the first attempt for
+all 3 cases. The reference sections split into two different target
+instruction-order shapes: `SetActTbl`/`SetFadeColor` want ascending
+field-offset order (lowest offset executes first, highest offset lands in
+the delay slot); `CreateModels` wants the opposite, descending order
+(highest offset first, lowest in the delay slot) — same 3-independent-
+store shape, opposite target orders, ruling out any single fixed rule
+based on offset direction alone.
+Mechanism: an exhaustive 6-permutation probe (a 3-pointer-field class,
+every possible source statement order for `a=pa;b=pb;c=pc;` in ascending-
+offset field declaration order) found that each of the two target shapes
+corresponds to exactly one specific permutation: writing statements in the
+order (*second*-declared field; *third*-declared field; *first*-declared
+field) produces the ascending-offset target; the order (*second*; *first*;
+*third*) produces the descending-offset target. Neither permutation is
+"natural" by any reading-order or declaration-order intuition, and this
+project has no visibility into GCC 2.96's internal RTL scheduling that
+would explain why these two specific rotations are the ones that occur.
+Supporting evidence: `docs/tasks/LINKONCE_CLUSTER.md` (2026-09-23 second
+non-trivial-tier batch entry) and the exhaustive 6-permutation probe
+output (all 6 orderings' exact disassembly) referenced there.
+Reconsideration conditions: if a future 3-or-more-independent-statement
+case is found where NEITHER of these two permutations matches, the "two
+known permutations cover it" assumption should be dropped in favor of
+re-running the exhaustive-permutation probe for that specific
+field/register count combination — this was not derived from first
+principles and may not generalize to 4+ independent statements or
+different field-size mixes.
+What this does not justify: this does not mean the field identities,
+offsets, or values were ever in doubt for these three methods — only the
+emission order of three already-correct, independent store instructions
+needed brute-force determination rather than reasoning.
+References: [linkonce cluster task](tasks/LINKONCE_CLUSTER.md).
+
+## A second confirmed instance: pointer-typed array-element address computation hits the same isolated-probe scheduling wall
+
+Hypothesis: `CMotion::GetPose`/`GetColorPose` (`return &poseArray[index];`,
+an array-of-structs address computation) would reproduce byte-exactly
+once the stride (confirmed via the `sll` shift amount, 0x40 and 0x20
+bytes respectively) and field offset were correctly modeled, since the
+source shape is a simple, singular return expression like several other
+successfully-matched accessors in the same batch.
+Observed result: matched the target *size* (16 bytes) exactly but
+scheduled the independent `sll`/`lw` pair in the opposite order and used
+the opposite `addu` operand order, on the first attempt and on two further
+rephrasings (`array + index`, `index + array`) — all three produced
+byte-identical (wrong) output.
+Mechanism: the same isolated-probe register-allocation/instruction-
+scheduling context-sensitivity already logged for `CCamera::GetViewMatrix`
+and the `__tf*` RTTI cluster, now confirmed for a third distinct code
+shape (pointer-typed array-element address computation, not just a field
+passthrough or an RTTI registration function). This strengthens the
+existing conclusion that the limitation is about GCC 2.96's scheduler
+reacting to surrounding compilation context, not about anything specific
+to any one accessor shape.
+Supporting evidence: `docs/tasks/LINKONCE_CLUSTER.md` (2026-09-23 second
+non-trivial-tier batch entry); exact reference/candidate disassembly for
+all 3 rephrasing attempts.
+Reconsideration conditions: same as the existing entries — a different,
+still-unmodified EE GCC 2.96 sub-build/patch level identified as the
+actual original toolchain could change this.
+What this does not justify: the stride/offset evidence for `poseArray`
+(0x2c, stride 0x40) and `colorPoseArray` (0x6c, stride 0x20) remains
+valid — only the specific getter for each is deferred.
+References: [linkonce cluster task](tasks/LINKONCE_CLUSTER.md).

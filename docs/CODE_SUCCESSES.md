@@ -386,3 +386,108 @@ sections in this pass; an address that does not land exactly on a linkonce
 vtable section's start would need a different follow-up (e.g. it could be
 mid-vtable, or a non-vtable constant entirely).
 References: [RTTI runtime helpers task](tasks/RTTI_RUNTIME_HELPERS.md).
+
+## `this + index*stride [+ offset]` with no preceding load means the array lives inside the object itself
+
+Symptom: an `int GetX(int index)` accessor's first instruction scales the
+index (`sll $5,$5,N`) and adds it directly to `$4` (`this`), with no `lw`
+anywhere before the final dereference — the usual "load a pointer field,
+then index it" shape doesn't apply, and there's no field to attribute
+the array to.
+Mechanism: eleven sections across seven classes in one batch
+(`CRender::GetVUEntryCV`/`GetVUEntryPrim`, `CBgCtrl::GetFilter`,
+`CCharaCntrl::SetNowChara`, `CCharaDataSts::GetStatusBuf`,
+`CCharaBase::SetPartsMdlSw`, all four `CMotionSts` status accessors,
+`CGameEffect_Ctrl::GetGameEffectBase`, all five `Labyrinth_ArmGet`
+accessors) share this exact shape: `sll $5,$5,shift; addu $5,$5,$4;
+lw/sw $2,offset($5)`. Since `$4` (`this`) is used as the base directly, the
+indexed array's first element is a fixed byte offset *inside the class's
+own layout*, not behind a pointer member.
+Pathway: when an accessor's first two instructions are `sll` (scale index)
++ `addu` with `$4` as one operand (not a loaded register), model it as
+`ElementType fieldName[1];` (a one-element placeholder; a declared array's
+length never affects codegen for a runtime-variable index, so the
+placeholder is exactly as byte-accurate as any larger guess) at the byte
+offset the final `lw`/`sw` uses, and the accessor as `return
+fieldName[index];` or `fieldName[index] = value;`. Contrast with the same
+shape reached through an actual pointer field (`lw` first, then `addu` to
+the *loaded* register, not `$4`) — that case needs `ElementType
+*fieldName;` or `ElementType *fieldName[1];` instead, and is a materially
+different claim about the class's layout (a separately-allocated buffer
+vs. an inline array).
+Verification: all eleven sections matched byte-for-byte via
+`make verify-ee`/`compare_sections.py` on the first attempt using this
+model, including two array-of-pointer variants
+(`CCharaBase::GetWeaponC`/`GetWeaponPmv`/`SetCurrentSubWeaponPmv`) that
+needed the "loaded pointer, not $4" variant instead — confirming both
+shapes are real and distinguishable from the disassembly alone.
+Scope: general MIPS/GCC array-indexing codegen; likely applies anywhere in
+this cluster an accessor takes an `int index` parameter.
+Limits: does not establish the array's actual length or element count,
+only that element 0 starts at the observed offset with the observed
+stride.
+References: [linkonce cluster task](tasks/LINKONCE_CLUSTER.md).
+
+## `nor $rd,$zero,$rs` is MIPS's bitwise-NOT idiom, not a new comparison operator
+
+Symptom: a boolean-returning accessor's disassembly includes `nor` before
+the already-familiar `sltu`/`srl` boolify step, and it's unclear what C++
+source produces a `nor` that wasn't asked for.
+Mechanism: MIPS has no dedicated bitwise-NOT instruction; GCC (and every
+MIPS compiler) synthesizes `~x` as `nor $rd, $zero, $rs` (since
+`~(0 | x) = ~x`). `CMotion3::IsChangeMotionNo` (`nor` then `sltu
+$2,$zero,$2`) is therefore `return (~field) != 0;`, algebraically
+`return field != -1;` — a "changed from sentinel -1" check, not a generic
+nonzero test. `CChara::IsStartActPmv` (`nor` then `srl $2,$2,0x1f`,
+extracting bit 31) is `return field >= 0;` — the sign bit of `~field` is
+the logical negation of `field`'s own sign bit.
+Pathway: when `nor $rd,$zero,$rs` (or `nor $rd,$rs,$zero`) appears, read it
+as `~rs`, then read whatever follows it as an ordinary boolify/extract of
+that complemented value — `!= 0` after `nor` means `!= -1` on the original;
+`srl ...,31` after `nor` means `>= 0` on the original. Don't model these as
+a new, unexplained instruction shape; they compose from two already-known
+idioms (bitwise-NOT-via-nor, then the existing boolify/sign-extract
+patterns).
+Verification: both reproduced byte-exactly via `make verify-ee` using
+`return field != -1;` and `return field >= 0;` respectively, no additional
+rephrasing needed once decoded this way.
+Scope: general MIPS codegen convention (any compiler on an ISA without a
+dedicated NOT instruction); not specific to this compiler.
+Limits: only these two compositions (`nor`+`sltu`, `nor`+`srl 31`) are
+confirmed; other post-`nor` operations are unverified but expected to
+decode the same way (complement, then interpret normally).
+References: [linkonce cluster task](tasks/LINKONCE_CLUSTER.md).
+
+## A field read two different ways at the same offset is a union, not two fields or a cast
+
+Symptom: one accessor treats a field as a pointer (`StartActPmv`), another
+accessor at the *identical* offset treats it as a raw signed integer for a
+sign-bit test (`IsStartActPmv`), and C++ doesn't allow two differently-typed
+member declarations at the same offset without an explicit union — nor
+does pointer-to-integer casting on this target reliably preserve "just
+reinterpret the bits" semantics (pointers are 32-bit, `long` is 8 bytes
+per earlier evidence in this project).
+Mechanism: `CChara::actPmv` is loaded as a plain 32-bit value and compared
+via `nor`+`srl 31` (a signed sign-bit test, see above) by
+`IsStartActPmv`, and used as a genuine pointer by the already-verified
+`StartActPmv`/`GetActPmvTgt`-adjacent code. An anonymous
+`union { void *actPmv; int actPmvRaw; };` gives both accessors their own
+correctly-typed name for the same 4 bytes without duplicating the offset
+or risking a cross-size-class cast.
+Pathway: when two evidenced accessors read/write the identical offset with
+genuinely incompatible types (pointer vs. arithmetic int, not just
+`void*` vs. a more specific pointer as in the sibling-accessor case
+already logged), use an anonymous union rather than picking one type and
+casting at the call site — a cast risks silently changing codegen
+(e.g. a pointer-to-`long`-to-`int` cast chain could touch more bytes than
+intended on a target where `long` is wider than a pointer), while a union
+member access compiles to the same raw load/store either way.
+Verification: `IsStartActPmv() { return actPmvRaw >= 0; }` matched
+byte-for-byte via `make verify-ee`; `StartActPmv`'s existing verified
+section was unaffected (confirmed by the same full-suite rerun).
+Scope: general C++/MIPS technique; applies whenever two already-evidenced
+accessors disagree on a field's type at the same offset.
+Limits: only one instance in this cluster; the union does not claim which
+interpretation (pointer or raw flag test) reflects the "true" original
+field type, only that both are real, evidenced accesses.
+References: [linkonce cluster task](tasks/LINKONCE_CLUSTER.md).
