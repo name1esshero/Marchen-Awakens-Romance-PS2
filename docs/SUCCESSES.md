@@ -1207,6 +1207,30 @@ References: [library-main texture audit](../tasks/GRAPHIC_TEXT_LIB_MAIN_TEX.md),
 `graphics/index.json`, and
 [`localization methodology`](LOCALIZATION_METHODOLOGY.md).
 
+## Character voice-summary portraits contain no readable labels
+
+Finding: the 16 `characters` textures mapped to `lib_voice_sum.b` are distinct
+64×64 portrait images with a pale balloon-like overlay. The overlay's tiny
+gray dash/dot strokes remain generic, unclassified marks after nearest-neighbor
+inspection; no Japanese name, voice label, or Latin text is readable. Keep
+these marks out of the translation inventory unless a contextual or source
+comparison identifies language-bearing content.
+
+Verification: all 16 filenames, dimensions, and full TGA SHA-256 values match
+`graphics/index.json`; each has the same type-2, 32-bit, top-origin (`0x28`)
+header and exact 16,402-byte extent. All 16 images were visually reviewed,
+including enlarged overlay close-ups; the hashes are unique and do not overlap
+the `lib_char_sum.b` set. Each TGA's alpha samples are fully opaque despite the
+32-bit alpha-capable header. Japanese baselines and the index were unchanged.
+Scope: DQ-41's exact 16 `characters` rows for
+`disc!/_DATA.YFS;1!/data/menu/lib_voice_sum.b`.
+Limits: isolated pixels do not establish the overlays' runtime role or UI
+mapping; no UV/runtime claim, import, ISO build, or emulator validation was
+made.
+References: [DQ-41 inventory](../tasks/GRAPHIC_TEXT_LIB_VOICE_SUM.md),
+`graphics/index.json`, and
+[`localization methodology`](LOCALIZATION_METHODOLOGY.md).
+
 ## English texture siblings reinsert byte-exactly through a relocated ISO build
 
 Symptom: localized texture edits need to remain separate from recovered
