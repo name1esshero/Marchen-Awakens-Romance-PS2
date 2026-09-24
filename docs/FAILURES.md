@@ -467,7 +467,7 @@ commit object using `git show -s --format='%(trailers)' <commit>` before
 reporting completion. This entry records a procedure failure; it does not
 change the queue content committed in `57885fd`.
 
-## A full worker checkout failed when the temporary filesystem was full
+## The 16 GiB temporary filesystem filled during checkout and disc build
 
 While provisioning DQ-22, `git worktree add` targeted `/tmp`, whose 16 GiB
 tmpfs was full (`0` bytes available; inode use was 34%). Checkout emitted
@@ -481,5 +481,20 @@ bad asset filenames. Before a full worktree checkout, inspect free space on its
 target volume. Retry on a volume with sufficient capacity; preserve existing
 worktrees instead of deleting another contributor's checkout. This does not
 show that the repository itself is too large for a full worktree on the C:
-volume. The DQ-22 assignment remains `READY` until its isolated worktree and
-worker identity are verified.
+volume. A later retry provisioned the isolated DQ-22 worktree on C: with the
+configured worker identity; the worker completed the audit in commit `00bc47e`,
+integrated as `6ccd26a`.
+
+On 2026-09-23, `make build-mod-disc` reached the final nested-archive build and
+failed at `out.write(block)` with `OSError: [Errno 28] No space left on device`.
+At that time `/tmp` was a 16 GiB tmpfs with only 29 MiB available and 33% inode
+use, while `/mnt/c` still had 185 GiB free. The previous 4.7 GB `mar_eng.iso`
+remained in place; the builder's atomic replacement had not installed a partial
+image. The packer's nested `TemporaryDirectory` used Python's default `/tmp`, so
+free space on the repository's C: volume did not help.
+
+This is byte-capacity exhaustion, not an ISO-size limit or inode exhaustion.
+The repository's `build-mod-disc` target now places packer temporaries under
+ignored `build/tmp/` by default and accepts an explicit `TMPDIR` override. Verify
+the previous ISO remains intact after a failed attempt, then retry on a volume
+with sufficient space; preserve existing worktrees instead of deleting them.

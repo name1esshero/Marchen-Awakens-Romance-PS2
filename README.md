@@ -25,6 +25,14 @@ make test            # parser/reconstruction/tool tests and candidate syntax che
 make verify-source-only  # isolated rebuild without reference files or cached objects
 ```
 
+The repository does not contain the original commercial disc image;
+`.gitignore` excludes `baserom.iso`. A full-disc rebuild requires your own
+authenticated copy at the repository root. Run `make verify-reference` before
+exporting or building, and do not add the image to Git. The tracked graphics,
+English image layers, translation catalogs, and build tools are the editable
+project inputs; `extracted/`, `build/`, and the generated `mar_eng.iso` are
+local build products.
+
 To compare directly with the original, place `baserom.iso` at the repository root:
 
 ```sh
@@ -43,6 +51,10 @@ make compare-disc    # streams the complete rebuilt ISO against the pinned image
 make verify-disc     # rebuilds and compares in one gate
 make build-mod-disc  # builds mar_eng.iso in the workspace root for emulator testing
 ```
+
+The mod-disc packer uses ignored `build/tmp/` for large temporary files by
+default. If that volume is constrained, set `TMPDIR` to a filesystem with enough
+free space, for example `TMPDIR=/path/with/free-space make build-mod-disc`.
 
 `extracted/assets/catalog.json` maps readable archive paths to workspace files.
 Raw leaves remain editable as bytes; recognized text leaves have `.utf8.txt`

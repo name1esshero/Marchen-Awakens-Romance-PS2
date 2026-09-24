@@ -196,13 +196,19 @@ as a tracked sibling such as `*_eng_layer.png`; do not rely on a file in a
 user-specific generation cache. Fit it to measured source bounds with
 `tools/graphics_compose.py` or `make graphics-compose`, optionally thresholding
 low-alpha model noise and clearing only the measured Japanese text rectangle.
-The normalizer preserves the base canvas, composites alpha, downsamples with
-area filtering or upsamples bilinearly, writes a new TGA, and reports dimensions
-and hashes. Use the immutable `_jp.tga` as `--base` and the separate `_eng.tga`
-as output. Inspect the exact-size raster, then run `make graphics-stage` to map
-it through the source RTX3 palette; never treat a successful image conversion
-as runtime/UV evidence. Rebuilding from the tracked PNG, measured rectangles,
-threshold, and command must reproduce the same TGA bytes.
+The default `contain` mode preserves the generated layer's aspect ratio; use
+`cover` only when a centered crop is intentional. The explicit `stretch` mode
+maps each axis independently to fill the measured text region, for cases where
+the source label's proportions would otherwise leave translated lettering
+visibly undersized. It can distort letterforms, so record that choice and
+inspect at native size before accepting it. All modes preserve the base canvas,
+composite alpha, and use deterministic area/bilinear resampling; the tool
+reports dimensions and hashes. Use the immutable `_jp.tga` as `--base` and the
+separate `_eng.tga` as output. Inspect the exact-size raster, then run
+`make graphics-stage` to map it through the source RTX3 palette; never treat a
+successful image conversion as runtime/UV evidence. Rebuilding from the
+tracked PNG, measured rectangles, threshold, fit mode, and command must
+reproduce the same TGA bytes.
 
 The synthetic regressions exercise UTF-8 editing, CP932 encoding, ISO directory
 extent growth, and volume-length update, plus structured message editing with
@@ -420,6 +426,10 @@ that both `Y - B` and `Y - Z` category totals balance.
    existing regular output file; reconstruction still goes to a sibling
    temporary file, and `os.replace` installs it only after every requested
    catalogue and override was applied. A failed rebuild preserves the prior ISO.
+   `make build-mod-disc` directs the packer's larger nested-container temporaries
+   to ignored `build/tmp/` by default. Set `TMPDIR=/path/with/free-space` when
+   that filesystem lacks enough room; do not delete unrelated worktrees to free
+   the shared `/tmp` tmpfs.
 6. Run `python3 tools/compare_disc.py build/assets-rebuilt.iso`. The comparator
    reads both complete files in chunks, authenticates the reference hash, counts
    every unequal/missing byte, and reports initial mismatch offsets. Exit 0 means
