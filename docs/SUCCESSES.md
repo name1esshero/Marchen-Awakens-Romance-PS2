@@ -1248,6 +1248,24 @@ The audit does not establish UV use, screen composition, or runtime behavior.
 References: [`lib_movie_sum.b` texture audit](../tasks/GRAPHIC_TEXT_LIB_MOVIE_SUM.md),
 `graphics/index.json`, and localization methodology §14.
 
+## Library character-summary exports are portraits without visible labels
+
+Method: select exactly the `characters` category rows for
+`disc!/_DATA.YFS;1!/data/menu/lib_char_sum.b`, authenticate each exported TGA
+against `graphics/index.json`, and inspect all pixels at enlarged scale with
+the declared top-origin orientation. Finding: all 16 resources are distinct
+64×64 character portraits/cropped faces; none has readable Japanese or Latin
+names, captions, labels, or title marks. A diagonal red/gray facial marking
+and mask details remain visual artwork, not supported text candidates.
+Verification: all 16 filenames, dimensions and full hashes match the index;
+every type-2, no-color-map, 32-bit TGA has descriptor `0x28`, an exact
+16,402-byte extent, and fully opaque alpha. All 16 images were visually
+reviewed. No baseline or override was changed. Limits: this establishes only
+the exported raster contents; it does not identify characters by name or
+establish UVs, screen composition, or runtime use. No ISO/emulator validation
+was run. References: [library character-summary audit](../tasks/GRAPHIC_TEXT_LIB_CHAR_SUM.md),
+`graphics/index.json`, and [`localization methodology`](LOCALIZATION_METHODOLOGY.md).
+
 ## Weapon texture audits should separate Japanese writing from decorative and language-neutral marks
 
 Symptom: an asset category containing weapon sprites and UI parts can mix genuine
