@@ -345,3 +345,44 @@ Limits: field names `x`/`y` are a plausible guess from the class's
 apparent purpose, not independently confirmed; no method in this batch
 reads or writes an individual `x`/`y` component.
 References: [linkonce cluster task](tasks/LINKONCE_CLUSTER.md).
+
+## A helper function's vtable-pointer constant identifies its runtime class via the linkonce data section at that address
+
+Symptom: three tiny shared helper functions each write a small object and
+return, with no name, symbol, or debug info to say which C++ class each
+object actually is.
+Mechanism: each helper computes an absolute address (`lui`+`addiu`) and
+stores it into the object's second word — the classic MIPS o32 vtable-pointer
+initialization idiom. That absolute address is not itself meaningful in
+isolation, but it exactly matches the load address of a real,
+named `.gnu.linkonce.d._vt$<len><Name>` vtable data section elsewhere in
+the same ELF. Looking up which named vtable section owns that address turns
+an anonymous "helper at 0x32c1f8" into a confirmed "field-initializer for
+`__user_type_info`" — the same technique already used throughout this
+project to identify classes from field offsets, just applied to a vtable
+pointer's target instead of a `this`-relative field.
+Pathway: when a disassembled function's only distinguishing content is a
+computed absolute address stored into an object (not a `jal`/branch
+target), look that address up against the ELF's own section table before
+guessing at its purpose from the calling context alone. A `.gnu.linkonce.d._vt$*`
+section hit gives a definitive class name; other section kinds may need
+different follow-up.
+Verification: `tools/bootstrap.py`'s `elf_sections` used to confirm
+`0x3e7020`/`0x3e6ff0`/`0x3e6fc0` are the exact load addresses of
+`.gnu.linkonce.d._vt$16__user_type_info`,
+`.gnu.linkonce.d._vt$14__si_type_info`, and
+`.gnu.linkonce.d._vt$17__class_type_info` respectively — three distinct,
+unambiguous section-name matches, not a coincidence of nearby addresses
+(each vtable section is 48 bytes and the constants land exactly at each
+section's start).
+Scope: general technique for any vtable-pointer-initializing code on a
+platform whose linker keeps named vtable sections (as this GNU v2/cfront
+linkonce-heavy build does); not specific to RTTI helpers.
+Limits: only resolves the *class identity* of the object being initialized,
+not its full member layout or virtual function table contents. All four
+vtable-pointer constants found in this cluster (three `__tf*`-registration
+helpers plus one destructor-dispatch helper) resolved cleanly to named
+sections in this pass; an address that does not land exactly on a linkonce
+vtable section's start would need a different follow-up (e.g. it could be
+mid-vtable, or a non-vtable constant entirely).
+References: [RTTI runtime helpers task](tasks/RTTI_RUNTIME_HELPERS.md).
