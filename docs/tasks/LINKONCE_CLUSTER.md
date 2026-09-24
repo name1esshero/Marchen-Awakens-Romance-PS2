@@ -757,3 +757,85 @@ byte-level claim was made). Reconstruction now covers **441 sections /
 3,528 bytes across ninety-five partial classes**; 3,441,676 bytes remain
 explicit raw debt. `make test verify-boot verify-source-only verify-ee`
 passes (full boot ELF and full EE-probe ELF both byte-identical).
+
+## First non-trivial (>8-byte) batch — 34 sections in 22 already-known classes — 2026-09-23
+
+Agent: Claude Sonnet 5; role: Code Department Lead. With the trivial 8-byte
+tier exhausted, this batch moves to the next size tier (12 bytes, three
+instructions) within classes already partially recovered, surveyed from
+`reports/linkonce_text_inventory.json`'s 334 remaining `member`-kind
+sections sized above 8 bytes. 36 sections were disassembled; 34 recovered,
+2 deferred.
+
+New evidenced shapes:
+
+- **Conditional move as a ternary**: `CPrim::ArgFilter` is
+  `move $2,$4; jr $ra; movn $2,$5,$5` — `return value ? value : this;`,
+  the first use of `movn` in this cluster. `movn`/`movz` are MIPS32R2, not
+  in the pinned `-march=mips3` assembler's default set; enabled locally
+  with `.set mips32r2` / `.set mips3` around just this one stanza in
+  `asm/camera_accessors.s`, not as a global flag change.
+- **Signed vs. unsigned zero-comparison changes the instruction**:
+  `CChara::IsHitDmgCntChk` is `slt $2,$zero,$2` (signed `> 0`), not the
+  `sltu $2,$zero,$2` (`!= 0`) already seen for every other boolified-int
+  getter in this cluster. Modeled as `return hitDmgCnt > 0;`, not
+  `!= 0`.
+- **A masked-and-returned 64-bit field needs an unsigned return type**:
+  `CPrim::GetPrimPRIM` is `ld $2,0x8($4); jr $ra; andi $2,$2,0x7` (12
+  bytes). `int GetPrimPRIM() { return prim & 0x7; }` compiles to 20 bytes
+  (extra `dsll32`/`dsra32` sign-extension pair) because narrowing a 64-bit
+  masked value to a *signed* 32-bit return forces explicit sign extension;
+  `unsigned long GetPrimPRIM() { return prim & 0x7; }` matches exactly.
+- **A "setter" can return the pointer it was just given**:
+  `CActTbl::SetActTbl` is `move $2,$5; jr $ra; sw $2,0x0($4)` (3
+  instructions, not 2) — the assigned value is also the return value:
+  `MOTNO_TBL *SetActTbl(MOTNO_TBL *value) { return actData = value; }`,
+  not a `void` setter.
+- **Independent-field-store order is neither source order nor offset
+  order**: for two-statement `void` setters writing unrelated fields
+  (`CActBoyake::DispOff`, `CChara::SetPadChk`, `CActReversal::SetRevMax`),
+  the compiled instruction order did not match naive source-order
+  assumptions in 2 of 3 first attempts. Confirmed empirically with an
+  isolated two-field probe: the statement assigning the *first-declared*
+  field must be written *last* in source for it to land in the delay slot
+  matching the reference; get this from source-order experiments, not
+  from re-deriving GCC's scheduler.
+- **A hidden pointer field can be revealed by a sibling accessor**:
+  `CBgCtrl::nowBg`, `CPAppear::nodeData`, `CActTbl::actData`, and
+  `CCharaBase::charCol` were all previously modeled as plain `int`/`void*`
+  fields (matching their own already-verified getter's raw passthrough)
+  until a *different* method in the same class dereferenced the identical
+  offset, revealing it as a typed pointer
+  (`CBgCtrl::GetNowBgColGrp`, `CPAppear::GetType`, `CActTbl::SetActTbl`,
+  `CCharaBase::GetColHitData`). Retyping the field is safe and does not
+  reopen the sibling getter's existing match, since a raw pointer-value
+  passthrough compiles identically regardless of the pointer's static
+  type.
+- **`objVector` is 8 bytes (two floats), not the 12-byte three-float
+  vector any name alone would suggest**: `CWeapon::SetTgtPos`/
+  `PositionInit`/`AddOffset` take `objVector` by value with a *completely
+  empty* body, compiling to a bare 16-byte prologue/epilogue with zero
+  load/store instructions. A 12-byte `{float x,y,z;}` hypothesis spills
+  the unused value defensively (`ldl`/`ldr`, 36 bytes); only an 8-byte
+  `{float x,y;}` reproduces the reference's zero-instruction body exactly
+  on all three methods.
+- **R5900 `LQ`/`SQ` quadword instructions confirmed on a second,
+  independent, much smaller pair**: `CCharCom::SetMovePos` and
+  `FireStorm_Seed::SetPos` (both taking `objVector` by const reference,
+  12-byte sections) use the identical undecoded opcode-0x1E/0x1F
+  (`LQ`/`SQ`) pattern already found on CCamera's 112-byte matrix setters,
+  confirming this is a systemic tooling gap (no R5900-aware disassembler
+  or assembler), not something specific to large aggregates. Both left
+  deferred, matching the matrix-setter precedent; no candidate added.
+
+Two sections deferred for the already-documented isolated-probe
+register-allocation limitation (`CBgCtrl::GetNowBgColGrp`,
+`CPAppear::GetType`, both `return field->member;` pointer chases that
+reproduce size but reuse `$3` for the intermediate where the reference
+reuses `$2` throughout) — see `docs/CODE_FAILURES.md`.
+
+Reconstruction now covers **475 sections / 3,936 bytes across ninety-five
+partial classes** (no new classes; all 34 recovered sections fell in
+already-partially-modeled classes); 3,441,268 bytes remain explicit raw
+debt. `make test verify-boot verify-source-only verify-ee` passes (full
+boot ELF and full EE-probe ELF both byte-identical).

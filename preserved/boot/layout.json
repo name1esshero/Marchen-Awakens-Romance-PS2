@@ -227,9 +227,15 @@
     },
     {
       "offset": 2343728,
-      "size": 196,
+      "size": 184,
       "kind": "unrecovered_hex",
       "source": "unrecovered_0023c330.hex"
+    },
+    {
+      "offset": 2343912,
+      "size": 12,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.isUpdateLightMatrix__8CRender2"
     },
     {
       "offset": 2343924,
@@ -276,8 +282,8 @@
     {
       "offset": 2344044,
       "size": 12,
-      "kind": "unrecovered_hex",
-      "source": "unrecovered_0023c46c.hex"
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.IsCulMode__8CRender2"
     },
     {
       "offset": 2344056,
@@ -875,9 +881,33 @@
     },
     {
       "offset": 2349684,
-      "size": 792,
+      "size": 20,
       "kind": "unrecovered_hex",
       "source": "unrecovered_0023da74.hex"
+    },
+    {
+      "offset": 2349704,
+      "size": 12,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.IsFrameJump__8CMotionC"
+    },
+    {
+      "offset": 2349716,
+      "size": 12,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.IsFrameJumpNext__8CMotionC"
+    },
+    {
+      "offset": 2349728,
+      "size": 12,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetEndOfMotion__8CMotionC"
+    },
+    {
+      "offset": 2349740,
+      "size": 736,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023daac.hex"
     },
     {
       "offset": 2350476,
@@ -1019,9 +1049,15 @@
     },
     {
       "offset": 2351452,
-      "size": 96,
+      "size": 12,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetDispPosZ__9CEventAct"
+    },
+    {
+      "offset": 2351464,
+      "size": 84,
       "kind": "unrecovered_hex",
-      "source": "unrecovered_0023e15c.hex"
+      "source": "unrecovered_0023e168.hex"
     },
     {
       "offset": 2351548,
@@ -1037,9 +1073,15 @@
     },
     {
       "offset": 2351564,
-      "size": 96,
+      "size": 12,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.DispOff__10CActBoyake"
+    },
+    {
+      "offset": 2351576,
+      "size": 84,
       "kind": "unrecovered_hex",
-      "source": "unrecovered_0023e1cc.hex"
+      "source": "unrecovered_0023e1d8.hex"
     },
     {
       "offset": 2351660,
@@ -1067,9 +1109,15 @@
     },
     {
       "offset": 2351700,
-      "size": 224,
+      "size": 212,
       "kind": "unrecovered_hex",
       "source": "unrecovered_0023e254.hex"
+    },
+    {
+      "offset": 2351912,
+      "size": 12,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetRevMax__12CActReversalff"
     },
     {
       "offset": 2351924,
@@ -1271,9 +1319,15 @@
     },
     {
       "offset": 2353120,
-      "size": 96,
+      "size": 84,
       "kind": "unrecovered_hex",
       "source": "unrecovered_0023e7e0.hex"
+    },
+    {
+      "offset": 2353204,
+      "size": 12,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.IsGameOver__12CGameCntrlGm"
     },
     {
       "offset": 2353216,
@@ -1703,9 +1757,21 @@
     },
     {
       "offset": 2358844,
-      "size": 80,
+      "size": 12,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.CheckPadPress__6CCharaUi"
+    },
+    {
+      "offset": 2358856,
+      "size": 12,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.CheckPadOn__6CCharaUi"
+    },
+    {
+      "offset": 2358868,
+      "size": 56,
       "kind": "unrecovered_hex",
-      "source": "unrecovered_0023fe3c.hex"
+      "source": "unrecovered_0023fe54.hex"
     },
     {
       "offset": 2358924,
@@ -1763,9 +1829,27 @@
     },
     {
       "offset": 2358996,
-      "size": 156,
+      "size": 12,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetNowRootLocate__6CChara"
+    },
+    {
+      "offset": 2359008,
+      "size": 12,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetNowNullLocate__6CChara"
+    },
+    {
+      "offset": 2359020,
+      "size": 12,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetNowBipLocate__6CChara"
+    },
+    {
+      "offset": 2359032,
+      "size": 120,
       "kind": "unrecovered_hex",
-      "source": "unrecovered_0023fed4.hex"
+      "source": "unrecovered_0023fef8.hex"
     },
     {
       "offset": 2359152,
@@ -1782,8 +1866,8 @@
     {
       "offset": 2359168,
       "size": 12,
-      "kind": "unrecovered_hex",
-      "source": "unrecovered_0023ff80.hex"
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.IsHitDmgCntChk__6CChara"
     },
     {
       "offset": 2359180,
@@ -1913,9 +1997,21 @@
     },
     {
       "offset": 2359348,
-      "size": 304,
+      "size": 260,
       "kind": "unrecovered_hex",
       "source": "unrecovered_00240034.hex"
+    },
+    {
+      "offset": 2359608,
+      "size": 12,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetPadChk__6CCharaii"
+    },
+    {
+      "offset": 2359620,
+      "size": 32,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_00240144.hex"
     },
     {
       "offset": 2359652,
@@ -1931,9 +2027,15 @@
     },
     {
       "offset": 2359668,
-      "size": 276,
+      "size": 264,
       "kind": "unrecovered_hex",
       "source": "unrecovered_00240174.hex"
+    },
+    {
+      "offset": 2359932,
+      "size": 12,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.StopConvertStone__9CCharaPmv"
     },
     {
       "offset": 2359944,
@@ -2051,9 +2153,15 @@
     },
     {
       "offset": 2360456,
-      "size": 100,
+      "size": 88,
       "kind": "unrecovered_hex",
       "source": "unrecovered_00240488.hex"
+    },
+    {
+      "offset": 2360544,
+      "size": 12,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetColHitData__10CCharaBase"
     },
     {
       "offset": 2360556,
@@ -2219,9 +2327,15 @@
     },
     {
       "offset": 2360948,
-      "size": 40,
+      "size": 28,
       "kind": "unrecovered_hex",
       "source": "unrecovered_00240674.hex"
+    },
+    {
+      "offset": 2360976,
+      "size": 12,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetGroundHeight__10CCharaBase"
     },
     {
       "offset": 2360988,
@@ -2255,9 +2369,21 @@
     },
     {
       "offset": 2361052,
-      "size": 56,
+      "size": 32,
       "kind": "unrecovered_hex",
       "source": "unrecovered_002406dc.hex"
+    },
+    {
+      "offset": 2361084,
+      "size": 12,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetLastSyncRate__10CCharaBase"
+    },
+    {
+      "offset": 2361096,
+      "size": 12,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetLastSyncRateMax__10CCharaBase"
     },
     {
       "offset": 2361108,
@@ -2357,9 +2483,21 @@
     },
     {
       "offset": 2362784,
-      "size": 332,
+      "size": 52,
       "kind": "unrecovered_hex",
       "source": "unrecovered_00240da0.hex"
+    },
+    {
+      "offset": 2362836,
+      "size": 12,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetActTbl__7CActTblP9MOTNO_TBL"
+    },
+    {
+      "offset": 2362848,
+      "size": 268,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_00240de0.hex"
     },
     {
       "offset": 2363116,
@@ -2472,8 +2610,8 @@
     {
       "offset": 2363356,
       "size": 12,
-      "kind": "unrecovered_hex",
-      "source": "unrecovered_00240fdc.hex"
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetTgtPos__7CWeaponG9objVectori"
     },
     {
       "offset": 2363368,
@@ -2508,8 +2646,8 @@
     {
       "offset": 2363408,
       "size": 12,
-      "kind": "unrecovered_hex",
-      "source": "unrecovered_00241010.hex"
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.PositionInit__7CWeaponG9objVector"
     },
     {
       "offset": 2363420,
@@ -2520,8 +2658,8 @@
     {
       "offset": 2363428,
       "size": 12,
-      "kind": "unrecovered_hex",
-      "source": "unrecovered_00241024.hex"
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.AddOffset__7CWeaponG9objVector"
     },
     {
       "offset": 2363440,
@@ -2807,9 +2945,15 @@
     },
     {
       "offset": 2367424,
-      "size": 164,
+      "size": 152,
       "kind": "unrecovered_hex",
       "source": "unrecovered_00241fc0.hex"
+    },
+    {
+      "offset": 2367576,
+      "size": 12,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.ResetPosition__4CCol"
     },
     {
       "offset": 2367588,
@@ -2921,9 +3065,15 @@
     },
     {
       "offset": 2369460,
-      "size": 84,
+      "size": 72,
       "kind": "unrecovered_hex",
       "source": "unrecovered_002427b4.hex"
+    },
+    {
+      "offset": 2369532,
+      "size": 12,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.ArgFilter__5CPrimP7PRIMINF"
     },
     {
       "offset": 2369544,
@@ -2939,9 +3089,15 @@
     },
     {
       "offset": 2369560,
-      "size": 40,
+      "size": 28,
       "kind": "unrecovered_hex",
       "source": "unrecovered_00242818.hex"
+    },
+    {
+      "offset": 2369588,
+      "size": 12,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetPrimPRIM__5CPrim"
     },
     {
       "offset": 2369600,
@@ -3047,9 +3203,21 @@
     },
     {
       "offset": 2372304,
-      "size": 124,
+      "size": 76,
       "kind": "unrecovered_hex",
       "source": "unrecovered_002432d0.hex"
+    },
+    {
+      "offset": 2372380,
+      "size": 12,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.EnableEnd__9CGefScene"
+    },
+    {
+      "offset": 2372392,
+      "size": 36,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_00243328.hex"
     },
     {
       "offset": 2372428,
@@ -3125,9 +3293,15 @@
     },
     {
       "offset": 2375220,
-      "size": 64,
+      "size": 12,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetDispPosZ__16CGameEffect_Ctrl"
+    },
+    {
+      "offset": 2375232,
+      "size": 52,
       "kind": "unrecovered_hex",
-      "source": "unrecovered_00243e34.hex"
+      "source": "unrecovered_00243e40.hex"
     },
     {
       "offset": 2375284,
@@ -3335,9 +3509,15 @@
     },
     {
       "offset": 2379220,
-      "size": 428,
+      "size": 12,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.ActionSameType__9FireStorm"
+    },
+    {
+      "offset": 2379232,
+      "size": 416,
       "kind": "unrecovered_hex",
-      "source": "unrecovered_00244dd4.hex"
+      "source": "unrecovered_00244de0.hex"
     },
     {
       "offset": 2379648,
@@ -3425,9 +3605,27 @@
     },
     {
       "offset": 2386148,
-      "size": 14396,
+      "size": 14328,
       "kind": "unrecovered_hex",
       "source": "unrecovered_002468e4.hex"
+    },
+    {
+      "offset": 2400476,
+      "size": 12,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetGroundHeight__9ClsSpring"
+    },
+    {
+      "offset": 2400488,
+      "size": 12,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SkFollowInit__9ClsSpring"
+    },
+    {
+      "offset": 2400500,
+      "size": 44,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0024a0f4.hex"
     },
     {
       "offset": 2400544,
@@ -3449,9 +3647,15 @@
     },
     {
       "offset": 2400696,
-      "size": 1232,
+      "size": 1220,
       "kind": "unrecovered_hex",
       "source": "unrecovered_0024a1b8.hex"
+    },
+    {
+      "offset": 2401916,
+      "size": 12,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SelectSaveData__7CMCard2RC12MAR_SAVEDATA"
     },
     {
       "offset": 2401928,

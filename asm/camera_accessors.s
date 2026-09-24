@@ -1326,3 +1326,143 @@ addiu $2, $4, 0x10
 .section .gnu.linkonce.t.SetFileSize__7CMcFunci,"ax",@progbits
 jr $31
 sw $5, 0x10($4)
+.section .gnu.linkonce.t.isUpdateLightMatrix__8CRender2,"ax",@progbits
+lw $2, 0x604($4)
+jr $31
+sltu $2, $zero, $2
+.section .gnu.linkonce.t.IsCulMode__8CRender2,"ax",@progbits
+lw $2, 0x50c($4)
+jr $31
+sltu $2, $zero, $2
+.section .gnu.linkonce.t.IsFrameJump__8CMotionC,"ax",@progbits
+lw $2, 0x44($4)
+jr $31
+andi $2, $2, 0x2
+.section .gnu.linkonce.t.IsFrameJumpNext__8CMotionC,"ax",@progbits
+lw $2, 0x44($4)
+jr $31
+andi $2, $2, 0x7
+.section .gnu.linkonce.t.SetEndOfMotion__8CMotionC,"ax",@progbits
+addiu $2, $zero, 0x1
+jr $31
+sw $2, 0x50($4)
+.section .gnu.linkonce.t.GetDispPosZ__9CEventAct,"ax",@progbits
+mtc1 $zero, $f0
+jr $31
+nop
+.section .gnu.linkonce.t.DispOff__10CActBoyake,"ax",@progbits
+sb $zero, 0x84($4)
+jr $31
+sw $zero, 0x30($4)
+.section .gnu.linkonce.t.SetRevMax__12CActReversalff,"ax",@progbits
+.set oddspreg
+swc1 $f12, 0x30($4)
+jr $31
+swc1 $f13, 0x34($4)
+.set nooddspreg
+.section .gnu.linkonce.t.IsGameOver__12CGameCntrlGm,"ax",@progbits
+lw $2, 0xc4($4)
+jr $31
+sltu $2, $zero, $2
+.section .gnu.linkonce.t.CheckPadPress__6CCharaUi,"ax",@progbits
+lw $2, 0xa10($4)
+jr $31
+and $2, $5, $2
+.section .gnu.linkonce.t.CheckPadOn__6CCharaUi,"ax",@progbits
+lw $2, 0xa14($4)
+jr $31
+and $2, $5, $2
+.section .gnu.linkonce.t.GetNowRootLocate__6CChara,"ax",@progbits
+lw $2, 0xb4($4)
+jr $31
+addiu $2, $2, 0x70
+.section .gnu.linkonce.t.GetNowNullLocate__6CChara,"ax",@progbits
+lw $2, 0xb4($4)
+jr $31
+addiu $2, $2, 0x30
+.section .gnu.linkonce.t.GetNowBipLocate__6CChara,"ax",@progbits
+lw $2, 0xb4($4)
+jr $31
+addiu $2, $2, 0x70
+.section .gnu.linkonce.t.IsHitDmgCntChk__6CChara,"ax",@progbits
+lw $2, 0x108c($4)
+jr $31
+slt $2, $zero, $2
+.section .gnu.linkonce.t.SetPadChk__6CCharaii,"ax",@progbits
+sw $5, 0xcdc($4)
+jr $31
+sw $6, 0xce0($4)
+.section .gnu.linkonce.t.StopConvertStone__9CCharaPmv,"ax",@progbits
+addiu $2, $zero, 0x1
+jr $31
+sw $2, 0x63c($4)
+.section .gnu.linkonce.t.GetColHitData__10CCharaBase,"ax",@progbits
+lw $2, 0x430($4)
+jr $31
+addiu $2, $2, 0x70
+.section .gnu.linkonce.t.GetGroundHeight__10CCharaBase,"ax",@progbits
+mtc1 $zero, $f0
+jr $31
+nop
+.section .gnu.linkonce.t.GetLastSyncRate__10CCharaBase,"ax",@progbits
+mtc1 $zero, $f0
+jr $31
+nop
+.section .gnu.linkonce.t.GetLastSyncRateMax__10CCharaBase,"ax",@progbits
+mtc1 $zero, $f0
+jr $31
+nop
+.section .gnu.linkonce.t.SetActTbl__7CActTblP9MOTNO_TBL,"ax",@progbits
+daddu $2, $5, $0
+jr $31
+sw $2, 0x0($4)
+.section .gnu.linkonce.t.SetTgtPos__7CWeaponG9objVectori,"ax",@progbits
+addiu $sp, $sp, -0x10
+jr $31
+addiu $sp, $sp, 0x10
+.section .gnu.linkonce.t.PositionInit__7CWeaponG9objVector,"ax",@progbits
+addiu $sp, $sp, -0x10
+jr $31
+addiu $sp, $sp, 0x10
+.section .gnu.linkonce.t.AddOffset__7CWeaponG9objVector,"ax",@progbits
+addiu $sp, $sp, -0x10
+jr $31
+addiu $sp, $sp, 0x10
+.section .gnu.linkonce.t.ResetPosition__4CCol,"ax",@progbits
+addiu $2, $zero, 0x1
+jr $31
+sw $2, 0x28($4)
+.section .gnu.linkonce.t.ArgFilter__5CPrimP7PRIMINF,"ax",@progbits
+daddu $2, $4, $0
+.set mips32r2
+jr $31
+movn $2, $5, $5
+.set mips3
+.section .gnu.linkonce.t.GetPrimPRIM__5CPrim,"ax",@progbits
+ld $2, 0x8($4)
+jr $31
+andi $2, $2, 0x7
+.section .gnu.linkonce.t.EnableEnd__9CGefScene,"ax",@progbits
+addiu $2, $zero, 0x1
+jr $31
+sw $2, 0x4c($4)
+.section .gnu.linkonce.t.GetDispPosZ__16CGameEffect_Ctrl,"ax",@progbits
+mtc1 $zero, $f0
+jr $31
+nop
+.section .gnu.linkonce.t.ActionSameType__9FireStorm,"ax",@progbits
+addiu $2, $zero, 0x1
+jr $31
+sw $2, 0x570($4)
+.section .gnu.linkonce.t.GetGroundHeight__9ClsSpring,"ax",@progbits
+mtc1 $zero, $f0
+jr $31
+nop
+.section .gnu.linkonce.t.SkFollowInit__9ClsSpring,"ax",@progbits
+addiu $2, $zero, 0x1
+jr $31
+sw $2, 0x34($4)
+.section .gnu.linkonce.t.SelectSaveData__7CMCard2RC12MAR_SAVEDATA,"ax",@progbits
+lw $2, 0x0($5)
+jr $31
+sw $2, 0x2e2c($4)

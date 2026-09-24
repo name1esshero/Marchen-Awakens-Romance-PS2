@@ -130,3 +130,80 @@ and *argument roles* are still fully evidenced; only the exact register
 choice within a shape is shown to be non-deterministic across otherwise
 identical code in the same binary.
 References: [typeinfo sections task](tasks/TYPEINFO_SECTIONS.md).
+
+## Guessing independent-field-store order from source order or field-declaration order both fail; test empirically
+
+Hypothesis: for a `void` setter writing two unrelated, independently-typed
+fields with no data dependency between them (`CActBoyake::DispOff`,
+`CChara::SetPadChk`, `CActReversal::SetRevMax`), writing the statements in
+either natural reading order (matching field declaration order) or in
+matching-the-reference-instruction order would predict which store lands
+in the branch-delay slot after `jr $ra`.
+Observed result: naive source order matching field-declaration order was
+wrong for 2 of the first 3 cases tried (`SetPadChk`, `SetRevMax`); only
+`DispOff` happened to match on the first guess. There was no consistent
+"first-declared-first" or "lower-offset-first" or "byte-store-before-
+word-store" rule visible from inspection alone across the 3 examples.
+Mechanism: GCC's instruction scheduler reorders independent stores by its
+own internal heuristics (likely related to its internal statement/RTL
+numbering or a scheduling pass's tie-breaking, not something visible from
+the C++ source's textual order). Confirmed by a controlled two-field probe
+(`Test1::OrderAB`/`OrderBA`, `Test2::SetXYab`/`SetXYba`, one class with an
+int+byte pair mimicking `DispOff`'s shape, one with two ints mimicking
+`SetPadChk`'s shape): both orderings were compiled and disassembled side
+by side, and the actual match required writing the statement for the
+*later-declared* field *first* in source (so it lands in the delay slot
+last), which is the opposite of naive reading-order intuition and was
+determined only by testing, not by reasoning about the compiler further.
+Supporting evidence: `docs/tasks/LINKONCE_CLUSTER.md` (2026-09-23
+non-trivial-tier batch entry) records the exact reference and candidate
+bytes for all three cases before and after the fix.
+Reconsideration conditions: if a future batch finds >2 consecutive
+examples where naive source order matches on the first try, the "always
+test both orders" default could be relaxed to "try naive order first, but
+still verify" — not yet warranted from 3 data points.
+What this does not justify: this does not mean the *values* being stored
+or the *field identities* were wrong — only the emission order of two
+already-correct, independent store instructions. A `verify-ee` failure on
+a multi-statement `void` setter with no other error signal is a strong
+hint to try the reversed statement order before suspecting the field
+offsets or values themselves.
+References: [linkonce cluster task](tasks/LINKONCE_CLUSTER.md).
+
+## Two more confirmed instances of the isolated-probe register-allocation limitation, both pointer chases
+
+Hypothesis: `CBgCtrl::GetNowBgColGrp` (`return nowBg->group;`) and
+`CPAppear::GetType` (`return nodeData->type;`) — both a two-`lw`
+pointer-chase through an already-evidenced pointer field plus a fixed
+member offset — would reproduce byte-exactly once the field's pointer
+type and the member offset were correctly modeled, following the same
+`GetColHitData`-style pattern that worked immediately for other classes
+in the same batch.
+Observed result: both compiled to the exact target *size* (12 bytes) on
+the first attempt, but with `$3` as the intermediate register holding the
+loaded pointer where the reference reuses `$2` throughout
+(`lw $2,off($4); jr $ra; lw $2,extra($2)` in the reference vs.
+`lw $3,off($4); jr $ra; lw $2,extra($3)` in the candidate). Three
+rephrasings were tried for `GetNowBgColGrp` alone (direct return
+expression, an explicit local pointer variable, and a `const`-qualified
+method) — all three produced the identical `$3`/`$2` split.
+Mechanism: this is the same isolated-probe register-allocation-context
+limitation already logged for `CCamera::GetViewMatrix` and generalized
+across the whole `__tf*` RTTI cluster — GCC 2.96's register allocator
+makes different choices depending on surrounding register pressure/context
+that an isolated probe cannot reproduce, even holding the exact source
+shape fixed.
+Supporting evidence: `docs/tasks/LINKONCE_CLUSTER.md` (2026-09-23
+non-trivial-tier batch entry); the exact reference/candidate disassembly
+for both methods and all three `GetNowBgColGrp` rephrasing attempts.
+Reconsideration conditions: same as the existing `CAMERA_MATRIX_PROBE.md`
+entry — a different, still-unmodified EE GCC 2.96 sub-build/patch level
+identified as the actual original toolchain could change this; no source
+rephrasing found in this batch changed it.
+What this does not justify: the field retyping (`nowBg`/`nodeData` as
+typed pointers, not plain `int`/`void*`) that made these two methods
+possible to even attempt remains valid, reusable evidence recorded in
+`CODE_SUCCESSES.md` — only the specific getter method for each is deferred,
+left as a comment in `candidates/ee_camera/CCamera.h` rather than a
+compiled, verified section.
+References: [linkonce cluster task](tasks/LINKONCE_CLUSTER.md).

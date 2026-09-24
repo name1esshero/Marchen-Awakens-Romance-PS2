@@ -233,3 +233,115 @@ uses a different shared helper with an extra literal-`1` argument, plausibly
 but not confirmedly a virtual-base variant (single occurrence, left open).
 References: [typeinfo sections task](tasks/TYPEINFO_SECTIONS.md),
 [linkonce cluster task](tasks/LINKONCE_CLUSTER.md).
+
+## A sibling accessor's dereference reveals a field's true (pointer) type
+
+Symptom: a field already modeled as a plain `int`/`void*` (because its own
+getter just does a raw `lw`+`jr` passthrough, which compiles identically
+either way) turns out to be read at a *nonzero offset* by a different
+method in the same class, which the plain-type model cannot express.
+Mechanism: `CBgCtrl::nowBg`, `CPAppear::nodeData`, `CActTbl::actData`, and
+`CCharaBase::charCol` were all first recovered from their own simple
+getter alone, with no reason yet to suspect they were anything but a flat
+value. A later method in the *same class* (`GetNowBgColGrp`, `GetType`,
+`SetActTbl`, `GetColHitData`) turned out to load through that same field
+plus a fixed offset (`lw $2,off($4); lw $2,extra($2)` or
+`addiu $2,$2,extra`), which only makes sense if the field is a pointer to
+a struct with a member/sub-object at `extra`.
+Pathway: when a new method's first load reads a field you already have
+modeled as `int`/`void*`, and the method then dereferences or offsets that
+loaded value, retype the field to a pointer (to a small helper struct
+with just enough padding + the needed member, named only to reproduce the
+offset — not a real recovered layout). This is safe to do to an
+already-committed, already-verified field: a raw pointer-value passthrough
+getter (`return field;`) compiles to the identical bytes whether `field`
+is declared `int`, `void*`, or a real pointer type, so retyping never
+reopens an existing match — confirm this with `verify-ee`/`compare_sections.py`
+after the change rather than assuming it, but expect it to still pass.
+Verification: all four retypes verified via `make verify-boot verify-ee`
+after the change; each sibling getter's own section still matched byte-for-
+byte with no modification to its own source line.
+Scope: general to any accessor-recovery project where a class's fields are
+reconstructed incrementally, one method at a time, with no ground truth for
+field types beyond what each accessor's own body demands.
+Limits: only establishes that the field is *a* pointer with a member at
+the observed offset; the pointed-to type's other members, its total size,
+and the field's original name remain unevidenced beyond that.
+References: [linkonce cluster task](tasks/LINKONCE_CLUSTER.md).
+
+## Conditional move, signed-vs-unsigned zero tests, and narrowing all leave distinct evidence
+
+Symptom: three different "looks like the usual pattern" guesses each
+produced a wrong or oversized result on the first attempt in the same
+batch of non-trivial accessors.
+Mechanism, three independent cases:
+1. `CPrim::ArgFilter(PRIMINF*)` is `move $2,$4; jr $ra; movn $2,$5,$5` —
+   a ternary (`return value ? value : this;`) compiled with MIPS32R2's
+   `movn` (conditional move), not an `if`/branch. This is the first `movn`
+   in this cluster; nothing about the method's one-pointer-in/one-pointer-
+   out signature suggested a ternary until the disassembly was read.
+2. `CChara::IsHitDmgCntChk` boolifies a field with `slt $2,$zero,$2`
+   (signed), where every other `return field != 0;` boolify already in
+   this cluster used `sltu $2,$zero,$2` (unsigned). `slt` only appears for
+   a *signed greater-than-zero* test (`return field > 0;`), which rejects
+   negative values that `!= 0` would accept — a real semantic difference,
+   not an equivalent rephrasing.
+3. `CPrim::GetPrimPRIM` masks a 64-bit field and returns it in 12 bytes
+   (`ld`, `jr`, `andi`); returning the masked value as `int` (signed)
+   costs 8 extra bytes (`dsll32`/`dsra32` sign-extension), while
+   `unsigned long` return type matches exactly, since a signed narrowing
+   conversion from a 64-bit masked value needs explicit sign-extension
+   that an unsigned return does not.
+Pathway: don't default to `if`-shaped or `!= 0`-shaped or `int`-returning
+models for every conditional-looking or boolean-looking or masked
+accessor. Read the actual opcode: `movn`/`movz` means a ternary/conditional
+assignment, not a branch; `slt` vs `sltu` distinguishes `> 0` from `!= 0`;
+extra sign-extension instructions around a masked 64-bit field mean the
+return type should be unsigned, not signed.
+Verification: `make verify-ee`/`compare_sections.py`, all three exact
+after correcting to the evidence-driven model above; `movn`/`movz` needed
+a local `.set mips32r2` / `.set mips3` bracket in `asm/camera_accessors.s`
+around only the one affected stanza (MIPS32R2 conditional-move
+instructions are not in the pinned `-march=mips3` assembler's default
+instruction set; this is a local directive, not a global compiler-flag
+change, and does not affect the byte-exactness gate's meaning).
+Scope: general MIPS/GCC codegen conventions; not specific to this
+compiler beyond the `-march=mips3` assembler default excluding MIPS32R2
+opcodes.
+Limits: only one example of each shape is confirmed in this cluster.
+References: [linkonce cluster task](tasks/LINKONCE_CLUSTER.md).
+
+## `objVector` is an 8-byte, two-float vector, confirmed by three independently-matching empty bodies
+
+Symptom: `CWeapon::SetTgtPos`/`PositionInit`/`AddOffset` all take
+`objVector` by value with a body that reproduces the reference's bare
+16-byte prologue/epilogue (zero load/store instructions) only for a
+specific guessed size, and a wrong guess still compiles and "looks"
+plausible (same section, same mangled name) while being the wrong size.
+Mechanism: a 12-byte `objVector { float x,y,z; }` hypothesis compiles the
+same empty-body methods to 36 bytes (defensive `ldl`/`ldr` spill of the
+unused by-value struct argument onto the stack, the same alignment-driven
+codegen difference already seen for `objMatrix`), while an 8-byte
+`objVector { float x,y; }` reproduces the reference's exact bare
+prologue/epilogue on all three independently-checked methods.
+Pathway: for a `G<len><Name>`-mangled by-value class parameter whose
+method body is provably empty in the reference (checked by comparing byte
+count to the minimal empty-body-with-frame baseline), don't assume the
+type's size from its name or a prior similar type (`objMatrix`'s 64 bytes
+does not imply `objVector` is proportionally sized) — binary-search the
+size empirically against the exact reference byte count, since a
+too-large or misaligned guess triggers visible defensive spill code you
+can detect immediately, and a correct guess reproduces a suspiciously
+trivial, easy-to-verify all-zero-instruction body.
+Verification: `python3 tools/run_ee_probe.py` on an isolated 3-method
+probe; 8 bytes matched exactly (byte-for-byte, all three methods) on the
+first attempt after the 12-byte hypothesis was rejected by size alone.
+Scope: this compiler's by-value-class-parameter spill/dead-code behavior;
+likely generalizes to any GCC of this era with conservative "always spill
+non-trivial-looking class parameters" behavior (see the register-
+allocation-context entries in `CODE_FAILURES.md` for the companion
+limitation once a body is *not* empty).
+Limits: field names `x`/`y` are a plausible guess from the class's
+apparent purpose, not independently confirmed; no method in this batch
+reads or writes an individual `x`/`y` component.
+References: [linkonce cluster task](tasks/LINKONCE_CLUSTER.md).

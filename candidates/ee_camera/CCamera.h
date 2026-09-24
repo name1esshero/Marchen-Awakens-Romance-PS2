@@ -14,6 +14,12 @@ class CCamera;
 // Named only to reproduce the mangled parameter type in
 // SetCurrentStatus__10CCharaBaseiiP12TypeArmParami; no members are evidenced.
 class TypeArmParam;
+// Named only to reproduce ArgFilter__5CPrimP7PRIMINF's mangled parameter
+// type; no members are evidenced.
+class PRIMINF;
+// Named only to reproduce SetActTbl__7CActTblP9MOTNO_TBL's mangled
+// parameter type; no members are evidenced.
+class MOTNO_TBL;
 // Named only to reproduce SetSubMotion__7CWeaponG8MotionNoif's mangled
 // parameter: 'G' is this old ABI's encoding for a class passed BY VALUE
 // (any class type, trivial or not — an earlier belief that this required a
@@ -21,6 +27,16 @@ class TypeArmParam;
 // distinct from 'P' (pointer) and 'R' (genuine C++ reference) seen
 // elsewhere. No members are evidenced.
 class MotionNo {};
+// Two floats confirmed by CWeapon::SetTgtPos/PositionInit/AddOffset: their
+// empty bodies take objVector by value with no spill code at all (matching
+// the reference's bare prologue/epilogue), which only reproduces at exactly
+// 8 bytes -- 12 bytes (three floats) spills defensively via ldl/ldr instead.
+// Field names x/y are a plausible guess from the class's evident purpose,
+// not independently confirmed.
+class objVector {
+public:
+    float x, y;
+};
 
 class CRender {
 public:
@@ -123,7 +139,9 @@ public:
     unsigned int lightTmp;
     unsigned char unknown464[0x4c4 - 0x464];
     int packetCount;
-    unsigned char unknown4c8[0x534 - 0x4c8];
+    unsigned char unknown4c8[0x50c - 0x4c8];
+    int culMode;
+    unsigned char unknown510[0x534 - 0x510];
     int nearClipMode;
     unsigned char unknown538[0x548 - 0x538];
     unsigned int bgCol;
@@ -131,7 +149,8 @@ public:
     int flickerFree;
     unsigned char unknown57c[0x600 - 0x57c];
     int clearFrameBuffer;
-    unsigned char unknown604[0x610 - 0x604];
+    int updateLightMatrix;
+    unsigned char unknown608[0x610 - 0x608];
     int wipeCnt;
     unsigned char unknown614[0x740 - 0x614];
     int regState;
@@ -150,6 +169,8 @@ public:
     int GetWipeCnt() { return wipeCnt; }
     void SetWipeCnt(int value) { wipeCnt = value; }
     int GetRegState() { return regState; }
+    int IsCulMode() { return culMode != 0; }
+    int isUpdateLightMatrix() { return updateLightMatrix != 0; }
 };
 
 class CGameCamera {
@@ -206,7 +227,12 @@ class CChara {
 public:
     unsigned char unknown000[0x50];
     unsigned int nowLocate;
-    unsigned char unknown054[0x308];
+    unsigned char unknown054[0xb4 - 0x54];
+    // Base pointer for GetNowRootLocate/GetNowBipLocate/GetNowNullLocate,
+    // each of which returns this plus a fixed byte offset; the pointed-to
+    // layout beyond those two offsets is not evidenced.
+    unsigned char *nowLocateTable;
+    unsigned char unknown0b8[0x35c - 0xb8];
     float rotateY;
     unsigned char unknown360[0x34];
     int charSts;
@@ -216,7 +242,10 @@ public:
     unsigned int locateBtm;
     unsigned char unknown614[0xc];
     unsigned int locateNull;
-    unsigned char unknown624[0x404];
+    unsigned char unknown624[0xa10 - 0x624];
+    unsigned int padPressMask;
+    unsigned int padOnMask;
+    unsigned char unknowna18[0xa28 - 0xa18];
     unsigned int padCnfig;
     unsigned char unknowna2c[0x2a4];
     int padType;
@@ -253,7 +282,7 @@ public:
     int playerType;
     unsigned char unknownfd0[0xb8];
     int hpDamageBlock;
-    unsigned char unknown108c[0x4];
+    int hitDmgCnt;
     int syncroSeChk;
 
     // Evidenced body ignores its argument and returns it unchanged.
@@ -298,6 +327,14 @@ public:
     void *GetChrParam() const { return chrParam; }
     void SetPadOffMask(int value) { padOffMask = value; }
     void SetAutoGuard(int value) { autoGuard = value; }
+    // GetNowRootLocate and GetNowBipLocate return the identical address.
+    void *GetNowRootLocate() { return nowLocateTable + 0x70; }
+    void *GetNowBipLocate() { return nowLocateTable + 0x70; }
+    void *GetNowNullLocate() { return nowLocateTable + 0x30; }
+    int CheckPadPress(unsigned int mask) { return mask & padPressMask; }
+    int CheckPadOn(unsigned int mask) { return mask & padOnMask; }
+    int IsHitDmgCntChk() { return hitDmgCnt > 0; }
+    void SetPadChk(int a, int b) { padChk2 = b; padChk = a; }
 };
 
 class CCharaBase {
@@ -327,7 +364,11 @@ public:
     void *currentWeaponTmp;
     void *curWeaponSnd;
     unsigned char unknown418[0x18];
-    int charCol;
+    // Retyped from a plain int: GetColHitData dereferences it as a pointer
+    // plus a fixed offset, so despite the name (grouped with charColG/
+    // charColK, both genuinely separate ints) this field is itself a
+    // pointer. GetCharCol returns its raw 4-byte value unchanged either way.
+    unsigned char *charCol;
     int charColG;
     int charColK;
     unsigned char unknown43c[0x4];
@@ -339,7 +380,8 @@ public:
     int yhoseiOffPmv;
     int ybaseSetPmv;
 
-    int GetCharCol() { return charCol; }
+    void *GetCharCol() { return charCol; }
+    void *GetColHitData() { return charCol + 0x70; }
     int GetCharColG() { return charColG; }
     int GetCharColK() { return charColK; }
     void *GetCharSe() { return &charSe; }
@@ -384,6 +426,11 @@ public:
     void SetYhoseiOffPmv(int value) { yhoseiOffPmv = value; }
     void SetYbaseSetPmv(int value) { ybaseSetPmv = value; }
     int GetCharCom() { return charCom; }
+    // Evidenced bodies ignore this object entirely and return the fixed
+    // constant 0.0f.
+    float GetGroundHeight() { return 0.0f; }
+    float GetLastSyncRate() { return 0.0f; }
+    float GetLastSyncRateMax() { return 0.0f; }
 };
 
 class CWeapon {
@@ -414,6 +461,9 @@ public:
     void SetCatchFlag(int) {}
     int GetCol(int) { return 0; }
     void SetSubMotion(MotionNo, int, float) {}
+    void SetTgtPos(objVector, int) {}
+    void PositionInit(objVector) {}
+    void AddOffset(objVector) {}
     int SetWeapon(int) { return 0; }
     void ResetWeapon() {}
     int IsAirAction() { return 0; }
@@ -550,6 +600,14 @@ public:
 // spelling); no members are evidenced.
 class AprMotion;
 
+// Named only to reproduce GetType's pointer-chase through the existing
+// nodeData field; no other members are evidenced.
+class PAppearNodeData {
+public:
+    unsigned char unknown00[0x10];
+    int type;
+};
+
 class CPAppear {
 public:
     unsigned char unknown000[0x10];
@@ -559,7 +617,10 @@ public:
     unsigned char unknown054[0x3c];
     void *pMovie;
     void *ypcHead;
-    void *nodeData;
+    // Retyped from void*: GetType dereferences it, so it is a typed
+    // pointer despite the raw 4-byte value GetNodeData already returns
+    // unchanged (same value either way).
+    PAppearNodeData *nodeData;
     void *parent;
     unsigned char unknown0a0[0x1b4];
     int isMotionEnd;
@@ -580,6 +641,11 @@ public:
     float GetFrame() { return frame; }
     int IsDisplay() { return isDisplay; }
     int IsMotionEnd() { return isMotionEnd; }
+    // GetType (`return nodeData->type;`) is deferred: this exact source
+    // reproduces the target's size but reuses register $3 for the
+    // intermediate pointer where the reference reuses $2 throughout -- the
+    // same isolated-probe register-allocation limitation already
+    // documented for CCamera's matrix accessors (see CODE_FAILURES.md).
     // Evidenced bodies ignore both arguments and return void.
     void OnMotionJumpPre(AprMotion *, AprMotion *) {}
     void OnMotionJumpAfter(AprMotion *, AprMotion *) {}
@@ -623,7 +689,11 @@ class CActTbl;
 
 class CMotionC {
 public:
-    unsigned char unknown000[0xf4];
+    unsigned char unknown000[0x44];
+    int frameJumpFlags;
+    unsigned char unknown048[0x50 - 0x48];
+    int endOfMotion;
+    unsigned char unknown054[0xf4 - 0x54];
     CMotionSts *motSts;
     CActTbl *actTbl;
     unsigned char unknown0fc[0x4];
@@ -634,6 +704,9 @@ public:
     CMotionC *childAddFr;
     CMotionC *subChildAddFr;
 
+    int IsFrameJump() { return frameJumpFlags & 0x2; }
+    int IsFrameJumpNext() { return frameJumpFlags & 0x7; }
+    void SetEndOfMotion() { endOfMotion = 1; }
     void SetMotSts(CMotionSts *value) { motSts = value; }
     void SetActTbl(CActTbl *value) { actTbl = value; }
     void SetParent(CMotionC *value) { parent = value; }
@@ -676,7 +749,8 @@ public:
     unsigned int boundingSphere;
     unsigned char unknown018[0xc];
     void *owner;
-    unsigned char unknown028[0x8];
+    int active;
+    unsigned char unknown02c[0x4];
     unsigned int min;
     float lower;
     unsigned char unknown038[0x8];
@@ -695,6 +769,7 @@ public:
     void *GetMax() { return &max; }
     // Evidenced body ignores all five arguments and returns a fixed zero.
     int CallBack(CCol *, int, int, ColCheckResult *, ColCheckResult *) { return 0; }
+    void ResetPosition() { active = 1; }
 };
 
 // Named only to reproduce ArmEffectBase::SetType's mangled enum parameter;
@@ -874,6 +949,9 @@ public:
     unsigned long GetPrim() { return prim; }
     void SetTex0(unsigned long value) { tex0 = value; }
     unsigned long GetTex0() { return tex0; }
+    unsigned long GetPrimPRIM() { return prim & 0x7; }
+    // Evidenced body: returns the argument if non-null, else this pointer.
+    PRIMINF *ArgFilter(PRIMINF *value) { return value ? value : (PRIMINF *)this; }
     // GetTex0Addr (address-of) and GetTex0 (value) read the identical
     // offset (0x10); the same aliasing shape already seen elsewhere.
     void *GetTex0Addr() { return &tex0; }
@@ -934,6 +1012,14 @@ public:
     void SetActiveDraw(int value) { activeDraw = value; }
 };
 
+// Named only to reproduce SelectSaveData__7CMCard2RC12MAR_SAVEDATA's mangled
+// parameter type; only its first 4-byte field is evidenced (copied whole by
+// SelectSaveData), name and further members are not.
+class MAR_SAVEDATA {
+public:
+    int id;
+};
+
 class CMCard2 {
 public:
     unsigned char unknown000[0x5c4];
@@ -942,11 +1028,14 @@ public:
     unsigned char unknown5cc[0x2c];
     int totalDataCapa;
     int dataCapa;
+    unsigned char unknown600[0x2e2c - 0x600];
+    int selectedSaveId;
 
     int GetActNo() { return actNo; }
     void *GetActionParam() { return &actionParam; }
     int GetDataCapa() { return dataCapa; }
     int GetTotalDataCapa() { return totalDataCapa; }
+    void SelectSaveData(const MAR_SAVEDATA &data) { selectedSaveId = data.id; }
 };
 
 // Named only to reproduce SetDispMode__5CFade11ACTOBJ_TYPE's mangled enum
@@ -966,16 +1055,32 @@ public:
     void SetDispMode(ACTOBJ_TYPE value) { dispMode = value; }
 };
 
+// Named only to reproduce GetNowBgColGrp's pointer-chase through the
+// existing nowBg field; no other members are evidenced.
+class BgColGrp {
+public:
+    unsigned char unknown00[0x68];
+    unsigned int group;
+};
+
 class CBgCtrl {
 public:
     unsigned char unknown000[0x30];
     int bg;
-    int nowBg;
+    // Retyped from a plain int: GetNowBgColGrp dereferences it, so it is a
+    // pointer despite the flat 4-byte value GetNowBg already returns raw
+    // (unchanged behavior for GetNowBg either way).
+    BgColGrp *nowBg;
     unsigned char unknown038[0xec];
     int disp;
 
     int GetBg() { return bg; }
-    int GetNowBg() { return nowBg; }
+    void *GetNowBg() { return nowBg; }
+    // GetNowBgColGrp (`return nowBg->group;`) is deferred: this exact
+    // source reproduces the target's size but reuses register $3 for the
+    // intermediate pointer where the reference reuses $2 throughout -- the
+    // same isolated-probe register-allocation limitation already
+    // documented for CCamera's matrix accessors (see CODE_FAILURES.md).
     void SetDisp(int value) { disp = value; }
 };
 
@@ -984,12 +1089,15 @@ public:
     unsigned char unknown000[0xb0];
     float gameCtrlTimer;
     float gameCtrlTimeOver;
-    unsigned char unknown0b8[0x6c];
+    unsigned char unknown0b8[0xc];
+    int gameOver;
+    unsigned char unknown0c8[0x124 - 0xc8];
     int pauseMenu;
 
     float GetGameCtrlTimer() const { return gameCtrlTimer; }
     float GetGameCtrlTimeOver() const { return gameCtrlTimeOver; }
     int GetPauseMenu() { return pauseMenu; }
+    int IsGameOver() { return gameOver != 0; }
 };
 
 class CMotionPMS {
@@ -1122,12 +1230,19 @@ public:
 
 class CActBoyake {
 public:
-    unsigned char unknown000[0x68];
+    unsigned char unknown000[0x30];
+    // Named only because DispOff zeroes it together with dispFlag below;
+    // no independent evidence of its exact role.
+    int dispCounter;
+    unsigned char unknown034[0x68 - 0x34];
     int destroy;
     int actionSw;
+    unsigned char unknown070[0x84 - 0x70];
+    unsigned char dispFlag;
 
     void SetDestroy(int value) { destroy = value; }
     void SetActionSw(int value) { actionSw = value; }
+    void DispOff() { dispCounter = 0; dispFlag = 0; }
 };
 
 // Named only to reproduce SetBgType's mangled enum parameter; no
@@ -1198,11 +1313,14 @@ class CGefScene {
 public:
     unsigned char unknown000[0x40];
     unsigned int billBoardAngle;
-    unsigned char unknown044[0x24];
+    unsigned char unknown044[0x8];
+    int enableEnd;
+    unsigned char unknown050[0x18];
     int loopCnt;
 
     void SetLoopCnt(int value) { loopCnt = value; }
     void *GetBillBoardAngle() { return &billBoardAngle; }
+    void EnableEnd() { enableEnd = 1; }
 };
 
 class CGameEffect_Ctrl {
@@ -1213,6 +1331,7 @@ public:
     // unrecovered for the same reason (see docs/tasks/LINKONCE_CLUSTER.md
     // and docs/CODE_SUCCESSES.md).
     int GetDispPosE() { return 4; }
+    float GetDispPosZ() { return 0.0f; }
 };
 
 class FireWall_Seed {
@@ -1263,14 +1382,18 @@ class CEventAct {
 public:
     // Evidenced body ignores all arguments and returns the fixed constant 2.
     int GetDispPosE() { return 2; }
+    float GetDispPosZ() { return 0.0f; }
 };
 
 class CActReversal {
 public:
-    unsigned char unknown000[0x38];
+    unsigned char unknown000[0x30];
+    float revMax;
+    float revMaxRate;
     float count;
 
     void SetCount(float value) { count = value; }
+    void SetRevMax(float max, float rate) { revMaxRate = rate; revMax = max; }
 };
 
 class CStageObj {
@@ -1356,6 +1479,8 @@ public:
 
     // Evidenced body unconditionally sets this field to zero.
     void RestartConvertStone() { convertStone = 0; }
+    // Evidenced body unconditionally sets the same field to one.
+    void StopConvertStone() { convertStone = 1; }
 };
 
 class CCharaSts {
@@ -1383,9 +1508,12 @@ public:
 
 class CActTbl {
 public:
-    void *actData;
+    // Retyped from void*: SetActTbl assigns a MOTNO_TBL* into it, so it is
+    // typed despite GetActData returning the raw value unchanged either way.
+    MOTNO_TBL *actData;
 
     void *GetActData() { return actData; }
+    MOTNO_TBL *SetActTbl(MOTNO_TBL *value) { return actData = value; }
 };
 
 class CEffectArmActTbl {
@@ -1406,10 +1534,6 @@ public:
 
     int GetModel() { return model; }
 };
-
-// Named only to reproduce FootStamp_Base::Init's mangled parameter type;
-// no members are evidenced.
-class objVector;
 
 class LoadAnimNormal {
 public:
@@ -1465,8 +1589,13 @@ public:
 
 class FireStorm {
 public:
+    unsigned char unknown000[0x570];
+    int actionSameType;
+
     // Evidenced body ignores all arguments and returns void.
     void Draw2D() {}
+    // Evidenced body unconditionally sets this field to one.
+    void ActionSameType() { actionSameType = 1; }
 };
 
 class Thunder {
@@ -1523,8 +1652,12 @@ class ClsSpring {
 public:
     unsigned char unknown000[0x10];
     unsigned int chainSetting;
+    unsigned char unknown014[0x34 - 0x14];
+    int skFollowInit;
 
     void *GetChainSetting() { return &chainSetting; }
+    float GetGroundHeight() { return 0.0f; }
+    void SkFollowInit() { skFollowInit = 1; }
 };
 
 class CMcFunc {

@@ -137,18 +137,23 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   text artifacts plus assembled code. `cmp` verifies every output byte.
 - An isolated build containing no ISO, extracted files, reports, existing build
   outputs or downloaded compiler reproduces the pinned boot hash.
-- 441 accessors (3,528 bytes) across ninety-five distinct classes (see
+- 475 accessors (3,936 bytes) across ninety-five distinct classes (see
   `candidates/ee_camera/CCamera.h` for the full list) have verified assembly
-  implementations. Every trivial 8-byte linkonce section not judged
-  UI/dialog/texture/model/movie-adjacent is now either recovered or
-  explicitly deferred as a `$gp`-relative static (5 sections across 4
-  classes: `CArmEffect`, `CGameEffect_Ctrl`, `LoadAnimNormal`,
+  implementations: the original 441 trivial 8-byte sections, plus 34 from
+  the first non-trivial (12-byte-tier) batch. Every trivial 8-byte linkonce
+  section not judged UI/dialog/texture/model/movie-adjacent is now either
+  recovered or explicitly deferred as a `$gp`-relative static (5 sections
+  across 4 classes: `CArmEffect`, `CGameEffect_Ctrl`, `LoadAnimNormal`,
   `CGameEffect_FootStamp` — singleton/static instance pointers an isolated
   probe cannot reproduce without manufacturing a whole-program static
-  layout). This is a natural completion point for the safe-scope recovery;
-  see [the linkonce cluster task](tasks/LINKONCE_CLUSTER.md).
+  layout). Of 334 remaining non-trivial (>8-byte) sections surveyed, 36 were
+  examined this batch: 34 recovered, 2 deferred for the same isolated-probe
+  register-allocation limitation, and 2 more (`CCharCom::SetMovePos`,
+  `FireStorm_Seed::SetPos`) confirmed to use undecoded R5900 `LQ`/`SQ`
+  instructions, the same tooling gap already found on CCamera's matrix
+  setters. See [the linkonce cluster task](tasks/LINKONCE_CLUSTER.md).
 - EE GCC `2.96-ee-001003-1` with the same single `-O2` flag compiles natural
-  C++ candidates for all 441 into the same sections. Substituting them
+  C++ candidates for all 475 into the same sections. Substituting them
   in the full ELF also passes byte comparison. The partial classes remain candidates.
 - Research compiler distribution, hash and flags are pinned; the setup step is
   explicit and downloaded executables are ignored by Git.
@@ -161,7 +166,7 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
 
 ## Remaining debt and limits
 
-- **3,441,676 bytes** of the boot ELF remain explicitly preserved as unrecovered
+- **3,441,268 bytes** of the boot ELF remain explicitly preserved as unrecovered
   hex, including most code, data and ELF metadata. No authentic-source completion
   percentage is claimed; a source-artifact rebuild is not complete decompilation.
 - Original game compiler version/flags are not proved. Eight middleware banners
