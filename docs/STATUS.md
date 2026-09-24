@@ -143,15 +143,20 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   The `train_tex.b` audit is complete: its `trng` texture reads
   `トレーニング` (“Training”) and its controller atlas includes `ARM セット`
   and `ランダム`; the title's visible letters span `(1,12)`–`(224,57)`.
-  DQ-34 queues an English title sibling. The GameOver audit is active in its
-  verified isolated worktree. The queue holds five `READY` bounded asset cards
-  for one active delegated worker (5.0 ready cards per active worker;
+  DQ-23's GameOver audit is complete and integrated: the ending text is English
+  artwork in low-alpha planes, so no translation override is needed. DQ-34's
+  `TRAINING` title sibling is active in an isolated worktree with worker-specific
+  Git identity. DQ-35 queues English siblings for the two confirmed controller
+  labels `ARM セット` and `ランダム`. The queue holds five `READY` bounded asset
+  cards for one active delegated worker (5.0 ready cards per active worker;
   reserve/capacity is 5/2 = 2.5).
   The completed
   title-remainder audit is integrated. Map,
   special-font, AFS suffix, background, and title-remainder audits are
-  integrated. Training-text is complete and GameOver is active; transition-menu,
-  TGS-menu, save/load, war-close, and training-title localization are ready. The
+  integrated. Training-text and GameOver are complete; transition-menu,
+  TGS-menu, save/load, and war-close audits remain ready. Training-title
+  localization is active, while the two confirmed training-controller labels
+  are queued separately. The
   coordinator's read-only PSMCT32
   investigation found a common eight-byte shortfall across 43 records but no safe decode; those
   records remain raw.
