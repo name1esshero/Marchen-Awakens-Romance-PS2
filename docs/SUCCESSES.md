@@ -1051,3 +1051,28 @@ Japanese; flat-texture review does not identify UVs, runtime use, or presentatio
 No baseline/override was edited, and no ISO or emulator/runtime validation was run.
 References: [`weapon texture audit`](../tasks/GRAPHIC_TEXT_WEAPONS.md),
 `graphics/index.json`, [`LOCALIZATION_METHODOLOGY.md`](LOCALIZATION_METHODOLOGY.md).
+
+
+## Environment texture audit identifies localized UI mixed into the texture corpus
+
+Symptom: the `graphics/environments/` category combines materials and scenery
+with compact interface atlases and marked surfaces, so filenames alone do not
+reveal translation work. Mechanism: authenticate every export against
+`graphics/index.json`, inspect the full set, then separate readable Japanese,
+English-only labels, and unresolved glyph-like emblems.
+Successful finding: five files visibly carry Japanese text or Japanese-styled
+wordmarks (`lbrn`, `gate`, `field_name`, `txts`, and `wrgm`). The gate marks and
+`wrgm` reading remain unresolved; `field_name` includes multiple
+`…のフィールド` labels and `サイコロ操作`. Two door/pillar motifs remain
+candidates only.
+Verification: all 189 TGA filenames, dimensions, and SHA-256 values match the
+index; each type-2, 32-bit, top-origin (`0x28`) payload has the exact declared
+length. The reviewed set totals 12,217,674 bytes and 157 distinct hashes.
+Scope: read-only visual classification of `graphics/environments/*_jp.tga`; no
+baseline or override changed.
+Limits: raster observation does not identify UVs, draw paths, intended context,
+or runtime visibility. No ISO/emulator validation was run, and unresolved marks
+are not interpreted as text.
+References: [environment text audit](../tasks/GRAPHIC_TEXT_ENVIRONMENTS.md),
+`graphics/index.json`, and
+[localization methodology](LOCALIZATION_METHODOLOGY.md).
