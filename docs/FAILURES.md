@@ -466,3 +466,20 @@ For future commits, prepare the full message in one file and use `git commit
 commit object using `git show -s --format='%(trailers)' <commit>` before
 reporting completion. This entry records a procedure failure; it does not
 change the queue content committed in `57885fd`.
+
+## A full worker checkout failed when the temporary filesystem was full
+
+While provisioning DQ-22, `git worktree add` targeted `/tmp`, whose 16 GiB
+tmpfs was full (`0` bytes available; inode use was 34%). Checkout emitted
+repeated `unable to write file` errors across tracked graphics. The incomplete
+worktree was stopped and cleaned; no worker had begun, no task content was
+lost, and the `worker/dq22-training-audit` branch remains available. The
+Windows-mounted C: volume reported 192 GiB free at the same time.
+
+The blocker was byte capacity on the selected tmpfs, not inode exhaustion or
+bad asset filenames. Before a full worktree checkout, inspect free space on its
+target volume. Retry on a volume with sufficient capacity; preserve existing
+worktrees instead of deleting another contributor's checkout. This does not
+show that the repository itself is too large for a full worktree on the C:
+volume. The DQ-22 assignment remains `READY` until its isolated worktree and
+worker identity are verified.

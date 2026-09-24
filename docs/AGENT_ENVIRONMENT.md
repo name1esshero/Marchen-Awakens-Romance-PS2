@@ -409,7 +409,11 @@ or a useful negative result must improve the shared record so later workers
 can start from evidence instead of repeating the same search.
 
 Before editing, each simultaneous worker must create its own Git worktree and
-branch. It owns its implementation, task evidence, applicable verification,
+branch. Check free space on the target volume before a full checkout; if it is
+short, choose a roomier volume or arrange a deliberately narrow sparse checkout.
+Do not remove another worker's or completed collaborator's worktree to reclaim
+space. After a failed partial checkout, verify Git's worktree list and preserve
+the task branch before retrying elsewhere. It owns its implementation, task evidence, applicable verification,
 scoped staging, and commit with all required `STANDARDS.md` §17 trailers. It
 must inspect its own final commit and verify that the changed-file list matches
 its task and trailers, then report the commit hash and verification outcome.

@@ -134,19 +134,19 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   unresolved. The coordinator is building its `OPTIONS` sibling from a tracked
   transparent layer and measured-region compositor. War-common's 13-row audit
   is complete: the `wrgm` mark appears to read `ウォーハンター` (“War Hunter”),
-  while the calligraphic marks in `window` remain unresolved. Library/movie-summary
-  audit is active in a separate worker worktree. The five-row library-main
+  while the calligraphic marks in `window` remain unresolved. The five-row library-main
   audit found likely `ライブラリ` and `キャラの戦歴` marks plus `014-007`; its
-  `window` marks remain unresolved. The training-text audit is active in a
-  separate worker worktree. Shop-menu's
+  `window` marks remain unresolved. The 23-row library movie-summary audit
+  found no readable text and all images were fully opaque. Shop-menu's
   six UI textures include Japanese text candidates in `equip`, `wdw_pause`, and
   `window`; `shop` reads `ARMショップ` and already has an English sibling.
-  The queue holds four `READY` bounded asset cards for two authorized workers
-  (2.0 ready cards per worker slot). The completed
+  The training-text audit is ready while its worker worktree is provisioned.
+  The queue holds five `READY` bounded asset cards for two authorized workers
+  (2.5 ready cards per slot); no delegated worker is active. The completed
   title-remainder audit is integrated. Map,
   special-font, AFS suffix, background, and title-remainder audits are
-  integrated. Library/movie-summary and training audits are active; GameOver,
-  transition-menu, TGS-menu, and save/load texture audits remain ready.
+  integrated. The training, GameOver, transition-menu, TGS-menu, and save/load
+  texture audits are ready. The coordinator's read-only PSMCT32 investigation found a
   The coordinator's read-only PSMCT32 investigation found a
   common eight-byte shortfall across 43 records but no safe decode; those
   records remain raw.
