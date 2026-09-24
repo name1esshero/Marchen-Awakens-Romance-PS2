@@ -1108,6 +1108,29 @@ run. The four top-row character-like forms remain unmapped.
 References: [`SPECIAL_FONT_ATLASES.md`](../tasks/SPECIAL_FONT_ATLASES.md),
 `graphics/index.json`, `tools/rtx3.py`, and localization methodology §14.
 
+## Library-main textures expose a Japanese title and character-history plate
+
+Symptom: the five UI exports mapped to `lib_main_tex.b` include both
+illustration and text-bearing menu artwork, while the filenames do not make
+the exact localized surfaces obvious.
+Method: select the exact `user_interface` rows from `graphics/index.json`,
+verify each TGA's name, dimensions, complete hash, header, and extent, then
+review all five alpha-composited images and enlarge the likely lettering.
+Finding: `lbry` appears to read `ライブラリ` (“Library”); `plt_001` appears to
+read `キャラの戦歴` (roughly, “Character battle history”) and also carries the
+separate `014-007` tag. The outlined marks in `window` remain an unresolved
+candidate; the character illustration and cavern scene show no readable words.
+Verification: all five indexed filenames, dimensions, and full TGA SHA-256
+values match; every image has a type-2, 32-bit, top-origin (`0x28`) header and
+exact declared extent. All five were visually reviewed. No baseline or
+override was changed.
+Limits: the Japanese readings are visual evidence, not confirmation of final
+English phrasing. Flat-image bounds do not establish UVs, draw order, or
+runtime presentation; no bundle/ISO rebuild or emulator validation was run.
+References: [library-main texture audit](../tasks/GRAPHIC_TEXT_LIB_MAIN_TEX.md),
+`graphics/index.json`, and
+[`localization methodology`](LOCALIZATION_METHODOLOGY.md).
+
 ## English texture siblings reinsert byte-exactly through a relocated ISO build
 
 Symptom: localized texture edits need to remain separate from recovered
