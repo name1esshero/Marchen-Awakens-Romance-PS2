@@ -747,6 +747,34 @@ References: `graphics/user_interface/00039_01631_0025_windisp_eng.tga`,
 [`FAILURES.md`](FAILURES.md), `tools/graphics.py`, `tools/rtx3.py`,
 `tools/verify_graphics_in_iso.py`.
 
+## Winner-screen UI audits should retain duplicate paths and isolate ambiguous marks
+
+Symptom: a screen-specific UI bundle can include many identically hashed small
+textures alongside frames, decorative circles, and compact label art; a
+directory-level count or filename inference can overstate translation coverage.
+Method: select assets by exact bundle path and category, keep every source path
+in the inventory, compare full hashes to identify visual duplicates, then
+inspect unique pixels with transparency exposed and record uncertain glyphs
+separately from readable wording.
+Finding: among 22 `user_interface` rows in `winner_tex.b` (excluding the already
+covered `0025_windisp`), 16 named 32×32 rows share one exact low-opacity image;
+the 22 paths contain 7 unique hashes. `window` has three outlined Japanese-
+looking text rows, while the shared tiny mark, the `mg_circle` ring, and
+`win_back2` linework remain unclassified candidates. A plain circular outline
+and magenta stepped pattern contain no recognizable wording.
+Verification: every included path, dimension, and complete TGA SHA-256 matched
+`graphics/index.json`; all files have exact type-2 32-bit top-origin extents,
+and all 22 appearances were visually reviewed. No baseline, override, bundle,
+or ISO changed.
+Scope: the 22 UI texture rows from `disc!/_DATA.YFS;1!/data/menu/winner_tex.b`;
+the non-UI bundle members and `0025_windisp` are excluded.
+Limits: repeated bytes establish identical raster content, not per-character
+meaning. The ambiguous marks are not confirmed Japanese; flat texture review
+does not establish UV placement, composition, draw order, or runtime visibility.
+References: [winner texture audit](../tasks/GRAPHIC_TEXT_WINNER_TEX.md),
+`graphics/index.json`, and
+[`LOCALIZATION_METHODOLOGY.md`](LOCALIZATION_METHODOLOGY.md).
+
 ## Translate the title-screen mark and credit while preserving its indexed texture
 
 Symptom: the `title000` texture contains a Japanese title mark and author/publisher
