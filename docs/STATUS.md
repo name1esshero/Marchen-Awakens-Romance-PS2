@@ -140,15 +140,15 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   found no readable text and all images were fully opaque. Shop-menu's
   six UI textures include Japanese text candidates in `equip`, `wdw_pause`, and
   `window`; `shop` reads `ARMショップ` and already has an English sibling.
-  The training-text audit is ready while its worker worktree is provisioned.
-  The queue holds five `READY` bounded asset cards for two authorized workers
-  (2.5 ready cards per slot); no delegated worker is active. The completed
+  The training-text audit is active in its verified isolated worker worktree.
+  The queue holds four `READY` bounded asset cards for one active delegated
+  worker (4.0 ready cards per active worker; reserve/capacity is 4/2 = 2.0).
+  The completed
   title-remainder audit is integrated. Map,
   special-font, AFS suffix, background, and title-remainder audits are
-  integrated. The training, GameOver, transition-menu, TGS-menu, and save/load
-  texture audits are ready. The coordinator's read-only PSMCT32 investigation found a
-  The coordinator's read-only PSMCT32 investigation found a
-  common eight-byte shortfall across 43 records but no safe decode; those
+  integrated. The training audit is active; GameOver, transition-menu, TGS-menu,
+  and save/load texture audits are ready. The coordinator's read-only PSMCT32
+  investigation found a common eight-byte shortfall across 43 records but no safe decode; those
   records remain raw.
   The `ttlprts` and `title000` English siblings, task notes and success entries
   are integrated, locally round-trip, and reparse from the rebuilt ISO. None of
