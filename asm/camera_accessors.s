@@ -1077,3 +1077,78 @@ lw $2, 0x10c($4)
 .section .gnu.linkonce.t.GetScnNo__9CPDataGef,"ax",@progbits
 jr $31
 lw $2, 0x110($4)
+.section .gnu.linkonce.t.GetAlpha__11CEffPrimObj,"ax",@progbits
+jr $31
+lwc1 $f0, 0x74($4)
+.section .gnu.linkonce.t.GetCenter__11CEffPrimObj,"ax",@progbits
+jr $31
+lw $2, 0x30($4)
+.section .gnu.linkonce.t.SetDestroy__10CActBoyakei,"ax",@progbits
+jr $31
+sw $5, 0x68($4)
+.section .gnu.linkonce.t.SetActionSw__10CActBoyakei,"ax",@progbits
+jr $31
+sw $5, 0x6c($4)
+.section .gnu.linkonce.t.SetBgType__6CStage10DispBgType,"ax",@progbits
+jr $31
+sw $5, 0x1a0($4)
+.section .gnu.linkonce.t.GetBgType__6CStage,"ax",@progbits
+jr $31
+lw $2, 0x1a0($4)
+.section .gnu.linkonce.t.ActionUpdate_Arm__10CWeaponArm,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.ActionUpdate_Arm3__10CWeaponArm,"ax",@progbits
+jr $31
+daddu $2, $0, $0
+.section .gnu.linkonce.t.GetSubNo__10CWeaponArmiii,"ax",@progbits
+jr $31
+addu $2, $7, $5
+.section .gnu.linkonce.t.GetModel__10CEffectArm,"ax",@progbits
+jr $31
+daddu $2, $0, $0
+.section .gnu.linkonce.t.GetArmModelNum__10CEffectArm,"ax",@progbits
+jr $31
+daddu $2, $0, $0
+.section .gnu.linkonce.t.IsAir__10CEffectArm,"ax",@progbits
+jr $31
+lw $2, 0x44($4)
+.section .gnu.linkonce.t.GetComPad__8CCharCom,"ax",@progbits
+jr $31
+addiu $2, $4, 0x8
+.section .gnu.linkonce.t.SetManualGuardFlag__8CCharComi,"ax",@progbits
+jr $31
+sw $5, 0x4($4)
+.section .gnu.linkonce.t.SetTrainingStatus__8CCharComQ28CCharCom17ComTrainingStatus,"ax",@progbits
+jr $31
+sw $5, 0x194($4)
+.section .gnu.linkonce.t.GetNumObject__8CObjList,"ax",@progbits
+jr $31
+lw $2, 0xc($4)
+.section .gnu.linkonce.t.GetFirstObject__8CObjList,"ax",@progbits
+jr $31
+lw $2, 0x10($4)
+.section .gnu.linkonce.t.GetLastObject__8CObjList,"ax",@progbits
+jr $31
+lw $2, 0x14($4)
+.section .gnu.linkonce.t.GetParentScene__9CGefBirth,"ax",@progbits
+jr $31
+lw $2, 0x20($4)
+.section .gnu.linkonce.t.IsEnable__9CGefBirth,"ax",@progbits
+jr $31
+lw $2, 0x0($4)
+.section .gnu.linkonce.t.GetRate__9CGefBirth,"ax",@progbits
+jr $31
+lwc1 $f0, 0x24($4)
+.section .gnu.linkonce.t.IsEnd__7CHitEff,"ax",@progbits
+jr $31
+lw $2, 0xa4($4)
+.section .gnu.linkonce.t.GetCharNo__7CHitEff,"ax",@progbits
+jr $31
+lw $2, 0x70($4)
+.section .gnu.linkonce.t.DrawHit__7CHitEff,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.GameEffectOn__10CArmEffectRC9objMatrix,"ax",@progbits
+jr $31
+nop

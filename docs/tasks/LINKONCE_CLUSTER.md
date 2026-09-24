@@ -619,3 +619,54 @@ passes (full boot ELF and full EE-probe ELF both byte-identical).
 
 Not recovered this batch: the remaining 375 still-untouched trivial 8-byte
 sections, still excluding UI/menu/texture/model/movie-adjacent classes.
+
+## CWeaponArm/CEffectArm/CCharCom/CObjList/CGefBirth/CHitEff/CArmEffect/CEffPrimObj/CActBoyake/CStage batch — 2026-09-23
+
+Agent: Claude Sonnet 5; role: Contributor. Ten classes batched together
+(27 candidate sections, 25 recovered, 2 explicitly deferred).
+
+Three new mangling/codegen shapes appeared, all confirmed on standalone
+probes before touching the real candidates:
+
+- **A genuine computation, not a passthrough**:
+  `GetSubNo__10CWeaponArmiii` is `addu $2, $7, $5` — for parameters
+  `(a, b, c)`, that's `c + a` (register `$7`=`c`, `$5`=`a`), confirmed by
+  testing both operand orders: `c + a` reproduced `addu $2, $7, $5` exactly,
+  while `a + c` produced the reversed (and non-matching) `addu $2, $5, $7`.
+  Every other recovered method in this cluster so far has been a field
+  access, constant return, or no-op; this is the first with real (if
+  trivial) arithmetic.
+- **`Q<n>` qualified/nested name**: `SetTrainingStatus__8CCharComQ28CCharCom17ComTrainingStatus`
+  is `CCharCom::SetTrainingStatus(CCharCom::ComTrainingStatus)` — a nested
+  enum. `Q2` introduces a 2-component qualified name, each component a
+  `<len><name>` pair (`8CCharCom`, `17ComTrainingStatus`). Modeled as a
+  nested `enum ComTrainingStatus` inside `CCharCom`; matched on the first
+  attempt.
+- **`RC<len><name>`**: `GameEffectOn__10CArmEffectRC9objMatrix` is
+  `(const objMatrix &)` — reference (`R`) to const (`C`) `objMatrix`,
+  combining two letters already known individually. Matched on the first
+  attempt.
+
+**Deferred (not recovered)**: `CArmEffect::GetUpdateFlag` (`lb`) and
+`GetHead` (`lw`) both address via `$gp` (`-0x60dc($gp)`, `-0x60e0($gp)`),
+not `$this`/`$4` like every other section in this cluster — evidence of a
+static or file-scope variable, not an instance field. An isolated EE GCC
+probe cannot reproduce the exact `$gp`-relative offset without matching the
+*entire original program's* small-data-segment layout, and manufacturing
+that layout to force a match would violate STANDARDS.md's prohibition on
+manufactured matches. Left as raw hex, excluded from
+`config/camera_sections.txt`; `GameEffectOn` from the same class was still
+recovered since its own body never touches the `$gp`-relative fields.
+
+The unmodified EE GCC `2.96-ee-001003-1` `-O2` invocation matched all 25
+integrated sections. Reconstruction now covers **383 sections / 3,064 bytes
+across forty-two partial classes**; 3,442,140 bytes remain explicit raw
+debt (2 bytes short of the theoretical maximum for this batch, held back by
+the two deferred `$gp`-relative sections). `make test verify-boot
+verify-source-only verify-ee` passes (full boot ELF and full EE-probe ELF
+both byte-identical).
+
+Not recovered this batch: the remaining ~108 still-untouched trivial 8-byte
+sections in safe gameplay classes, plus the 2 deferred `$gp`-relative
+sections noted above, plus the 238 still-excluded UI/menu/texture/model/
+movie-adjacent sections.

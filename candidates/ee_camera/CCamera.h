@@ -1017,4 +1017,130 @@ public:
     int GetScnNo() { return scnNo; }
 };
 
+class CWeaponArm {
+public:
+    // Evidenced bodies ignore all arguments; two are no-op/fixed-zero stubs
+    // (see the same note on CCharaBase's stub methods). GetSubNo computes
+    // c + a from its three arguments (a, b, c), confirmed by operand order
+    // on a standalone probe: c + a produced addu $2, $7, $5, an exact match,
+    // while a + c produced the reversed addu $2, $5, $7.
+    void ActionUpdate_Arm() {}
+    int ActionUpdate_Arm3() { return 0; }
+    int GetSubNo(int a, int b, int c) { return c + a; }
+};
+
+class CEffectArm {
+public:
+    unsigned char unknown000[0x44];
+    int isAir;
+
+    // Evidenced bodies are fixed-zero stubs (see the same note on
+    // CCharaBase's stub methods).
+    void *GetModel() { return 0; }
+    int GetArmModelNum() { return 0; }
+    int IsAir() { return isAir; }
+};
+
+class CCharCom {
+public:
+    // Named only to reproduce SetTrainingStatus's mangled nested-enum
+    // parameter (Q28CCharCom17ComTrainingStatus); no enumerators beyond the
+    // placeholder are evidenced.
+    enum ComTrainingStatus { COM_TRAINING_STATUS_UNKNOWN };
+
+    unsigned char unknown000[0x4];
+    int manualGuardFlag;
+    unsigned int comPad;
+    unsigned char unknown00c[0x188];
+    ComTrainingStatus trainingStatus;
+
+    void *GetComPad() { return &comPad; }
+    void SetManualGuardFlag(int value) { manualGuardFlag = value; }
+    void SetTrainingStatus(ComTrainingStatus value) { trainingStatus = value; }
+};
+
+class CObjList {
+public:
+    unsigned char unknown000[0xc];
+    int numObject;
+    void *firstObject;
+    void *lastObject;
+
+    int GetNumObject() { return numObject; }
+    void *GetFirstObject() { return firstObject; }
+    void *GetLastObject() { return lastObject; }
+};
+
+class CGefBirth {
+public:
+    int enable;
+    unsigned char unknown004[0x1c];
+    int parentScene;
+    float rate;
+
+    int GetParentScene() { return parentScene; }
+    int IsEnable() { return enable; }
+    float GetRate() { return rate; }
+};
+
+class CHitEff {
+public:
+    unsigned char unknown000[0x70];
+    int charNo;
+    unsigned char unknown074[0x30];
+    int isEnd;
+
+    int IsEnd() { return isEnd; }
+    int GetCharNo() { return charNo; }
+    // Evidenced body ignores all arguments and returns void.
+    void DrawHit() {}
+};
+
+class CArmEffect {
+public:
+    // Only GameEffectOn is recovered here: GetUpdateFlag and GetHead read
+    // via $gp-relative addressing (lb/lw with a $gp base, not $this/$4) --
+    // a static or file-scope variable, not an instance field. Reproducing
+    // that would require matching the *entire original program's*
+    // small-data-segment layout relative to $gp, which an isolated probe
+    // cannot replicate without manufacturing an artificial global layout;
+    // left unrecovered per STANDARDS.md's prohibition on manufactured
+    // matches. See docs/tasks/LINKONCE_CLUSTER.md.
+    void GameEffectOn(const objMatrix &) {}
+};
+
+class CEffPrimObj {
+public:
+    unsigned char unknown000[0x30];
+    void *center;
+    unsigned char unknown034[0x40];
+    float alpha;
+
+    float GetAlpha() { return alpha; }
+    void *GetCenter() { return center; }
+};
+
+class CActBoyake {
+public:
+    unsigned char unknown000[0x68];
+    int destroy;
+    int actionSw;
+
+    void SetDestroy(int value) { destroy = value; }
+    void SetActionSw(int value) { actionSw = value; }
+};
+
+// Named only to reproduce SetBgType's mangled enum parameter; no
+// enumerators beyond the placeholder are evidenced.
+enum DispBgType { DISP_BG_TYPE_UNKNOWN };
+
+class CStage {
+public:
+    unsigned char unknown000[0x1a0];
+    DispBgType bgType;
+
+    void SetBgType(DispBgType value) { bgType = value; }
+    DispBgType GetBgType() { return bgType; }
+};
+
 #endif

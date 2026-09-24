@@ -398,3 +398,38 @@ int (CMotionPMS::*gMotionPMSGetDirectFlagAddress)() = &CMotionPMS::GetDirectFlag
 void *(CPDataGef::*gPDataGefGetDataAddress)() = &CPDataGef::GetData;
 int (CPDataGef::*gPDataGefGetGefNoAddress)() = &CPDataGef::GetGefNo;
 int (CPDataGef::*gPDataGefGetScnNoAddress)() = &CPDataGef::GetScnNo;
+
+void (CWeaponArm::*gWeaponArmActionUpdate_ArmAddress)() = &CWeaponArm::ActionUpdate_Arm;
+int (CWeaponArm::*gWeaponArmActionUpdate_Arm3Address)() = &CWeaponArm::ActionUpdate_Arm3;
+int (CWeaponArm::*gWeaponArmGetSubNoAddress)(int, int, int) = &CWeaponArm::GetSubNo;
+
+void *(CEffectArm::*gEffectArmGetModelAddress)() = &CEffectArm::GetModel;
+int (CEffectArm::*gEffectArmGetArmModelNumAddress)() = &CEffectArm::GetArmModelNum;
+int (CEffectArm::*gEffectArmIsAirAddress)() = &CEffectArm::IsAir;
+
+void *(CCharCom::*gCharComGetComPadAddress)() = &CCharCom::GetComPad;
+void (CCharCom::*gCharComSetManualGuardFlagAddress)(int) = &CCharCom::SetManualGuardFlag;
+void (CCharCom::*gCharComSetTrainingStatusAddress)(CCharCom::ComTrainingStatus) = &CCharCom::SetTrainingStatus;
+
+int (CObjList::*gObjListGetNumObjectAddress)() = &CObjList::GetNumObject;
+void *(CObjList::*gObjListGetFirstObjectAddress)() = &CObjList::GetFirstObject;
+void *(CObjList::*gObjListGetLastObjectAddress)() = &CObjList::GetLastObject;
+
+int (CGefBirth::*gGefBirthGetParentSceneAddress)() = &CGefBirth::GetParentScene;
+int (CGefBirth::*gGefBirthIsEnableAddress)() = &CGefBirth::IsEnable;
+float (CGefBirth::*gGefBirthGetRateAddress)() = &CGefBirth::GetRate;
+
+int (CHitEff::*gHitEffIsEndAddress)() = &CHitEff::IsEnd;
+int (CHitEff::*gHitEffGetCharNoAddress)() = &CHitEff::GetCharNo;
+void (CHitEff::*gHitEffDrawHitAddress)() = &CHitEff::DrawHit;
+
+void (CArmEffect::*gArmEffectGameEffectOnAddress)(const objMatrix &) = &CArmEffect::GameEffectOn;
+
+float (CEffPrimObj::*gEffPrimObjGetAlphaAddress)() = &CEffPrimObj::GetAlpha;
+void *(CEffPrimObj::*gEffPrimObjGetCenterAddress)() = &CEffPrimObj::GetCenter;
+
+void (CActBoyake::*gActBoyakeSetDestroyAddress)(int) = &CActBoyake::SetDestroy;
+void (CActBoyake::*gActBoyakeSetActionSwAddress)(int) = &CActBoyake::SetActionSw;
+
+void (CStage::*gStageSetBgTypeAddress)(DispBgType) = &CStage::SetBgType;
+DispBgType (CStage::*gStageGetBgTypeAddress)() = &CStage::GetBgType;
