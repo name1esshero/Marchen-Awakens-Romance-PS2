@@ -782,6 +782,30 @@ runtime composition, and on-screen presentation remain unknown.
 References: [`map texture audit`](../tasks/GRAPHIC_TEXT_MAPS.md),
 `graphics/index.json`, `tools/rtx3.py`.
 
+## Background textures mix scene art with localized and language-neutral lettering
+
+Symptom: the `backgrounds` category contains both environmental/effect textures
+and small UI/title graphics, so the category name alone does not show which
+images warrant translation review.
+Mechanism: review all 46 indexed Japanese TGAs on a checkerboard or neutral
+background, inspect the alpha-bearing lettering at enlarged scale, and compare
+each image's dimensions and full-file SHA-256 with `graphics/index.json`.
+Successful pathway: identify nine assets with visible English lettering,
+Japanese title/control marks, or a digit/unit atlas; separately flag two door
+scenes with inscription-like marks whose script is unresolved. Explicitly record
+the other 35 as having no readable text, including the icon-only shop panels,
+and preserve exact duplicate groups by hash.
+Verification: all 46 filesystem images match the 46 background index records in
+dimensions and image SHA-256; every image was visually reviewed. The report
+records source-pixel bounds where text is visible and does not infer UVs or
+runtime composition.
+Limits: two carved-looking door inscriptions are not confidently identifiable
+as Japanese; control-text and unit readings are visual only. No baseline or
+override was changed, and no ISO build or emulator/runtime validation was run.
+References: [`background texture audit`](../tasks/GRAPHIC_TEXT_BACKGROUNDS.md),
+`graphics/index.json`,
+[`LOCALIZATION_METHODOLOGY.md`](LOCALIZATION_METHODOLOGY.md).
+
 ## Byte-weight recovery levels after editable YOBJ coordinate surfaces
 
 Symptom: one "decompiled percentage" conflates file preservation, parser
