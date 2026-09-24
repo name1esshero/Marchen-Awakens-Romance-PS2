@@ -1211,3 +1211,29 @@ acceptance.
 References: `tasks/MESSAGE_TABLE.md`, `tasks/DATABASE_CONDITION_SEMANTICS.md`,
 `tasks/GRAPHIC_TEXT_ARM_COMMAND.md`, `reports/translation_surfaces.json`, and
 `reports/mar_eng_compare_14_graphics_database.json`.
+
+## Menu-bundle graphics audits should separate label atlases from artwork
+
+Symptom: one menu texture bundle can mix character sheets, button/control
+legends, Japanese mode labels, scrolling copy, and purely decorative resources.
+Method: select rows by the exact bundle `asset_path` in `graphics/index.json`,
+authenticate every TGA by complete hash/dimensions/header extent, then review
+all images with transparency visible before assigning text bounds. Preserve a
+per-file inventory even where content is non-text or unresolved.
+Finding: the 12 `top_tex.b` exports contain clear Japanese text candidates in
+the mixed `icon` atlas, the narrow `mg_scroll` strip, and the `mnmn`,
+`modename`, and `window` lettering surfaces. The two `ch_*` sheets are character
+art; a tiny chest mark is not confidently readable and remains unclassified.
+The other five resources show effects, colored orbs, sky, or a gradient without
+visible wording. Latin controls and labels in the icon atlas should be kept
+distinct from Japanese text during localization.
+Verification: all 12 filenames, dimensions, and full SHA-256 values match their
+index rows; hashes are unique, and all files have exact type-2 32-bit top-origin
+TGA extents. Every image was reviewed visually. No baseline, override, bundle,
+or ISO was edited or built.
+Scope: `disc!/_DATA.YFS;1!/data/menu/top_tex.b`, 12 indexed Japanese TGAs.
+Limits: isolated flat textures do not establish string identity where small
+glyphs are unclear, UV placement, composition, animation, or runtime visibility.
+References: [top texture audit](../tasks/GRAPHIC_TEXT_TOP_TEX.md),
+`graphics/index.json`, and
+[`LOCALIZATION_METHODOLOGY.md`](LOCALIZATION_METHODOLOGY.md).
