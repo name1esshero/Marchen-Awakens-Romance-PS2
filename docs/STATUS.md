@@ -134,9 +134,9 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   unresolved. The coordinator is building its `OPTIONS` sibling from a tracked
   transparent layer and measured-region compositor. War-common's 13-row audit
   is complete: the `wrgm` mark appears to read `ウォーハンター` (“War Hunter”),
-  while the calligraphic marks in `window` remain unresolved. Shop-menu and
-  library-main audits are active in separate worker worktrees. Shop-menu's six
-  UI textures include Japanese text candidates in `equip`, `wdw_pause`, and
+  while the calligraphic marks in `window` remain unresolved. Library/movie-summary
+  and library-main audits are active in separate worker worktrees. Shop-menu's
+  six UI textures include Japanese text candidates in `equip`, `wdw_pause`, and
   `window`; `shop` reads `ARMショップ` and already has an English sibling.
   The queue holds four `READY` bounded asset cards for two authorized workers
   (2.0 ready cards per worker slot). The completed
