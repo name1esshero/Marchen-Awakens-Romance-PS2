@@ -27,6 +27,29 @@ References: [asset methodology](TASK_ASSET_WORKSPACE_METHODOLOGY.md),
 `tools/assets.py`, `tools/compare_disc.py`, `tests/test_assets.py`,
 `tests/test_compare_disc.py`.
 
+## AFS filename suffixes mirror archive table words without proven semantics
+
+Symptom: each filename-TOC row carries 16 trailing bytes whose purpose was
+unknown, making it unclear whether an archive editor could preserve or interpret
+them safely.
+Mechanism: a read-only comparison of all 38 rows in the observed `MOVIE.AFS;1`
+and `BGM.AFS;1` archives found that the suffix's final little-endian word mirrors
+the member count in row 0, then alternating member offset and size words for the
+first half of the archive table in subsequent rows. The first 12 bytes also
+decode to calendar-valid six-u16 tuples under one candidate date/time grouping,
+but no field meaning is established.
+Verification: all 38 raw suffixes and per-suffix SHA-256 hashes were recorded.
+A fresh parser report matched the tracked AFS inventory exactly, and direct
+checks reproduced the final-word relation for 38/38 rows against both pinned
+archive extents. The pinned image hash was rechecked.
+Scope: metadata bytes in these two archive filename tables only.
+Limits: the timestamp-like grouping is an unconfirmed candidate, and the exact
+table-word correlation does not explain why the values are duplicated or prove
+that a runtime loader reads them. Keep the suffix opaque and unchanged until
+independent producer or loader evidence is available.
+References: [`suffix audit`](../tasks/AFS_TOC_SUFFIX.md),
+[`AFS inventory`](../tasks/AFS_INTERNALS.md), `tools/afs.py`.
+
 ## BPE-wrapped menu bundles can be edited and reinserted as decoded payloads
 
 Symptom: 724 menu `.b` leaves expose no useful image/string structure while
