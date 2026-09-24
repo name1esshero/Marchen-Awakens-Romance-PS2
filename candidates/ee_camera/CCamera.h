@@ -1143,4 +1143,106 @@ public:
     DispBgType GetBgType() { return bgType; }
 };
 
+class CStageWall {
+public:
+    unsigned char unknown000[0x1b0];
+    DispBgType bgType;
+
+    void SetBgType(DispBgType value) { bgType = value; }
+    DispBgType GetBgType() { return bgType; }
+};
+
+class CPArm_PS2 {
+public:
+    unsigned char unknown000[0x290];
+    int classArmObj;
+    int weaponClass;
+
+    int GetClassArmObj() { return classArmObj; }
+    int GetWeaponClass() { return weaponClass; }
+};
+
+class CBabGun {
+public:
+    unsigned char unknown000[0x80];
+    unsigned int pos;
+    unsigned char unknown084[0x3c];
+    int col;
+
+    void *GetPos() { return &pos; }
+    int GetCol() { return col; }
+};
+
+class CCharCol {
+public:
+    unsigned char unknown000[0x70];
+    // GetColHitData (address-of) and SetProp (value write) read/write the
+    // identical offset (0x70); the same aliasing shape already seen
+    // repeatedly in this cluster.
+    int colHitData;
+
+    void *GetColHitData() { return &colHitData; }
+    void SetProp(int value) { colHitData = value; }
+};
+
+class CCharaMotion {
+public:
+    unsigned char unknown000[0x98];
+    float rotAngle;
+
+    float GetRotAngle() { return rotAngle; }
+    void SetRotAngle(float value) { rotAngle = value; }
+};
+
+class CGefScene {
+public:
+    unsigned char unknown000[0x40];
+    unsigned int billBoardAngle;
+    unsigned char unknown044[0x24];
+    int loopCnt;
+
+    void SetLoopCnt(int value) { loopCnt = value; }
+    void *GetBillBoardAngle() { return &billBoardAngle; }
+};
+
+class CGameEffect_Ctrl {
+public:
+    // GetInstance reads via $gp-relative addressing (lw $2, -0x60e4($gp)),
+    // not $this/$4 -- a singleton's static instance pointer, the same
+    // structural case as CArmEffect::GetUpdateFlag/GetHead. Left
+    // unrecovered for the same reason (see docs/tasks/LINKONCE_CLUSTER.md
+    // and docs/CODE_SUCCESSES.md).
+    int GetDispPosE() { return 4; }
+};
+
+class FireWall_Seed {
+public:
+    unsigned char unknown000[0x3e0];
+    int isActive;
+
+    // Evidenced body ignores all arguments and returns void.
+    void Draw3D() {}
+    int IsActive() { return isActive; }
+};
+
+class FireStorm_Ptcl {
+public:
+    unsigned char unknown000[0x74];
+    float alpha;
+
+    // Evidenced body ignores all arguments and returns void.
+    void Draw2D() {}
+    void SetAlpha(float value) { alpha = value; }
+};
+
+class FireStorm_Seed {
+public:
+    unsigned char unknown000[0x74];
+    float alpha;
+
+    // Evidenced body ignores all arguments and returns void.
+    void Draw2D() {}
+    void SetAlpha(float value) { alpha = value; }
+};
+
 #endif

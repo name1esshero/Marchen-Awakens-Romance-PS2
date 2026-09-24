@@ -670,3 +670,41 @@ Not recovered this batch: the remaining ~108 still-untouched trivial 8-byte
 sections in safe gameplay classes, plus the 2 deferred `$gp`-relative
 sections noted above, plus the 238 still-excluded UI/menu/texture/model/
 movie-adjacent sections.
+
+## CStageWall/CPArm_PS2/CBabGun/CCharCol/CCharaMotion/CGefScene/CGameEffect_Ctrl/FireWall_Seed/FireStorm_Ptcl/FireStorm_Seed batch — 2026-09-23
+
+Agent: Claude Sonnet 5; role: Contributor. Ten more classes batched (20
+candidate sections, 19 recovered, 1 deferred).
+
+At this point the remaining safe candidate list is entirely 1-2-section
+classes; many names in this tail suggest UI/dialog/menu territory (e.g. the
+`Mar*`/`DataBase*`/`Labyrinth_*` event-screen families, `CommandList`/
+`KeyConfig`/`Train*`, `CString*`, `CockpitBase`/`CCharGauge`, `Char2DAnimCtrl*`)
+and were skipped this batch even though they don't match the earlier
+UI/texture/model/movie keyword filter, out of caution around the concurrent
+localization session's territory — narrative/dialog screens are very likely
+to display text drawn from the same message tables being translated.
+
+A third `$gp`-relative section was found and deferred the same way as the
+two in the previous batch: `CGameEffect_Ctrl::GetInstance` reads
+`-0x60e4($gp)`, the classic singleton static-instance-pointer shape. Left
+unrecovered for the same reason (see `docs/CODE_SUCCESSES.md`).
+`CCharCol::GetColHitData` (address-of) and `SetProp` (value write) alias the
+identical offset `0x70`, the same pattern seen repeatedly — modeled as one
+plain `int` field, not the address-typed placeholder used for pure
+address-of cases, since here the field is genuinely both read and written
+as a scalar.
+
+The unmodified EE GCC `2.96-ee-001003-1` `-O2` invocation matched all 19
+integrated sections. Reconstruction now covers **402 sections / 3,216 bytes
+across fifty-one partial classes**; 3,441,988 bytes remain explicit raw
+debt. `make test verify-boot verify-source-only verify-ee` passes (full
+boot ELF and full EE-probe ELF both byte-identical).
+
+With the expanded caution keyword list (adding `Mar`/`DataBase`/`Labyrinth`/
+`LabyEve`/`Command`/`KeyConfig`/`Train`/`String`/`Cockpit`/`Gauge`/`2DAnim`/
+`Transition`/`type_info` to the original UI/texture/model/movie set), exactly
+**44 sections across 40 classes** remain judged safe and untouched; 283
+sections across the rest are now deliberately excluded, up from 238, and 3
+sections total are deferred as `$gp`-relative statics (331 total remaining,
+unchanged from the true census figure).

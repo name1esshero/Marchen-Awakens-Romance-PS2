@@ -1073,9 +1073,27 @@
     },
     {
       "offset": 2352444,
-      "size": 280,
+      "size": 176,
       "kind": "unrecovered_hex",
       "source": "unrecovered_0023e53c.hex"
+    },
+    {
+      "offset": 2352620,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetBgType__10CStageWall10DispBgType"
+    },
+    {
+      "offset": 2352628,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetBgType__10CStageWall"
+    },
+    {
+      "offset": 2352636,
+      "size": 88,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023e5fc.hex"
     },
     {
       "offset": 2352724,
@@ -1367,9 +1385,27 @@
     },
     {
       "offset": 2354408,
-      "size": 2576,
+      "size": 472,
       "kind": "unrecovered_hex",
       "source": "unrecovered_0023ece8.hex"
+    },
+    {
+      "offset": 2354880,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetClassArmObj__9CPArm_PS2"
+    },
+    {
+      "offset": 2354888,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetWeaponClass__9CPArm_PS2"
+    },
+    {
+      "offset": 2354896,
+      "size": 2088,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0023eed0.hex"
     },
     {
       "offset": 2356984,
@@ -2387,9 +2423,27 @@
     },
     {
       "offset": 2365572,
-      "size": 668,
+      "size": 376,
       "kind": "unrecovered_hex",
       "source": "unrecovered_00241884.hex"
+    },
+    {
+      "offset": 2365948,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetPos__7CBabGun"
+    },
+    {
+      "offset": 2365956,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetCol__7CBabGun"
+    },
+    {
+      "offset": 2365964,
+      "size": 276,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_00241a0c.hex"
     },
     {
       "offset": 2366240,
@@ -2507,9 +2561,45 @@
     },
     {
       "offset": 2367596,
-      "size": 320,
+      "size": 88,
       "kind": "unrecovered_hex",
       "source": "unrecovered_0024206c.hex"
+    },
+    {
+      "offset": 2367684,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetColHitData__8CCharCol"
+    },
+    {
+      "offset": 2367692,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetProp__8CCharColi"
+    },
+    {
+      "offset": 2367700,
+      "size": 88,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_002420d4.hex"
+    },
+    {
+      "offset": 2367788,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetRotAngle__12CCharaMotion"
+    },
+    {
+      "offset": 2367796,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetRotAngle__12CCharaMotionf"
+    },
+    {
+      "offset": 2367804,
+      "size": 112,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0024213c.hex"
     },
     {
       "offset": 2367916,
@@ -2687,9 +2777,27 @@
     },
     {
       "offset": 2372304,
-      "size": 1672,
+      "size": 124,
       "kind": "unrecovered_hex",
       "source": "unrecovered_002432d0.hex"
+    },
+    {
+      "offset": 2372428,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetLoopCnt__9CGefScenei"
+    },
+    {
+      "offset": 2372436,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetBillBoardAngle__9CGefScene"
+    },
+    {
+      "offset": 2372444,
+      "size": 1532,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_0024335c.hex"
     },
     {
       "offset": 2373976,
@@ -2711,9 +2819,21 @@
     },
     {
       "offset": 2374000,
-      "size": 1284,
+      "size": 1212,
       "kind": "unrecovered_hex",
       "source": "unrecovered_00243970.hex"
+    },
+    {
+      "offset": 2375212,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.GetDispPosE__16CGameEffect_Ctrl"
+    },
+    {
+      "offset": 2375220,
+      "size": 64,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_00243e34.hex"
     },
     {
       "offset": 2375284,
@@ -2807,9 +2927,75 @@
     },
     {
       "offset": 2376020,
-      "size": 25908,
+      "size": 1176,
       "kind": "unrecovered_hex",
       "source": "unrecovered_00244154.hex"
+    },
+    {
+      "offset": 2377196,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.Draw3D__13FireWall_Seed"
+    },
+    {
+      "offset": 2377204,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.IsActive__13FireWall_Seed"
+    },
+    {
+      "offset": 2377212,
+      "size": 912,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_002445fc.hex"
+    },
+    {
+      "offset": 2378124,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.Draw2D__14FireStorm_Ptcl"
+    },
+    {
+      "offset": 2378132,
+      "size": 20,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_00244994.hex"
+    },
+    {
+      "offset": 2378152,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetAlpha__14FireStorm_Ptclf"
+    },
+    {
+      "offset": 2378160,
+      "size": 288,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_002449b0.hex"
+    },
+    {
+      "offset": 2378448,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.Draw2D__14FireStorm_Seed"
+    },
+    {
+      "offset": 2378456,
+      "size": 12,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_00244ad8.hex"
+    },
+    {
+      "offset": 2378468,
+      "size": 8,
+      "kind": "object_section",
+      "section": ".gnu.linkonce.t.SetAlpha__14FireStorm_Seedf"
+    },
+    {
+      "offset": 2378476,
+      "size": 23452,
+      "kind": "unrecovered_hex",
+      "source": "unrecovered_00244aec.hex"
     },
     {
       "offset": 2401928,

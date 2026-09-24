@@ -1152,3 +1152,60 @@ nop
 .section .gnu.linkonce.t.GameEffectOn__10CArmEffectRC9objMatrix,"ax",@progbits
 jr $31
 nop
+.section .gnu.linkonce.t.SetBgType__10CStageWall10DispBgType,"ax",@progbits
+jr $31
+sw $5, 0x1b0($4)
+.section .gnu.linkonce.t.GetBgType__10CStageWall,"ax",@progbits
+jr $31
+lw $2, 0x1b0($4)
+.section .gnu.linkonce.t.GetClassArmObj__9CPArm_PS2,"ax",@progbits
+jr $31
+lw $2, 0x290($4)
+.section .gnu.linkonce.t.GetWeaponClass__9CPArm_PS2,"ax",@progbits
+jr $31
+lw $2, 0x294($4)
+.section .gnu.linkonce.t.GetPos__7CBabGun,"ax",@progbits
+jr $31
+addiu $2, $4, 0x80
+.section .gnu.linkonce.t.GetCol__7CBabGun,"ax",@progbits
+jr $31
+lw $2, 0xc0($4)
+.section .gnu.linkonce.t.GetColHitData__8CCharCol,"ax",@progbits
+jr $31
+addiu $2, $4, 0x70
+.section .gnu.linkonce.t.SetProp__8CCharColi,"ax",@progbits
+jr $31
+sw $5, 0x70($4)
+.section .gnu.linkonce.t.GetRotAngle__12CCharaMotion,"ax",@progbits
+jr $31
+lwc1 $f0, 0x98($4)
+.section .gnu.linkonce.t.SetRotAngle__12CCharaMotionf,"ax",@progbits
+jr $31
+swc1 $f12, 0x98($4)
+.section .gnu.linkonce.t.SetLoopCnt__9CGefScenei,"ax",@progbits
+jr $31
+sw $5, 0x68($4)
+.section .gnu.linkonce.t.GetBillBoardAngle__9CGefScene,"ax",@progbits
+jr $31
+addiu $2, $4, 0x40
+.section .gnu.linkonce.t.GetDispPosE__16CGameEffect_Ctrl,"ax",@progbits
+jr $31
+addiu $2, $0, 0x4
+.section .gnu.linkonce.t.Draw3D__13FireWall_Seed,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.IsActive__13FireWall_Seed,"ax",@progbits
+jr $31
+lw $2, 0x3e0($4)
+.section .gnu.linkonce.t.Draw2D__14FireStorm_Ptcl,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.SetAlpha__14FireStorm_Ptclf,"ax",@progbits
+jr $31
+swc1 $f12, 0x74($4)
+.section .gnu.linkonce.t.Draw2D__14FireStorm_Seed,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.SetAlpha__14FireStorm_Seedf,"ax",@progbits
+jr $31
+swc1 $f12, 0x74($4)

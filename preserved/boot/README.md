@@ -3,9 +3,9 @@
 Authority: [standards](../../docs/STANDARDS.md).
 
 `layout.json` covers every byte of the 3,445,204-byte boot ELF exactly once.
-383 object sections contribute 3,064 bytes, assembled from
+402 object sections contribute 3,216 bytes, assembled from
 `asm/camera_accessors.s` in the normal build. The optional EE compiler probe can
-supply those same sections. The remaining **3,442,140 bytes** are raw
+supply those same sections. The remaining **3,441,988 bytes** are raw
 hexadecimal source intervals (one per gap between recovered sections). They
 preserve code, data, ELF metadata, section names and gaps without claiming
 their semantics have been recovered. This is explicit technical debt.

@@ -433,3 +433,32 @@ void (CActBoyake::*gActBoyakeSetActionSwAddress)(int) = &CActBoyake::SetActionSw
 
 void (CStage::*gStageSetBgTypeAddress)(DispBgType) = &CStage::SetBgType;
 DispBgType (CStage::*gStageGetBgTypeAddress)() = &CStage::GetBgType;
+
+void (CStageWall::*gStageWallSetBgTypeAddress)(DispBgType) = &CStageWall::SetBgType;
+DispBgType (CStageWall::*gStageWallGetBgTypeAddress)() = &CStageWall::GetBgType;
+
+int (CPArm_PS2::*gPArmPS2GetClassArmObjAddress)() = &CPArm_PS2::GetClassArmObj;
+int (CPArm_PS2::*gPArmPS2GetWeaponClassAddress)() = &CPArm_PS2::GetWeaponClass;
+
+void *(CBabGun::*gBabGunGetPosAddress)() = &CBabGun::GetPos;
+int (CBabGun::*gBabGunGetColAddress)() = &CBabGun::GetCol;
+
+void *(CCharCol::*gCharColGetColHitDataAddress)() = &CCharCol::GetColHitData;
+void (CCharCol::*gCharColSetPropAddress)(int) = &CCharCol::SetProp;
+
+float (CCharaMotion::*gCharaMotionGetRotAngleAddress)() = &CCharaMotion::GetRotAngle;
+void (CCharaMotion::*gCharaMotionSetRotAngleAddress)(float) = &CCharaMotion::SetRotAngle;
+
+void (CGefScene::*gGefSceneSetLoopCntAddress)(int) = &CGefScene::SetLoopCnt;
+void *(CGefScene::*gGefSceneGetBillBoardAngleAddress)() = &CGefScene::GetBillBoardAngle;
+
+int (CGameEffect_Ctrl::*gGameEffectCtrlGetDispPosEAddress)() = &CGameEffect_Ctrl::GetDispPosE;
+
+void (FireWall_Seed::*gFireWallSeedDraw3DAddress)() = &FireWall_Seed::Draw3D;
+int (FireWall_Seed::*gFireWallSeedIsActiveAddress)() = &FireWall_Seed::IsActive;
+
+void (FireStorm_Ptcl::*gFireStormPtclDraw2DAddress)() = &FireStorm_Ptcl::Draw2D;
+void (FireStorm_Ptcl::*gFireStormPtclSetAlphaAddress)(float) = &FireStorm_Ptcl::SetAlpha;
+
+void (FireStorm_Seed::*gFireStormSeedDraw2DAddress)() = &FireStorm_Seed::Draw2D;
+void (FireStorm_Seed::*gFireStormSeedSetAlphaAddress)(float) = &FireStorm_Seed::SetAlpha;
