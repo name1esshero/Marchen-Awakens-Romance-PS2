@@ -498,3 +498,21 @@ The repository's `build-mod-disc` target now places packer temporaries under
 ignored `build/tmp/` by default and accepts an explicit `TMPDIR` override. Verify
 the previous ISO remains intact after a failed attempt, then retry on a volume
 with sufficient space; preserve existing worktrees instead of deleting them.
+
+## A simultaneous status sweep stalled across mounted worktrees
+
+Hypothesis: checking every registered worktree at once would quickly reveal
+dirty branches before delegating new tasks. Running `git status` and untracked
+file scans concurrently across all 26 worktrees under `/mnt/c` did not return
+within several minutes; multiple Git processes remained blocked in filesystem
+I/O, and staging then reported a temporary shared `index.lock`.
+
+The scan was stopped before any worktree files were modified. The lock
+disappeared after the status processes exited, and the staging command had
+failed before adding files. A separate code edit appeared in the shared root
+worktree during the scan and was left untouched. Targeted checks of the
+completed DQ-31, DQ-37, and weapon-audit worktrees were clean. On this
+Windows-mounted checkout, inventory branch tips first and check only active or
+candidate worker worktrees; avoid launching broad parallel `git status` scans
+over every large asset worktree. This result does not indicate repository
+corruption or that any worker changes were lost.

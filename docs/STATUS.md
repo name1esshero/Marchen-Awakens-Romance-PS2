@@ -89,11 +89,12 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   Current root-level `mar_eng.iso` is 5,023,940,608 bytes (SHA-256
   `9590a689a512d035e8073f44917eb78b6ee35841e549c61dd065641230e25e67`). The
   reusable `make verify-graphics-image` gate reparses all fourteen English TXCs
-  through ISO/YFS/BPE/UI tables and confirms 1,400,064 bytes exactly match
-  staged overrides. The graphics audit found fourteen overrides, 43 unresolved
-  TXCs, and zero modified Japanese baselines. The authenticated pinned-reference
-  comparison reports 758,496,753 differing bytes, expected for this translated
-  and relocated image; see
+  in the latest validated ISO through ISO/YFS/BPE/UI tables and confirms
+  1,400,064 bytes exactly match staged overrides. The current graphics source
+  workspace now stages 17 overrides, with 43 unresolved TXCs and zero modified
+  Japanese baselines; three newer graphics still await rebuild and reparse.
+  The authenticated pinned-reference comparison for the 14-override ISO reports
+  758,496,753 differing bytes, expected for this translated and relocated image; see
   `reports/mar_eng_compare_14_graphics_database.json` and
   [`GRAPHIC_TEXT_LOCALIZATION.md`](../tasks/GRAPHIC_TEXT_LOCALIZATION.md).
   A direct current-ISO reparse confirmed `_msg.dat` (20,714 bytes,
@@ -153,22 +154,28 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   hash/dimension/header checks and visual review. It found the `esy_menu.tex`
   title mark and credits still Japanese despite an existing English sibling;
   three outlined `window` rows and center-bar marks remain unresolved. DQ-37's
-  full-width menu audit is active in its identity-configured worktree. The
-  owner-reported title-screen mismatch is
-  tracked as DQ-38: the English versions of `title`, `ttlprts`, and `title_marh`
-  do not match the expected logo composition and are being reworked. The queue
-  holds four `READY` bounded asset cards and one active delegated worker, with
-  capacity for two (reserve/capacity is 4/2 = 2.0).
+  full-width menu audit and DQ-31's TGS-menu audit are complete and integrated
+  as `df4315d` and `2ea24f0`; the source worker commits are documented as
+  patch-equivalent with their worker authorship retained. DQ-38 also covers the
+  standalone `title000` English texture; its prior title mark was copied from
+  the same misidentified subtitle art. The owner-supplied MÄR HEAVEN mark has a
+  distinctive style across the franchise and is now the visual source for the
+  DQ-38 rework; `ARM FIGHT DREAM` remains a separate subtitle. DQ-30 and DQ-38
+  are coordinator work. Six `READY` bounded asset cards are available before
+  delegation; assigning two workers will leave four ready cards for the
+  authorized capacity of two (reserve/capacity = 4/2 = 2.0).
   The completed
   title-remainder audit is integrated. Map,
   special-font, AFS suffix, background, and title-remainder audits are
   integrated. Training-text and GameOver are complete; transition-menu,
-  TGS-menu, save/load, and war-close audits are ready. The 13-row remaining-menu
-  audit is integrated; the 30-row full-width `ｗ.b` audit remains active.
+  save/load, war-close, library-character-summary, library-voice-summary, and
+  training-character texture audits are ready. The 13-row remaining-menu audit
+  is integrated; the 30-row full-width `ｗ.b` audit and single-row TGS-menu
+  audits are complete.
   The training-title and training-controller artwork are integrated and await
-  lead palette/ISO validation. DQ-38 reworks the three title-screen English
-  textures after the supplied in-game capture showed repeated subtitle lettering
-  and a mismatched logo. The
+  lead palette/ISO validation. DQ-38 reworks three title atlases and the
+  dependent standalone `title000` English texture after the supplied in-game
+  capture showed repeated subtitle lettering and a mismatched logo. The
   coordinator's read-only PSMCT32
   investigation found a common eight-byte shortfall across 43 records but no safe decode; those
   records remain raw.
