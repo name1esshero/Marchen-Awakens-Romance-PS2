@@ -117,12 +117,13 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   are in their linked task notes. A corpus-wide UI/title text audit remains
   open. The queue has four `READY` bounded Luna/assets cards for the current
   two-worker limit (2.0 per authorized slot); effects and weapon reviews are
-  integrated, while icon and environment reviews are active. The completed
-  title-remainder audit is integrated. Map,
+  integrated, while icon and environment reviews are active. The coordinator is
+  building an English sibling for the confirmed “Equip ARM” command. The
+  completed title-remainder audit is integrated. Map,
   special-font, AFS suffix, background, and title-remainder audits are
   integrated. Card textures, alternate `.yma` layouts, the bounded
-  database-condition review, and one confirmed ARM-command image localization
-  remain ready. The coordinator's read-only PSMCT32 investigation found a
+  database-condition review, and the Japanese button-help localization remain
+  ready. The coordinator's read-only PSMCT32 investigation found a
   common eight-byte shortfall across 43 records but no safe decode; those
   records remain raw.
   The `ttlprts` and `title000` English siblings, task notes and success entries
