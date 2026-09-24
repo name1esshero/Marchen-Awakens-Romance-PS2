@@ -1283,6 +1283,25 @@ References: [training texture audit](../tasks/GRAPHIC_TEXT_TRAINING_TEX.md),
 `graphics/index.json`, `localization/messages.json`, and
 [`localization methodology`](LOCALIZATION_METHODOLOGY.md).
 
+## Training-title replacement stays within its measured Japanese text bounds
+
+Symptom: the 256×64 `trng` texture contains a single Japanese title wordmark,
+while a whole-image generation edit could disturb the recovered canvas or
+unrelated pixels. Method: keep `_jp.tga` immutable, request an exact transparent
+`TRAINING` layer in the source bevel/gradient style, clear only its measured
+`[1,225) × [12,58)` text bounds, then compose with deterministic aspect-preserving
+`contain` fit. Finding: the tracked English sibling keeps the source canvas and
+places a readable 158×46 wordmark centered in the 224×46 clear region. The
+selected layer is a 2172×724 transparent PNG, SHA-256
+`1e49150306afb0acae23de3c4c07dba548ad755c58015fa5ba09a838bfcb1a86`; the TGA
+SHA-256 is `52fa9103b580e2c3988c273b48515808460b53394bce050ec3209662e76c6e14`.
+Verification: repeated composition is byte-identical; pixel comparison found
+zero changes outside the declared clear bounds, and the Japanese source hash
+is unchanged. Limits: this does not validate palette import, UV/runtime use,
+ISO reinsertion or emulator readability; the lead owns those checks.
+References: [training-title evidence](../tasks/GRAPHIC_TEXT_TRAINING_TITLE.md),
+`tools/graphics_compose.py`, and the Japanese/English sibling TGAs.
+
 ## Card-text audits should inspect nameplates separately from illustrations
 
 Symptom: a large card-texture category appears to offer broad localization
