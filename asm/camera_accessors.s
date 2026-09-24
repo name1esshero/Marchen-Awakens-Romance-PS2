@@ -1616,3 +1616,65 @@ sll $5, $5, 0x2
 addu $5, $5, $4
 jr $31
 lw $2, 0x160($5)
+.section .gnu.linkonce.t.GetVertexNum__10CSubObjecti,"ax",@progbits
+lw $2, 0x18($4)
+sll $5, $5, 0x5
+addu $5, $5, $2
+jr $31
+lw $2, 0x0($5)
+.section .gnu.linkonce.t.GetVertex__10CSubObjecti,"ax",@progbits
+lw $2, 0x18($4)
+sll $5, $5, 0x5
+addu $5, $5, $2
+jr $31
+lw $2, 0x8($5)
+.section .gnu.linkonce.t.GetNormal__10CSubObjecti,"ax",@progbits
+lw $2, 0x18($4)
+sll $5, $5, 0x5
+addu $5, $5, $2
+jr $31
+lw $2, 0xc($5)
+.section .gnu.linkonce.t.GetBoneNum__10CSubObjecti,"ax",@progbits
+lw $2, 0x18($4)
+sll $5, $5, 0x5
+addu $5, $5, $2
+jr $31
+lw $2, 0x4($5)
+.section .gnu.linkonce.t.SetMotionOnly__8CMotionCG8MotionNoi,"ax",@progbits
+addiu $sp, $sp, -0x10
+sw $5, 0xbc($4)
+sw $6, 0xc0($4)
+jr $31
+addiu $sp, $sp, 0x10
+.section .gnu.linkonce.t.SetXYWH__10CActFilteriiii,"ax",@progbits
+sw $5, 0x54($4)
+sw $6, 0x58($4)
+sw $7, 0x5c($4)
+jr $31
+sw $8, 0x60($4)
+.section .gnu.linkonce.t.SetWeaponType__7CWeaponiiii,"ax",@progbits
+sw $5, 0x10($4)
+sw $6, 0x14($4)
+sw $7, 0x18($4)
+jr $31
+sw $8, 0x1c($4)
+.section .gnu.linkonce.t.GetData__4CColi,"ax",@progbits
+lw $2, 0x10($4)
+sll $5, $5, 0x2
+addu $5, $5, $2
+jr $31
+lw $2, 0x0($5)
+.section .gnu.linkonce.t.GetNextObject__8CObjListP4CObj,"ax",@progbits
+beqz $5, 1f
+daddu $2, $0, $0
+lw $2, 0x4($5)
+1:
+jr $31
+nop
+.section .gnu.linkonce.t.GetPrevObject__8CObjListP4CObj,"ax",@progbits
+beqz $5, 1f
+daddu $2, $0, $0
+lw $2, 0x0($5)
+1:
+jr $31
+nop

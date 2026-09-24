@@ -282,3 +282,79 @@ What this does not justify: the stride/offset evidence for `poseArray`
 (0x2c, stride 0x40) and `colorPoseArray` (0x6c, stride 0x20) remains
 valid — only the specific getter for each is deferred.
 References: [linkonce cluster task](tasks/LINKONCE_CLUSTER.md).
+
+## Correction: an empty-body-only test never disambiguated `objVector`'s size, and a real field copy caught it
+
+Hypothesis: `objVector` is 8 bytes (`{ float x, y; }`), established (per
+the first non-trivial batch) by three independently-matching empty-body
+by-value methods (`CWeapon::SetTgtPos`/`PositionInit`/`AddOffset`) that
+all reproduced the reference's exact bare prologue/epilogue at that size,
+and did not at 12 bytes (which spilled defensively).
+Observed result: a later real field-copy method,
+`C3dObject::SetPosition` (`position = value;` on `const objVector &`),
+copies exactly two *aligned* 8-byte doublewords (`ld`/`sd`) — 16 bytes
+total, not 8. Retesting the original three empty-body methods against a
+16-byte, 8-byte-aligned `objVector` found they *also* reproduce the exact
+same trivial bytes. The original test could never have distinguished 8
+from 16 bytes; both are compatible with "no spill code for an unused
+by-value aligned aggregate parameter," and the investigation stopped at
+the first size that worked instead of checking whether other sizes worked
+equally well.
+Mechanism: for a by-value class parameter whose body never reads any
+member, the compiler's dead-code elimination (or lack of any need to
+spill) doesn't depend on the class's exact size — any size up to some
+threshold produces the identical "just don't touch it" codegen, so an
+empty-body test only rules out sizes that trigger *defensive* spill code
+(unaligned or a size the ABI can't hold trivially), not sizes larger than
+the true one that still happen to behave trivially. Disambiguating the
+size required a method that actually *uses* the value — a real field
+assignment, which is exactly the kind of evidence an empty-body stub
+structurally cannot provide.
+Supporting evidence: `docs/tasks/LINKONCE_CLUSTER.md` (2026-09-24 third
+non-trivial-tier batch entry); the 16-byte `objVector` hypothesis was
+re-verified against all three original `CWeapon` sections (byte-identical)
+before being adopted as the correction.
+Reconsideration conditions: none outstanding — the correction is now
+supported by a real field-copy method, not just empty-body absence of
+counter-evidence. A future single-field access (e.g. reading just
+`.x` or `.z`, as `FireStorm_Ptcl::SetPos` does) could still further refine
+or contradict the exact 4-float internal layout, only the total size and
+alignment are now well-evidenced.
+What this does not justify: this does not cast doubt on `objMatrix`'s
+established 64-byte/8-byte-aligned size (that was derived from a real
+aggregate-copy method from the start, not an empty-body test) — only
+`objVector`'s size, which was under-evidenced specifically because its
+only supporting methods happened to have empty bodies.
+References: [linkonce cluster task](tasks/LINKONCE_CLUSTER.md).
+
+## A second, distinct R5900-specific instruction confirmed undecodable: a three-operand `MULT`
+
+Hypothesis: `CMCard2::GetSaveData` (params `12MAR_SAVEDATA`, an
+array/index-style accessor by its shape) would decode fully once its
+"unknown" instruction was identified, following the same pattern as every
+other accessor in this cluster.
+Observed result: the one non-`<unknown>`-elsewhere instruction decodes as
+opcode 0 (SPECIAL class), funct 0x18 — standard MIPS `MULT $rs,$rt`
+(writing only HI/LO, `rd` field reserved/zero) — but the actual `rd` field
+in this word is *not* zero (decodes to a real GPR), which standard MIPS
+`MULT` never produces and `llvm-objdump-21` cannot represent, rendering it
+`<unknown>`. This matches the R5900's documented three-operand `MULT
+rd,rs,rt` extension (a genuine EE-specific ISA addition beyond stock
+MIPS III, distinct from the already-documented `LQ`/`SQ` quadword
+instructions), most plausibly here computing `index * sizeof(MAR_SAVEDATA)`
+for an array access where the element size isn't a convenient power-of-two
+shift.
+Mechanism: same root cause as the `LQ`/`SQ` gap — R5900-specific opcodes
+outside `llvm-objdump-21`'s generic MIPS III decode table — but a
+*different* specific instruction, confirming this is a broader tooling
+gap (multiple distinct R5900 extensions unsupported) rather than one
+isolated missing opcode.
+Supporting evidence: `docs/tasks/LINKONCE_CLUSTER.md` (2026-09-24 third
+non-trivial-tier batch entry) has the exact disassembly.
+Reconsideration conditions: an R5900-aware disassembler (decoding the
+three-operand `MULT`/`MULTU` extension in addition to `LQ`/`SQ`) would be
+needed before this section is even attemptable.
+What this does not justify: does not cast doubt on `MAR_SAVEDATA`'s
+existing `int id;` field evidence from `CMCard2::SelectSaveData` — only
+that `GetSaveData` itself remains unrecovered.
+References: [linkonce cluster task](tasks/LINKONCE_CLUSTER.md).

@@ -503,3 +503,13 @@
 .gnu.linkonce.t.GetShopArmNo__16Labyrinth_ArmGeti
 .gnu.linkonce.t.GetDBNo__16Labyrinth_ArmGeti
 .gnu.linkonce.t.GetDBType__16Labyrinth_ArmGeti
+.gnu.linkonce.t.GetVertexNum__10CSubObjecti
+.gnu.linkonce.t.GetVertex__10CSubObjecti
+.gnu.linkonce.t.GetNormal__10CSubObjecti
+.gnu.linkonce.t.GetBoneNum__10CSubObjecti
+.gnu.linkonce.t.SetMotionOnly__8CMotionCG8MotionNoi
+.gnu.linkonce.t.SetXYWH__10CActFilteriiii
+.gnu.linkonce.t.SetWeaponType__7CWeaponiiii
+.gnu.linkonce.t.GetData__4CColi
+.gnu.linkonce.t.GetNextObject__8CObjListP4CObj
+.gnu.linkonce.t.GetPrevObject__8CObjListP4CObj

@@ -568,3 +568,14 @@ int (Labyrinth_ArmGet::*gLabyArmGetGetBrokenArmNoAddress)(int) = &Labyrinth_ArmG
 int (Labyrinth_ArmGet::*gLabyArmGetGetShopArmNoAddress)(int) = &Labyrinth_ArmGet::GetShopArmNo;
 int (Labyrinth_ArmGet::*gLabyArmGetGetDBNoAddress)(int) = &Labyrinth_ArmGet::GetDBNo;
 int (Labyrinth_ArmGet::*gLabyArmGetGetDBTypeAddress)(int) = &Labyrinth_ArmGet::GetDBType;
+
+int (CSubObject::*gSubObjGetVertexNumAddress)(int) = &CSubObject::GetVertexNum;
+void *(CSubObject::*gSubObjGetVertexAddress)(int) = &CSubObject::GetVertex;
+void *(CSubObject::*gSubObjGetNormalAddress)(int) = &CSubObject::GetNormal;
+int (CSubObject::*gSubObjGetBoneNumAddress)(int) = &CSubObject::GetBoneNum;
+void (CMotionC::*gMotionCSetMotionOnlyAddress)(MotionNo, int) = &CMotionC::SetMotionOnly;
+void (CActFilter::*gActFilterSetXYWHAddress)(int, int, int, int) = &CActFilter::SetXYWH;
+void (CWeapon::*gWeaponSetWeaponTypeAddress)(int, int, int, int) = &CWeapon::SetWeaponType;
+int (CCol::*gColGetDataAddress)(int) = &CCol::GetData;
+CObj *(CObjList::*gObjListGetNextObjectAddress)(CObj *) = &CObjList::GetNextObject;
+CObj *(CObjList::*gObjListGetPrevObjectAddress)(CObj *) = &CObjList::GetPrevObject;

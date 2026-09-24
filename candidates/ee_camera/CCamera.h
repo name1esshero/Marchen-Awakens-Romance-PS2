@@ -32,22 +32,39 @@ class ARM_PARAM;
 // parameter type; no members are evidenced.
 class CheckActList;
 class CWeapon;
-// Named only to reproduce SetSubMotion__7CWeaponG8MotionNoif's mangled
-// parameter: 'G' is this old ABI's encoding for a class passed BY VALUE
-// (any class type, trivial or not — an earlier belief that this required a
-// non-trivial constructor was tested and disproved; see SUCCESSES.md),
-// distinct from 'P' (pointer) and 'R' (genuine C++ reference) seen
-// elsewhere. No members are evidenced.
-class MotionNo {};
-// Two floats confirmed by CWeapon::SetTgtPos/PositionInit/AddOffset: their
-// empty bodies take objVector by value with no spill code at all (matching
-// the reference's bare prologue/epilogue), which only reproduces at exactly
-// 8 bytes -- 12 bytes (three floats) spills defensively via ldl/ldr instead.
-// Field names x/y are a plausible guess from the class's evident purpose,
-// not independently confirmed.
-class objVector {
+// Correction (superseding this class's original fully-empty definition):
+// CMotionC::SetMotionOnly(MotionNo, int) actually stores the MotionNo
+// parameter's register into a field (`sw $5, 0xbc($4)`) -- an empty class
+// (sizeof 1, no state to copy) generates no store at all for a by-value
+// assignment, so MotionNo needs at least one real, register-sized member
+// for this evidence to compile. 'G' is this old ABI's encoding for a class
+// passed BY VALUE (any class type, trivial or not — an earlier belief that
+// this required a non-trivial constructor was tested and disproved; see
+// SUCCESSES.md), distinct from 'P' (pointer) and 'R' (genuine C++
+// reference) seen elsewhere. `value`'s name/meaning is a placeholder;
+// CWeapon::SetSubMotion's existing empty-bodied use of this type is
+// unaffected (that body never touches the parameter, so no store depends
+// on this member either way).
+class MotionNo {
 public:
-    float x, y;
+    int value;
+};
+// Correction (superseding this class's original 8-byte, two-float
+// definition): CWeapon::SetTgtPos/PositionInit/AddOffset's empty by-value
+// bodies reproduce identically at both 8 and 16 (aligned) bytes -- that
+// evidence alone never disambiguated the size. C3dObject::SetPosition
+// (`position = value;` on a `const objVector &`) settles it: the reference
+// copies exactly two ALIGNED 8-byte doublewords (`ld`/`sd`, not the
+// defensive `ldl`/`ldr`/`sdl`/`sdr` an unaligned or wrong-size guess
+// produces), matching only a 16-byte, 8-byte-aligned aggregate. Field
+// names x/y/z/w are a plausible guess from the class's evident purpose
+// and FireStorm_Ptcl::SetPos's per-float copies at offsets 0 and 8; the
+// exact field at offset 4/12 and w's existence beyond padding are not
+// independently confirmed. See docs/CODE_FAILURES.md for the correction
+// record.
+class __attribute__((aligned(8))) objVector {
+public:
+    float x, y, z, w;
 };
 
 class CRender {
@@ -222,12 +239,20 @@ public:
     objMatrix *linkBoneMat;
     unsigned char unknown014[0x20 - 0x14];
     unsigned int localMat;
-    unsigned char unknown024[0x60 - 0x24];
+    unsigned char unknown024[0x50 - 0x24];
+    objVector position;
     unsigned int worldMat;
 
     C3dObject *GetParent() { return parent; }
     C3dObject *GetFirstChild() { return firstChild; }
     C3dObject *GetNextChild(C3dObject *object) { return object->nextChild; }
+    // SetPosition (`position = value;`) is deferred: this exact source
+    // reproduces the target's size (two aligned ld/sd doubleword pairs,
+    // confirming objVector's 16-byte/8-byte-aligned layout) but reuses
+    // register $3 for the second pair where the reference reuses $2
+    // throughout -- the same isolated-probe register-allocation/scheduling
+    // limitation already documented for CCamera's matrix accessors,
+    // confirmed here even with full-header context (see CODE_FAILURES.md).
     void SetLinkBoneMat(objMatrix *value) { linkBoneMat = value; }
     objMatrix *GetLinkBoneMat() { return linkBoneMat; }
     const void *_GetLocalMat(int) const { return &localMat; }
@@ -476,7 +501,7 @@ public:
     CHR_PARAM *chrParam;
     void *chara;
     int linkBoneType;
-    unsigned char unknown010[0x4];
+    int weaponCategory;
     int armType;
     int tblNo;
     int subWeapon;
@@ -484,6 +509,12 @@ public:
 
     void *GetArmParam() { return armParam; }
     void *GetChara() { return chara; }
+    void SetWeaponType(int category, int arm, int tbl, int sub) {
+        armType = arm;
+        tblNo = tbl;
+        subWeapon = sub;
+        weaponCategory = category;
+    }
     int GetLinkBoneType() { return linkBoneType; }
     int IsSubWeapon() { return subWeapon; }
     int GetArmType() { return armType; }
@@ -603,7 +634,10 @@ public:
     int motion;
     unsigned char unknown028[0x4];
     Pose *poseArray;
-    unsigned char *mask;
+    // Retyped from unsigned char*: GetMask's boolify reads it via a signed
+    // `lb`, not `lbu`, which only reproduces with a signed char element
+    // type. SetMask's existing `sb` store is unaffected by the change.
+    char *mask;
     unsigned char unknown034[0x48 - 0x34];
     int linkBone;
     unsigned char unknown04c[0x4];
@@ -633,6 +667,10 @@ public:
     int IsEndMotion() { return endMotion; }
     int GetLinkBone() { return linkBone; }
     void SetMask(int index, int value) { mask[index] = value; }
+    // GetMask (`return mask[index] != 0;`) is deferred: matches size but
+    // reuses register $3 for the intermediate pointer where the reference
+    // reuses $2 throughout -- the same isolated-probe register-allocation
+    // limitation already documented for CCamera's matrix accessors.
     // GetPose (`return &poseArray[index];`) and GetColorPose
     // (`return &colorPoseArray[index];`) are deferred: this exact source
     // reproduces the target's size but schedules `sll`/`lw` in the opposite
@@ -768,7 +806,10 @@ public:
     int frameJumpFlags;
     unsigned char unknown048[0x50 - 0x48];
     int endOfMotion;
-    unsigned char unknown054[0xf4 - 0x54];
+    unsigned char unknown054[0xbc - 0x54];
+    MotionNo motionOnly;
+    int motionOnlyFrame;
+    unsigned char unknown0c4[0xf4 - 0xc4];
     CMotionSts *motSts;
     CActTbl *actTbl;
     unsigned char unknown0fc[0x4];
@@ -782,6 +823,7 @@ public:
     int IsFrameJump() { return frameJumpFlags & 0x2; }
     int IsFrameJumpNext() { return frameJumpFlags & 0x7; }
     void SetEndOfMotion() { endOfMotion = 1; }
+    void SetMotionOnly(MotionNo value, int frame) { motionOnlyFrame = frame; motionOnly = value; }
     void SetMotSts(CMotionSts *value) { motSts = value; }
     void SetActTbl(CActTbl *value) { actTbl = value; }
     void SetParent(CMotionC *value) { parent = value; }
@@ -820,7 +862,7 @@ class CCol {
 public:
     unsigned char unknown000[0xc];
     int colNum;
-    unsigned char unknown010[0x4];
+    int *dataArray;
     unsigned int boundingSphere;
     unsigned char unknown018[0xc];
     void *owner;
@@ -845,6 +887,7 @@ public:
     // Evidenced body ignores all five arguments and returns a fixed zero.
     int CallBack(CCol *, int, int, ColCheckResult *, ColCheckResult *) { return 0; }
     void ResetPosition() { active = 1; }
+    int GetData(int index) { return dataArray[index]; }
 };
 
 // Named only to reproduce ArmEffectBase::SetType's mangled enum parameter;
@@ -872,13 +915,26 @@ public:
     void *GetArmParam() { return armParam; }
 };
 
+// Named only to reproduce CSubObject's per-element accessors' fixed
+// offsets/stride (0x20 bytes, from `sll $5,$5,0x5`); no other members are
+// evidenced.
+class SubObjectElement {
+public:
+    int vertexNum;
+    int boneNum;
+    void *vertex;
+    void *normal;
+    unsigned char unknown10[0x20 - 0x10];
+};
+
 class CSubObject {
 public:
     unsigned char unknown000[0xc];
     int original;
     int vertexListNum;
     int primListNum;
-    unsigned char unknown018[0x78];
+    SubObjectElement *elements;
+    unsigned char unknown01c[0x90 - 0x1c];
     int flags;
 
     // GetBody (address-of) and GetVertexListNum (value) read the identical
@@ -889,6 +945,13 @@ public:
     int GetFlags() { return flags; }
     int GetVertexListNum() { return vertexListNum; }
     int GetPrimListNum() { return primListNum; }
+    int GetVertexNum(int index) { return elements[index].vertexNum; }
+    void *GetVertex(int index) { return elements[index].vertex; }
+    void *GetNormal(int index) { return elements[index].normal; }
+    int GetBoneNum(int index) { return elements[index].boneNum; }
+    // GetBoneList (`return elements[index].unknown10;`) is deferred: same
+    // isolated-probe register-allocation limitation (the reference reuses
+    // $2 throughout; the candidate splits the computation across $2/$3).
 };
 
 class CPDataArmObj {
@@ -1281,6 +1344,14 @@ public:
     }
 };
 
+// Named only to reproduce GetNextObject/GetPrevObject's linked-list
+// traversal of a caller-supplied node; no other members are evidenced.
+class CObj {
+public:
+    CObj *prev;
+    CObj *next;
+};
+
 class CObjList {
 public:
     unsigned char unknown000[0xc];
@@ -1291,6 +1362,10 @@ public:
     int GetNumObject() { return numObject; }
     void *GetFirstObject() { return firstObject; }
     void *GetLastObject() { return lastObject; }
+    // Null-safe: returns 0 if the passed node itself is null, otherwise
+    // the node's own next/prev link (not a field of this CObjList).
+    CObj *GetNextObject(CObj *object) { return object ? object->next : 0; }
+    CObj *GetPrevObject(CObj *object) { return object ? object->prev : 0; }
 };
 
 class CGefBirth {
@@ -1492,8 +1567,19 @@ class CActFilter {
 public:
     unsigned char unknown000[0x48];
     int dispFilter;
+    unsigned char unknown04c[0x54 - 0x4c];
+    int filterX;
+    int filterY;
+    int filterW;
+    int filterH;
 
     void SetDispFilter(int value) { dispFilter = value; }
+    void SetXYWH(int x, int y, int w, int h) {
+        filterY = y;
+        filterW = w;
+        filterH = h;
+        filterX = x;
+    }
 };
 
 class CEventAct {

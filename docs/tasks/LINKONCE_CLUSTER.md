@@ -922,3 +922,99 @@ Reconstruction now covers **505 sections / 4,416 bytes across ninety-five
 partial classes** (no new classes); 3,440,788 bytes remain explicit raw
 debt. `make test verify-boot verify-source-only verify-ee` passes (full
 boot ELF and full EE-probe ELF both byte-identical).
+
+## Third non-trivial batch — 10 sections in 8 already-known classes, plus a size correction — 2026-09-24
+
+Agent: Claude Sonnet 5; role: Code Department Lead. Continues into the
+20-byte tier (five instructions). 18 sections disassembled; 10 recovered,
+1 size correction to already-committed evidence, 7 deferred (4 for the
+isolated-probe register-allocation limitation, 1 for a genuine R5900
+tooling gap, 1 for `$gp`-relative addressing, 1 that needed a size
+correction and is itself still deferred after the correction).
+
+**Correction (superseding `objVector`'s original 8-byte, two-float
+definition from the first non-trivial batch):** `C3dObject::SetPosition`
+(`position = value;` on `const objVector &`) copies exactly two *aligned*
+8-byte doublewords (`ld`/`sd`, not the defensive `ldl`/`ldr`/`sdl`/`sdr` an
+unaligned or wrong-size guess produces) — only a 16-byte, 8-byte-aligned
+`objVector` reproduces this. The original 8-byte conclusion was never
+actually disambiguated by its supporting evidence: a 16-byte aligned
+`objVector` was tested and found to *also* reproduce the exact same
+trivial empty body for `CWeapon::SetTgtPos`/`PositionInit`/`AddOffset`
+byte-for-byte, meaning that evidence was compatible with either size all
+along. `objVector` is now `{ float x, y, z, w; }`, `aligned(8)`; all three
+previously-verified `CWeapon` sections were re-verified unaffected by the
+type change (a by-value empty-body parameter's codegen doesn't depend on
+the unused type's exact layout, only compatible sizes). `SetPosition`
+itself is deferred despite the corrected type: it now matches the
+reference's exact size and instruction sequence, but reuses register `$3`
+for the second `ld`/`sd` pair where the reference reuses `$2` throughout —
+the by-now-familiar isolated-probe scheduling limitation, confirmed even
+with the full real header providing context.
+
+Two more corrections to already-verified evidence, confirmed safe by full
+gate re-runs before and after:
+
+- **`MotionNo` needs a real member.** `CMotionC::SetMotionOnly(MotionNo,
+  int)` stores the `MotionNo` parameter's register into a field
+  (`sw $5, 0xbc($4)`); a fully empty class (sizeof 1, no state) generates
+  *no store at all* for a by-value copy, so the original `class MotionNo
+  {};` could never have reproduced this. Given `int value;`, the
+  assignment compiles to the expected store. `CWeapon::SetSubMotion`'s
+  existing empty-bodied use of `MotionNo` is unaffected, since that body
+  never touches the parameter regardless of its layout.
+- **`CMotion::mask` needs a signed element type.** `CMotion::GetMask`
+  boolifies `mask[index]` via a signed `lb`, not `lbu`; the field was
+  `unsigned char *` from the previous batch (matching `SetMask`, whose
+  `sb` store doesn't care about signedness either way). Retyped to
+  `char *`; `SetMask`'s existing section re-verified unaffected.
+
+New evidenced shapes:
+
+- **A four-independent-statement setter generalizes the three-statement
+  scheduler rule found last batch**: `CActFilter::SetXYWH` and
+  `CWeapon::SetWeaponType` (4 unrelated fields from 4 params) both want
+  natural ascending-offset compiled order. An exhaustive-style probe (6
+  permutations of 4 independent assignments) found the same "rotate
+  declaration order left by one" rule already established for 3
+  statements generalizes directly: source order (2nd; 3rd; 4th; 1st field)
+  produces the ascending target, just as (2nd; 3rd; 1st) did for 3
+  fields — a real, reusable pattern now confirmed at two different
+  statement counts.
+- **Array of structs reached through a loaded pointer, not embedded**:
+  `CSubObject::GetVertexNum`/`GetVertex`/`GetNormal`/`GetBoneNum` all load
+  a pointer field at a fixed offset, then index it with a 0x20-byte
+  stride — a `SubObjectElement` array (name only, no other members
+  evidenced) living behind `CSubObject::elements`, distinct from the
+  in-object-embedded arrays found last batch.
+- **Null-safe linked-list traversal reading a caller-supplied node's own
+  field, not `this`'s**: `CObjList::GetNextObject`/`GetPrevObject` are
+  `return object ? object->next : 0;` / `return object ? object->prev :
+  0;` — a `beqz`+delay-slot-`move`(`daddu $2,$0,$0`, the established
+  move-vs-daddu precedent) ternary reading the *parameter's* linked-list
+  pointer, requiring a real `CObj { CObj *prev; CObj *next; };` rather
+  than the opaque forward declaration the mangled parameter type alone
+  would need. First branching (`beqz`) stanza in `asm/camera_accessors.s`;
+  used a GNU-as numeric local label (`1f`/`1:`) since no prior stanza
+  needed an intra-section branch target.
+
+Deferred: `CSubObject::GetBoneList` and `CMotion::GetMask` (both the
+established register-allocation limitation, same as `GetPose`/
+`GetColorPose` last batch); `C3dObject::SetPosition` (register-allocation
+limitation, see correction above); `CMCard2::GetSaveData` (uses a genuine
+undecoded R5900-specific three-operand `MULT rd,rs,rt` variant that
+writes a GPR directly, beyond standard MIPS `MULT`'s LO/HI-only semantics
+— llvm-objdump-21 renders it `<unknown>`; a new, distinct R5900 tooling
+gap from the already-documented `LQ`/`SQ` one); `ArmEffectBase::SetAirFlag`
+(indexes a `$gp`-relative table using `this` itself as the index, the
+same "don't force a whole-program static layout" deferral already
+established, with the added twist of the pointer being scaled instead of
+an ordinary integer index); `FireStorm_Ptcl::SetPos` (a partial `objVector`
+field copy, `posX = value.x; posZ = value.z;`, skipping the middle field —
+matches size but hits the same FP-register-allocation limitation, `$f1`
+vs. reference's `$f0` reused, on the second `lwc1`/`swc1` pair).
+
+Reconstruction now covers **515 sections / 4,616 bytes across ninety-five
+partial classes** (no new classes); 3,440,588 bytes remain explicit raw
+debt. `make test verify-boot verify-source-only verify-ee` passes (full
+boot ELF and full EE-probe ELF both byte-identical).

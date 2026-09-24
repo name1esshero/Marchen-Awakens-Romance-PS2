@@ -161,9 +161,11 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   the same misidentified subtitle art. The owner-supplied MÄR HEAVEN mark has a
   distinctive style across the franchise and is now the visual source for the
   DQ-38 rework; `ARM FIGHT DREAM` remains a separate subtitle. DQ-30 and DQ-38
-  are coordinator work. Six `READY` bounded asset cards are available before
-  delegation; assigning two workers will leave four ready cards for the
-  authorized capacity of two (reserve/capacity = 4/2 = 2.0).
+  are coordinator work. DQ-40 and DQ-41 are assigned to separate worker
+  worktrees for 16-image audits of `lib_char_sum.b` and `lib_voice_sum.b`.
+  Their source image sets are disjoint, and their required success findings use
+  distinct reserved anchors in `SUCCESSES.md`. Four `READY` bounded asset cards
+  remain for the authorized capacity of two (reserve/capacity = 4/2 = 2.0).
   The completed
   title-remainder audit is integrated. Map,
   special-font, AFS suffix, background, and title-remainder audits are
@@ -190,24 +192,29 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   text artifacts plus assembled code. `cmp` verifies every output byte.
 - An isolated build containing no ISO, extracted files, reports, existing build
   outputs or downloaded compiler reproduces the pinned boot hash.
-- 505 accessors (4,416 bytes) across ninety-five distinct classes (see
+- 515 accessors (4,616 bytes) across ninety-five distinct classes (see
   `candidates/ee_camera/CCamera.h` for the full list) have verified assembly
-  implementations: the original 441 trivial 8-byte sections, plus 64 from
-  two non-trivial-tier batches (12- and 16-byte). Every trivial 8-byte linkonce
-  section not judged UI/dialog/texture/model/movie-adjacent is now either
-  recovered or explicitly deferred as a `$gp`-relative static (5 sections
+  implementations: the original 441 trivial 8-byte sections, plus 74 from
+  three non-trivial-tier batches (12-, 16-, and 20-byte). Every trivial 8-byte
+  linkonce section not judged UI/dialog/texture/model/movie-adjacent is now
+  either recovered or explicitly deferred as a `$gp`-relative static (5 sections
   across 4 classes: `CArmEffect`, `CGameEffect_Ctrl`, `LoadAnimNormal`,
   `CGameEffect_FootStamp` — singleton/static instance pointers an isolated
   probe cannot reproduce without manufacturing a whole-program static
-  layout). Of the non-trivial (>8-byte) sections surveyed, 68 have now been
-  examined across two batches: 64 recovered, 4 deferred for the same
-  isolated-probe register-allocation/scheduling limitation, and 2 more
-  (`CCharCom::SetMovePos`, `FireStorm_Seed::SetPos`) confirmed to use
-  undecoded R5900 `LQ`/`SQ` instructions, the same tooling gap already found
-  on CCamera's matrix setters. Roughly 270 non-trivial sections remain
-  unexamined. See [the linkonce cluster task](tasks/LINKONCE_CLUSTER.md).
+  layout). Of the non-trivial (>8-byte) sections surveyed, 86 have now been
+  examined across three batches: 74 recovered, 7 deferred for the same
+  isolated-probe register-allocation/scheduling limitation, and 3 more
+  (`CCharCom::SetMovePos`, `FireStorm_Seed::SetPos`, `CMCard2::GetSaveData`)
+  confirmed to use undecoded R5900-specific instructions (`LQ`/`SQ` and a
+  three-operand `MULT` variant), the same class of tooling gap already found
+  on CCamera's matrix setters. `objVector`'s size was corrected from 8 to 16
+  bytes (8-byte-aligned) after a real field-copy method
+  (`C3dObject::SetPosition`) disambiguated it; the original empty-body-only
+  evidence never actually ruled out 16 bytes. Roughly 260 non-trivial
+  sections remain unexamined. See
+  [the linkonce cluster task](tasks/LINKONCE_CLUSTER.md).
 - EE GCC `2.96-ee-001003-1` with the same single `-O2` flag compiles natural
-  C++ candidates for all 505 into the same sections. Substituting them
+  C++ candidates for all 515 into the same sections. Substituting them
   in the full ELF also passes byte comparison. The partial classes remain candidates.
 - Research compiler distribution, hash and flags are pinned; the setup step is
   explicit and downloaded executables are ignored by Git.
@@ -220,7 +227,7 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
 
 ## Remaining debt and limits
 
-- **3,440,788 bytes** of the boot ELF remain explicitly preserved as unrecovered
+- **3,440,588 bytes** of the boot ELF remain explicitly preserved as unrecovered
   hex, including most code, data and ELF metadata. No authentic-source completion
   percentage is claimed; a source-artifact rebuild is not complete decompilation.
 - Original game compiler version/flags are not proved. Eight middleware banners

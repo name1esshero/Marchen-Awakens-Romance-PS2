@@ -491,3 +491,73 @@ Limits: only one instance in this cluster; the union does not claim which
 interpretation (pointer or raw flag test) reflects the "true" original
 field type, only that both are real, evidenced accesses.
 References: [linkonce cluster task](tasks/LINKONCE_CLUSTER.md).
+
+## The independent-statement scheduler rule generalizes: "rotate declaration order left by one" for N statements, not just 3
+
+Symptom: after finding a specific, non-obvious source order that
+reproduces a 3-independent-statement setter's instruction order (previous
+batch), a NEW 4-independent-statement setter (`CActFilter::SetXYWH`,
+`CWeapon::SetWeaponType`) again failed on the first (natural-order)
+attempt, raising the question of whether every new statement count needs
+its own from-scratch exhaustive search.
+Mechanism: the 3-statement rule already found was "write the 2nd-declared
+field's statement first, the 3rd-declared field's statement second, and
+the 1st-declared field's statement last" for an ascending-offset target.
+A 6-permutation probe on 4 independent fields found the exact same pattern
+generalizes: source order (2nd; 3rd; 4th; 1st field) reproduces the
+ascending-offset target for 4 statements too. Both cases are the same
+single rule — "rotate the fields' declaration order left by one position"
+— not two unrelated coincidences.
+Pathway: for a new N-independent-statement void setter (N pointer/int/etc.
+fields set from N parameters) targeting a natural ascending-offset
+instruction order, try the rotate-left-by-one source order FIRST (field 2,
+field 3, ..., field N, field 1) before running a fresh exhaustive
+permutation search. Still verify with `make verify-ee` rather than
+assuming — this rule is empirically confirmed at N=3 and N=4, not proven
+for all N, and the *descending*-offset target shape found for
+`CWeapon::CreateModels` (previous batch) has a different, still only
+single-instance-confirmed permutation.
+Verification: `make verify-ee` — both `SetXYWH` and `SetWeaponType`
+matched byte-for-byte using the rotate-left-by-one order on the first
+verification attempt after the probe confirmed the pattern.
+Scope: this compiler's scheduler for chains of independent store
+instructions with no data dependency between them; likely specific to
+GCC 2.96's particular RTL scheduling heuristic, not a general MIPS ABI
+rule.
+Limits: confirmed at N=3 and N=4 for the ascending-offset target shape
+only; the descending-offset shape and N>=5 remain unverified beyond the
+single N=3 descending example already logged.
+References: [linkonce cluster task](tasks/LINKONCE_CLUSTER.md).
+
+## A caller-supplied node's own fields, not `this`'s, need a real (not opaque) pointee type
+
+Symptom: an accessor's mangled parameter is a pointer to an
+already-forward-declared, still-opaque type (`P4CObj`), and the method
+body needs to dereference *that parameter*, not `this` — impossible with
+a forward declaration alone, unlike every prior pointer-parameter case in
+this cluster that only ever read/wrote `this`'s own fields.
+Mechanism: `CObjList::GetNextObject`/`GetPrevObject` are
+`return object ? object->next : 0;` / `return object ? object->prev :
+0;` (`beqz`-gated null check, then a field read *through the parameter*,
+not through `this`). Making this compile at all requires `CObj` to be a
+complete type with real `prev`/`next` members at the evidenced offsets
+(0 and 4), not just the opaque forward declaration the mangled parameter
+type alone demands.
+Pathway: when an accessor's body needs to dereference a
+pointer/reference *parameter* (as opposed to a field reachable from
+`this`), check whether the parameter's type has only ever been
+forward-declared in the header; if so, and the method's evidenced body
+requires reading a member of it, promote the forward declaration to a
+real (if minimal) class definition with just the members the evidence
+demands — the same "minimal evidenced struct" pattern already used for
+non-`this` pointee types (`SubObjectElement`, `Pose`, `FootPosEntry`),
+just triggered by a parameter instead of a field.
+Verification: `make verify-ee` — both accessors matched byte-for-byte,
+including the `beqz`+delay-slot-`daddu` null-check shape (the established
+move-vs-daddu precedent applying inside a delay slot, not just a plain
+return).
+Scope: general to any accessor-recovery project encountering a
+pointer-parameter dereference; not specific to this compiler.
+Limits: `CObj`'s only evidenced members are `prev`/`next`; its total size
+and any other members remain unknown.
+References: [linkonce cluster task](tasks/LINKONCE_CLUSTER.md).
