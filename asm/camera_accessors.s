@@ -1209,3 +1209,120 @@ nop
 .section .gnu.linkonce.t.SetAlpha__14FireStorm_Seedf,"ax",@progbits
 jr $31
 swc1 $f12, 0x74($4)
+.section .gnu.linkonce.t.SynchCallBack__15CRenderCallBackP7CRender,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.SetDispFilter__10CActFilteri,"ax",@progbits
+jr $31
+sw $5, 0x48($4)
+.section .gnu.linkonce.t.GetDispPosE__9CEventAct,"ax",@progbits
+jr $31
+addiu $2, $0, 0x2
+.section .gnu.linkonce.t.SetCount__12CActReversalf,"ax",@progbits
+jr $31
+swc1 $f12, 0x38($4)
+.section .gnu.linkonce.t.GetMotSts__9CStageObj,"ax",@progbits
+jr $31
+lw $2, 0x1b0($4)
+.section .gnu.linkonce.t.GetBg__8CPBG_PS2,"ax",@progbits
+jr $31
+lw $2, 0x294($4)
+.section .gnu.linkonce.t.GetObjDispLink__12CPObject_PS2,"ax",@progbits
+jr $31
+addiu $2, $4, 0x29c
+.section .gnu.linkonce.t.GetGefDispLink__9CPGef_PS2,"ax",@progbits
+jr $31
+addiu $2, $4, 0x2a4
+.section .gnu.linkonce.t.GetData__11CPDataGefDt,"ax",@progbits
+jr $31
+daddu $2, $0, $0
+.section .gnu.linkonce.t.GetData__10CPDataSeDt,"ax",@progbits
+jr $31
+daddu $2, $0, $0
+.section .gnu.linkonce.t.GetBG__9CPClassBG,"ax",@progbits
+jr $31
+lw $2, 0x4($4)
+.section .gnu.linkonce.t.GetObj__15CPClassEventObj,"ax",@progbits
+jr $31
+lw $2, 0x4($4)
+.section .gnu.linkonce.t.GetObj__13CPClassArmObj,"ax",@progbits
+jr $31
+lw $2, 0x4($4)
+.section .gnu.linkonce.t.GetObj__10CPClassGef,"ax",@progbits
+jr $31
+lw $2, 0x4($4)
+.section .gnu.linkonce.t.RestartConvertStone__9CCharaPmv,"ax",@progbits
+jr $31
+sw $0, 0x63c($4)
+.section .gnu.linkonce.t.GetChara__9CCharaSts,"ax",@progbits
+jr $31
+lw $2, 0xae0($4)
+.section .gnu.linkonce.t.DisableReversal__8CActTblC,"ax",@progbits
+jr $31
+sw $0, 0x5c($4)
+.section .gnu.linkonce.t.GetAtrSts__10CMotionSts,"ax",@progbits
+jr $31
+daddu $2, $4, $0
+.section .gnu.linkonce.t.GetActData__7CActTbl,"ax",@progbits
+jr $31
+lw $2, 0x0($4)
+.section .gnu.linkonce.t.GetModel__16CEffectArmActTbl,"ax",@progbits
+jr $31
+lw $2, 0x50($4)
+.section .gnu.linkonce.t.GetArmModelNum__16CEffectArmActTbl,"ax",@progbits
+jr $31
+lw $2, 0x5c($4)
+.section .gnu.linkonce.t.GetModel__16CEffectWeaponArm,"ax",@progbits
+jr $31
+lw $2, 0x58($4)
+.section .gnu.linkonce.t.GetParent__10CGefFactor,"ax",@progbits
+jr $31
+lw $2, 0x0($4)
+.section .gnu.linkonce.t.GetData__4CGef,"ax",@progbits
+jr $31
+lw $2, 0x4($4)
+.section .gnu.linkonce.t.GetDispPosE__12CActFootStmp,"ax",@progbits
+jr $31
+addiu $2, $0, 0x5
+.section .gnu.linkonce.t.GetHead__13ArmEffectCtrl,"ax",@progbits
+jr $31
+lw $2, 0x4($4)
+.section .gnu.linkonce.t.Draw3D__8FireBall,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.SetEraseFlag__13FireWall_Ctrli,"ax",@progbits
+jr $31
+sw $5, 0x4e4($4)
+.section .gnu.linkonce.t.Draw2D__9FireStorm,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.Draw3D__7Thunder,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.Draw3D__12ThunderStorm,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.Draw2D__15IcedEarthCircle,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.GetCharNo__11Aura_Effect,"ax",@progbits
+jr $31
+lw $2, 0x330($4)
+.section .gnu.linkonce.t.GameEffectOn__21CGameEffect_FootStampRC9objMatrix,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.Init__14FootStamp_BaseRC9objVectorRCfRCi,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.GameEffectAction__17CGameEffect_Dammy,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.GameEffectDraw__17CGameEffect_Dammy,"ax",@progbits
+jr $31
+nop
+.section .gnu.linkonce.t.GetChainSetting__9ClsSpring,"ax",@progbits
+jr $31
+addiu $2, $4, 0x10
+.section .gnu.linkonce.t.SetFileSize__7CMcFunci,"ax",@progbits
+jr $31
+sw $5, 0x10($4)

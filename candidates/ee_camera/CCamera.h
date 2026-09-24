@@ -1245,4 +1245,294 @@ public:
     void SetAlpha(float value) { alpha = value; }
 };
 
+class CRenderCallBack {
+public:
+    // Evidenced body ignores its argument and returns void.
+    void SynchCallBack(CRender *) {}
+};
+
+class CActFilter {
+public:
+    unsigned char unknown000[0x48];
+    int dispFilter;
+
+    void SetDispFilter(int value) { dispFilter = value; }
+};
+
+class CEventAct {
+public:
+    // Evidenced body ignores all arguments and returns the fixed constant 2.
+    int GetDispPosE() { return 2; }
+};
+
+class CActReversal {
+public:
+    unsigned char unknown000[0x38];
+    float count;
+
+    void SetCount(float value) { count = value; }
+};
+
+class CStageObj {
+public:
+    unsigned char unknown000[0x1b0];
+    int motSts;
+
+    int GetMotSts() { return motSts; }
+};
+
+class CPBG_PS2 {
+public:
+    unsigned char unknown000[0x294];
+    int bg;
+
+    int GetBg() { return bg; }
+};
+
+class CPObject_PS2 {
+public:
+    unsigned char unknown000[0x29c];
+    unsigned int objDispLink;
+
+    void *GetObjDispLink() { return &objDispLink; }
+};
+
+class CPGef_PS2 {
+public:
+    unsigned char unknown000[0x2a4];
+    unsigned int gefDispLink;
+
+    void *GetGefDispLink() { return &gefDispLink; }
+};
+
+class CPDataGefDt {
+public:
+    // Evidenced body ignores all arguments and returns a fixed zero.
+    void *GetData() { return 0; }
+};
+
+class CPDataSeDt {
+public:
+    // Evidenced body ignores all arguments and returns a fixed zero.
+    void *GetData() { return 0; }
+};
+
+class CPClassBG {
+public:
+    unsigned char unknown000[0x4];
+    int bg;
+
+    int GetBG() { return bg; }
+};
+
+class CPClassEventObj {
+public:
+    unsigned char unknown000[0x4];
+    int obj;
+
+    int GetObj() { return obj; }
+};
+
+class CPClassArmObj {
+public:
+    unsigned char unknown000[0x4];
+    int obj;
+
+    int GetObj() { return obj; }
+};
+
+class CPClassGef {
+public:
+    unsigned char unknown000[0x4];
+    int obj;
+
+    int GetObj() { return obj; }
+};
+
+class CCharaPmv {
+public:
+    unsigned char unknown000[0x63c];
+    int convertStone;
+
+    // Evidenced body unconditionally sets this field to zero.
+    void RestartConvertStone() { convertStone = 0; }
+};
+
+class CCharaSts {
+public:
+    unsigned char unknown000[0xae0];
+    void *chara;
+
+    void *GetChara() { return chara; }
+};
+
+class CActTblC {
+public:
+    unsigned char unknown000[0x5c];
+    int reversalFlag;
+
+    // Evidenced body unconditionally sets this field to zero.
+    void DisableReversal() { reversalFlag = 0; }
+};
+
+class CMotionSts {
+public:
+    // Evidenced body returns the object's own address unchanged.
+    void *GetAtrSts() { return this; }
+};
+
+class CActTbl {
+public:
+    void *actData;
+
+    void *GetActData() { return actData; }
+};
+
+class CEffectArmActTbl {
+public:
+    unsigned char unknown000[0x50];
+    int model;
+    unsigned char unknown054[0x8];
+    int armModelNum;
+
+    int GetModel() { return model; }
+    int GetArmModelNum() { return armModelNum; }
+};
+
+class CEffectWeaponArm {
+public:
+    unsigned char unknown000[0x58];
+    int model;
+
+    int GetModel() { return model; }
+};
+
+// Named only to reproduce FootStamp_Base::Init's mangled parameter type;
+// no members are evidenced.
+class objVector;
+
+class LoadAnimNormal {
+public:
+    // GetInstance reads via $gp-relative addressing (lw $2, -0x6138($gp)),
+    // not $this/$4 -- a singleton's static instance pointer, the same
+    // structural case as CArmEffect::GetUpdateFlag/GetHead and
+    // CGameEffect_Ctrl::GetInstance. Left unrecovered for the same reason
+    // (see docs/tasks/LINKONCE_CLUSTER.md and docs/CODE_SUCCESSES.md).
+};
+
+class CGefFactor {
+public:
+    void *parent;
+
+    void *GetParent() { return parent; }
+};
+
+class CGef {
+public:
+    unsigned char unknown000[0x4];
+    void *data;
+
+    void *GetData() { return data; }
+};
+
+class CActFootStmp {
+public:
+    // Evidenced body ignores all arguments and returns the fixed constant 5.
+    int GetDispPosE() { return 5; }
+};
+
+class ArmEffectCtrl {
+public:
+    unsigned char unknown000[0x4];
+    void *head;
+
+    void *GetHead() { return head; }
+};
+
+class FireBall {
+public:
+    // Evidenced body ignores all arguments and returns void.
+    void Draw3D() {}
+};
+
+class FireWall_Ctrl {
+public:
+    unsigned char unknown000[0x4e4];
+    int eraseFlag;
+
+    void SetEraseFlag(int value) { eraseFlag = value; }
+};
+
+class FireStorm {
+public:
+    // Evidenced body ignores all arguments and returns void.
+    void Draw2D() {}
+};
+
+class Thunder {
+public:
+    // Evidenced body ignores all arguments and returns void.
+    void Draw3D() {}
+};
+
+class ThunderStorm {
+public:
+    // Evidenced body ignores all arguments and returns void.
+    void Draw3D() {}
+};
+
+class IcedEarthCircle {
+public:
+    // Evidenced body ignores all arguments and returns void.
+    void Draw2D() {}
+};
+
+class Aura_Effect {
+public:
+    unsigned char unknown000[0x330];
+    int charNo;
+
+    int GetCharNo() { return charNo; }
+};
+
+class CGameEffect_FootStamp {
+public:
+    // Evidenced body ignores its argument and returns void. GetpFootStamp
+    // is deferred: it reads via $gp-relative addressing, not $this (same
+    // reason as LoadAnimNormal::GetInstance above).
+    void GameEffectOn(const objMatrix &) {}
+};
+
+class FootStamp_Base {
+public:
+    // Evidenced body ignores all three (by-const-reference) arguments and
+    // returns void. Confirmed on a standalone probe that RC applies to
+    // primitive types the same way as class types (const float &,
+    // const int &), composing the already-known R/C letters.
+    void Init(const objVector &, const float &, const int &) {}
+};
+
+class CGameEffect_Dammy {
+public:
+    // Evidenced bodies ignore all arguments and return void.
+    void GameEffectAction() {}
+    void GameEffectDraw() {}
+};
+
+class ClsSpring {
+public:
+    unsigned char unknown000[0x10];
+    unsigned int chainSetting;
+
+    void *GetChainSetting() { return &chainSetting; }
+};
+
+class CMcFunc {
+public:
+    unsigned char unknown000[0x10];
+    int fileSize;
+
+    void SetFileSize(int value) { fileSize = value; }
+};
+
 #endif

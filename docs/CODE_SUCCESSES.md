@@ -99,3 +99,52 @@ Limits: does not establish that these two bytes are permanently
 unrecoverable, only that the current isolated-probe methodology cannot
 reach them without manufacturing a match.
 References: [linkonce cluster task](tasks/LINKONCE_CLUSTER.md).
+
+## A one-instruction method can unconditionally zero a field, not just pass a value through
+
+Symptom: a candidate setter modeled as `field = value;` (taking the field's
+value from an argument) does not match a target `sw`/`swc1` instruction
+that stores a literal zero register (`$zero`), because the real method
+takes no such argument at all.
+Mechanism: `CCharaPmv::RestartConvertStone` (`sw $zero, 0x63c($4)`) and
+`CActTblC::DisableReversal` (`sw $zero, 0x5c($4)`) are zero-argument methods
+whose entire evidenced body is "set this field to zero" — not a setter
+receiving a caller-supplied value. The parameter list and the field-write
+value are independent claims; a one-instruction store doesn't imply the
+stored value came from an argument.
+Pathway: when a store instruction's source register is `$zero` rather than
+an argument register (`$5`/`$6`/`$7`/`$f12`), and the mangled name has no
+parameter encoding for that position, model the method as taking no
+parameters and assigning the literal constant, e.g.
+`void DisableReversal() { reversalFlag = 0; }` — not
+`void DisableReversal(int value) { reversalFlag = value; }`.
+Verification: `make verify-ee` — the unmodified EE GCC `2.96-ee-001003-1`
+`-O2` probe reproduces both exact `sw $zero, ...` byte patterns from these
+zero-argument bodies.
+Scope: general MIPS codegen convention (any zero-argument "clear/disable"
+method); not specific to this compiler.
+Limits: only integer-field zeroing confirmed; float-field zeroing via
+`swc1 $f0-implicit-zero` or similar has not been observed in this cluster.
+References: [linkonce cluster task](tasks/LINKONCE_CLUSTER.md).
+
+## `RC` (const reference) composes with primitive types, not only classes
+
+Symptom: uncertain whether a `const T &` parameter mangling generalizes
+beyond class types to primitives like `float`/`int`.
+Mechanism: `FootStamp_Base::Init__14FootStamp_BaseRC9objVectorRCfRCi` has
+three by-const-reference parameters: a class (`RC9objVector` = `const
+objVector &`) and two primitives (`RCf` = `const float &`, `RCi` = `const
+int &`). The `R`/`C` letters compose the same way regardless of what
+follows them — a primitive type letter (`f`, `i`, ...) or a `<len><name>`
+class spelling.
+Pathway: when a raw suffix shows `RC` followed by a primitive type letter
+rather than a `<len><name>`, declare that parameter as `const <type> &`
+directly — the same composition rule already established for `RC<len><name>`
+(reference to const class) applies uniformly.
+Verification: confirmed on a standalone probe
+(`void Init(const objVector &, const float &, const int &) {}`) before
+touching the real candidate, then again via `make verify-ee`.
+Scope: GNU v2/cfront-style mangling on this EE GCC target.
+Limits: only `float`/`int` confirmed as the primitive operands; other
+primitive types are unverified but expected to follow the same rule.
+References: [linkonce cluster task](tasks/LINKONCE_CLUSTER.md).

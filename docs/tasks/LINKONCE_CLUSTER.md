@@ -708,3 +708,52 @@ With the expanded caution keyword list (adding `Mar`/`DataBase`/`Labyrinth`/
 sections across the rest are now deliberately excluded, up from 238, and 3
 sections total are deferred as `$gp`-relative statics (331 total remaining,
 unchanged from the true census figure).
+
+## Final safe-scope batch — 37 classes, completing the recoverable set — 2026-09-23
+
+Agent: Claude Sonnet 5; role: Contributor. The last batch of the
+originally-remaining 40 safe classes (41 candidate sections, 39 recovered,
+2 more `$gp`-relative sections deferred).
+
+Two further deferrals found and confirmed the same way as the earlier
+three: `LoadAnimNormal::GetInstance` (`-0x6138($gp)`, a singleton
+instance pointer) and `CGameEffect_FootStamp::GetpFootStamp`
+(`-0x6020($gp)`). `CGameEffect_FootStamp::GameEffectOn` was still
+recovered since its own body never touches the deferred field, the same
+split already used for `CArmEffect`.
+
+Two more evidenced shapes, both new to this cluster:
+
+- **Unconditional field-zeroing, not a passthrough setter**:
+  `CCharaPmv::RestartConvertStone` is `sw $zero, 0x63c($4)` and
+  `CActTblC::DisableReversal` is `sw $zero, 0x5c($4)` — both write the
+  literal constant zero to a field, taking no value from any argument
+  (neither method even has a parameter). Modeled as
+  `void RestartConvertStone() { convertStone = 0; }` and
+  `void DisableReversal() { reversalFlag = 0; }`.
+- **`RC` applied to a primitive type, not just a class**:
+  `FootStamp_Base::Init` takes `RC9objVector`, `RCf`, and `RCi` — reference-
+  to-const composed with a NEW class (`objVector`, forward-declared) *and*
+  with primitive types (`const float &`, `const int &`). Confirmed on a
+  standalone probe before touching the real candidate: `RC` composes with
+  any type the same way, not only classes.
+
+With this batch, **every trivial 8-byte section not judged UI/dialog/
+texture/model/movie-adjacent has now been either recovered or explicitly
+deferred as a `$gp`-relative static**. The remaining 5 sections in
+"safe" classes are exactly the 5 deferred ones (`CArmEffect` ×2,
+`CGameEffect_Ctrl` ×1, `LoadAnimNormal` ×1, `CGameEffect_FootStamp` ×1) —
+none are unaddressed oversights. This is a natural completion point for
+this session's scope: further progress requires either resolving the
+`$gp`-relative static-layout problem, or extending into the deliberately
+excluded UI/dialog/texture/model/movie territory (238+ sections across
+~55 classes), which stays out of scope while the concurrent localization
+session is active there.
+
+The unmodified EE GCC `2.96-ee-001003-1` `-O2` invocation matched all 39
+integrated sections on the first attempt after adding one missed method
+(`CActFootStmp::GetDispPosE`, caught by `verify-ee`'s `KeyError` before any
+byte-level claim was made). Reconstruction now covers **441 sections /
+3,528 bytes across ninety-five partial classes**; 3,441,676 bytes remain
+explicit raw debt. `make test verify-boot verify-source-only verify-ee`
+passes (full boot ELF and full EE-probe ELF both byte-identical).
