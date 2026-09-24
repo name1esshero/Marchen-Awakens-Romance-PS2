@@ -764,6 +764,27 @@ on-screen readability; no ISO or emulator validation was performed.
 References: `graphics/user_interface/00039_00985_00000_title000_eng.tga`,
 [`title000 task evidence`](../tasks/GRAPHIC_TEXT_TITLE000.md), `tools/rtx3.py`.
 
+## Audit title textures for remaining Japanese text candidates
+
+Symptom: Japanese-baseline filenames without English siblings may be effects,
+backgrounds, or already-language-neutral marks rather than missing translations.
+Mechanism: compare the title directory with the graphics index and override
+siblings, then review each decoded TGA on a transparency checkerboard while
+recording source dimensions and full-file hashes. Keep uncertain glyph-like
+art separate from confirmed readable text.
+Verification: all 13 unmatched title baselines have dimensions and hashes that
+match `graphics/index.json`. Ten show no wording, `title_mar` already contains
+the Latin MÄR brandmark, and `mg_circle` contains non-readable ring ornaments.
+The fragmented magenta marks in `thunder` remain an ambiguous candidate. No
+Japanese source or English override was changed.
+Scope: the 13 Japanese title images without `_eng.tga` siblings in the reviewed
+graphics index.
+Limits: flat-image inspection cannot decide if `thunder` contains obscured text,
+or establish UV mapping, draw order, animation, or screen placement.
+References: [`title remainder audit`](../tasks/GRAPHIC_TEXT_TITLE_REMAINDERS.md),
+`graphics/index.json`, `tools/rtx3.py`,
+[`localization methodology`](LOCALIZATION_METHODOLOGY.md).
+
 ## Distinguish language-neutral map numbers from Japanese labels
 
 Symptom: exported map textures are potential localization surfaces, but numerals
