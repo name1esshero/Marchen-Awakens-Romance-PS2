@@ -1106,3 +1106,36 @@ are not interpreted as text.
 References: [environment text audit](../tasks/GRAPHIC_TEXT_ENVIRONMENTS.md),
 `graphics/index.json`, and
 [localization methodology](LOCALIZATION_METHODOLOGY.md).
+
+## Card-text audits should inspect nameplates separately from illustrations
+
+Symptom: a large card-texture category appears to offer broad localization
+work, but filenames include framed artwork, backgrounds, portrait crops, UI
+labels, and actual Japanese writing. Method: authenticate every TGA against
+`graphics/index.json`, review every unique full-file hash visually, then make
+native-size close-ups of likely lettering atlases. Deduplicate only the visual
+review; retain one inventory row per source path so aliases and insertion names
+are not lost.
+
+Finding: among 672 card-category textures, 145 `plt_*` name/caption bands carry
+Japanese kana/kanji, with 129 unique raster hashes and 16 exact duplicate paths.
+Five separate UI textures contain English wording: `HURRY UP!`,
+`Please Wait...`, `DRAW`, `EXTRA TITLE` / `EXTRA BATTLE`, and `Win` / `Lose` /
+`Draw`. One dark `center_bar` has faint block-like marks but no confident
+reading and should remain a candidate until contextual review. No readable
+words appeared on the other 521 paths. Measure lettering on the central plate
+independently of its metallic frame; preserve the Japanese export as an
+immutable baseline.
+
+Verification: all 672 filenames, dimensions, complete SHA-256 values, and
+type-2 32-bit top-origin TGA extents match the catalogue; all 615 unique
+byte hashes were visually reviewed, and the 145 nameplate paths received
+native-pixel close-up review. The nameplate dark-ink core bounds were measured
+for every path. No baseline or override was edited.
+Scope: `graphics/cards/*_jp.tga` in graphics index version 4.
+Limits: this is a raster-content census, not a transcription/translation of
+every caption; texture UVs, runtime use, draw order, and screen composition
+remain unknown. The unresolved `center_bar` is not confirmed as Japanese text.
+References: [card texture text-surface audit](../tasks/GRAPHIC_TEXT_CARDS.md),
+`graphics/index.json`, and
+[localization methodology](LOCALIZATION_METHODOLOGY.md).
