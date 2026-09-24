@@ -877,6 +877,29 @@ References: [`background texture audit`](../tasks/GRAPHIC_TEXT_BACKGROUNDS.md),
 `graphics/index.json`,
 [`LOCALIZATION_METHODOLOGY.md`](LOCALIZATION_METHODOLOGY.md).
 
+## Password-menu textures separate Japanese labels from entry glyphs and frame parts
+
+Symptom: the ten textures mapped to `password_tex.b` mix an ornamental
+background, controller/help labels, password entry artwork, and transition
+parts, so the resource names alone do not identify the localized surface.
+Method: select the exact bundle path from `graphics/index.json`, validate each
+TXC member and exported TGA hash/dimension, then review all ten alpha-composited
+images at native or nearest-neighbor enlarged scale.
+Finding: the controller/help atlas contains Japanese command labels alongside
+English control text, the password font atlas contains English A–Z/digit cells
+and a Japanese password sample, and a separate texture carries a `パスワード`
+wordmark. Seven other textures have no confidently readable wording. The small
+red/blue marks in the password-parts texture remain unresolved symbols.
+Verification: all ten mapped source-member hashes and all ten TGA filename,
+dimension, and full SHA-256 values match the index; every image was reviewed.
+No Japanese baseline or override was changed.
+Limits: raster bounds and visual readings do not establish atlas-cell lookup,
+UVs, draw order, or runtime display. No bundle/ISO rebuild or emulator
+validation was performed.
+References: [password texture audit](../tasks/GRAPHIC_TEXT_PASSWORD_TEX.md),
+`graphics/index.json`, and
+[`localization methodology`](LOCALIZATION_METHODOLOGY.md).
+
 ## Byte-weight recovery levels after editable YOBJ coordinate surfaces
 
 Symptom: one "decompiled percentage" conflates file preservation, parser
