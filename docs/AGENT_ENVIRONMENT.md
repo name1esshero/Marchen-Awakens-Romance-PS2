@@ -285,6 +285,37 @@ extraction. Subagent output is untrusted until it passes normal gates.
 
 ## Queue-worker onboarding and scope
 
+### Provision worktree identity before delegation
+
+The coordinator provisions each worker's separate worktree, branch, and Git
+author identity before sending the acclimation prompt. This makes the commit's
+Git author identify the worker who produced it while trailers retain the
+model, parent, department, work type, verification, and knowledge context.
+
+Enable Git's per-worktree configuration once in the repository. Then configure
+identity in each worker worktree before it edits files:
+
+```sh
+git config extensions.worktreeConfig true
+git -C "$WORKTREE" config --worktree user.name 'GPT-6 Luna (Subagent)'
+git -C "$WORKTREE" config --worktree user.email 'gpt-6-luna-subagent@agents.local'
+```
+
+Use the operator-provided contributor label for `user.name`, with a matching
+synthetic `@agents.local` address unless that contributor actually owns an
+account. For example, a Claude worker may use `Claude Sonnet 5 (Subagent)` and
+`claude-sonnet-5-subagent@agents.local`. Never assign a fake
+`users.noreply.github.com` address. Configure the lead's own worktree under the
+lead's identity too. Verify the effective identity with
+`git -C "$WORKTREE" config --show-origin --get-regexp '^(user\.(name|email))$'`.
+
+The delegated worker commits its own verified work under that Git author. The
+lead integrates the commit without changing its author; Git's committer field
+may identify the lead who performed integration. Every commit carries the
+seven trailers defined in `STANDARDS.md` §17. For delegated work,
+`Parent-Agent` names the direct delegator and `Department` records the owning
+domain. For direct lead work, use `Parent-Agent: none (lead work)`.
+
 Give a queue worker an acclimation prompt before delegating implementation:
 
 > Acclimate yourself to this workspace and choose a job from the queue

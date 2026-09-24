@@ -575,14 +575,38 @@ When an AI worker enters the repository:
 
 ------------------------------------------------------------------------
 
-## 17. Commit Attribution and Evidence Footers
+## 17. Commit Authorship, Attribution, and Evidence Footers
 
-Every commit must end with the following five Git-style trailer fields, separated
-from the commit message body by a blank line:
+The Git author identifies the worker who produced the change. Configure that
+identity in the individual worktree before editing or committing. Do not let
+parallel workers inherit one shared checkout identity, and do not use a
+GitHub-style `users.noreply.github.com` address unless the author actually owns
+that account. Agents without a real account use a clearly synthetic address
+under `agents.local`, for example `gpt-6-luna-subagent@agents.local`.
+
+Enable per-worktree configuration once in the repository, then set identity in
+each worker's own worktree:
+
+```sh
+git config extensions.worktreeConfig true
+git -C "$WORKTREE" config --worktree user.name 'GPT-6 Luna (Subagent)'
+git -C "$WORKTREE" config --worktree user.email 'gpt-6-luna-subagent@agents.local'
+```
+
+Use the exact contributor label requested by the operator for `user.name` and
+choose a matching synthetic `agents.local` address. Configure the lead's own
+worktree as the lead as well. A lead integrating a worker commit should preserve
+the worker as Git author; the lead may appear as committer. Do not reset the
+author during cherry-pick or integration.
+
+Every commit must end with these seven Git-style trailer fields, separated from
+the commit message body by a blank line:
 
 ```text
 Agent-Model: <exact model identity supplied by the runtime/operator, or unknown>
 Agent-Role: <self-selected role for this work>
+Parent-Agent: <direct delegator, or none (lead work)>
+Department: <owning department and domain>
 Work-Type: <work categories>
 Verification: <gates actually run and outcomes>
 Knowledge-Updated: <files updated>
@@ -600,6 +624,12 @@ Agent-Model: unknown (runtime identity unavailable)
 
 Roles and work categories are not fixed enums.
 For non-agent work, use `Agent-Model: none (human)` and an appropriate role.
+For work performed directly by a department lead, use
+`Parent-Agent: none (lead work)` and name the owning department. For delegated
+work, `Parent-Agent` names the direct delegator and `Department` names the owning
+department/domain.
+Git author metadata and these trailers are complementary: author metadata names
+the producer; trailers preserve the model and organizational context.
 
 The subject and body must describe the concrete change and its scope. Verification
 must report only commands or gates actually run, including material failures or

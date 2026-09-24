@@ -11,7 +11,7 @@ Keep status, work queue, task evidence and reusable knowledge current as part of
 each meaningful task. Distinguish matching bytes, candidate semantics, authentic
 source recovery, and unresolved raw regions. Never weaken pinned reference hashes.
 
-Every new commit needs the five attribution/evidence trailers defined in
+Every new commit needs the seven attribution/evidence trailers defined in
 STANDARDS.md §17. Model, role and work type are values for the current contributor
 and task; the example in the standards is not a fixed identity or default role.
 Record only verification actually run. Preserve existing history unless the owner
