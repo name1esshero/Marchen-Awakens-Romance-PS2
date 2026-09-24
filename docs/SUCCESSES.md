@@ -905,6 +905,27 @@ References: [`background texture audit`](../tasks/GRAPHIC_TEXT_BACKGROUNDS.md),
 `graphics/index.json`,
 [`LOCALIZATION_METHODOLOGY.md`](LOCALIZATION_METHODOLOGY.md).
 
+## Alpha-plane inspection finds lettering when a texture's RGB is blank
+
+Some exported TGAs can carry visible letter shapes in transparency while their
+RGB channels contain only black. Inspect the alpha plane separately when a
+normal RGB view appears empty, and record the threshold used to bound any
+letterforms; a checkerboard RGBA composite can reveal the transparency shape,
+but does not establish the game's blending or display behavior.
+
+In the four-texture `GameOver_tex.b` audit, `bg_00` and `bg_01` have zero-valued
+RGB channels and encode an English `GAME OVER` silhouette in their low-alpha
+regions. The opaque `gmover` TGA independently contains the same English
+wordmark, while `flear` is a radial effect without text. All four disk TGA hashes
+match `graphics/index.json`, and each header and full pixel extent checks out.
+
+Scope: the four indexed texture exports mapped to
+`disc!/_DATA.YFS;1!/data/menu/GameOver_tex.b`.
+Limits: this confirms only raster and alpha-plane content. It does not infer
+runtime blending, UVs, screen composition, or language-specific use.
+References: [`GameOver_tex.b audit`](../tasks/GRAPHIC_TEXT_GAMEOVER_TEX.md),
+`graphics/index.json`, and localization methodology §14.
+
 ## Password-menu textures separate Japanese labels from entry glyphs and frame parts
 
 Symptom: the ten textures mapped to `password_tex.b` mix an ornamental
