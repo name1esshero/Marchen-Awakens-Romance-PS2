@@ -928,6 +928,32 @@ References: [password texture audit](../tasks/GRAPHIC_TEXT_PASSWORD_TEX.md),
 `graphics/index.json`, and
 [`localization methodology`](LOCALIZATION_METHODOLOGY.md).
 
+## War-common textures expose a localized wordmark among mixed UI surfaces
+
+Symptom: `war_common_tex.b` mixes patterned panels, shading shapes, small scene
+art, and possible lettering; filenames alone do not show which
+images need localization.
+Method: select the exact `user_interface` rows from `graphics/index.json`,
+check every TGA name, dimension, full hash, header and extent, then visually
+review all 13 alpha-composited images at native or nearest-neighbor enlarged
+scale.
+Finding: `00039_01606_0022_wrgm_jp.tga` contains a multicolor katakana
+wordmark that appears to read `ウォーハンター` (“War Hunter”), with
+nontransparent bounds `[20,235) × [13,60)`. The calligraphic-looking marks in
+`00039_01606_0021_window_jp.tga` remain unresolved; the other eleven images
+show no confidently readable words. Preserve both the confirmed text surface
+and the unresolved candidate for later localization review.
+Verification: all 13 filenames, dimensions and full TGA SHA-256 values match
+the index; each type-2, 32-bit, top-origin (`0x28`) image has its exact declared
+extent; all 13 images were visually reviewed. No Japanese baseline or English
+override was changed.
+Limits: these are flat-raster readings only. The `window` marks, UVs, draw
+order, logo role and runtime display remain unverified. No bundle/ISO rebuild
+or emulator validation was performed.
+References: [war-common texture audit](../tasks/GRAPHIC_TEXT_WAR_COMMON_TEX.md),
+`graphics/index.json`, and
+[`localization methodology`](LOCALIZATION_METHODOLOGY.md).
+
 ## Byte-weight recovery levels after editable YOBJ coordinate surfaces
 
 Symptom: one "decompiled percentage" conflates file preservation, parser
