@@ -137,13 +137,18 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   text artifacts plus assembled code. `cmp` verifies every output byte.
 - An isolated build containing no ISO, extracted files, reports, existing build
   outputs or downloaded compiler reproduces the pinned boot hash.
-- 402 accessors (3,216 bytes) across fifty-one distinct classes (see
-  `candidates/ee_camera/CCamera.h` for the full list, most recently adding
-  `CStageWall`, `CPArm_PS2`, `CBabGun`, `CCharCol`, `CCharaMotion`,
-  `CGefScene`, `CGameEffect_Ctrl`, `FireWall_Seed`, `FireStorm_Ptcl`,
-  `FireStorm_Seed`) have verified assembly implementations.
+- 441 accessors (3,528 bytes) across ninety-five distinct classes (see
+  `candidates/ee_camera/CCamera.h` for the full list) have verified assembly
+  implementations. Every trivial 8-byte linkonce section not judged
+  UI/dialog/texture/model/movie-adjacent is now either recovered or
+  explicitly deferred as a `$gp`-relative static (5 sections across 4
+  classes: `CArmEffect`, `CGameEffect_Ctrl`, `LoadAnimNormal`,
+  `CGameEffect_FootStamp` — singleton/static instance pointers an isolated
+  probe cannot reproduce without manufacturing a whole-program static
+  layout). This is a natural completion point for the safe-scope recovery;
+  see [the linkonce cluster task](tasks/LINKONCE_CLUSTER.md).
 - EE GCC `2.96-ee-001003-1` with the same single `-O2` flag compiles natural
-  C++ candidates for all 402 into the same sections. Substituting them
+  C++ candidates for all 441 into the same sections. Substituting them
   in the full ELF also passes byte comparison. The partial classes remain candidates.
 - Research compiler distribution, hash and flags are pinned; the setup step is
   explicit and downloaded executables are ignored by Git.
@@ -156,20 +161,20 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
 
 ## Remaining debt and limits
 
-- **3,441,988 bytes** of the boot ELF remain explicitly preserved as unrecovered
+- **3,441,676 bytes** of the boot ELF remain explicitly preserved as unrecovered
   hex, including most code, data and ELF metadata. No authentic-source completion
   percentage is claimed; a source-artifact rebuild is not complete decompilation.
 - Original game compiler version/flags are not proved. Eight middleware banners
   advertise `GCC2096 SCE3020`; those labels are not provenance for every object.
 - Complete class inheritance, virtual layout and size are unknown for all
-  fifty-one partial classes above. Matching these small accessors is
-  insufficient to promote the classes to recovered source. 44 more
-  census-identified trivial 8-byte linkonce sections remain unrecovered in
-  safe (non-UI/dialog/texture/model/movie) classes, plus 3 explicitly
-  deferred `$gp`-relative-static sections (singleton/static instance
-  pointers; see [the linkonce cluster task](tasks/LINKONCE_CLUSTER.md)),
-  plus 283 sections deliberately excluded as UI/menu/dialog/texture/model/
-  movie-adjacent, across classes including `MenuFrameUI`/`MenuFrame`/`MenuFrameSimpleUI`/
+  ninety-five partial classes above. Matching these small accessors is
+  insufficient to promote the classes to recovered source. 5 explicitly
+  deferred `$gp`-relative-static sections remain (singleton/static instance
+  pointers an isolated probe cannot reproduce without manufacturing a
+  whole-program static layout; see
+  [the linkonce cluster task](tasks/LINKONCE_CLUSTER.md)), plus 283 sections
+  deliberately excluded as UI/menu/dialog/texture/model/movie-adjacent,
+  across classes including `MenuFrameUI`/`MenuFrame`/`MenuFrameSimpleUI`/
   `MenuEsy` and `CTexData`.
 - `GetViewRect` now has a reproducible non-matching four-float aggregate probe:
   40 candidate bytes versus 24 original bytes, with unaligned versus aligned
