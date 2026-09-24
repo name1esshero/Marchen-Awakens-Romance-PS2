@@ -18,8 +18,8 @@ and domain. The queue coordinator checks dependencies and active scopes before
 marking a contribution `READY`; reserve ratios are tracked separately for each
 authorized worker pool.
 
-Current Luna/assets snapshot: 5 `READY` cards / 1 active delegated worker =
-5.0; reserve / authorized asset-worker capacity = 5 / 2 = 2.5. DQ-17
+Current Luna/assets snapshot: 4 `READY` cards / 2 active delegated workers =
+2.0; reserve / authorized asset-worker capacity = 4 / 2 = 2.0. DQ-17
 (`password_tex.b`) and DQ-19 (`top_tex.b`) are complete and integrated as
 `763807b` and `4778c17`. DQ-24 (`winner_tex.b`) and DQ-25
 (`war_sel_base_tex.b`) are complete and integrated as `23b4937` and `e23f4da`.
@@ -28,15 +28,14 @@ DQ-26 (`war_common_tex.b`) is complete and integrated as `2025d11`; DQ-27
 `29cecee` and `3a997a4`. DQ-21 (`lib_movie_sum.b`) is complete and integrated
 as `40ed02f`; DQ-22 (`train_tex.b`) is complete and integrated as `6ccd26a`;
 DQ-23 (`GameOver_tex.b`) is complete and integrated as `ab3b437`. DQ-34
-(`trng` title translation) is assigned in its verified, identity-configured
-worktree. DQ-35 (two training-controller labels) is ready and independent of
-DQ-34.
+(`trng` title translation) and DQ-35 (two training-controller labels) are
+assigned in verified, identity-configured worktrees with disjoint asset scopes.
 DQ-20's read-only audit
 is complete; DQ-30's English wordmark translation is active coordinator work.
 DQ-13 and DQ-14 through DQ-16 are complete; the current English ISO reparses
 all 14 graphics and all three text catalogues byte-exactly. DQ-18 is complete
 with the corrected Claude code commit and both DQ-18 follow-ups integrated.
-DQ-29 and DQ-31 through DQ-33, plus DQ-35, remain ready. Each worker records task evidence
+DQ-29 and DQ-31 through DQ-33 remain ready. Each worker records task evidence
 and a scoped success/failure; the coordinator maintains shared queue/status,
 resolves integration collisions, and validates the combined ISO.
 
@@ -76,7 +75,7 @@ resolves integration collisions, and validates the combined ISO.
 | DQ-32 / READY | Luna / assets | Audit the single Japanese `user_interface` texture row from `saveload_tex.b` for save/load labels or other translation-bearing artwork. Read-only review: do not edit `_jp.tga` or create overrides. | The exact `graphics/index.json` row whose `asset_path` is `disc!/_DATA.YFS;1!/data/menu/saveload_tex.b`, its mapped `graphics/user_interface/*_jp.tga`, and [`LOCALIZATION_METHODOLOGY.md`](LOCALIZATION_METHODOLOGY.md). | `tasks/GRAPHIC_TEXT_SAVELOAD_TEX.md` plus a scoped `docs/SUCCESSES.md` or `docs/FAILURES.md` entry; record the filename, dimensions, full hash, TGA header/extent, visible text/bounds or negative finding, and visual review. Preserve Japanese baseline; make no UV/runtime inference. |
 | DQ-33 / READY | Luna / assets | Audit the single Japanese user-interface texture exported from `war_close_tex.b` for embedded Japanese text, UI labels, or other translation-bearing artwork. Read-only review: do not edit `_jp.tga` or create overrides. | The exact `graphics/index.json` row for `disc!/_DATA.YFS;1!/data/menu/war_close_tex.b` (`sel_frame`, 32×32 PSMT4) and its mapped `graphics/user_interface/00039_01602_0000_sel_frame_jp.tga`, plus [`LOCALIZATION_METHODOLOGY.md`](LOCALIZATION_METHODOLOGY.md). | `tasks/GRAPHIC_TEXT_WAR_CLOSE_TEX.md` plus a scoped `docs/SUCCESSES.md` or `docs/FAILURES.md` entry; record the source/TXC/TGA hashes, dimensions and TGA extent, describe visible text/bounds or negative finding, and visually review the image. Preserve Japanese baseline; make no UV/runtime inference. |
 | DQ-34 / IN PROGRESS (`ttlprts_english_art`; `worker/dq34-training-title-translation`) | Luna / localization graphics | Create an English sibling for the confirmed `トレーニング` title in `graphics/user_interface/00039_01593_0010_trng_jp.tga`, using the exact text `TRAINING`. Keep the 256×64 canvas and Japanese source immutable; translate only the measured title bounds, without changing other training-menu textures. | DQ-22 evidence in [`GRAPHIC_TEXT_TRAINING_TEX.md`](../tasks/GRAPHIC_TEXT_TRAINING_TEX.md), its indexed TGA hash, and [`LOCALIZATION_METHODOLOGY.md`](LOCALIZATION_METHODOLOGY.md). | `tasks/GRAPHIC_TEXT_TRAINING_TITLE.md`, scoped success evidence, tracked transparent `*_eng_layer.png` and `_eng.tga`; record the prompt, layer/output hashes, measured clear/composition bounds and fit mode; deterministic recomposition must reproduce the exact TGA and leave pixels outside the clear region unchanged. The lead will verify source-palette RTX3 import and ISO reparse. No UV/runtime claim. |
-| DQ-35 / READY | Luna / localization graphics | Create English labels for the two clearly readable Japanese strings `ARM セット` → `ARM SET` and `ランダム` → `RANDOM` in `graphics/icon/00039_01593_0008_icon_jp.tga`. Preserve the 256×256 canvas, Japanese baseline, controller symbols, Latin control labels, and all other unconfirmed text; do not alter any other training-menu texture. | DQ-22 evidence in [`GRAPHIC_TEXT_TRAINING_TEX.md`](../tasks/GRAPHIC_TEXT_TRAINING_TEX.md), the indexed TGA hash, and [`LOCALIZATION_METHODOLOGY.md`](LOCALIZATION_METHODOLOGY.md). | `tasks/GRAPHIC_TEXT_TRAINING_ICON_LOCALIZATION.md`, scoped success/failure evidence, tracked transparent `*_eng_layer.png` and `_eng.tga`; independently measure and record both label bounds, image prompt, layer/output hashes and deterministic composition parameters. Recomposition must exactly reproduce the TGA and leave all pixels outside the measured clear regions unchanged. Lead verifies source-palette RTX3 import and ISO reparse. Other tiny phrases, UV/runtime use, and emulator acceptance remain open. |
+| DQ-35 / IN PROGRESS (`queue_worker_two`; `worker/dq35-training-icon-translation`) | Luna / localization graphics | Create English labels for the two clearly readable Japanese strings `ARM セット` → `ARM SET` and `ランダム` → `RANDOM` in `graphics/icon/00039_01593_0008_icon_jp.tga`. Preserve the 256×256 canvas, Japanese baseline, controller symbols, Latin control labels, and all other unconfirmed text; do not alter any other training-menu texture. | DQ-22 evidence in [`GRAPHIC_TEXT_TRAINING_TEX.md`](../tasks/GRAPHIC_TEXT_TRAINING_TEX.md), the indexed TGA hash, and [`LOCALIZATION_METHODOLOGY.md`](LOCALIZATION_METHODOLOGY.md). | `tasks/GRAPHIC_TEXT_TRAINING_ICON_LOCALIZATION.md`, scoped success/failure evidence, tracked transparent `*_eng_layer.png` and `_eng.tga`; independently measure and record both label bounds, image prompt, layer/output hashes and deterministic composition parameters. Recomposition must exactly reproduce the TGA and leave all pixels outside the measured clear regions unchanged. Lead verifies source-palette RTX3 import and ISO reparse. Other tiny phrases, UV/runtime use, and emulator acceptance remain open. |
 
 The `ttlprts` and repeated `title000` overrides remain integrated with their
 prior round-trip evidence. DQ-14's database conditions, DQ-15's `EQUIP ARM`
@@ -84,9 +83,8 @@ command, and DQ-16's button-help labels now join the current 14-graphic English
 ISO build; all three edited text/catalog resources and all 14 graphics reparse
 byte-exactly. Japanese baselines remain unchanged, and emulator/runtime review
 is still open. DQ-23's GameOver audit is integrated; DQ-34 training-title
-translation is active in its isolated worktree, and DQ-35 independently queues
-the two confirmed controller labels. The remaining audits are the bounded cards
-above.
+translation and DQ-35's two confirmed controller labels are active in separate,
+identity-configured worktrees. The remaining audits are the bounded cards above.
 
 | Priority | Task | State / next evidence | Completion gate |
 | --- | --- | --- | --- |
