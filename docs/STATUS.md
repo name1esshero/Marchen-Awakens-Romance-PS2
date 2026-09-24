@@ -135,13 +135,16 @@ assignment, and must follow STANDARDS.md §17's fail-closed identity rule.
   transparent layer and measured-region compositor. War-common's 13-row audit
   is complete: the `wrgm` mark appears to read `ウォーハンター` (“War Hunter”),
   while the calligraphic marks in `window` remain unresolved. Shop-menu and
-  library-main audits are active in separate worker worktrees. The queue holds
-  four `READY` bounded asset cards for two authorized workers (2.0 ready cards
-  per worker slot). The completed
+  library-main audits are active in separate worker worktrees. Shop-menu's six
+  UI textures include Japanese text candidates in `equip`, `wdw_pause`, and
+  `window`; `shop` reads `ARMショップ` and already has an English sibling.
+  The queue holds four `READY` bounded asset cards for two authorized workers
+  (2.0 ready cards per worker slot). The completed
   title-remainder audit is integrated. Map,
   special-font, AFS suffix, background, and title-remainder audits are
-  integrated. Library/movie-summary, training, GameOver, and transition-menu
-  texture audits remain ready. The coordinator's read-only PSMCT32 investigation found a
+  integrated. Library/movie-summary and library-main audits are active; training,
+  GameOver, transition-menu, and the newly queued TGS-menu audit remain ready.
+  The coordinator's read-only PSMCT32 investigation found a
   common eight-byte shortfall across 43 records but no safe decode; those
   records remain raw.
   The `ttlprts` and `title000` English siblings, task notes and success entries
